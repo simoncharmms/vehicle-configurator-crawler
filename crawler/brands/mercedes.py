@@ -20,7 +20,7 @@ from bs4 import BeautifulSoup
 from crawler.base import BrandCrawler, CrawlConfig, CrawlResult, EngineType, VehicleData
 from crawler.engines.base_engine import BaseEngine
 from crawler.brands.registry import BrandRegistry
-from crawler.network import fetch_html_curl, retry_with_backoff
+from crawler.network import retry_with_backoff, BrowserPool
 
 logger = logging.getLogger(__name__)
 
@@ -77,15 +77,24 @@ class MercedesCrawler(BrandCrawler):
         errors: list[str] = []
         vehicles: list[VehicleData] = []
 
-        logger.info(f"Mercedes: fetching {MODELS_URL}")
-        html = fetch_html_curl(MODELS_URL)
-        soup = BeautifulSoup(html, "lxml")
-        vehicles = self._extract_from_ssr(soup)
+        try:
+            logger.info(f"Mercedes: fetching {MODELS_URL}")
+            pool = await BrowserPool.acquire()
+            # Use Playwright for better site compatibility (looks like real browser)
+            html = await pool.fetch_html(MODELS_URL)
+            soup = BeautifulSoup(html, "lxml")
+            vehicles = self._extract_from_ssr(soup)
 
-        if vehicles:
-            logger.info(f"Mercedes: extracted {len(vehicles)} vehicles from SSR data")
-        else:
-            errors.append("No vehicles found in SSR navigation data")
+            if vehicles:
+                logger.info(f"Mercedes: extracted {len(vehicles)} vehicles from SSR data")
+            else:
+                errors.append("No vehicles found in SSR navigation data")
+
+        finally:
+            try:
+                await BrowserPool.close()
+            except Exception:
+                pass
 
         return CrawlResult(
             brand=self.brand,

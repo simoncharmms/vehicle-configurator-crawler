@@ -23,7 +23,7 @@ from bs4 import BeautifulSoup
 from crawler.base import BrandCrawler, CrawlConfig, CrawlResult, EngineType, VehicleData
 from crawler.engines.base_engine import BaseEngine
 from crawler.brands.registry import BrandRegistry
-from crawler.network import fetch_html_curl, retry_with_backoff
+from crawler.network import retry_with_backoff, BrowserPool
 
 logger = logging.getLogger(__name__)
 
@@ -86,7 +86,9 @@ class AudiCrawler(BrandCrawler):
 
         try:
             logger.info(f"Audi: fetching {MODELS_URL}")
-            html = fetch_html_curl(MODELS_URL)
+            pool = await BrowserPool.acquire()
+            # Use Playwright for better site compatibility
+            html = await pool.fetch_html(MODELS_URL)
             soup = BeautifulSoup(html, "lxml")
 
             # Strategy 1: Extract from Apollo GraphQL cache
@@ -111,6 +113,11 @@ class AudiCrawler(BrandCrawler):
         except Exception as e:
             logger.error(f"Audi crawl error: {e}")
             errors.append(str(e))
+        finally:
+            try:
+                await BrowserPool.close()
+            except Exception:
+                pass
             raise  # Re-raise so retry_with_backoff can retry on transient errors
 
         return CrawlResult(
