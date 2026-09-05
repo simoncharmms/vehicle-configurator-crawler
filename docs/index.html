@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vehicle Configurator Price Tracker</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>🚗 Vehicle Configurator Price Tracker</h1>
+    <p class="subtitle">Daily price snapshots from German vehicle configurators</p>
+  </header>
+
+  <main>
+    <section id="controls">
+      <div class="filter-group">
+        <label for="brand-filter">Brand:</label>
+        <select id="brand-filter">
+          <option value="all">All Brands</option>
+        </select>
+      </div>
+      <div class="filter-group">
+        <label for="model-filter">Model:</label>
+        <select id="model-filter">
+          <option value="all">All Models</option>
+        </select>
+      </div>
+      <div class="filter-group">
+        <label for="date-range">Period:</label>
+        <select id="date-range">
+          <option value="7">Last 7 days</option>
+          <option value="30" selected>Last 30 days</option>
+          <option value="90">Last 90 days</option>
+          <option value="all">All time</option>
+        </select>
+      </div>
+    </section>
+
+    <section id="stats">
+      <div class="stat-card">
+        <span class="stat-value" id="total-brands">-</span>
+        <span class="stat-label">Brands</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-value" id="total-vehicles">-</span>
+        <span class="stat-label">Vehicles</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-value" id="last-updated">-</span>
+        <span class="stat-label">Last Updated</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-value" id="avg-price">-</span>
+        <span class="stat-label">Avg. Price</span>
+      </div>
+    </section>
+
+    <section id="chart-section">
+      <h2>Price Trends</h2>
+      <canvas id="price-chart"></canvas>
+    </section>
+
+    <section id="vehicle-list">
+      <h2>Current Vehicles</h2>
+      <div id="vehicles-container"></div>
+    </section>
+  </main>
+
+  <footer>
+    <p>Data collected daily at 06:00 CET. Prices in EUR, sourced from official configurators.</p>
+    <p>Mercedes-Benz · Audi · Porsche</p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
