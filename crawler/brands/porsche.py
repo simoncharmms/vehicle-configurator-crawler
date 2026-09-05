@@ -3,6 +3,8 @@
 robots.txt:  Could not verify (timed out during initial check).
 Strategy:    Static HTML extraction + price lookup from model pages.
              Porsche's model pages embed structured data.
+Resilience:  Uses ``fetch_html_curl`` (rotating user-agents, built-in curl retries)
+             wrapped with ``retry_with_backoff`` (3 retries, exponential delay).
 """
 
 from __future__ import annotations
@@ -10,7 +12,6 @@ from __future__ import annotations
 import json
 import logging
 import re
-import subprocess
 import time
 
 from bs4 import BeautifulSoup
@@ -18,42 +19,11 @@ from bs4 import BeautifulSoup
 from crawler.base import BrandCrawler, CrawlConfig, CrawlResult, EngineType, VehicleData
 from crawler.engines.base_engine import BaseEngine
 from crawler.brands.registry import BrandRegistry
+from crawler.network import fetch_html_curl, retry_with_backoff
 
 logger = logging.getLogger(__name__)
 
 MODELS_URL = "https://www.porsche.com/germany/models/"
-
-HEADERS = {
-    "User-Agent": (
-        "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) "
-        "AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
-    ),
-    "Accept-Language": "de-DE,de;q=0.9,en;q=0.8",
-    "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
-}
-
-
-def _fetch_html(url: str, timeout: int = 30) -> str:
-    """Fetch HTML using curl."""
-    result = subprocess.run(
-        [
-            "curl", "-sL", "--compressed", "--http1.1",
-            "--max-time", str(timeout),
-            "--retry", "2", "--retry-delay", "3",
-            "-H", f"User-Agent: {HEADERS['User-Agent']}",
-            "-H", f"Accept-Language: {HEADERS['Accept-Language']}",
-            "-H", f"Accept: {HEADERS['Accept']}",
-            url,
-        ],
-        capture_output=True,
-        text=True,
-        timeout=timeout + 10,
-    )
-    if result.returncode != 0:
-        raise RuntimeError(f"curl failed (code {result.returncode}): {result.stderr[:200]}")
-    if not result.stdout:
-        raise RuntimeError("curl returned empty response")
-    return result.stdout
 
 
 @BrandRegistry.register
@@ -71,6 +41,19 @@ class PorscheCrawler(BrandCrawler):
         )
 
     async def crawl(self, config: CrawlConfig | None = None) -> CrawlResult:
+        """Crawl Porsche models with automatic retry on transient failures."""
+        try:
+            return await retry_with_backoff(
+                self._crawl_inner, config, max_retries=1, base_delay=1.0,
+            )
+        except Exception as e:
+            logger.warning(f"Porsche: all retry attempts exhausted: {e}")
+            return CrawlResult(
+                brand=self.brand,
+                errors=[f"All attempts failed: {e}"],
+            )
+
+    async def _crawl_inner(self, config: CrawlConfig | None = None) -> CrawlResult:
         cfg = config or self.get_default_config()
         start_time = time.time()
         errors: list[str] = []
@@ -78,7 +61,7 @@ class PorscheCrawler(BrandCrawler):
 
         try:
             logger.info(f"Porsche: fetching {MODELS_URL}")
-            html = _fetch_html(MODELS_URL)
+            html = fetch_html_curl(MODELS_URL)
             soup = BeautifulSoup(html, "lxml")
 
             # Try to extract from page data
@@ -91,6 +74,7 @@ class PorscheCrawler(BrandCrawler):
         except Exception as e:
             logger.error(f"Porsche crawl error: {e}")
             errors.append(str(e))
+            raise  # Re-raise so retry_with_backoff can retry
 
         return CrawlResult(
             brand=self.brand,

@@ -5,7 +5,8 @@
  * Uses Chart.js for price trend visualization.
  */
 
-const DATA_BASE = '../data/prices';
+// Resolve data path: works both locally (../data/prices) and on GitHub Pages (data/prices)
+const DATA_BASE = document.location.pathname.includes('/docs/') ? '../data/prices' : 'data/prices';
 let allData = {};   // { brand: { date: CrawlResult } }
 let chartInstance = null;
 

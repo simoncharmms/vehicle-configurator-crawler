@@ -5,6 +5,8 @@ Strategy:    Static HTML extraction from Apollo GraphQL cache.
              The Audi model overview page embeds a full GraphQL response with
              all carline (model) data, vehicle types, and IDs.
              Prices are fetched from individual model pages where available.
+Resilience:  Uses ``fetch_html_curl`` (rotating user-agents, built-in curl retries)
+             wrapped with ``retry_with_backoff`` (3 retries, exponential delay).
 """
 
 from __future__ import annotations
@@ -12,7 +14,6 @@ from __future__ import annotations
 import json
 import logging
 import re
-import subprocess
 import time
 from typing import Any
 
@@ -22,11 +23,13 @@ from bs4 import BeautifulSoup
 from crawler.base import BrandCrawler, CrawlConfig, CrawlResult, EngineType, VehicleData
 from crawler.engines.base_engine import BaseEngine
 from crawler.brands.registry import BrandRegistry
+from crawler.network import fetch_html_curl, retry_with_backoff
 
 logger = logging.getLogger(__name__)
 
 MODELS_URL = "https://www.audi.de/de/brand/de/neuwagen.html"
 
+# Headers still needed for requests.Session in _enrich_prices
 HEADERS = {
     "User-Agent": (
         "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) "
@@ -36,28 +39,6 @@ HEADERS = {
     "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
     "Accept-Encoding": "gzip, deflate, br",
 }
-
-def _fetch_html(url: str, timeout: int = 30) -> str:
-    """Fetch HTML using curl (handles TLS edge cases)."""
-    result = subprocess.run(
-        [
-            "curl", "-sL", "--compressed", "--http1.1",
-            "--max-time", str(timeout),
-            "--retry", "2", "--retry-delay", "3",
-            "-H", f"User-Agent: {HEADERS['User-Agent']}",
-            "-H", f"Accept-Language: {HEADERS['Accept-Language']}",
-            "-H", f"Accept: {HEADERS['Accept']}",
-            url,
-        ],
-        capture_output=True,
-        text=True,
-        timeout=timeout + 5,
-    )
-    if result.returncode != 0:
-        raise RuntimeError(f"curl failed (code {result.returncode}): {result.stderr[:200]}")
-    if not result.stdout:
-        raise RuntimeError("curl returned empty response")
-    return result.stdout
 
 
 VEHICLE_TYPE_MAP = {
@@ -82,6 +63,22 @@ class AudiCrawler(BrandCrawler):
         )
 
     async def crawl(self, config: CrawlConfig | None = None) -> CrawlResult:
+        """Crawl Audi models with automatic retry on transient failures.
+
+        Uses retry_with_backoff (max 2 attempts) for retriable errors.
+        """
+        try:
+            return await retry_with_backoff(
+                self._crawl_inner, config, max_retries=1, base_delay=1.0,
+            )
+        except Exception as e:
+            logger.warning(f"Audi: all retry attempts exhausted: {e}")
+            return CrawlResult(
+                brand=self.brand,
+                errors=[f"All attempts failed: {e}"],
+            )
+
+    async def _crawl_inner(self, config: CrawlConfig | None = None) -> CrawlResult:
         cfg = config or self.get_default_config()
         start_time = time.time()
         errors: list[str] = []
@@ -89,7 +86,7 @@ class AudiCrawler(BrandCrawler):
 
         try:
             logger.info(f"Audi: fetching {MODELS_URL}")
-            html = _fetch_html(MODELS_URL)
+            html = fetch_html_curl(MODELS_URL)
             soup = BeautifulSoup(html, "lxml")
 
             # Strategy 1: Extract from Apollo GraphQL cache
@@ -114,6 +111,7 @@ class AudiCrawler(BrandCrawler):
         except Exception as e:
             logger.error(f"Audi crawl error: {e}")
             errors.append(str(e))
+            raise  # Re-raise so retry_with_backoff can retry on transient errors
 
         return CrawlResult(
             brand=self.brand,

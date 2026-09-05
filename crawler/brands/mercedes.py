@@ -4,6 +4,8 @@ robots.txt:  Allow: /passengercars/content-pool/tool-pages/car-configurator.html
 Strategy:    Static HTML extraction from SSR data (no Playwright needed).
              Model overview pages contain embedded JSON with model names, prices,
              images, and configurator links.
+Resilience:  Uses ``fetch_html_curl`` (rotating user-agents, built-in curl retries)
+             wrapped with ``retry_with_backoff`` (3 retries, exponential delay).
 """
 
 from __future__ import annotations
@@ -11,7 +13,6 @@ from __future__ import annotations
 import json
 import logging
 import re
-import subprocess
 import time
 
 from bs4 import BeautifulSoup
@@ -19,42 +20,11 @@ from bs4 import BeautifulSoup
 from crawler.base import BrandCrawler, CrawlConfig, CrawlResult, EngineType, VehicleData
 from crawler.engines.base_engine import BaseEngine
 from crawler.brands.registry import BrandRegistry
+from crawler.network import fetch_html_curl, retry_with_backoff
 
 logger = logging.getLogger(__name__)
 
 MODELS_URL = "https://www.mercedes-benz.de/passengercars/models.html"
-
-HEADERS = {
-    "User-Agent": (
-        "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) "
-        "AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
-    ),
-    "Accept-Language": "de-DE,de;q=0.9,en;q=0.8",
-    "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
-    "Accept-Encoding": "gzip, deflate, br",
-}
-
-def _fetch_html(url: str, timeout: int = 30) -> str:
-    """Fetch HTML using curl (handles TLS better than requests for some sites)."""
-    result = subprocess.run(
-        [
-            "curl", "-sL", "--compressed", "--http1.1",
-            "--max-time", str(timeout),
-            "--retry", "2", "--retry-delay", "3",
-            "-H", f"User-Agent: {HEADERS['User-Agent']}",
-            "-H", f"Accept-Language: {HEADERS['Accept-Language']}",
-            "-H", f"Accept: {HEADERS['Accept']}",
-            url,
-        ],
-        capture_output=True,
-        text=True,
-        timeout=timeout + 5,
-    )
-    if result.returncode != 0:
-        raise RuntimeError(f"curl failed (code {result.returncode}): {result.stderr[:200]}")
-    if not result.stdout:
-        raise RuntimeError("curl returned empty response")
-    return result.stdout
 
 
 # Vehicle type mapping for Mercedes tags
@@ -84,27 +54,38 @@ class MercedesCrawler(BrandCrawler):
         )
 
     async def crawl(self, config: CrawlConfig | None = None) -> CrawlResult:
+        """Crawl Mercedes models with automatic retry on transient failures.
+
+        Uses retry_with_backoff (max 2 attempts) for retriable errors.
+        Timeouts are handled gracefully — returns an error result rather
+        than blocking the entire orchestrator run.
+        """
+        try:
+            return await retry_with_backoff(
+                self._crawl_inner, config, max_retries=1, base_delay=1.0,
+            )
+        except Exception as e:
+            logger.warning(f"Mercedes: all retry attempts exhausted: {e}")
+            return CrawlResult(
+                brand=self.brand,
+                errors=[f"All attempts failed: {e}"],
+            )
+
+    async def _crawl_inner(self, config: CrawlConfig | None = None) -> CrawlResult:
         cfg = config or self.get_default_config()
         start_time = time.time()
         errors: list[str] = []
         vehicles: list[VehicleData] = []
 
-        try:
-            # Strategy 1: Extract from any model overview page
-            # The SSR navigation data is present on every MB page and contains all models
-            logger.info(f"Mercedes: fetching {MODELS_URL}")
-            html = _fetch_html(MODELS_URL)
-            soup = BeautifulSoup(html, "lxml")
-            vehicles = self._extract_from_ssr(soup)
+        logger.info(f"Mercedes: fetching {MODELS_URL}")
+        html = fetch_html_curl(MODELS_URL)
+        soup = BeautifulSoup(html, "lxml")
+        vehicles = self._extract_from_ssr(soup)
 
-            if vehicles:
-                logger.info(f"Mercedes: extracted {len(vehicles)} vehicles from SSR data")
-            else:
-                errors.append("No vehicles found in SSR navigation data")
-
-        except Exception as e:
-            logger.error(f"Mercedes crawl error: {e}")
-            errors.append(str(e))
+        if vehicles:
+            logger.info(f"Mercedes: extracted {len(vehicles)} vehicles from SSR data")
+        else:
+            errors.append("No vehicles found in SSR navigation data")
 
         return CrawlResult(
             brand=self.brand,
