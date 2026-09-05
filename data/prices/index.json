@@ -21,6 +21,17 @@
           "error_count": 0
         }
       ]
+    },
+    "mercedesbenz": {
+      "name": "Mercedes-Benz",
+      "snapshots": [
+        {
+          "date": "2026-09-05",
+          "file": "mercedesbenz_2026-09-05.json",
+          "vehicle_count": 0,
+          "error_count": 1
+        }
+      ]
     }
   },
   "crawl_history": [
@@ -32,7 +43,16 @@
         "Mercedes-Benz",
         "Audi"
       ]
+    },
+    {
+      "date": "2026-09-05",
+      "timestamp": "2026-09-05T12:00:11.068486",
+      "total_vehicles": 0,
+      "brands_crawled": [
+        "Mercedes-Benz",
+        "Audi"
+      ]
     }
   ],
-  "last_updated": "2026-09-05T11:57:04.074463"
+  "last_updated": "2026-09-05T12:00:11.068493"
 }
