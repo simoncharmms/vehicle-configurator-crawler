@@ -158,11 +158,27 @@
         "Zeekr",
         "Polestar"
       ]
+    },
+    {
+      "date": "2026-09-07",
+      "timestamp": "2026-09-07T11:16:38.770658",
+      "total_vehicles": 110,
+      "total_options": 0,
+      "brands_crawled": [
+        "Mercedes-Benz",
+        "Audi",
+        "Porsche",
+        "Lexus",
+        "BYD",
+        "XPeng",
+        "Zeekr",
+        "Polestar"
+      ]
     }
   ],
   "option_summary": {
-    "last_updated": "2026-09-07T11:13:07.826411",
+    "last_updated": "2026-09-07T11:16:38.770681",
     "options": []
   },
-  "last_updated": "2026-09-07T11:13:07.826415"
+  "last_updated": "2026-09-07T11:16:38.770683"
 }
