@@ -30,7 +30,7 @@ logger = logging.getLogger(__name__)
 MODELS_URL = "https://www.mercedes-benz.de/passengercars/models.html"
 
 # Max models to probe for option data (rate-limited)
-MAX_OPTION_PROBES = 5
+MAX_OPTION_PROBES = 25  # Increased from 5 for better cross-brand coverage
 
 # Vehicle type mapping for Mercedes tags
 FUEL_MAP = {
@@ -228,6 +228,7 @@ class MercedesCrawler(BrandCrawler):
            (with ``equipmentId``, ``title``, ``isIncluded`` fields)
         3. HTML text regex fallback for price patterns
         """
+        # Probe all vehicles with URLs up to limit (was [:MAX_OPTION_PROBES])
         targets = [v for v in vehicles if v.base_price and v.url][:MAX_OPTION_PROBES]
         if not targets:
             return

@@ -168,6 +168,9 @@ class LexusCrawler(BrandCrawler):
                 model_code = car.get("model", {}).get("code", "")
                 url = f"{self.base_url}/modelle/{model_code}" if model_code else MODELS_URL
 
+                # Extract options from grade features
+                options = self._extract_options_from_grade(grade, model_name)
+                
                 vehicles.append(VehicleData(
                     brand=self.brand,
                     model=display_model,
@@ -176,6 +179,65 @@ class LexusCrawler(BrandCrawler):
                     currency="EUR",
                     fuel_type=fuel_type,
                     url=url,
+                    available_options=options,
                 ))
 
         return vehicles
+
+    def _extract_options_from_grade(self, grade: dict, model_name: str) -> list:
+        """Extract options from grade features array.
+        
+        Grade structure includes:
+        - features[]: list of feature/option descriptions
+        - name: trim level (e.g., "Basis", "Executive")
+        - category: grade category
+        """
+        from crawler.base import OptionData
+        from crawler.option_mappings import normalize_option_name
+        
+        options = []
+        
+        # Extract from features array
+        features = grade.get('features', [])
+        for feature in features:
+            if not isinstance(feature, dict):
+                continue
+                
+            feature_name = feature.get('name', '') or feature.get('title', '')
+            if not feature_name:
+                continue
+            
+            # Normalize option name
+            std_name = normalize_option_name(feature_name, 'lexus')
+            if not std_name:
+                # If not in standard mappings, create a generic entry
+                std_name = feature_name.lower().replace(' ', '_')
+            
+            opt = OptionData(
+                standardized_name=std_name,
+                brand_specific_name=feature_name,
+                price=None,  # Lexus DE doesn't expose option prices
+                category=feature.get('category', 'other'),
+                code=feature.get('code', ''),
+                currency='EUR'
+            )
+            options.append(opt)
+        
+        # Also extract grade name as an "option" (trim level)
+        grade_name = grade.get('name', '').strip()
+        if grade_name:
+            std_grade = normalize_option_name(grade_name, 'lexus')
+            if not std_grade:
+                std_grade = f"trim_{grade_name.lower().replace(' ', '_')}"
+            
+            opt = OptionData(
+                standardized_name=std_grade,
+                brand_specific_name=grade_name,
+                price=None,
+                category='trim_level',
+                code='',
+                currency='EUR'
+            )
+            options.append(opt)
+        
+        return options

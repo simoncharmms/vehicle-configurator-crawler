@@ -42,7 +42,7 @@ MODELS_URL = "https://www.porsche.com/germany/models/"
 MODEL_FAMILIES = {"718", "911", "Taycan", "Panamera", "Macan", "Cayenne"}
 
 # Max models to probe for option data
-MAX_OPTION_PROBES = 5
+MAX_OPTION_PROBES = 25  # Increased from 5 for broader cross-brand option coverage
 
 # Slug mapping for model family detail pages
 _PORSCHE_FAMILY_SLUGS: dict[str, str] = {
