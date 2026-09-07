@@ -544,5 +544,80 @@
     },
     "duration_seconds": 19.58,
     "option_summary": []
+  },
+  {
+    "brand": "Polestar",
+    "timestamp": "2026-09-07T18:01:41.410715+00:00",
+    "vehicle_count": 5,
+    "vehicles": [
+      {
+        "brand": "Polestar",
+        "model": "Polestar 2",
+        "variant": "",
+        "base_price": 57690.0,
+        "currency": "EUR",
+        "fuel_type": "electric",
+        "available_options": [],
+        "url": "https://www.polestar.com/de/polestar-2/",
+        "image_url": ""
+      },
+      {
+        "brand": "Polestar",
+        "model": "Polestar 3",
+        "variant": "",
+        "base_price": 78900.0,
+        "currency": "EUR",
+        "fuel_type": "electric",
+        "available_options": [],
+        "url": "https://www.polestar.com/de/polestar-3/",
+        "image_url": ""
+      },
+      {
+        "brand": "Polestar",
+        "model": "Polestar 4 SUV",
+        "variant": "",
+        "base_price": 57900.0,
+        "currency": "EUR",
+        "fuel_type": "electric",
+        "available_options": [],
+        "url": "https://www.polestar.com/de/polestar-4-models/polestar-4-suv/",
+        "image_url": ""
+      },
+      {
+        "brand": "Polestar",
+        "model": "Polestar 5",
+        "variant": "",
+        "base_price": 118600.0,
+        "currency": "EUR",
+        "fuel_type": "electric",
+        "available_options": [],
+        "url": "https://www.polestar.com/de/polestar-5/",
+        "image_url": ""
+      },
+      {
+        "brand": "Polestar",
+        "model": "Polestar 4 Coupe",
+        "variant": "",
+        "base_price": 61900.0,
+        "currency": "EUR",
+        "fuel_type": "electric",
+        "available_options": [],
+        "url": "https://www.polestar.com/de/polestar-4-models/polestar-4-coupe/",
+        "image_url": ""
+      }
+    ],
+    "errors": [],
+    "strategy": {
+      "engine": "playwright",
+      "selectors": {},
+      "js_triggers": [],
+      "wait_selector": "",
+      "wait_timeout_ms": 30000,
+      "rate_limit_seconds": 3.0,
+      "confidence": 0.85,
+      "notes": "Playwright fetch + model page text extraction (curl blocked by CDN)."
+    },
+    "duration_seconds": 18.63,
+    "option_summary": []
   }
 ]

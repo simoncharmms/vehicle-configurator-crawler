@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-09-07T17:57:23.023098Z",
+  "last_updated": "2026-09-07T18:01:41.413450",
   "brands": {
     "audi": {
       "name": "Audi",
@@ -168,684 +168,597 @@
       ]
     }
   },
-  "option_summary": [
-    {
-      "standardized_name": "Porsche Doppelkupplung (PDK)",
-      "brand_specific_name": "Porsche Doppelkupplung (PDK)",
-      "category": "drivetrain",
-      "model_count": 60
-    },
-    {
-      "standardized_name": "Race-Tex",
-      "brand_specific_name": "Race-Tex",
-      "category": "interior",
-      "model_count": 60
-    },
-    {
-      "standardized_name": "leather_seats",
-      "brand_specific_name": "Race-Tex with extensive items in leather",
-      "category": "interior",
-      "model_count": 60
-    },
-    {
-      "standardized_name": "6-speed manual transmission with dual-mass flywheel",
-      "brand_specific_name": "6-speed manual transmission with dual-mass flywheel",
-      "category": "drivetrain",
-      "model_count": 60
-    },
-    {
-      "standardized_name": "Standard Interior with Race-Tex / Race-Tex Seats",
-      "brand_specific_name": "Standard Interior with Race-Tex / Race-Tex Seats",
-      "category": "interior",
-      "model_count": 60
-    },
-    {
-      "standardized_name": "GTS interior package",
-      "brand_specific_name": "GTS interior package",
-      "category": "interior",
-      "model_count": 60
-    },
-    {
-      "standardized_name": "8-speed Porsche Doppelkupplung (PDK)",
-      "brand_specific_name": "8-speed Porsche Doppelkupplung (PDK)",
-      "category": "drivetrain",
-      "model_count": 60
-    },
-    {
-      "standardized_name": "Heritage Design",
-      "brand_specific_name": "Heritage Design",
-      "category": "interior",
-      "model_count": 60
-    },
-    {
-      "standardized_name": "6-speed sports transmission",
-      "brand_specific_name": "6-speed sports transmission",
-      "category": "drivetrain",
-      "model_count": 60
-    },
-    {
-      "standardized_name": "Sport-Tex",
-      "brand_specific_name": "Sport-Tex",
-      "category": "interior",
-      "model_count": 60
-    },
-    {
-      "standardized_name": "\tStandard",
-      "brand_specific_name": "\tStandard",
-      "category": "interior",
-      "model_count": 60
-    },
-    {
-      "standardized_name": "allrad",
-      "brand_specific_name": "All-Wheel Drive",
-      "category": "drivetrain",
-      "model_count": 60
-    },
-    {
-      "standardized_name": "Interior package",
-      "brand_specific_name": "Interior package",
-      "category": "interior",
-      "model_count": 60
-    },
-    {
-      "standardized_name": "7-speed Porsche Doppelkupplung (PDK)",
-      "brand_specific_name": "7-speed Porsche Doppelkupplung (PDK)",
-      "category": "drivetrain",
-      "model_count": 60
-    },
-    {
-      "standardized_name": "6-speed GT sports transmission",
-      "brand_specific_name": "6-speed GT sports transmission",
-      "category": "drivetrain",
-      "model_count": 60
-    },
-    {
-      "standardized_name": "Standard",
-      "brand_specific_name": "Standard",
-      "category": "interior",
-      "model_count": 60
-    },
-    {
-      "standardized_name": "Performance Battery Plus",
-      "brand_specific_name": "Performance Battery Plus",
-      "category": "drivetrain",
-      "model_count": 60
-    },
-    {
-      "standardized_name": "Performance Battery",
-      "brand_specific_name": "Performance Battery",
-      "category": "drivetrain",
-      "model_count": 60
-    },
-    {
-      "standardized_name": "8-speed automatic gearbox",
-      "brand_specific_name": "8-speed automatic gearbox",
-      "category": "other",
-      "model_count": 60
-    },
-    {
-      "standardized_name": "8-speed Porsche Doppelkupplung (PDK) - Rear seats",
-      "brand_specific_name": "8-speed Porsche Doppelkupplung (PDK) - Rear seats",
-      "category": "drivetrain",
-      "model_count": 60
-    },
-    {
-      "standardized_name": "6-speed sports transmission - Rear seats",
-      "brand_specific_name": "6-speed sports transmission - Rear seats",
-      "category": "drivetrain",
-      "model_count": 60
-    },
-    {
-      "standardized_name": "6-speed sports transmission - Rear-Axle Steering",
-      "brand_specific_name": "6-speed sports transmission - Rear-Axle Steering",
-      "category": "drivetrain",
-      "model_count": 60
-    },
-    {
-      "standardized_name": "8-speed Porsche Doppelkupplung (PDK) - Rear-Axle Steering",
-      "brand_specific_name": "8-speed Porsche Doppelkupplung (PDK) - Rear-Axle Steering",
-      "category": "drivetrain",
-      "model_count": 60
-    },
-    {
-      "standardized_name": "6-speed GT sports transmission - Rear seats",
-      "brand_specific_name": "6-speed GT sports transmission - Rear seats",
-      "category": "drivetrain",
-      "model_count": 60
-    },
-    {
-      "standardized_name": "7-speed Porsche Doppelkupplung (PDK) - Rear seats",
-      "brand_specific_name": "7-speed Porsche Doppelkupplung (PDK) - Rear seats",
-      "category": "drivetrain",
-      "model_count": 60
-    },
-    {
-      "standardized_name": "Performance Battery - Rear-Axle Steering",
-      "brand_specific_name": "Performance Battery - Rear-Axle Steering",
-      "category": "drivetrain",
-      "model_count": 60
-    },
-    {
-      "standardized_name": "Performance Battery Plus - Rear-Axle Steering",
-      "brand_specific_name": "Performance Battery Plus - Rear-Axle Steering",
-      "category": "drivetrain",
-      "model_count": 60
-    },
-    {
-      "standardized_name": "Performance Battery Plus - Manthey Kit",
-      "brand_specific_name": "Performance Battery Plus - Manthey Kit",
-      "category": "drivetrain",
-      "model_count": 60
-    },
-    {
-      "standardized_name": "Performance Battery - Offroad Package",
-      "brand_specific_name": "Performance Battery - Offroad Package",
-      "category": "drivetrain",
-      "model_count": 60
-    },
-    {
-      "standardized_name": "8-speed automatic gearbox - Rear-Axle Steering",
-      "brand_specific_name": "8-speed automatic gearbox - Rear-Axle Steering",
-      "category": "other",
-      "model_count": 60
-    },
-    {
-      "standardized_name": "head_up_display",
-      "brand_specific_name": "Head-up-Display",
-      "category": "technology",
-      "model_count": 3
-    },
-    {
-      "standardized_name": "premium_sound",
-      "brand_specific_name": "Burmester\u00ae 3D-Surround-Soundsystem",
-      "category": "sound",
-      "model_count": 3
-    },
-    {
-      "standardized_name": "Digitales Extra: MBUX Augmented Reality f\u00fcr Navigation",
-      "brand_specific_name": "Digitales Extra: MBUX Augmented Reality f\u00fcr Navigation",
-      "category": "technology",
-      "model_count": 3
-    },
-    {
-      "standardized_name": "Adaptiver Fernlicht-Assistent Plus",
-      "brand_specific_name": "Adaptiver Fernlicht-Assistent Plus",
-      "category": "lighting",
-      "model_count": 3
-    },
-    {
-      "standardized_name": "rear_camera",
-      "brand_specific_name": "Park-Paket mit 360\u00b0-Kamera",
-      "category": "safety",
-      "model_count": 3
-    },
-    {
-      "standardized_name": "Sidebags im Fond",
-      "brand_specific_name": "Sidebags im Fond",
-      "category": "other",
-      "model_count": 3
-    },
-    {
-      "standardized_name": "Anh\u00e4ngevorrichtung mit ESP\u00ae Anh\u00e4ngerstabilisierung",
-      "brand_specific_name": "Anh\u00e4ngevorrichtung mit ESP\u00ae Anh\u00e4ngerstabilisierung",
-      "category": "exterior",
-      "model_count": 3
-    },
-    {
-      "standardized_name": "matrix_led",
-      "brand_specific_name": "DIGITAL LIGHT",
-      "category": "lighting",
-      "model_count": 3
-    },
-    {
-      "standardized_name": "Memory-Paket",
-      "brand_specific_name": "Memory-Paket",
-      "category": "packages",
-      "model_count": 3
-    },
-    {
-      "standardized_name": "steering_wheel_heating",
-      "brand_specific_name": "Lenkradheizung",
-      "category": "comfort",
-      "model_count": 3
-    },
-    {
-      "standardized_name": "Klimatisierungsautomatik THERMOTRONIC",
-      "brand_specific_name": "Klimatisierungsautomatik THERMOTRONIC",
-      "category": "comfort",
-      "model_count": 3
-    },
-    {
-      "standardized_name": "ambient_lighting",
-      "brand_specific_name": "Aktive Ambientebeleuchtung",
-      "category": "interior",
-      "model_count": 3
-    },
-    {
-      "standardized_name": "Winter-Paket",
-      "brand_specific_name": "Winter-Paket",
-      "category": "packages",
-      "model_count": 3
-    },
-    {
-      "standardized_name": "MBUX Superscreen",
-      "brand_specific_name": "MBUX Superscreen",
-      "category": "technology",
-      "model_count": 2
-    },
-    {
-      "standardized_name": "parking_assist",
-      "brand_specific_name": "Digitales Extra: MB.DRIVE PARKING ASSIST 360",
-      "category": "safety",
-      "model_count": 2
-    },
-    {
-      "standardized_name": "Digitales Extra: MB.DRIVE ASSIST",
-      "brand_specific_name": "Digitales Extra: MB.DRIVE ASSIST",
-      "category": "technology",
-      "model_count": 2
-    },
-    {
-      "standardized_name": "HANDS-FREE ACCESS",
-      "brand_specific_name": "HANDS-FREE ACCESS",
-      "category": "other",
-      "model_count": 2
-    },
-    {
-      "standardized_name": "KEYLESS-GO",
-      "brand_specific_name": "KEYLESS-GO",
-      "category": "other",
-      "model_count": 2
-    },
-    {
-      "standardized_name": "KEYLESS-GO Komfort-Paket mit Digitalem Extra",
-      "brand_specific_name": "KEYLESS-GO Komfort-Paket mit Digitalem Extra",
-      "category": "technology",
-      "model_count": 2
-    },
-    {
-      "standardized_name": "Digitales Extra: GUARD 360\u00b0 Fahrzeugschutz Plus",
-      "brand_specific_name": "Digitales Extra: GUARD 360\u00b0 Fahrzeugschutz Plus",
-      "category": "technology",
-      "model_count": 2
-    },
-    {
-      "standardized_name": "On-board AC-Lader bis 22 kW",
-      "brand_specific_name": "On-board AC-Lader bis 22 kW",
-      "category": "other",
-      "model_count": 2
-    },
-    {
-      "standardized_name": "Winter-Paket Plus mit 18\" Winter-Komplettr\u00e4dern",
-      "brand_specific_name": "Winter-Paket Plus mit 18\" Winter-Komplettr\u00e4dern",
-      "category": "packages",
-      "model_count": 2
-    },
-    {
-      "standardized_name": "Sportsitze",
-      "brand_specific_name": "Sportsitze",
-      "category": "comfort",
-      "model_count": 2
-    },
-    {
-      "standardized_name": "Digitales Extra: ENERGIZING COMFORT",
-      "brand_specific_name": "Digitales Extra: ENERGIZING COMFORT",
-      "category": "technology",
-      "model_count": 2
-    },
-    {
-      "standardized_name": "Soundpersonalisierung",
-      "brand_specific_name": "Soundpersonalisierung",
-      "category": "sound",
-      "model_count": 2
-    },
-    {
-      "standardized_name": "MBUX Hyperscreen",
-      "brand_specific_name": "MBUX Hyperscreen",
-      "category": "technology",
-      "model_count": 2
-    },
-    {
-      "standardized_name": "PRE-SAFE\u00ae Impuls Seite",
-      "brand_specific_name": "PRE-SAFE\u00ae Impuls Seite",
-      "category": "safety",
-      "model_count": 2
-    },
-    {
-      "standardized_name": "air_suspension",
-      "brand_specific_name": "AIRMATIC",
-      "category": "comfort",
-      "model_count": 2
-    },
-    {
-      "standardized_name": "panoramic_roof",
-      "brand_specific_name": "Panorama-Schiebedach",
-      "category": "exterior",
-      "model_count": 2
-    },
-    {
-      "standardized_name": "Sitzklimatisierung f\u00fcr Fahrer und Beifahrer",
-      "brand_specific_name": "Sitzklimatisierung f\u00fcr Fahrer und Beifahrer",
-      "category": "comfort",
-      "model_count": 2
-    },
-    {
-      "standardized_name": "seat_heating_front",
-      "brand_specific_name": "Sitzheizung im Fond",
-      "category": "comfort",
-      "model_count": 2
-    },
-    {
-      "standardized_name": "Digitales Extra: MBUX Smartphone Integration",
-      "brand_specific_name": "Digitales Extra: MBUX Smartphone Integration",
-      "category": "technology",
-      "model_count": 1
-    },
-    {
-      "standardized_name": "Digitales Extra: Park-Assistent",
-      "brand_specific_name": "Digitales Extra: Park-Assistent",
-      "category": "technology",
-      "model_count": 1
-    },
-    {
-      "standardized_name": "AMG Styling",
-      "brand_specific_name": "AMG Styling",
-      "category": "other",
-      "model_count": 1
-    },
-    {
-      "standardized_name": "Winter-Paket Plus mit 17\" Winter-Komplettr\u00e4dern",
-      "brand_specific_name": "Winter-Paket Plus mit 17\" Winter-Komplettr\u00e4dern",
-      "category": "packages",
-      "model_count": 1
-    },
-    {
-      "standardized_name": "Kabelloses Ladesystem f\u00fcr mobile Endger\u00e4te vorn 2-fach",
-      "brand_specific_name": "Kabelloses Ladesystem f\u00fcr mobile Endger\u00e4te vorn 2-fach",
-      "category": "other",
-      "model_count": 1
-    },
-    {
-      "standardized_name": "KEYLESS-GO mit fl\u00e4chenb\u00fcndigen T\u00fcrgriffen",
-      "brand_specific_name": "KEYLESS-GO mit fl\u00e4chenb\u00fcndigen T\u00fcrgriffen",
-      "category": "other",
-      "model_count": 1
-    },
-    {
-      "standardized_name": "Hinterachslenkung",
-      "brand_specific_name": "Hinterachslenkung",
-      "category": "drivetrain",
-      "model_count": 1
-    },
-    {
-      "standardized_name": "Agility & Comfort Paket",
-      "brand_specific_name": "Agility & Comfort Paket",
-      "category": "packages",
-      "model_count": 1
-    },
-    {
-      "standardized_name": "Mercedes Stern teilbeleuchtet",
-      "brand_specific_name": "Mercedes Stern teilbeleuchtet",
-      "category": "other",
-      "model_count": 1
-    },
-    {
-      "standardized_name": "Mercedes-Benz ikonischer Grill mit beleuchtetem Panel",
-      "brand_specific_name": "Mercedes-Benz ikonischer Grill mit beleuchtetem Panel",
-      "category": "other",
-      "model_count": 1
-    },
-    {
-      "standardized_name": "Mercedes-Benz ikonischer Grill mit beleuchteter Umrandung",
-      "brand_specific_name": "Mercedes-Benz ikonischer Grill mit beleuchteter Umrandung",
-      "category": "other",
-      "model_count": 1
-    },
-    {
-      "standardized_name": "ENERGIZING AIR CONTROL",
-      "brand_specific_name": "ENERGIZING AIR CONTROL",
-      "category": "other",
-      "model_count": 1
-    },
-    {
-      "standardized_name": "Digitales Extra: MBUX Entertainment 3 Jahre",
-      "brand_specific_name": "Digitales Extra: MBUX Entertainment 3 Jahre",
-      "category": "technology",
-      "model_count": 1
-    },
-    {
-      "standardized_name": "USB-Paket Plus",
-      "brand_specific_name": "USB-Paket Plus",
-      "category": "packages",
-      "model_count": 1
-    },
-    {
-      "standardized_name": "Digitales Extra: Vorr\u00fcstung f\u00fcr Digitalen Fahrzeugschl\u00fcssel f\u00fcr Smartphone",
-      "brand_specific_name": "Digitales Extra: Vorr\u00fcstung f\u00fcr Digitalen Fahrzeugschl\u00fcssel f\u00fcr Smartphone",
-      "category": "technology",
-      "model_count": 1
-    },
-    {
-      "standardized_name": "Bremsanlage mit gr\u00f6\u00dferen Bremsscheiben an der Vorderachse",
-      "brand_specific_name": "Bremsanlage mit gr\u00f6\u00dferen Bremsscheiben an der Vorderachse",
-      "category": "safety",
-      "model_count": 1
-    },
-    {
-      "standardized_name": "DYNAMIC BODY CONTROL Fahrwerk mit adaptiver Verstelld\u00e4mpfung",
-      "brand_specific_name": "DYNAMIC BODY CONTROL Fahrwerk mit adaptiver Verstelld\u00e4mpfung",
-      "category": "drivetrain",
-      "model_count": 1
-    },
-    {
-      "standardized_name": "sport_suspension",
-      "brand_specific_name": "Sportfahrwerk",
-      "category": "drivetrain",
-      "model_count": 1
-    },
-    {
-      "standardized_name": "W\u00e4rme- und ger\u00e4uschd\u00e4mmendes Akustikglas",
-      "brand_specific_name": "W\u00e4rme- und ger\u00e4uschd\u00e4mmendes Akustikglas",
-      "category": "exterior",
-      "model_count": 1
-    },
-    {
-      "standardized_name": "Multikontursitze f\u00fcr Fahrer und Beifahrer",
-      "brand_specific_name": "Multikontursitze f\u00fcr Fahrer und Beifahrer",
-      "category": "comfort",
-      "model_count": 1
-    },
-    {
-      "standardized_name": "AIR-BALANCE Paket",
-      "brand_specific_name": "AIR-BALANCE Paket",
-      "category": "packages",
-      "model_count": 1
-    },
-    {
-      "standardized_name": "Standheizung",
-      "brand_specific_name": "Standheizung",
-      "category": "comfort",
-      "model_count": 1
-    },
-    {
-      "standardized_name": "Sonnenrollos in den Fondt\u00fcren links und rechts",
-      "brand_specific_name": "Sonnenrollos in den Fondt\u00fcren links und rechts",
-      "category": "interior",
-      "model_count": 1
-    },
-    {
-      "standardized_name": "Sonnenrollo elektrisch f\u00fcr Heckscheibe",
-      "brand_specific_name": "Sonnenrollo elektrisch f\u00fcr Heckscheibe",
-      "category": "interior",
-      "model_count": 1
-    },
-    {
-      "standardized_name": "Sonnenblende ausziehbar",
-      "brand_specific_name": "Sonnenblende ausziehbar",
-      "category": "interior",
-      "model_count": 1
-    },
-    {
-      "standardized_name": "Mittelkonsole Feinstrukturoptik schwarz",
-      "brand_specific_name": "Mittelkonsole Feinstrukturoptik schwarz",
-      "category": "interior",
-      "model_count": 1
-    },
-    {
-      "standardized_name": "Mittelkonsole Rautenoptik silbergrau",
-      "brand_specific_name": "Mittelkonsole Rautenoptik silbergrau",
-      "category": "interior",
-      "model_count": 1
-    },
-    {
-      "standardized_name": "Mittelkonsole Metallstruktur",
-      "brand_specific_name": "Mittelkonsole Metallstruktur",
-      "category": "interior",
-      "model_count": 1
-    },
-    {
-      "standardized_name": "Sonnenschutz-Paket",
-      "brand_specific_name": "Sonnenschutz-Paket",
-      "category": "interior",
-      "model_count": 1
-    },
-    {
-      "standardized_name": "Entfall farbige Sicherheitsgurte",
-      "brand_specific_name": "Entfall farbige Sicherheitsgurte",
-      "category": "other",
-      "model_count": 1
-    },
-    {
-      "standardized_name": "Digitales Extra: Smartphone Integration",
-      "brand_specific_name": "Digitales Extra: Smartphone Integration",
-      "category": "technology",
-      "model_count": 1
-    },
-    {
-      "standardized_name": "TV-Tuner",
-      "brand_specific_name": "TV-Tuner",
-      "category": "other",
-      "model_count": 1
-    },
-    {
-      "standardized_name": "adaptive_cruise_control",
-      "brand_specific_name": "Digitales Extra: Aktiver Abstands-Assistent DISTRONIC",
-      "category": "safety",
-      "model_count": 1
-    },
-    {
-      "standardized_name": "Totwinkel-Assistent",
-      "brand_specific_name": "Totwinkel-Assistent",
-      "category": "safety",
-      "model_count": 1
-    },
-    {
-      "standardized_name": "Aktiver Lenk-Assistent",
-      "brand_specific_name": "Aktiver Lenk-Assistent",
-      "category": "safety",
-      "model_count": 1
-    },
-    {
-      "standardized_name": "Memory Park-Assistent",
-      "brand_specific_name": "Memory Park-Assistent",
-      "category": "safety",
-      "model_count": 1
-    },
-    {
-      "standardized_name": "Verkehrszeichen-Assistent",
-      "brand_specific_name": "Verkehrszeichen-Assistent",
-      "category": "safety",
-      "model_count": 1
-    },
-    {
-      "standardized_name": "Fahrassistenz-Paket Plus",
-      "brand_specific_name": "Fahrassistenz-Paket Plus",
-      "category": "packages",
-      "model_count": 1
-    },
-    {
-      "standardized_name": "Assistenz-Paket",
-      "brand_specific_name": "Assistenz-Paket",
-      "category": "packages",
-      "model_count": 1
-    },
-    {
-      "standardized_name": "Park-Paket mit Remote-Parkfunktionen",
-      "brand_specific_name": "Park-Paket mit Remote-Parkfunktionen",
-      "category": "packages",
-      "model_count": 1
-    },
-    {
-      "standardized_name": "Digitales Extra: Adaptiver Fernlicht-Assistent",
-      "brand_specific_name": "Digitales Extra: Adaptiver Fernlicht-Assistent",
-      "category": "technology",
-      "model_count": 1
-    },
-    {
-      "standardized_name": "Servoschlie\u00dfen",
-      "brand_specific_name": "Servoschlie\u00dfen",
-      "category": "other",
-      "model_count": 1
-    },
-    {
-      "standardized_name": "KEYLESS-GO Komfort-Paket",
-      "brand_specific_name": "KEYLESS-GO Komfort-Paket",
-      "category": "comfort",
-      "model_count": 1
-    },
-    {
-      "standardized_name": "KEYLESS-GO Komfort-Paket Plus",
-      "brand_specific_name": "KEYLESS-GO Komfort-Paket Plus",
-      "category": "comfort",
-      "model_count": 1
-    },
-    {
-      "standardized_name": "GUARD 360\u00b0 Fahrzeugschutz Plus mit Digitalen Extras",
-      "brand_specific_name": "GUARD 360\u00b0 Fahrzeugschutz Plus mit Digitalen Extras",
-      "category": "technology",
-      "model_count": 1
-    },
-    {
-      "standardized_name": "Hinterachslenkung mit 4,5\u00b0 Lenkwinkelanpassung",
-      "brand_specific_name": "Hinterachslenkung mit 4,5\u00b0 Lenkwinkelanpassung",
-      "category": "drivetrain",
-      "model_count": 1
-    },
-    {
-      "standardized_name": "Hinterachslenkung mit 10\u00b0 Lenkwinkelanpassung",
-      "brand_specific_name": "Hinterachslenkung mit 10\u00b0 Lenkwinkelanpassung",
-      "category": "drivetrain",
-      "model_count": 1
-    },
-    {
-      "standardized_name": "GUARD 360\u00b0 einbruchhemmendes Verbundsicherheitsglas mit W\u00e4rme- und Ger\u00e4uschd\u00e4mmung",
-      "brand_specific_name": "GUARD 360\u00b0 einbruchhemmendes Verbundsicherheitsglas mit W\u00e4rme- und Ger\u00e4uschd\u00e4mmung",
-      "category": "exterior",
-      "model_count": 1
-    },
-    {
-      "standardized_name": "Frontscheibe, beheizt",
-      "brand_specific_name": "Frontscheibe, beheizt",
-      "category": "other",
-      "model_count": 1
-    },
-    {
-      "standardized_name": "Spiegel-Paket",
-      "brand_specific_name": "Spiegel-Paket",
-      "category": "packages",
-      "model_count": 1
-    },
-    {
-      "standardized_name": "Multikontursitze mit Massagefunktion Pro vorn",
-      "brand_specific_name": "Multikontursitze mit Massagefunktion Pro vorn",
-      "category": "comfort",
-      "model_count": 1
-    },
-    {
-      "standardized_name": "ENERGIZING AIR CONTROL Plus",
-      "brand_specific_name": "ENERGIZING AIR CONTROL Plus",
-      "category": "other",
-      "model_count": 1
+  "option_summary": {
+    "last_updated": "2026-09-07T18:01:41.413433",
+    "options": [
+      {
+        "standardized_name": "\tstandard",
+        "display_name": "\tstandard",
+        "category": "other",
+        "category_label": "Other",
+        "brands": {
+          "Porsche": {
+            "name": "\tStandard",
+            "avg_price": null,
+            "min_price": null,
+            "max_price": null,
+            "model_count": 60
+          }
+        },
+        "overall_avg_price": null,
+        "overall_min_price": null,
+        "overall_max_price": null,
+        "total_model_count": 60
+      },
+      {
+        "standardized_name": "6-speed gt sports transmission",
+        "display_name": "6-speed gt sports transmission",
+        "category": "other",
+        "category_label": "Other",
+        "brands": {
+          "Porsche": {
+            "name": "6-speed GT sports transmission",
+            "avg_price": null,
+            "min_price": null,
+            "max_price": null,
+            "model_count": 60
+          }
+        },
+        "overall_avg_price": null,
+        "overall_min_price": null,
+        "overall_max_price": null,
+        "total_model_count": 60
+      },
+      {
+        "standardized_name": "6-speed gt sports transmission - rear seats",
+        "display_name": "6-speed gt sports transmission - rear seats",
+        "category": "other",
+        "category_label": "Other",
+        "brands": {
+          "Porsche": {
+            "name": "6-speed GT sports transmission - Rear seats",
+            "avg_price": null,
+            "min_price": null,
+            "max_price": null,
+            "model_count": 60
+          }
+        },
+        "overall_avg_price": null,
+        "overall_min_price": null,
+        "overall_max_price": null,
+        "total_model_count": 60
+      },
+      {
+        "standardized_name": "6-speed manual transmission with dual-mass flywheel",
+        "display_name": "6-speed manual transmission with dual-mass flywheel",
+        "category": "other",
+        "category_label": "Other",
+        "brands": {
+          "Porsche": {
+            "name": "6-speed manual transmission with dual-mass flywheel",
+            "avg_price": null,
+            "min_price": null,
+            "max_price": null,
+            "model_count": 60
+          }
+        },
+        "overall_avg_price": null,
+        "overall_min_price": null,
+        "overall_max_price": null,
+        "total_model_count": 60
+      },
+      {
+        "standardized_name": "6-speed sports transmission",
+        "display_name": "6-speed sports transmission",
+        "category": "other",
+        "category_label": "Other",
+        "brands": {
+          "Porsche": {
+            "name": "6-speed sports transmission",
+            "avg_price": null,
+            "min_price": null,
+            "max_price": null,
+            "model_count": 60
+          }
+        },
+        "overall_avg_price": null,
+        "overall_min_price": null,
+        "overall_max_price": null,
+        "total_model_count": 60
+      },
+      {
+        "standardized_name": "6-speed sports transmission - rear seats",
+        "display_name": "6-speed sports transmission - rear seats",
+        "category": "other",
+        "category_label": "Other",
+        "brands": {
+          "Porsche": {
+            "name": "6-speed sports transmission - Rear seats",
+            "avg_price": null,
+            "min_price": null,
+            "max_price": null,
+            "model_count": 60
+          }
+        },
+        "overall_avg_price": null,
+        "overall_min_price": null,
+        "overall_max_price": null,
+        "total_model_count": 60
+      },
+      {
+        "standardized_name": "6-speed sports transmission - rear-axle steering",
+        "display_name": "6-speed sports transmission - rear-axle steering",
+        "category": "other",
+        "category_label": "Other",
+        "brands": {
+          "Porsche": {
+            "name": "6-speed sports transmission - Rear-Axle Steering",
+            "avg_price": null,
+            "min_price": null,
+            "max_price": null,
+            "model_count": 60
+          }
+        },
+        "overall_avg_price": null,
+        "overall_min_price": null,
+        "overall_max_price": null,
+        "total_model_count": 60
+      },
+      {
+        "standardized_name": "7-speed porsche doppelkupplung (pdk)",
+        "display_name": "7-speed porsche doppelkupplung (pdk)",
+        "category": "other",
+        "category_label": "Other",
+        "brands": {
+          "Porsche": {
+            "name": "7-speed Porsche Doppelkupplung (PDK)",
+            "avg_price": null,
+            "min_price": null,
+            "max_price": null,
+            "model_count": 60
+          }
+        },
+        "overall_avg_price": null,
+        "overall_min_price": null,
+        "overall_max_price": null,
+        "total_model_count": 60
+      },
+      {
+        "standardized_name": "7-speed porsche doppelkupplung (pdk) - rear seats",
+        "display_name": "7-speed porsche doppelkupplung (pdk) - rear seats",
+        "category": "other",
+        "category_label": "Other",
+        "brands": {
+          "Porsche": {
+            "name": "7-speed Porsche Doppelkupplung (PDK) - Rear seats",
+            "avg_price": null,
+            "min_price": null,
+            "max_price": null,
+            "model_count": 60
+          }
+        },
+        "overall_avg_price": null,
+        "overall_min_price": null,
+        "overall_max_price": null,
+        "total_model_count": 60
+      },
+      {
+        "standardized_name": "8-speed automatic gearbox",
+        "display_name": "8-speed automatic gearbox",
+        "category": "other",
+        "category_label": "Other",
+        "brands": {
+          "Porsche": {
+            "name": "8-speed automatic gearbox",
+            "avg_price": null,
+            "min_price": null,
+            "max_price": null,
+            "model_count": 60
+          }
+        },
+        "overall_avg_price": null,
+        "overall_min_price": null,
+        "overall_max_price": null,
+        "total_model_count": 60
+      },
+      {
+        "standardized_name": "8-speed automatic gearbox - rear-axle steering",
+        "display_name": "8-speed automatic gearbox - rear-axle steering",
+        "category": "other",
+        "category_label": "Other",
+        "brands": {
+          "Porsche": {
+            "name": "8-speed automatic gearbox - Rear-Axle Steering",
+            "avg_price": null,
+            "min_price": null,
+            "max_price": null,
+            "model_count": 60
+          }
+        },
+        "overall_avg_price": null,
+        "overall_min_price": null,
+        "overall_max_price": null,
+        "total_model_count": 60
+      },
+      {
+        "standardized_name": "8-speed porsche doppelkupplung (pdk)",
+        "display_name": "8-speed porsche doppelkupplung (pdk)",
+        "category": "other",
+        "category_label": "Other",
+        "brands": {
+          "Porsche": {
+            "name": "8-speed Porsche Doppelkupplung (PDK)",
+            "avg_price": null,
+            "min_price": null,
+            "max_price": null,
+            "model_count": 60
+          }
+        },
+        "overall_avg_price": null,
+        "overall_min_price": null,
+        "overall_max_price": null,
+        "total_model_count": 60
+      },
+      {
+        "standardized_name": "8-speed porsche doppelkupplung (pdk) - rear seats",
+        "display_name": "8-speed porsche doppelkupplung (pdk) - rear seats",
+        "category": "other",
+        "category_label": "Other",
+        "brands": {
+          "Porsche": {
+            "name": "8-speed Porsche Doppelkupplung (PDK) - Rear seats",
+            "avg_price": null,
+            "min_price": null,
+            "max_price": null,
+            "model_count": 60
+          }
+        },
+        "overall_avg_price": null,
+        "overall_min_price": null,
+        "overall_max_price": null,
+        "total_model_count": 60
+      },
+      {
+        "standardized_name": "8-speed porsche doppelkupplung (pdk) - rear-axle steering",
+        "display_name": "8-speed porsche doppelkupplung (pdk) - rear-axle steering",
+        "category": "other",
+        "category_label": "Other",
+        "brands": {
+          "Porsche": {
+            "name": "8-speed Porsche Doppelkupplung (PDK) - Rear-Axle Steering",
+            "avg_price": null,
+            "min_price": null,
+            "max_price": null,
+            "model_count": 60
+          }
+        },
+        "overall_avg_price": null,
+        "overall_min_price": null,
+        "overall_max_price": null,
+        "total_model_count": 60
+      },
+      {
+        "standardized_name": "allrad",
+        "display_name": "All-wheel drive system",
+        "category": "drivetrain",
+        "category_label": "Drivetrain",
+        "brands": {
+          "Porsche": {
+            "name": "All-Wheel Drive",
+            "avg_price": null,
+            "min_price": null,
+            "max_price": null,
+            "model_count": 60
+          }
+        },
+        "overall_avg_price": null,
+        "overall_min_price": null,
+        "overall_max_price": null,
+        "total_model_count": 60
+      },
+      {
+        "standardized_name": "gts interior package",
+        "display_name": "gts interior package",
+        "category": "other",
+        "category_label": "Other",
+        "brands": {
+          "Porsche": {
+            "name": "GTS interior package",
+            "avg_price": null,
+            "min_price": null,
+            "max_price": null,
+            "model_count": 60
+          }
+        },
+        "overall_avg_price": null,
+        "overall_min_price": null,
+        "overall_max_price": null,
+        "total_model_count": 60
+      },
+      {
+        "standardized_name": "heritage design",
+        "display_name": "heritage design",
+        "category": "other",
+        "category_label": "Other",
+        "brands": {
+          "Porsche": {
+            "name": "Heritage Design",
+            "avg_price": null,
+            "min_price": null,
+            "max_price": null,
+            "model_count": 60
+          }
+        },
+        "overall_avg_price": null,
+        "overall_min_price": null,
+        "overall_max_price": null,
+        "total_model_count": 60
+      },
+      {
+        "standardized_name": "interior package",
+        "display_name": "interior package",
+        "category": "other",
+        "category_label": "Other",
+        "brands": {
+          "Porsche": {
+            "name": "Interior package",
+            "avg_price": null,
+            "min_price": null,
+            "max_price": null,
+            "model_count": 60
+          }
+        },
+        "overall_avg_price": null,
+        "overall_min_price": null,
+        "overall_max_price": null,
+        "total_model_count": 60
+      },
+      {
+        "standardized_name": "leather_seats",
+        "display_name": "Leather seat upholstery",
+        "category": "interior",
+        "category_label": "Interior",
+        "brands": {
+          "Porsche": {
+            "name": "Race-Tex with extensive items in leather",
+            "avg_price": null,
+            "min_price": null,
+            "max_price": null,
+            "model_count": 60
+          }
+        },
+        "overall_avg_price": null,
+        "overall_min_price": null,
+        "overall_max_price": null,
+        "total_model_count": 60
+      },
+      {
+        "standardized_name": "performance battery",
+        "display_name": "performance battery",
+        "category": "other",
+        "category_label": "Other",
+        "brands": {
+          "Porsche": {
+            "name": "Performance Battery",
+            "avg_price": null,
+            "min_price": null,
+            "max_price": null,
+            "model_count": 60
+          }
+        },
+        "overall_avg_price": null,
+        "overall_min_price": null,
+        "overall_max_price": null,
+        "total_model_count": 60
+      },
+      {
+        "standardized_name": "performance battery - offroad package",
+        "display_name": "performance battery - offroad package",
+        "category": "other",
+        "category_label": "Other",
+        "brands": {
+          "Porsche": {
+            "name": "Performance Battery - Offroad Package",
+            "avg_price": null,
+            "min_price": null,
+            "max_price": null,
+            "model_count": 60
+          }
+        },
+        "overall_avg_price": null,
+        "overall_min_price": null,
+        "overall_max_price": null,
+        "total_model_count": 60
+      },
+      {
+        "standardized_name": "performance battery - rear-axle steering",
+        "display_name": "performance battery - rear-axle steering",
+        "category": "other",
+        "category_label": "Other",
+        "brands": {
+          "Porsche": {
+            "name": "Performance Battery - Rear-Axle Steering",
+            "avg_price": null,
+            "min_price": null,
+            "max_price": null,
+            "model_count": 60
+          }
+        },
+        "overall_avg_price": null,
+        "overall_min_price": null,
+        "overall_max_price": null,
+        "total_model_count": 60
+      },
+      {
+        "standardized_name": "performance battery plus",
+        "display_name": "performance battery plus",
+        "category": "other",
+        "category_label": "Other",
+        "brands": {
+          "Porsche": {
+            "name": "Performance Battery Plus",
+            "avg_price": null,
+            "min_price": null,
+            "max_price": null,
+            "model_count": 60
+          }
+        },
+        "overall_avg_price": null,
+        "overall_min_price": null,
+        "overall_max_price": null,
+        "total_model_count": 60
+      },
+      {
+        "standardized_name": "performance battery plus - manthey kit",
+        "display_name": "performance battery plus - manthey kit",
+        "category": "other",
+        "category_label": "Other",
+        "brands": {
+          "Porsche": {
+            "name": "Performance Battery Plus - Manthey Kit",
+            "avg_price": null,
+            "min_price": null,
+            "max_price": null,
+            "model_count": 60
+          }
+        },
+        "overall_avg_price": null,
+        "overall_min_price": null,
+        "overall_max_price": null,
+        "total_model_count": 60
+      },
+      {
+        "standardized_name": "performance battery plus - rear-axle steering",
+        "display_name": "performance battery plus - rear-axle steering",
+        "category": "other",
+        "category_label": "Other",
+        "brands": {
+          "Porsche": {
+            "name": "Performance Battery Plus - Rear-Axle Steering",
+            "avg_price": null,
+            "min_price": null,
+            "max_price": null,
+            "model_count": 60
+          }
+        },
+        "overall_avg_price": null,
+        "overall_min_price": null,
+        "overall_max_price": null,
+        "total_model_count": 60
+      },
+      {
+        "standardized_name": "porsche doppelkupplung (pdk)",
+        "display_name": "porsche doppelkupplung (pdk)",
+        "category": "other",
+        "category_label": "Other",
+        "brands": {
+          "Porsche": {
+            "name": "Porsche Doppelkupplung (PDK)",
+            "avg_price": null,
+            "min_price": null,
+            "max_price": null,
+            "model_count": 60
+          }
+        },
+        "overall_avg_price": null,
+        "overall_min_price": null,
+        "overall_max_price": null,
+        "total_model_count": 60
+      },
+      {
+        "standardized_name": "race-tex",
+        "display_name": "race-tex",
+        "category": "other",
+        "category_label": "Other",
+        "brands": {
+          "Porsche": {
+            "name": "Race-Tex",
+            "avg_price": null,
+            "min_price": null,
+            "max_price": null,
+            "model_count": 60
+          }
+        },
+        "overall_avg_price": null,
+        "overall_min_price": null,
+        "overall_max_price": null,
+        "total_model_count": 60
+      },
+      {
+        "standardized_name": "sport-tex",
+        "display_name": "sport-tex",
+        "category": "other",
+        "category_label": "Other",
+        "brands": {
+          "Porsche": {
+            "name": "Sport-Tex",
+            "avg_price": null,
+            "min_price": null,
+            "max_price": null,
+            "model_count": 60
+          }
+        },
+        "overall_avg_price": null,
+        "overall_min_price": null,
+        "overall_max_price": null,
+        "total_model_count": 60
+      },
+      {
+        "standardized_name": "standard",
+        "display_name": "standard",
+        "category": "other",
+        "category_label": "Other",
+        "brands": {
+          "Porsche": {
+            "name": "Standard",
+            "avg_price": null,
+            "min_price": null,
+            "max_price": null,
+            "model_count": 60
+          }
+        },
+        "overall_avg_price": null,
+        "overall_min_price": null,
+        "overall_max_price": null,
+        "total_model_count": 60
+      },
+      {
+        "standardized_name": "standard interior with race-tex / race-tex seats",
+        "display_name": "standard interior with race-tex / race-tex seats",
+        "category": "other",
+        "category_label": "Other",
+        "brands": {
+          "Porsche": {
+            "name": "Standard Interior with Race-Tex / Race-Tex Seats",
+            "avg_price": null,
+            "min_price": null,
+            "max_price": null,
+            "model_count": 60
+          }
+        },
+        "overall_avg_price": null,
+        "overall_min_price": null,
+        "overall_max_price": null,
+        "total_model_count": 60
+      }
+    ]
+  },
+  "crawl_history": [
+    {
+      "date": "2026-09-07",
+      "timestamp": "2026-09-07T18:01:41.412765",
+      "total_vehicles": 159,
+      "total_options": 1800,
+      "brands_crawled": [
+        "Mercedes-Benz",
+        "Audi",
+        "Porsche",
+        "Lexus",
+        "BYD",
+        "XPeng",
+        "Zeekr",
+        "Polestar"
+      ]
     }
   ]
 }
