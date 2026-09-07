@@ -1,4 +1,4 @@
-# 🚗 Vehicle Configurator Crawler
+#  Vehicle Configurator Crawler
 
 AI-powered vehicle configurator crawler with multi-brand support, dual-engine scraping, and a GitHub Pages dashboard for price tracking.
 
@@ -239,11 +239,11 @@ gh workflow run crawl.yml -f brands="mercedes-benz,audi"
 
 | Brand | Status | Notes |
 |-------|--------|-------|
-| **Mercedes-Benz** | ✅ Allowed | `Allow: /passengercars/content-pool/tool-pages/car-configurator.html*` |
-| **Audi** | ✅ Allowed | Only `/userinfo/` disallowed |
-| **Porsche** | ⚠️ Check | robots.txt timed out during initial check; test before committing |
-| **BMW** | ❌ Skipped | robots.txt returns 404; configurator ToS unclear |
-| **Tesla** | ❌ Skipped | `Crawl-delay: 10`; configurator heavily JS-dependent |
+| **Mercedes-Benz** |  Allowed | `Allow: /passengercars/content-pool/tool-pages/car-configurator.html*` |
+| **Audi** |  Allowed | Only `/userinfo/` disallowed |
+| **Porsche** |  Check | robots.txt timed out during initial check; test before committing |
+| **BMW** |  Skipped | robots.txt returns 404; configurator ToS unclear |
+| **Tesla** |  Skipped | `Crawl-delay: 10`; configurator heavily JS-dependent |
 
 All crawlers implement:
 - Respectful rate limiting (≥2s between requests)

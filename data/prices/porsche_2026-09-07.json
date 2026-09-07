@@ -1,0 +1,21 @@
+{
+  "brand": "Porsche",
+  "timestamp": "2026-09-07T05:25:06.178001+00:00",
+  "vehicle_count": 0,
+  "vehicles": [],
+  "errors": [
+    "No vehicles found on Porsche models page"
+  ],
+  "strategy": {
+    "engine": "beautifulsoup",
+    "selectors": {},
+    "js_triggers": [],
+    "wait_selector": "",
+    "wait_timeout_ms": 30000,
+    "rate_limit_seconds": 3.0,
+    "confidence": 0.6,
+    "notes": "Porsche: static HTML extraction from model pages. Option extraction from model/configurator API capture."
+  },
+  "duration_seconds": 0.78,
+  "option_summary": []
+}

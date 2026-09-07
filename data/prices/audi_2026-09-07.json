@@ -1,0 +1,21 @@
+{
+  "brand": "Audi",
+  "timestamp": "2026-09-07T05:25:05.401953+00:00",
+  "vehicle_count": 0,
+  "vehicles": [],
+  "errors": [
+    "HTTP 403 for https://www.audi.de/de/brand/de/neuwagen.html"
+  ],
+  "strategy": {
+    "engine": "beautifulsoup",
+    "selectors": {},
+    "js_triggers": [],
+    "wait_selector": "",
+    "wait_timeout_ms": 30000,
+    "rate_limit_seconds": 2.0,
+    "confidence": 0.85,
+    "notes": "Static HTML from Apollo GraphQL cache. Option extraction from model pages."
+  },
+  "duration_seconds": 0.47,
+  "option_summary": []
+}

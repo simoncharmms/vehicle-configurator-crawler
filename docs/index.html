@@ -3,13 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Vehicle Option Price Tracker</title>
+  <title>Vehicle Option Price Tracker Dashboard</title>
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <header>
-    <h1>🔧 Vehicle Option Price Tracker</h1>
+    <h1>Vehicle Option Price Tracker</h1>
     <p class="subtitle">Cross-brand option pricing from German vehicle configurators</p>
   </header>
 
@@ -59,7 +59,7 @@
 
     <!-- Option Price Comparison (primary view) -->
     <section id="option-comparison">
-      <h2>⚙️ Option Price Comparison</h2>
+      <h2>Option Price Comparison</h2>
       <p class="section-subtitle" id="option-source-label">Cross-brand pricing for common vehicle options</p>
       <div id="option-table-container">
         <table id="option-table">
@@ -81,14 +81,14 @@
 
     <!-- Option Price Chart -->
     <section id="chart-section">
-      <h2>📊 Option Price Overview</h2>
+      <h2>Option Price Overview</h2>
       <canvas id="price-chart"></canvas>
     </section>
 
     <!-- Vehicle List (collapsed by default) -->
     <section id="vehicle-list">
       <details>
-        <summary><h2 style="display:inline">🚗 Vehicle Models</h2></summary>
+        <summary><h2 style="display:inline">Vehicle Models</h2></summary>
         <div id="vehicles-container"></div>
       </details>
     </section>
