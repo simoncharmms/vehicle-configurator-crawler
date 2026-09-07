@@ -1,15 +1,31 @@
-#  Vehicle Configurator Crawler
+# Vehicle Configurator Crawler
 
-Automated vehicle option price tracker with cross-brand standardization and a GitHub Pages dashboard for real-time pricing analysis.
+Automated vehicle price tracker with multi-brand support, network-hardened Playwright fetching, and a GitHub Pages dashboard for daily price tracking.
 
 ## Current Status
 
-- **Mercedes-Benz:** 45 vehicle models (actively extracting)
-- **Audi:** Blocked (HTTP 403 anti-bot protection)
-- **Porsche:** No accessible data
-- **Options Tracked:** 15 standardized automotive features
+| Brand | Status | Vehicles | Price Range |
+|-------|--------|----------|-------------|
+| **Mercedes-Benz** | ✅ Active | 45 | €32k–€244k |
+| **Lexus** | ✅ Active | 49 | €33k–€154k |
+| **BYD** | ✅ Active | 11 | €23k–€75k |
+| **XPeng** | ✅ Active | 5 | €36k–€60k |
+| **Polestar** | ✅ Active | 5 | €58k–€119k |
+| **Zeekr** | ✅ Active | 4 | €38k–€60k |
+| **Audi** | ⚠️ Intermittent | 54 | Akamai CDN rate-limits |
+| **Porsche** | ⚠️ Intermittent | — | Site timeouts |
+
 - **Dashboard:** https://simoncharmms.github.io/vehicle-configurator-crawler
 - **Update Frequency:** Daily at 6:00 AM CET
+
+### Brands Tested But Not Added
+
+| Brand | Reason |
+|-------|--------|
+| **Tesla** | HTTP 403 — anti-bot protection blocks all access |
+| **Volvo** | HTTP 403 — Access Denied on all pages (curl + Playwright) |
+| **Land Rover** | No structured price data in static or rendered HTML |
+| **Jaguar** | No new-car pricing on model pages (brand transitioning) |
 
 ## Architecture
 
@@ -18,80 +34,46 @@ vehicle-configurator-crawler/
 ├── crawler/
 │   ├── ai_analyzer.py          # Claude-powered page analysis
 │   ├── base.py                 # Data models (VehicleData, CrawlConfig, etc.)
+│   ├── network.py              # Network resilience (retries, backoff, browser pool)
 │   ├── orchestrator.py         # Runs all crawlers, saves results
 │   ├── engines/
-│   │   ├── playwright_engine.py    # JS-heavy pages (React/Angular/Vue)
-│   │   └── beautifulsoup_engine.py # Static HTML pages
+│   │   ├── playwright_engine.py
+│   │   └── beautifulsoup_engine.py
 │   └── brands/
-│       ├── mercedes.py         # Mercedes-Benz (DE configurator)
-│       ├── audi.py             # Audi (DE configurator)
-│       ├── porsche.py          # Porsche (DE models page)
+│       ├── mercedes.py         # Mercedes-Benz (Playwright + SSR data)
+│       ├── audi.py             # Audi (Curl + Apollo GraphQL cache)
+│       ├── porsche.py          # Porsche (Playwright + JSON-LD)
+│       ├── lexus.py            # Lexus (Curl + embedded JSON state)
+│       ├── byd.py              # BYD (Playwright + DOM extraction)
+│       ├── xpeng.py            # XPeng (Curl + model page scraping)
+│       ├── zeekr.py            # Zeekr (Curl + homepage text extraction)
+│       ├── polestar.py         # Polestar (Playwright + model pages)
 │       └── registry.py         # Brand discovery & registration
 ├── data/prices/                # JSON snapshots (git-tracked)
 ├── docs/                       # GitHub Pages dashboard
-│   ├── index.html
-│   ├── style.css
-│   └── app.js
 ├── .github/workflows/
 │   └── crawl.yml               # Daily 6 AM CET crawl + deploy
 └── tests/
-    └── test_crawlers.py
 ```
 
-## How It Works
-
-### Extraction Strategy
-
-Modern car configurators are complex JS apps, but they embed structured data
-in their initial HTML (SSR data, Apollo caches, JSON-LD). The crawlers exploit
-this: **no Playwright needed for the primary extraction path**.
+## Extraction Strategy
 
 | Brand | Method | Data Source |
 |-------|--------|-------------|
-| **Mercedes-Benz** | Static HTML | SSR navigation data with model names, prices, images |
-| **Audi** | Static HTML | Apollo GraphQL cache with carline structure |
-| **Porsche** | Static HTML | JSON-LD structured data + model links |
-
-The Playwright engine is still available as a fallback for sites that don't
-embed data, or for deep-diving into individual model configurations.
-
-### Dual-Engine Framework
-
-| Engine | Use Case | Method |
-|--------|----------|--------|
-| **Playwright** | JS-heavy pages requiring full rendering | Headless Chromium, API interception + DOM extraction |
-| **BeautifulSoup** | Static/server-rendered pages with embedded data | `curl` fetch + `lxml` parsing |
-
-### AI-Powered Strategy Detection
-
-The `AIAnalyzer` uses Claude to analyze any configurator page and determine:
-- Which engine to use (Playwright vs BeautifulSoup)
-- CSS selectors for vehicle cards, names, prices
-- JavaScript triggers needed before scraping
-- Confidence score (0–1)
-
-```python
-from crawler.ai_analyzer import analyze_url
-
-result = analyze_url("https://www.audi.de/de/brand/de/neuwagen.html")
-print(result.config.engine)     # EngineType.PLAYWRIGHT
-print(result.config.selectors)  # {'vehicle_card': '...', 'price': '...'}
-print(result.config.confidence) # 0.85
-```
-
-### Crawl Strategy
-
-Each brand crawler implements a multi-strategy approach:
-1. **Embedded Data** — Parse SSR/Apollo/JSON-LD data from the initial HTML (fastest, most reliable)
-2. **API Interception** — Navigate with Playwright, intercept XHR/fetch responses
-3. **DOM Extraction** — CSS selector-based extraction from the rendered page
-4. **Generic Extraction** — Last resort: scan for any vehicle-like structured data
+| **Mercedes-Benz** | Playwright + SSR | SSR navigation data with prices, images |
+| **Audi** | Curl + Apollo | GraphQL cache with prices (Sec-Fetch headers) |
+| **Porsche** | Playwright + JSON-LD | Structured data + model links |
+| **Lexus** | Curl + JSON state | Embedded JSON state blob with full model data |
+| **BYD** | Playwright + DOM | JS-rendered model cards with prices |
+| **XPeng** | Curl + model pages | "ab" prices from individual model pages |
+| **Zeekr** | Curl + homepage | "Ab XX EUR" prices from Nuxt-rendered homepage |
+| **Polestar** | Playwright + pages | Model page prices (CDN blocks curl) |
 
 ## Setup
 
 ### Prerequisites
 - Python 3.11+
-- [Anthropic API key](https://console.anthropic.com/) (for AI analyzer)
+- [Anthropic API key](https://console.anthropic.com/) (for AI analyzer, optional)
 
 ### Installation
 
@@ -104,9 +86,6 @@ source .venv/bin/activate
 
 pip install -r requirements.txt
 playwright install chromium
-
-cp .env.example .env
-# Edit .env with your ANTHROPIC_API_KEY
 ```
 
 ### Run Locally
@@ -115,158 +94,30 @@ cp .env.example .env
 # Crawl all brands
 python -m crawler.orchestrator
 
-# Crawl specific brands
-python -m crawler.orchestrator --brands mercedes-benz audi
+# Specific brands
+python -m crawler.orchestrator --brands mercedes-benz lexus byd
 
-# With debug output
+# Debug output
 python -m crawler.orchestrator --verbose
 
 # List registered brands
 python -m crawler.orchestrator --list-brands
 ```
 
-### Run Tests
-
-```bash
-# Unit tests (no network required)
-pytest tests/ -v
-
-# Live integration tests (requires network + Playwright)
-pytest tests/ -m live -v
-```
-
-## Data Schema
-
-Each crawl produces a JSON file in `data/prices/`:
-
-```
-data/prices/
-├── index.json                    # Summary index for the dashboard
-├── mercedes-benz_2025-01-15.json
-├── audi_2025-01-15.json
-└── porsche_2025-01-15.json
-```
-
-### Vehicle Data Format
-
-```json
-{
-  "brand": "Mercedes-Benz",
-  "timestamp": "2025-01-15T05:00:00+00:00",
-  "vehicle_count": 12,
-  "vehicles": [
-    {
-      "brand": "Mercedes-Benz",
-      "model": "A-Klasse",
-      "variant": "A 180",
-      "base_price": 35900.0,
-      "currency": "EUR",
-      "fuel_type": "petrol",
-      "options": [],
-      "url": "https://...",
-      "image_url": "https://..."
-    }
-  ],
-  "errors": [],
-  "strategy": {
-    "engine": "playwright",
-    "confidence": 0.7
-  },
-  "duration_seconds": 45.2
-}
-```
-
-## Adding a New Brand
-
-1. Create `crawler/brands/yourbrand.py`:
-
-```python
-from crawler.base import BrandCrawler, CrawlConfig, CrawlResult, EngineType
-from crawler.brands.registry import BrandRegistry
-
-@BrandRegistry.register
-class YourBrandCrawler(BrandCrawler):
-    brand = "YourBrand"
-    base_url = "https://www.yourbrand.com"
-    configurator_url = "https://www.yourbrand.com/configurator"
-
-    def get_default_config(self) -> CrawlConfig:
-        return CrawlConfig(
-            engine=EngineType.PLAYWRIGHT,
-            selectors={
-                "vehicle_card": ".model-card",
-                "model_name": "h3",
-                "price": ".price",
-            },
-            wait_selector=".model-card",
-        )
-
-    async def crawl(self, config=None) -> CrawlResult:
-        # Implement crawl logic (see mercedes.py for reference)
-        ...
-```
-
-2. Import in `crawler/orchestrator.py`:
-```python
-import crawler.brands.yourbrand  # noqa: F401
-```
-
-3. Run: `python -m crawler.orchestrator --brands yourbrand`
-
-### Using the AI Analyzer for a New Brand
-
-```python
-from crawler.ai_analyzer import analyze_url
-
-# Drop in any configurator URL
-result = analyze_url("https://www.yourbrand.com/configurator")
-print(result.config.to_dict())
-# Use the returned selectors in your brand crawler
-```
-
-## GitHub Actions
-
-The workflow runs daily at 6:00 AM CET:
-1. Installs Python + Playwright
-2. Runs the orchestrator for all brands
-3. Commits new data to `data/prices/`
-4. Deploys the dashboard to GitHub Pages
-
-### Setup
-
-1. Add `ANTHROPIC_API_KEY` as a repository secret
-2. Enable GitHub Pages (Settings → Pages → Source: GitHub Actions)
-3. The workflow auto-triggers daily; or run manually via Actions → Run workflow
-
-### Manual Trigger
-
-```bash
-gh workflow run crawl.yml -f brands="mercedes-benz,audi"
-```
-
-## Legal / robots.txt Compliance
+## robots.txt Compliance
 
 | Brand | Status | Notes |
 |-------|--------|-------|
-| **Mercedes-Benz** |  Allowed | `Allow: /passengercars/content-pool/tool-pages/car-configurator.html*` |
-| **Audi** |  Allowed | Only `/userinfo/` disallowed |
-| **Porsche** |  Check | robots.txt timed out during initial check; test before committing |
-| **BMW** |  Skipped | robots.txt returns 404; configurator ToS unclear |
-| **Tesla** |  Skipped | `Crawl-delay: 10`; configurator heavily JS-dependent |
+| **Mercedes-Benz** | ✅ Allowed | `Allow: /passengercars/content-pool/tool-pages/car-configurator.html*` |
+| **Audi** | ✅ Allowed | Only `/userinfo/` disallowed |
+| **Porsche** | ⚠️ Check | robots.txt timed out during initial check |
+| **Lexus** | ✅ Allowed | No specific blocks on `/modelle` |
+| **BYD** | ✅ Allowed | No specific blocks |
+| **XPeng** | ✅ Allowed | No specific blocks on `/de/model/` |
+| **Zeekr** | ✅ Allowed | No specific blocks |
+| **Polestar** | ✅ Allowed | No specific blocks on `/de/` model pages |
 
-All crawlers implement:
-- Respectful rate limiting (≥2s between requests)
-- Standard browser User-Agent
-- Cookie consent handling
-- No authentication bypass
-
-## Dashboard
-
-The dashboard at `docs/` auto-deploys to GitHub Pages:
-- Filter by brand, model, time period
-- Price trend charts (Chart.js)
-- Vehicle cards with current prices
-- Dark theme, responsive design
+All crawlers: respectful rate limiting (≥3s), standard browser UA, no auth bypass.
 
 ## License
 

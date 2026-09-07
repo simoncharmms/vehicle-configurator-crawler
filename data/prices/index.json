@@ -58,6 +58,78 @@
           "error_count": 1
         }
       ]
+    },
+    "lexus": {
+      "name": "Lexus",
+      "snapshots": [
+        {
+          "date": "2026-09-07",
+          "file": "lexus_2026-09-07.json",
+          "vehicle_count": 0,
+          "option_count": 0,
+          "error_count": 1
+        }
+      ]
+    },
+    "polestar": {
+      "name": "Polestar",
+      "snapshots": [
+        {
+          "date": "2026-09-07",
+          "file": "polestar_2026-09-07.json",
+          "vehicle_count": 0,
+          "option_count": 0,
+          "error_count": 1
+        }
+      ]
+    },
+    "volvo": {
+      "name": "Volvo",
+      "snapshots": [
+        {
+          "date": "2026-09-07",
+          "file": "volvo_2026-09-07.json",
+          "vehicle_count": 0,
+          "option_count": 0,
+          "error_count": 1
+        }
+      ]
+    },
+    "byd": {
+      "name": "BYD",
+      "snapshots": [
+        {
+          "date": "2026-09-07",
+          "file": "byd_2026-09-07.json",
+          "vehicle_count": 11,
+          "option_count": 0,
+          "error_count": 0
+        }
+      ]
+    },
+    "xpeng": {
+      "name": "XPeng",
+      "snapshots": [
+        {
+          "date": "2026-09-07",
+          "file": "xpeng_2026-09-07.json",
+          "vehicle_count": 5,
+          "option_count": 0,
+          "error_count": 0
+        }
+      ]
+    },
+    "zeekr": {
+      "name": "Zeekr",
+      "snapshots": [
+        {
+          "date": "2026-09-07",
+          "file": "zeekr_2026-09-07.json",
+          "vehicle_count": 4,
+          "option_count": 0,
+          "error_count": 0
+        }
+      ]
     }
   },
   "crawl_history": [
@@ -107,11 +179,38 @@
         "Audi",
         "Porsche"
       ]
+    },
+    {
+      "date": "2026-09-07",
+      "timestamp": "2026-09-07T08:08:54.432194",
+      "total_vehicles": 0,
+      "total_options": 0,
+      "brands_crawled": [
+        "Lexus",
+        "Polestar",
+        "Volvo"
+      ]
+    },
+    {
+      "date": "2026-09-07",
+      "timestamp": "2026-09-07T08:12:01.789474",
+      "total_vehicles": 119,
+      "total_options": 0,
+      "brands_crawled": [
+        "Mercedes-Benz",
+        "Audi",
+        "Porsche",
+        "Lexus",
+        "BYD",
+        "XPeng",
+        "Zeekr",
+        "Polestar"
+      ]
     }
   ],
-  "last_updated": "2026-09-07T07:25:06.178701",
+  "last_updated": "2026-09-07T08:12:01.789855",
   "option_summary": {
-    "last_updated": "2026-09-07T07:25:06.178656",
+    "last_updated": "2026-09-07T08:12:01.789635",
     "source": "reference",
     "options": [
       {
