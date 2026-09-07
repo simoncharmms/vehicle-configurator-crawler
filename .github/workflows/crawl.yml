@@ -75,7 +75,7 @@ jobs:
   deploy-dashboard:
     needs: crawl
     runs-on: ubuntu-latest
-    if: always()
+    if: ${{ always() && github.event.repository.private == false }}
     permissions:
       contents: read
       pages: write
