@@ -187,7 +187,7 @@
     </header>
 
     <div class="intro-box">
-      <strong>Executive Summary:</strong> This project automates the extraction, standardization, and analysis of vehicle option pricing from major German automotive configurators (Mercedes-Benz, Audi, Porsche). It provides real-time pricing visibility into automotive options across brands, enabling pricing strategy analysis and market comparison.
+      <strong>Executive Summary:</strong> This project automates the extraction, standardization, and analysis of vehicle pricing from German and international automotive configurators (Mercedes-Benz, Lexus, Polestar, Porsche, BYD). It provides real-time pricing visibility into automotive models across brands. Only real extracted data is shown — no reference or fallback pricing.
     </div>
 
     <h2>Project Goal</h2>
@@ -346,7 +346,7 @@
         </tr>
       </table>
       
-      <p style="margin-top: 20px;"><strong>Overall:</strong> 45 vehicles captured. Option pricing uses reference database (fallback when live extraction blocked).</p>
+      <p style="margin-top: 20px;"><strong>Overall:</strong> 195 vehicles captured from 5 brands. Only real extracted data — no reference or fallback pricing.</p>
     </div>
 
     <h2>Top 10 Options by Average Price</h2>
@@ -446,7 +446,7 @@
         <li><strong>Automation:</strong> No manual data collection required. Daily crawls at 6 AM CET.</li>
         <li><strong>Standardization:</strong> Cross-brand comparison made possible via option name normalization.</li>
         <li><strong>Accessibility:</strong> Real-time web dashboard, no special software required.</li>
-        <li><strong>Resilience:</strong> Automatic retry logic, graceful error handling, historical fallbacks.</li>
+        <li><strong>Resilience:</strong> Automatic retry logic, graceful error handling.</li>
         <li><strong>Scalability:</strong> Framework easily extends to additional brands and options.</li>
         <li><strong>Transparency:</strong> All code and data tracked in git, transparent history and changes.</li>
       </ul>
@@ -466,8 +466,9 @@
     <div class="status-box warning">
       <strong>Known Limitations</strong>
       <ul>
-        <li>Audi and Porsche: Currently blocking scrapers (HTTP 403). System falls back to reference pricing.</li>
-        <li>Option extraction: Live option data limited; system uses reference database for all options.</li>
+        <li>Audi: Blocked by HTTP 403 anti-bot protection (was working 2026-09-05)</li>
+        <li>Volvo: Blocked by HTTP 403 on all endpoints</li>
+        <li>Option extraction: Per-model option pricing not yet enriched for most brands</li>
         <li>Dynamic pricing: Real-time price updates not captured; daily snapshots only.</li>
       </ul>
     </div>

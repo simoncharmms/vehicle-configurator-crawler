@@ -148,6 +148,7 @@ class BrowserPool:
         url: str,
         *,
         wait_selector: str | None = None,
+        wait_until: str = "domcontentloaded",
         timeout_ms: int = 30_000,
         user_agent: str | None = None,
     ) -> str:
@@ -155,13 +156,17 @@ class BrowserPool:
 
         Creates a fresh browser context per call for cookie isolation,
         reusing the shared browser instance for connection pooling.
+
+        Args:
+            wait_until: Playwright load state — ``domcontentloaded``
+                (default) or ``networkidle`` for SPA-heavy pages.
         """
         context = await self._browser.new_context(
             **self._new_context_kwargs(user_agent),
         )
         try:
             page = await context.new_page()
-            resp = await page.goto(url, wait_until="domcontentloaded", timeout=timeout_ms)
+            resp = await page.goto(url, wait_until=wait_until, timeout=timeout_ms)
             if resp and resp.status >= 400:
                 raise RuntimeError(f"HTTP {resp.status} for {url}")
             if wait_selector:

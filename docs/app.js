@@ -81,7 +81,18 @@ function populateFilters() {
   const brandSel = document.getElementById('brand-filter');
   const categories = new Set();
 
+  // Deduplicate brands by display name — only show brands with real vehicle data
+  const seenBrandNames = new Set();
   for (const [key, brand] of Object.entries(allData)) {
+    // Skip brands with no vehicles in any snapshot
+    const hasVehicles = Object.values(brand.snapshots || {}).some(
+      snaps => snaps.some(s => (s.vehicles || []).length > 0)
+    );
+    if (!hasVehicles) continue;
+    // Skip duplicate display names
+    if (seenBrandNames.has(brand.name)) continue;
+    seenBrandNames.add(brand.name);
+
     const opt = document.createElement('option');
     opt.value = key;
     opt.textContent = brand.name;
@@ -206,8 +217,7 @@ function renderOptionTable() {
   // Show data source indicator
   const sourceLabel = document.getElementById('option-source-label');
   if (sourceLabel) {
-    if (optionSummary.source === 'reference') {
-      sourceLabel.innerHTML = 'Reference prices from German configurators <span class="source-badge">Reference Data</span>';
+    if (false) { // Reference data removed — live data only
     } else {
       sourceLabel.textContent = 'Live-extracted pricing from German vehicle configurators';
     }

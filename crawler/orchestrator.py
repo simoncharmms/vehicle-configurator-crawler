@@ -17,7 +17,6 @@ from crawler.option_mappings import (
     get_category,
     get_category_label,
     get_description,
-    get_reference_option_summary,
 )
 from crawler.brands.registry import BrandRegistry
 
@@ -143,14 +142,15 @@ def _write_index(results: list[CrawlResult], data_dir: Path) -> None:
         index["crawl_history"] = []
 
     for result in results:
-        brand_key = result.brand.lower().replace("-", "").replace(" ", "_")
+        # Consistent brand key: lowercase, spaces → hyphens
+        brand_key = result.brand.lower().replace(" ", "-")
         if brand_key not in index["brands"]:
             index["brands"][brand_key] = {"name": result.brand, "snapshots": []}
 
         option_count = sum(len(v.available_options) for v in result.vehicles)
         snapshot = {
             "date": date_str,
-            "file": f"{result.brand.lower().replace('-', '').replace(' ', '_')}_{date_str}.json",
+            "file": f"{brand_key}_{date_str}.json",
             "vehicle_count": len(result.vehicles),
             "option_count": option_count,
             "error_count": len(result.errors),
@@ -169,16 +169,8 @@ def _write_index(results: list[CrawlResult], data_dir: Path) -> None:
         "brands_crawled": [r.brand for r in results],
     })
 
-    # Compute cross-brand option summary
-    # Uses live data when available, falls back to reference prices.
+    # Compute cross-brand option summary from live data only — no fallback
     summary = _compute_option_summary(results)
-    if not summary.get("options"):
-        logger.info("No live option data — using reference prices as fallback")
-        summary = {
-            "last_updated": datetime.now().isoformat(),
-            "source": "reference",
-            "options": get_reference_option_summary(),
-        }
     index["option_summary"] = summary
 
     index["last_updated"] = datetime.now().isoformat()

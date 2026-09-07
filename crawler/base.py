@@ -144,7 +144,9 @@ class CrawlResult:
         """Save crawl result as timestamped JSON."""
         data_dir.mkdir(parents=True, exist_ok=True)
         date_str = datetime.now().strftime("%Y-%m-%d")
-        filename = f"{self.brand.lower()}_{date_str}.json"
+        # Consistent brand key: lowercase, spaces → hyphens
+        brand_key = self.brand.lower().replace(" ", "-")
+        filename = f"{brand_key}_{date_str}.json"
         filepath = data_dir / filename
 
         # Merge with existing file if present (append to daily results)

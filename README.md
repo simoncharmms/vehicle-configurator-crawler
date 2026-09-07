@@ -4,19 +4,19 @@ Automated vehicle price tracker with multi-brand support, network-hardened Playw
 
 ## Current Status
 
-| Brand | Status | Vehicles | Price Range |
-|-------|--------|----------|-------------|
-| **Mercedes-Benz** | ✅ Active | 45 | €32k–€244k |
-| **Lexus** | ✅ Active | 49 | €33k–€154k |
-| **BYD** | ✅ Active | 11 | €23k–€75k |
-| **XPeng** | ✅ Active | 5 | €36k–€60k |
-| **Polestar** | ✅ Active | 5 | €58k–€119k |
-| **Zeekr** | ✅ Active | 4 | €38k–€60k |
-| **Audi** | ⚠️ Intermittent | 54 | Akamai CDN rate-limits |
-| **Porsche** | ⚠️ Intermittent | — | Site timeouts |
+| Brand | Status | Vehicles | Notes |
+|-------|--------|----------|-------|
+| **Mercedes-Benz** | ✅ Active | 45 | SSR data extraction |
+| **Lexus** | ✅ Active | 49 | JSON state blob extraction |
+| **Porsche** | ✅ Active | 85 | SPA rendering (networkidle) |
+| **BYD** | ✅ Active | 11 | Playwright rendering |
+| **Polestar** | ✅ Active | 5 | Model page price probes |
+| **Audi** | ⛔ Blocked | 0 | HTTP 403 (was working 2026-09-05) |
+| **Volvo** | ⛔ Blocked | 0 | HTTP 403 on all endpoints |
 
 - **Dashboard:** https://simoncharmms.github.io/vehicle-configurator-crawler
 - **Update Frequency:** Daily at 6:00 AM CET
+- **Data Policy:** Only real extracted data — no reference or fallback pricing
 
 ### Brands Tested But Not Added
 
