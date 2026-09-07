@@ -23,6 +23,9 @@ from crawler.brands.registry import BrandRegistry
 
 # Import brand modules to trigger registration
 import crawler.brands.mercedes  # noqa: F401
+import crawler.brands.volvo      # noqa: F401
+import crawler.brands.lexus      # noqa: F401
+import crawler.brands.polestar   # noqa: F401
 import crawler.brands.audi      # noqa: F401
 import crawler.brands.porsche   # noqa: F401
 
