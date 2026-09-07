@@ -1,6 +1,15 @@
 #  Vehicle Configurator Crawler
 
-AI-powered vehicle configurator crawler with multi-brand support, dual-engine scraping, and a GitHub Pages dashboard for price tracking.
+Automated vehicle option price tracker with cross-brand standardization and a GitHub Pages dashboard for real-time pricing analysis.
+
+## Current Status
+
+- **Mercedes-Benz:** 45 vehicle models (actively extracting)
+- **Audi:** Blocked (HTTP 403 anti-bot protection)
+- **Porsche:** No accessible data
+- **Options Tracked:** 15 standardized automotive features
+- **Dashboard:** https://simoncharmms.github.io/vehicle-configurator-crawler
+- **Update Frequency:** Daily at 6:00 AM CET
 
 ## Architecture
 
