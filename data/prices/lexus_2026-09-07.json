@@ -2814,5 +2814,26 @@
     },
     "duration_seconds": 1.3,
     "option_summary": []
+  },
+  {
+    "brand": "Lexus",
+    "timestamp": "2026-09-07T11:12:12.075707+00:00",
+    "vehicle_count": 0,
+    "vehicles": [],
+    "errors": [
+      "No vehicles found in Lexus JSON state data"
+    ],
+    "strategy": {
+      "engine": "beautifulsoup",
+      "selectors": {},
+      "js_triggers": [],
+      "wait_selector": "",
+      "wait_timeout_ms": 30000,
+      "rate_limit_seconds": 3.0,
+      "confidence": 0.95,
+      "notes": "Curl fetch + embedded JSON state (modelResults with prices)."
+    },
+    "duration_seconds": 0.95,
+    "option_summary": []
   }
 ]
