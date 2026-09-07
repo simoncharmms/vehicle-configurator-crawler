@@ -2585,5 +2585,17 @@
     "strategy": null,
     "duration_seconds": 0.0,
     "option_summary": []
+  },
+  {
+    "brand": "Mercedes-Benz",
+    "timestamp": "2026-09-07T11:09:36.957718+00:00",
+    "vehicle_count": 0,
+    "vehicles": [],
+    "errors": [
+      "All attempts failed: HTTP 403 for https://www.mercedes-benz.de/passengercars/models.html"
+    ],
+    "strategy": null,
+    "duration_seconds": 0.0,
+    "option_summary": []
   }
 ]
