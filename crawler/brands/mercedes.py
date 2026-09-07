@@ -222,8 +222,11 @@ class MercedesCrawler(BrandCrawler):
         """Probe individual model pages for option/equipment data.
 
         Picks a sample of models with known base prices and navigates to
-        their overview pages.  JSON API responses and embedded page data
-        are searched for equipment entries with prices.
+        their overview pages.  Equipment data is extracted from:
+        1. API JSON responses captured during page load
+        2. Embedded ``ssrData`` scripts containing equipment objects
+           (with ``equipmentId``, ``title``, ``isIncluded`` fields)
+        3. HTML text regex fallback for price patterns
         """
         targets = [v for v in vehicles if v.base_price and v.url][:MAX_OPTION_PROBES]
         if not targets:
@@ -243,17 +246,23 @@ class MercedesCrawler(BrandCrawler):
 
                 options: list[OptionData] = []
 
-                # 1) Search captured API responses
+                # 1) Search captured API responses for priced option entries
                 for resp in api_responses:
                     found = _search_json_for_options(resp.get("data"), self.brand)
                     options.extend(found)
 
-                # 2) Search embedded script data in page HTML
+                # 2) Extract equipment from Mercedes ssrData scripts
+                #    (the primary source on model overview pages)
+                soup = BeautifulSoup(html, "lxml")
+                equip_options = _extract_equipment_from_ssr(soup, self.brand)
+                if equip_options:
+                    options.extend(equip_options)
+
+                # 3) Search other embedded script JSON blobs
                 if not options:
-                    soup = BeautifulSoup(html, "lxml")
                     options = _extract_options_from_scripts(soup, self.brand)
 
-                # 3) Regex fallback: price patterns near equipment keywords
+                # 4) Regex fallback: price patterns near equipment keywords
                 if not options:
                     options = _extract_options_from_text(html, self.brand)
 
@@ -266,6 +275,117 @@ class MercedesCrawler(BrandCrawler):
 
             except Exception as e:
                 logger.debug(f"Mercedes options: {vehicle.model} failed: {e}")
+
+
+# ------------------------------------------------------------------
+# Mercedes ssrData equipment extraction
+# ------------------------------------------------------------------
+
+def _extract_equipment_from_ssr(
+    soup: BeautifulSoup, brand: str,
+) -> list[OptionData]:
+    """Extract equipment items from Mercedes model-page ``ssrData`` scripts.
+
+    Mercedes model overview pages embed structured equipment objects in
+    large ``<script>`` tags.  Each object has ``equipmentId``, ``title``,
+    ``isIncluded`` (standard vs. extra-cost), and a description.
+    Items marked ``isIncluded=False`` are optional extras.
+
+    Returns a list of :class:`OptionData` for **non-included** equipment
+    (i.e. available paid options).  Prices are set to ``None`` because
+    individual option pricing is only available in the configurator.
+    """
+    results: list[OptionData] = []
+
+    for script in soup.find_all("script"):
+        if not script.string or "equipmentId" not in script.string:
+            continue
+
+        text = script.string.strip()
+
+        # ssrData scripts use  window.ssrData["<hash>"] = { ... };
+        match = re.search(
+            r'\["([a-f0-9]+)"\]\s*=\s*({.*})\s*;?\s*$',
+            text,
+            re.DOTALL,
+        )
+        if not match:
+            continue
+
+        try:
+            data = json.loads(match.group(2))
+        except json.JSONDecodeError:
+            continue
+
+        # Recursively find equipment-like dicts in the tree.
+        equip_items = _find_equipment_items(data)
+        for item in equip_items:
+            title = item.get("title", "").strip()
+            eid = item.get("equipmentId", "")
+            is_included = item.get("isIncluded", True)
+
+            if not title or len(title) < 3:
+                continue
+
+            # Only non-included items are selectable options
+            if is_included:
+                continue
+
+            std = normalize_option_name(title, brand)
+            cat = get_category(std) if std else _guess_category_from_title(title)
+
+            results.append(OptionData(
+                standardized_name=std or "",
+                brand_specific_name=title,
+                price=None,  # not available on model overview pages
+                category=cat,
+                code=eid,
+            ))
+
+        if results:
+            break  # Typically only one large ssrData script
+
+    return results
+
+
+def _find_equipment_items(obj: Any, depth: int = 0) -> list[dict]:
+    """Recursively collect dicts containing ``equipmentId`` and ``title``."""
+    if depth > 12 or obj is None:
+        return []
+    results: list[dict] = []
+    if isinstance(obj, dict):
+        if "equipmentId" in obj and "title" in obj:
+            results.append(obj)
+        for v in obj.values():
+            results.extend(_find_equipment_items(v, depth + 1))
+    elif isinstance(obj, list):
+        for item in obj:
+            results.extend(_find_equipment_items(item, depth + 1))
+    return results
+
+
+def _guess_category_from_title(title: str) -> str:
+    """Heuristic category guess from an equipment title string."""
+    low = title.lower()
+    if any(w in low for w in ("sound", "audio", "burmester", "musik")):
+        return "sound"
+    if any(w in low for w in ("display", "head-up", "digital", "mbux")):
+        return "technology"
+    if any(w in low for w in ("sitz", "lenkrad", "heizung", "klima", "komfort", "standheizung")):
+        return "comfort"
+    if any(w in low for w in ("led", "licht", "light", "scheinwerfer")):
+        return "lighting"
+    if any(w in low for w in ("kamera", "assistent", "pre-safe", "airbag", "brems")):
+        return "safety"
+    if any(w in low for w in ("fahrwerk", "lenkung", "bremse", "4matic", "antrieb")):
+        return "drivetrain"
+    if any(w in low for w in ("dach", "panoram", "anhäng", "glas", "akustik")):
+        return "exterior"
+    if any(w in low for w in ("ambient", "innenraum", "leder", "mittelkonsole", "sonnen")):
+        return "interior"
+    if any(w in low for w in ("paket",)):
+        return "packages"
+    return "other"
 
 
 # ------------------------------------------------------------------

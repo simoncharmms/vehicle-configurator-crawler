@@ -30,6 +30,8 @@ from crawler.brands.mercedes import (
     _extract_options_from_scripts,
     _extract_options_from_text,
     _dedupe_options,
+    _find_equipment_items,
+    _guess_category_from_title,
 )
 from crawler.network import retry_with_backoff, BrowserPool
 
@@ -101,10 +103,13 @@ class AudiCrawler(BrandCrawler):
         errors: list[str] = []
         vehicles: list[VehicleData] = []
 
+        pool = await BrowserPool.acquire()
+
         try:
-            logger.info(f"Audi: fetching {MODELS_URL}")
-            pool = await BrowserPool.acquire()
-            html = await pool.fetch_html(MODELS_URL)
+            # --- Fetch model listing (with 403 resilience) ---
+            html = await self._fetch_with_403_recovery(
+                pool, MODELS_URL, cfg,
+            )
             soup = BeautifulSoup(html, "lxml")
 
             # Strategy 1: Apollo GraphQL cache
@@ -132,6 +137,20 @@ class AudiCrawler(BrandCrawler):
                     logger.warning(f"Audi: option extraction failed: {e}")
                     errors.append(f"Option extraction partial/failed: {e}")
 
+        except RuntimeError as e:
+            err_str = str(e)
+            if "403" in err_str:
+                logger.warning(
+                    f"Audi: HTTP 403 after all retries — "
+                    f"site is blocking automated access"
+                )
+                errors.append(
+                    f"HTTP 403 — Audi is blocking automated access. "
+                    f"Vehicle data unavailable this run."
+                )
+            else:
+                logger.error(f"Audi crawl error: {e}")
+                errors.append(str(e))
         except Exception as e:
             logger.error(f"Audi crawl error: {e}")
             errors.append(str(e))
@@ -148,6 +167,52 @@ class AudiCrawler(BrandCrawler):
             strategy_used=cfg,
             duration_seconds=time.time() - start_time,
         )
+
+    async def _fetch_with_403_recovery(
+        self,
+        pool: BrowserPool,
+        url: str,
+        config: CrawlConfig,
+    ) -> str:
+        """Fetch *url* with user-agent rotation on HTTP 403.
+
+        Tries up to 3 different user agents with increasing delays
+        before giving up.  This mitigates Audi's bot-detection which
+        blocks based on request fingerprinting.
+        """
+        from crawler.network import USER_AGENTS, get_random_user_agent
+        import random
+
+        # Shuffle UAs so each run looks different
+        uas = list(USER_AGENTS)
+        random.shuffle(uas)
+
+        last_err: Exception | None = None
+        for attempt, ua in enumerate(uas[:3]):
+            try:
+                if attempt > 0:
+                    delay = config.rate_limit_seconds * (attempt + 1) + random.uniform(1, 3)
+                    logger.info(
+                        f"Audi: retrying with different User-Agent "
+                        f"(attempt {attempt + 1}, delay {delay:.1f}s)"
+                    )
+                    await asyncio.sleep(delay)
+
+                logger.info(f"Audi: fetching {url}")
+                html = await pool.fetch_html(
+                    url, user_agent=ua, timeout_ms=30_000,
+                )
+                return html
+
+            except RuntimeError as e:
+                last_err = e
+                if "403" not in str(e):
+                    raise  # Non-403 errors propagate immediately
+                logger.warning(
+                    f"Audi: HTTP 403 (attempt {attempt + 1}/3)"
+                )
+
+        raise last_err  # type: ignore[misc]
 
     # ------------------------------------------------------------------
     # Model extraction
@@ -328,14 +393,25 @@ class AudiCrawler(BrandCrawler):
         pool: BrowserPool,
         config: CrawlConfig,
     ) -> None:
-        """Probe model pages / configurator for option data."""
+        """Probe model pages / configurator for option data.
+
+        Audi model pages frequently return HTTP 403 even through
+        Playwright.  The extraction pipeline:
+
+        1. Try the model overview page (``/neuwagen/{slug}.html``)
+        2. On 403 / failure, try the overview page already loaded
+        3. Search captured API (GraphQL), embedded scripts, and HTML text
+        4. On persistent 403, log a warning and skip gracefully
+        """
         targets = [v for v in vehicles if v.url][:MAX_OPTION_PROBES]
         if not targets:
             return
 
+        blocked_count = 0
+
         for vehicle in targets:
             try:
-                await asyncio.sleep(config.rate_limit_seconds)
+                await asyncio.sleep(config.rate_limit_seconds + 1.0)  # extra delay for Audi
 
                 # Build a meaningful page URL from the model variant
                 family = vehicle.variant.lower().replace("audi ", "").replace(" ", "")
@@ -343,27 +419,54 @@ class AudiCrawler(BrandCrawler):
                 probe_url = f"https://www.audi.de/de/brand/de/neuwagen/{slug}.html"
 
                 logger.info(f"Audi options: probing {vehicle.model} → {probe_url}")
-                html, api_responses = await pool.fetch_with_api_capture(
-                    probe_url,
-                    extra_wait_ms=4000,
-                    timeout_ms=25_000,
-                )
 
                 options: list[OptionData] = []
 
-                # 1) API response capture
-                for resp in api_responses:
-                    found = _search_json_for_options(resp.get("data"), self.brand)
-                    options.extend(found)
+                try:
+                    html, api_responses = await pool.fetch_with_api_capture(
+                        probe_url,
+                        extra_wait_ms=5000,
+                        timeout_ms=25_000,
+                    )
 
-                # 2) Embedded script data
-                if not options:
-                    soup = BeautifulSoup(html, "lxml")
-                    options = _extract_options_from_scripts(soup, self.brand)
+                    # 1) API response capture (GraphQL cache, JSON-LD, etc.)
+                    for resp in api_responses:
+                        found = _search_json_for_options(resp.get("data"), self.brand)
+                        options.extend(found)
 
-                # 3) Text regex fallback
-                if not options:
-                    options = _extract_options_from_text(html, self.brand)
+                    # 2) Embedded script data
+                    if not options:
+                        soup = BeautifulSoup(html, "lxml")
+                        options = _extract_options_from_scripts(soup, self.brand)
+
+                        # 2b) Search for Audi equipment items similar to
+                        #     Mercedes ssrData (structured JSON in scripts)
+                        if not options:
+                            options = _extract_audi_equipment_from_page(
+                                soup, self.brand,
+                            )
+
+                    # 3) Text regex fallback
+                    if not options:
+                        options = _extract_options_from_text(html, self.brand)
+
+                except RuntimeError as e:
+                    err_str = str(e)
+                    if "403" in err_str or "Forbidden" in err_str:
+                        blocked_count += 1
+                        logger.warning(
+                            f"Audi options: HTTP 403 on {probe_url} "
+                            f"(blocked {blocked_count}x) — skipping"
+                        )
+                        if blocked_count >= 2:
+                            logger.warning(
+                                "Audi options: persistent 403 blocking — "
+                                "aborting option probing for remaining models"
+                            )
+                            return
+                        continue
+                    else:
+                        raise
 
                 if options:
                     vehicle.available_options = _dedupe_options(options)
@@ -374,3 +477,56 @@ class AudiCrawler(BrandCrawler):
 
             except Exception as e:
                 logger.debug(f"Audi options: {vehicle.model} failed: {e}")
+
+
+def _extract_audi_equipment_from_page(
+    soup: BeautifulSoup, brand: str,
+) -> list[OptionData]:
+    """Search Audi model page for equipment data in embedded scripts.
+
+    Audi pages embed Apollo/GraphQL caches and other JSON structures
+    that may contain equipment or feature lists.
+    """
+    options: list[OptionData] = []
+
+    for script in soup.find_all("script"):
+        if not script.string:
+            continue
+        text = script.string.strip()
+
+        # Look for Apollo cache or LD+JSON with equipment data
+        if text.startswith('{"ROOT_QUERY"'):
+            try:
+                data = json.loads(text)
+                # Search entire cache for option-like entries
+                found = _search_json_for_options(data, brand)
+                options.extend(found)
+            except json.JSONDecodeError:
+                pass
+
+    # Also check JSON-LD structured data for feature lists
+    for script in soup.find_all("script", type="application/ld+json"):
+        try:
+            data = json.loads(script.string or "")
+            if isinstance(data, dict):
+                # Audi LD+JSON may have "additionalProperty" with equipment
+                for prop in data.get("additionalProperty", []):
+                    if isinstance(prop, dict):
+                        name = prop.get("name", "")
+                        value = prop.get("value", "")
+                        std = normalize_option_name(name, brand)
+                        if std:
+                            price = None
+                            if isinstance(value, str):
+                                from crawler.engines.base_engine import BaseEngine
+                                price = BaseEngine.parse_price(value)
+                            options.append(OptionData(
+                                standardized_name=std,
+                                brand_specific_name=name,
+                                price=price,
+                                category=get_category(std),
+                            ))
+        except (json.JSONDecodeError, TypeError):
+            continue
+
+    return options

@@ -174,11 +174,2206 @@
         "Zeekr",
         "Polestar"
       ]
+    },
+    {
+      "date": "2026-09-07",
+      "timestamp": "2026-09-07T13:44:34.582253",
+      "total_vehicles": 45,
+      "total_options": 170,
+      "brands_crawled": [
+        "Mercedes-Benz"
+      ]
+    },
+    {
+      "date": "2026-09-07",
+      "timestamp": "2026-09-07T13:44:39.322912",
+      "total_vehicles": 0,
+      "total_options": 0,
+      "brands_crawled": [
+        "Audi"
+      ]
+    },
+    {
+      "date": "2026-09-07",
+      "timestamp": "2026-09-07T13:45:39.701978",
+      "total_vehicles": 0,
+      "total_options": 0,
+      "brands_crawled": [
+        "Audi"
+      ]
+    },
+    {
+      "date": "2026-09-07",
+      "timestamp": "2026-09-07T13:46:59.699028",
+      "total_vehicles": 85,
+      "total_options": 1260,
+      "brands_crawled": [
+        "Porsche"
+      ]
+    },
+    {
+      "date": "2026-09-07",
+      "timestamp": "2026-09-07T13:51:18.605242",
+      "total_vehicles": 130,
+      "total_options": 1970,
+      "brands_crawled": [
+        "Mercedes-Benz",
+        "Audi",
+        "Porsche"
+      ]
     }
   ],
   "option_summary": {
-    "last_updated": "2026-09-07T11:16:38.770681",
-    "options": []
+    "last_updated": "2026-09-07T13:51:18.605794",
+    "options": [
+      {
+        "standardized_name": "\tstandard",
+        "display_name": "\tstandard",
+        "category": "other",
+        "category_label": "Other",
+        "brands": {
+          "Porsche": {
+            "name": "\tStandard",
+            "avg_price": null,
+            "min_price": null,
+            "max_price": null,
+            "model_count": 60
+          }
+        },
+        "overall_avg_price": null,
+        "overall_min_price": null,
+        "overall_max_price": null,
+        "total_model_count": 60
+      },
+      {
+        "standardized_name": "6-speed gt sports transmission",
+        "display_name": "6-speed gt sports transmission",
+        "category": "other",
+        "category_label": "Other",
+        "brands": {
+          "Porsche": {
+            "name": "6-speed GT sports transmission",
+            "avg_price": null,
+            "min_price": null,
+            "max_price": null,
+            "model_count": 60
+          }
+        },
+        "overall_avg_price": null,
+        "overall_min_price": null,
+        "overall_max_price": null,
+        "total_model_count": 60
+      },
+      {
+        "standardized_name": "6-speed gt sports transmission - rear seats",
+        "display_name": "6-speed gt sports transmission - rear seats",
+        "category": "other",
+        "category_label": "Other",
+        "brands": {
+          "Porsche": {
+            "name": "6-speed GT sports transmission - Rear seats",
+            "avg_price": null,
+            "min_price": null,
+            "max_price": null,
+            "model_count": 60
+          }
+        },
+        "overall_avg_price": null,
+        "overall_min_price": null,
+        "overall_max_price": null,
+        "total_model_count": 60
+      },
+      {
+        "standardized_name": "6-speed manual transmission with dual-mass flywheel",
+        "display_name": "6-speed manual transmission with dual-mass flywheel",
+        "category": "other",
+        "category_label": "Other",
+        "brands": {
+          "Porsche": {
+            "name": "6-speed manual transmission with dual-mass flywheel",
+            "avg_price": null,
+            "min_price": null,
+            "max_price": null,
+            "model_count": 60
+          }
+        },
+        "overall_avg_price": null,
+        "overall_min_price": null,
+        "overall_max_price": null,
+        "total_model_count": 60
+      },
+      {
+        "standardized_name": "6-speed sports transmission",
+        "display_name": "6-speed sports transmission",
+        "category": "other",
+        "category_label": "Other",
+        "brands": {
+          "Porsche": {
+            "name": "6-speed sports transmission",
+            "avg_price": null,
+            "min_price": null,
+            "max_price": null,
+            "model_count": 60
+          }
+        },
+        "overall_avg_price": null,
+        "overall_min_price": null,
+        "overall_max_price": null,
+        "total_model_count": 60
+      },
+      {
+        "standardized_name": "6-speed sports transmission - rear seats",
+        "display_name": "6-speed sports transmission - rear seats",
+        "category": "other",
+        "category_label": "Other",
+        "brands": {
+          "Porsche": {
+            "name": "6-speed sports transmission - Rear seats",
+            "avg_price": null,
+            "min_price": null,
+            "max_price": null,
+            "model_count": 60
+          }
+        },
+        "overall_avg_price": null,
+        "overall_min_price": null,
+        "overall_max_price": null,
+        "total_model_count": 60
+      },
+      {
+        "standardized_name": "6-speed sports transmission - rear-axle steering",
+        "display_name": "6-speed sports transmission - rear-axle steering",
+        "category": "other",
+        "category_label": "Other",
+        "brands": {
+          "Porsche": {
+            "name": "6-speed sports transmission - Rear-Axle Steering",
+            "avg_price": null,
+            "min_price": null,
+            "max_price": null,
+            "model_count": 60
+          }
+        },
+        "overall_avg_price": null,
+        "overall_min_price": null,
+        "overall_max_price": null,
+        "total_model_count": 60
+      },
+      {
+        "standardized_name": "7-speed porsche doppelkupplung (pdk)",
+        "display_name": "7-speed porsche doppelkupplung (pdk)",
+        "category": "other",
+        "category_label": "Other",
+        "brands": {
+          "Porsche": {
+            "name": "7-speed Porsche Doppelkupplung (PDK)",
+            "avg_price": null,
+            "min_price": null,
+            "max_price": null,
+            "model_count": 60
+          }
+        },
+        "overall_avg_price": null,
+        "overall_min_price": null,
+        "overall_max_price": null,
+        "total_model_count": 60
+      },
+      {
+        "standardized_name": "7-speed porsche doppelkupplung (pdk) - rear seats",
+        "display_name": "7-speed porsche doppelkupplung (pdk) - rear seats",
+        "category": "other",
+        "category_label": "Other",
+        "brands": {
+          "Porsche": {
+            "name": "7-speed Porsche Doppelkupplung (PDK) - Rear seats",
+            "avg_price": null,
+            "min_price": null,
+            "max_price": null,
+            "model_count": 60
+          }
+        },
+        "overall_avg_price": null,
+        "overall_min_price": null,
+        "overall_max_price": null,
+        "total_model_count": 60
+      },
+      {
+        "standardized_name": "8-speed automatic gearbox",
+        "display_name": "8-speed automatic gearbox",
+        "category": "other",
+        "category_label": "Other",
+        "brands": {
+          "Porsche": {
+            "name": "8-speed automatic gearbox",
+            "avg_price": null,
+            "min_price": null,
+            "max_price": null,
+            "model_count": 60
+          }
+        },
+        "overall_avg_price": null,
+        "overall_min_price": null,
+        "overall_max_price": null,
+        "total_model_count": 60
+      },
+      {
+        "standardized_name": "8-speed automatic gearbox - rear-axle steering",
+        "display_name": "8-speed automatic gearbox - rear-axle steering",
+        "category": "other",
+        "category_label": "Other",
+        "brands": {
+          "Porsche": {
+            "name": "8-speed automatic gearbox - Rear-Axle Steering",
+            "avg_price": null,
+            "min_price": null,
+            "max_price": null,
+            "model_count": 60
+          }
+        },
+        "overall_avg_price": null,
+        "overall_min_price": null,
+        "overall_max_price": null,
+        "total_model_count": 60
+      },
+      {
+        "standardized_name": "8-speed porsche doppelkupplung (pdk)",
+        "display_name": "8-speed porsche doppelkupplung (pdk)",
+        "category": "other",
+        "category_label": "Other",
+        "brands": {
+          "Porsche": {
+            "name": "8-speed Porsche Doppelkupplung (PDK)",
+            "avg_price": null,
+            "min_price": null,
+            "max_price": null,
+            "model_count": 60
+          }
+        },
+        "overall_avg_price": null,
+        "overall_min_price": null,
+        "overall_max_price": null,
+        "total_model_count": 60
+      },
+      {
+        "standardized_name": "8-speed porsche doppelkupplung (pdk) - rear seats",
+        "display_name": "8-speed porsche doppelkupplung (pdk) - rear seats",
+        "category": "other",
+        "category_label": "Other",
+        "brands": {
+          "Porsche": {
+            "name": "8-speed Porsche Doppelkupplung (PDK) - Rear seats",
+            "avg_price": null,
+            "min_price": null,
+            "max_price": null,
+            "model_count": 60
+          }
+        },
+        "overall_avg_price": null,
+        "overall_min_price": null,
+        "overall_max_price": null,
+        "total_model_count": 60
+      },
+      {
+        "standardized_name": "8-speed porsche doppelkupplung (pdk) - rear-axle steering",
+        "display_name": "8-speed porsche doppelkupplung (pdk) - rear-axle steering",
+        "category": "other",
+        "category_label": "Other",
+        "brands": {
+          "Porsche": {
+            "name": "8-speed Porsche Doppelkupplung (PDK) - Rear-Axle Steering",
+            "avg_price": null,
+            "min_price": null,
+            "max_price": null,
+            "model_count": 60
+          }
+        },
+        "overall_avg_price": null,
+        "overall_min_price": null,
+        "overall_max_price": null,
+        "total_model_count": 60
+      },
+      {
+        "standardized_name": "allrad",
+        "display_name": "All-wheel drive system",
+        "category": "drivetrain",
+        "category_label": "Drivetrain",
+        "brands": {
+          "Porsche": {
+            "name": "All-Wheel Drive",
+            "avg_price": null,
+            "min_price": null,
+            "max_price": null,
+            "model_count": 60
+          }
+        },
+        "overall_avg_price": null,
+        "overall_min_price": null,
+        "overall_max_price": null,
+        "total_model_count": 60
+      },
+      {
+        "standardized_name": "gts interior package",
+        "display_name": "gts interior package",
+        "category": "other",
+        "category_label": "Other",
+        "brands": {
+          "Porsche": {
+            "name": "GTS interior package",
+            "avg_price": null,
+            "min_price": null,
+            "max_price": null,
+            "model_count": 60
+          }
+        },
+        "overall_avg_price": null,
+        "overall_min_price": null,
+        "overall_max_price": null,
+        "total_model_count": 60
+      },
+      {
+        "standardized_name": "heritage design",
+        "display_name": "heritage design",
+        "category": "other",
+        "category_label": "Other",
+        "brands": {
+          "Porsche": {
+            "name": "Heritage Design",
+            "avg_price": null,
+            "min_price": null,
+            "max_price": null,
+            "model_count": 60
+          }
+        },
+        "overall_avg_price": null,
+        "overall_min_price": null,
+        "overall_max_price": null,
+        "total_model_count": 60
+      },
+      {
+        "standardized_name": "interior package",
+        "display_name": "interior package",
+        "category": "other",
+        "category_label": "Other",
+        "brands": {
+          "Porsche": {
+            "name": "Interior package",
+            "avg_price": null,
+            "min_price": null,
+            "max_price": null,
+            "model_count": 60
+          }
+        },
+        "overall_avg_price": null,
+        "overall_min_price": null,
+        "overall_max_price": null,
+        "total_model_count": 60
+      },
+      {
+        "standardized_name": "leather_seats",
+        "display_name": "Leather seat upholstery",
+        "category": "interior",
+        "category_label": "Interior",
+        "brands": {
+          "Porsche": {
+            "name": "Race-Tex with extensive items in leather",
+            "avg_price": null,
+            "min_price": null,
+            "max_price": null,
+            "model_count": 60
+          }
+        },
+        "overall_avg_price": null,
+        "overall_min_price": null,
+        "overall_max_price": null,
+        "total_model_count": 60
+      },
+      {
+        "standardized_name": "performance battery",
+        "display_name": "performance battery",
+        "category": "other",
+        "category_label": "Other",
+        "brands": {
+          "Porsche": {
+            "name": "Performance Battery",
+            "avg_price": null,
+            "min_price": null,
+            "max_price": null,
+            "model_count": 60
+          }
+        },
+        "overall_avg_price": null,
+        "overall_min_price": null,
+        "overall_max_price": null,
+        "total_model_count": 60
+      },
+      {
+        "standardized_name": "performance battery - offroad package",
+        "display_name": "performance battery - offroad package",
+        "category": "other",
+        "category_label": "Other",
+        "brands": {
+          "Porsche": {
+            "name": "Performance Battery - Offroad Package",
+            "avg_price": null,
+            "min_price": null,
+            "max_price": null,
+            "model_count": 60
+          }
+        },
+        "overall_avg_price": null,
+        "overall_min_price": null,
+        "overall_max_price": null,
+        "total_model_count": 60
+      },
+      {
+        "standardized_name": "performance battery - rear-axle steering",
+        "display_name": "performance battery - rear-axle steering",
+        "category": "other",
+        "category_label": "Other",
+        "brands": {
+          "Porsche": {
+            "name": "Performance Battery - Rear-Axle Steering",
+            "avg_price": null,
+            "min_price": null,
+            "max_price": null,
+            "model_count": 60
+          }
+        },
+        "overall_avg_price": null,
+        "overall_min_price": null,
+        "overall_max_price": null,
+        "total_model_count": 60
+      },
+      {
+        "standardized_name": "performance battery plus",
+        "display_name": "performance battery plus",
+        "category": "other",
+        "category_label": "Other",
+        "brands": {
+          "Porsche": {
+            "name": "Performance Battery Plus",
+            "avg_price": null,
+            "min_price": null,
+            "max_price": null,
+            "model_count": 60
+          }
+        },
+        "overall_avg_price": null,
+        "overall_min_price": null,
+        "overall_max_price": null,
+        "total_model_count": 60
+      },
+      {
+        "standardized_name": "performance battery plus - manthey kit",
+        "display_name": "performance battery plus - manthey kit",
+        "category": "other",
+        "category_label": "Other",
+        "brands": {
+          "Porsche": {
+            "name": "Performance Battery Plus - Manthey Kit",
+            "avg_price": null,
+            "min_price": null,
+            "max_price": null,
+            "model_count": 60
+          }
+        },
+        "overall_avg_price": null,
+        "overall_min_price": null,
+        "overall_max_price": null,
+        "total_model_count": 60
+      },
+      {
+        "standardized_name": "performance battery plus - rear-axle steering",
+        "display_name": "performance battery plus - rear-axle steering",
+        "category": "other",
+        "category_label": "Other",
+        "brands": {
+          "Porsche": {
+            "name": "Performance Battery Plus - Rear-Axle Steering",
+            "avg_price": null,
+            "min_price": null,
+            "max_price": null,
+            "model_count": 60
+          }
+        },
+        "overall_avg_price": null,
+        "overall_min_price": null,
+        "overall_max_price": null,
+        "total_model_count": 60
+      },
+      {
+        "standardized_name": "porsche doppelkupplung (pdk)",
+        "display_name": "porsche doppelkupplung (pdk)",
+        "category": "other",
+        "category_label": "Other",
+        "brands": {
+          "Porsche": {
+            "name": "Porsche Doppelkupplung (PDK)",
+            "avg_price": null,
+            "min_price": null,
+            "max_price": null,
+            "model_count": 60
+          }
+        },
+        "overall_avg_price": null,
+        "overall_min_price": null,
+        "overall_max_price": null,
+        "total_model_count": 60
+      },
+      {
+        "standardized_name": "race-tex",
+        "display_name": "race-tex",
+        "category": "other",
+        "category_label": "Other",
+        "brands": {
+          "Porsche": {
+            "name": "Race-Tex",
+            "avg_price": null,
+            "min_price": null,
+            "max_price": null,
+            "model_count": 60
+          }
+        },
+        "overall_avg_price": null,
+        "overall_min_price": null,
+        "overall_max_price": null,
+        "total_model_count": 60
+      },
+      {
+        "standardized_name": "sport-tex",
+        "display_name": "sport-tex",
+        "category": "other",
+        "category_label": "Other",
+        "brands": {
+          "Porsche": {
+            "name": "Sport-Tex",
+            "avg_price": null,
+            "min_price": null,
+            "max_price": null,
+            "model_count": 60
+          }
+        },
+        "overall_avg_price": null,
+        "overall_min_price": null,
+        "overall_max_price": null,
+        "total_model_count": 60
+      },
+      {
+        "standardized_name": "standard",
+        "display_name": "standard",
+        "category": "other",
+        "category_label": "Other",
+        "brands": {
+          "Porsche": {
+            "name": "Standard",
+            "avg_price": null,
+            "min_price": null,
+            "max_price": null,
+            "model_count": 60
+          }
+        },
+        "overall_avg_price": null,
+        "overall_min_price": null,
+        "overall_max_price": null,
+        "total_model_count": 60
+      },
+      {
+        "standardized_name": "standard interior with race-tex / race-tex seats",
+        "display_name": "standard interior with race-tex / race-tex seats",
+        "category": "other",
+        "category_label": "Other",
+        "brands": {
+          "Porsche": {
+            "name": "Standard Interior with Race-Tex / Race-Tex Seats",
+            "avg_price": null,
+            "min_price": null,
+            "max_price": null,
+            "model_count": 60
+          }
+        },
+        "overall_avg_price": null,
+        "overall_min_price": null,
+        "overall_max_price": null,
+        "total_model_count": 60
+      },
+      {
+        "standardized_name": "ambient_lighting",
+        "display_name": "Configurable ambient interior lighting",
+        "category": "interior",
+        "category_label": "Interior",
+        "brands": {
+          "Mercedes-Benz": {
+            "name": "Aktive Ambientebeleuchtung",
+            "avg_price": null,
+            "min_price": null,
+            "max_price": null,
+            "model_count": 5
+          }
+        },
+        "overall_avg_price": null,
+        "overall_min_price": null,
+        "overall_max_price": null,
+        "total_model_count": 5
+      },
+      {
+        "standardized_name": "anhängevorrichtung mit esp® anhängerstabilisierung",
+        "display_name": "anhängevorrichtung mit esp® anhängerstabilisierung",
+        "category": "other",
+        "category_label": "Other",
+        "brands": {
+          "Mercedes-Benz": {
+            "name": "Anhängevorrichtung mit ESP® Anhängerstabilisierung",
+            "avg_price": null,
+            "min_price": null,
+            "max_price": null,
+            "model_count": 5
+          }
+        },
+        "overall_avg_price": null,
+        "overall_min_price": null,
+        "overall_max_price": null,
+        "total_model_count": 5
+      },
+      {
+        "standardized_name": "matrix_led",
+        "display_name": "Matrix/adaptive LED headlights",
+        "category": "lighting",
+        "category_label": "Lighting",
+        "brands": {
+          "Mercedes-Benz": {
+            "name": "MULTIBEAM LED",
+            "avg_price": null,
+            "min_price": null,
+            "max_price": null,
+            "model_count": 5
+          }
+        },
+        "overall_avg_price": null,
+        "overall_min_price": null,
+        "overall_max_price": null,
+        "total_model_count": 5
+      },
+      {
+        "standardized_name": "memory-paket",
+        "display_name": "memory-paket",
+        "category": "other",
+        "category_label": "Other",
+        "brands": {
+          "Mercedes-Benz": {
+            "name": "Memory-Paket",
+            "avg_price": null,
+            "min_price": null,
+            "max_price": null,
+            "model_count": 5
+          }
+        },
+        "overall_avg_price": null,
+        "overall_min_price": null,
+        "overall_max_price": null,
+        "total_model_count": 5
+      },
+      {
+        "standardized_name": "premium_sound",
+        "display_name": "Premium audio/sound system",
+        "category": "sound",
+        "category_label": "Sound & Entertainment",
+        "brands": {
+          "Mercedes-Benz": {
+            "name": "Burmester® 3D-Surround-Soundsystem",
+            "avg_price": null,
+            "min_price": null,
+            "max_price": null,
+            "model_count": 5
+          }
+        },
+        "overall_avg_price": null,
+        "overall_min_price": null,
+        "overall_max_price": null,
+        "total_model_count": 5
+      },
+      {
+        "standardized_name": "sidebags im fond",
+        "display_name": "sidebags im fond",
+        "category": "other",
+        "category_label": "Other",
+        "brands": {
+          "Mercedes-Benz": {
+            "name": "Sidebags im Fond",
+            "avg_price": null,
+            "min_price": null,
+            "max_price": null,
+            "model_count": 5
+          }
+        },
+        "overall_avg_price": null,
+        "overall_min_price": null,
+        "overall_max_price": null,
+        "total_model_count": 5
+      },
+      {
+        "standardized_name": "steering_wheel_heating",
+        "display_name": "Heated steering wheel",
+        "category": "comfort",
+        "category_label": "Comfort",
+        "brands": {
+          "Mercedes-Benz": {
+            "name": "Lenkradheizung",
+            "avg_price": null,
+            "min_price": null,
+            "max_price": null,
+            "model_count": 5
+          }
+        },
+        "overall_avg_price": null,
+        "overall_min_price": null,
+        "overall_max_price": null,
+        "total_model_count": 5
+      },
+      {
+        "standardized_name": "adaptiver fernlicht-assistent plus",
+        "display_name": "adaptiver fernlicht-assistent plus",
+        "category": "other",
+        "category_label": "Other",
+        "brands": {
+          "Mercedes-Benz": {
+            "name": "Adaptiver Fernlicht-Assistent Plus",
+            "avg_price": null,
+            "min_price": null,
+            "max_price": null,
+            "model_count": 4
+          }
+        },
+        "overall_avg_price": null,
+        "overall_min_price": null,
+        "overall_max_price": null,
+        "total_model_count": 4
+      },
+      {
+        "standardized_name": "digitales extra: energizing comfort",
+        "display_name": "digitales extra: energizing comfort",
+        "category": "other",
+        "category_label": "Other",
+        "brands": {
+          "Mercedes-Benz": {
+            "name": "Digitales Extra: ENERGIZING COMFORT",
+            "avg_price": null,
+            "min_price": null,
+            "max_price": null,
+            "model_count": 4
+          }
+        },
+        "overall_avg_price": null,
+        "overall_min_price": null,
+        "overall_max_price": null,
+        "total_model_count": 4
+      },
+      {
+        "standardized_name": "digitales extra: mb.drive assist",
+        "display_name": "digitales extra: mb.drive assist",
+        "category": "other",
+        "category_label": "Other",
+        "brands": {
+          "Mercedes-Benz": {
+            "name": "Digitales Extra: MB.DRIVE ASSIST",
+            "avg_price": null,
+            "min_price": null,
+            "max_price": null,
+            "model_count": 4
+          }
+        },
+        "overall_avg_price": null,
+        "overall_min_price": null,
+        "overall_max_price": null,
+        "total_model_count": 4
+      },
+      {
+        "standardized_name": "digitales extra: mbux augmented reality für navigation",
+        "display_name": "digitales extra: mbux augmented reality für navigation",
+        "category": "other",
+        "category_label": "Other",
+        "brands": {
+          "Mercedes-Benz": {
+            "name": "Digitales Extra: MBUX Augmented Reality für Navigation",
+            "avg_price": null,
+            "min_price": null,
+            "max_price": null,
+            "model_count": 4
+          }
+        },
+        "overall_avg_price": null,
+        "overall_min_price": null,
+        "overall_max_price": null,
+        "total_model_count": 4
+      },
+      {
+        "standardized_name": "head_up_display",
+        "display_name": "Head-up display projecting info on windshield",
+        "category": "technology",
+        "category_label": "Technology",
+        "brands": {
+          "Mercedes-Benz": {
+            "name": "Head-up-Display",
+            "avg_price": null,
+            "min_price": null,
+            "max_price": null,
+            "model_count": 4
+          }
+        },
+        "overall_avg_price": null,
+        "overall_min_price": null,
+        "overall_max_price": null,
+        "total_model_count": 4
+      },
+      {
+        "standardized_name": "klimatisierungsautomatik thermotronic",
+        "display_name": "klimatisierungsautomatik thermotronic",
+        "category": "other",
+        "category_label": "Other",
+        "brands": {
+          "Mercedes-Benz": {
+            "name": "Klimatisierungsautomatik THERMOTRONIC",
+            "avg_price": null,
+            "min_price": null,
+            "max_price": null,
+            "model_count": 4
+          }
+        },
+        "overall_avg_price": null,
+        "overall_min_price": null,
+        "overall_max_price": null,
+        "total_model_count": 4
+      },
+      {
+        "standardized_name": "parking_assist",
+        "display_name": "Automated parking assistance",
+        "category": "safety",
+        "category_label": "Safety",
+        "brands": {
+          "Mercedes-Benz": {
+            "name": "Digitales Extra: MB.DRIVE PARKING ASSIST 360",
+            "avg_price": null,
+            "min_price": null,
+            "max_price": null,
+            "model_count": 4
+          }
+        },
+        "overall_avg_price": null,
+        "overall_min_price": null,
+        "overall_max_price": null,
+        "total_model_count": 4
+      },
+      {
+        "standardized_name": "rear_camera",
+        "display_name": "Rear-view / 360° camera system",
+        "category": "safety",
+        "category_label": "Safety",
+        "brands": {
+          "Mercedes-Benz": {
+            "name": "Digitales Extra: 360°-Kamera",
+            "avg_price": null,
+            "min_price": null,
+            "max_price": null,
+            "model_count": 4
+          }
+        },
+        "overall_avg_price": null,
+        "overall_min_price": null,
+        "overall_max_price": null,
+        "total_model_count": 4
+      },
+      {
+        "standardized_name": "winter-paket",
+        "display_name": "winter-paket",
+        "category": "other",
+        "category_label": "Other",
+        "brands": {
+          "Mercedes-Benz": {
+            "name": "Winter-Paket",
+            "avg_price": null,
+            "min_price": null,
+            "max_price": null,
+            "model_count": 4
+          }
+        },
+        "overall_avg_price": null,
+        "overall_min_price": null,
+        "overall_max_price": null,
+        "total_model_count": 4
+      },
+      {
+        "standardized_name": "digitales extra: guard 360° fahrzeugschutz plus",
+        "display_name": "digitales extra: guard 360° fahrzeugschutz plus",
+        "category": "other",
+        "category_label": "Other",
+        "brands": {
+          "Mercedes-Benz": {
+            "name": "Digitales Extra: GUARD 360° Fahrzeugschutz Plus",
+            "avg_price": null,
+            "min_price": null,
+            "max_price": null,
+            "model_count": 3
+          }
+        },
+        "overall_avg_price": null,
+        "overall_min_price": null,
+        "overall_max_price": null,
+        "total_model_count": 3
+      },
+      {
+        "standardized_name": "hands-free access",
+        "display_name": "hands-free access",
+        "category": "other",
+        "category_label": "Other",
+        "brands": {
+          "Mercedes-Benz": {
+            "name": "HANDS-FREE ACCESS",
+            "avg_price": null,
+            "min_price": null,
+            "max_price": null,
+            "model_count": 3
+          }
+        },
+        "overall_avg_price": null,
+        "overall_min_price": null,
+        "overall_max_price": null,
+        "total_model_count": 3
+      },
+      {
+        "standardized_name": "keyless-go",
+        "display_name": "keyless-go",
+        "category": "other",
+        "category_label": "Other",
+        "brands": {
+          "Mercedes-Benz": {
+            "name": "KEYLESS-GO",
+            "avg_price": null,
+            "min_price": null,
+            "max_price": null,
+            "model_count": 3
+          }
+        },
+        "overall_avg_price": null,
+        "overall_min_price": null,
+        "overall_max_price": null,
+        "total_model_count": 3
+      },
+      {
+        "standardized_name": "keyless-go komfort-paket mit digitalem extra",
+        "display_name": "keyless-go komfort-paket mit digitalem extra",
+        "category": "other",
+        "category_label": "Other",
+        "brands": {
+          "Mercedes-Benz": {
+            "name": "KEYLESS-GO Komfort-Paket mit Digitalem Extra",
+            "avg_price": null,
+            "min_price": null,
+            "max_price": null,
+            "model_count": 3
+          }
+        },
+        "overall_avg_price": null,
+        "overall_min_price": null,
+        "overall_max_price": null,
+        "total_model_count": 3
+      },
+      {
+        "standardized_name": "mbux superscreen",
+        "display_name": "mbux superscreen",
+        "category": "other",
+        "category_label": "Other",
+        "brands": {
+          "Mercedes-Benz": {
+            "name": "MBUX Superscreen",
+            "avg_price": null,
+            "min_price": null,
+            "max_price": null,
+            "model_count": 3
+          }
+        },
+        "overall_avg_price": null,
+        "overall_min_price": null,
+        "overall_max_price": null,
+        "total_model_count": 3
+      },
+      {
+        "standardized_name": "pre-safe® impuls seite",
+        "display_name": "pre-safe® impuls seite",
+        "category": "other",
+        "category_label": "Other",
+        "brands": {
+          "Mercedes-Benz": {
+            "name": "PRE-SAFE® Impuls Seite",
+            "avg_price": null,
+            "min_price": null,
+            "max_price": null,
+            "model_count": 3
+          }
+        },
+        "overall_avg_price": null,
+        "overall_min_price": null,
+        "overall_max_price": null,
+        "total_model_count": 3
+      },
+      {
+        "standardized_name": "seat_heating_front",
+        "display_name": "Heated front seats",
+        "category": "comfort",
+        "category_label": "Comfort",
+        "brands": {
+          "Mercedes-Benz": {
+            "name": "Sitzheizung im Fond",
+            "avg_price": null,
+            "min_price": null,
+            "max_price": null,
+            "model_count": 3
+          }
+        },
+        "overall_avg_price": null,
+        "overall_min_price": null,
+        "overall_max_price": null,
+        "total_model_count": 3
+      },
+      {
+        "standardized_name": "sitzklimatisierung für fahrer und beifahrer",
+        "display_name": "sitzklimatisierung für fahrer und beifahrer",
+        "category": "other",
+        "category_label": "Other",
+        "brands": {
+          "Mercedes-Benz": {
+            "name": "Sitzklimatisierung für Fahrer und Beifahrer",
+            "avg_price": null,
+            "min_price": null,
+            "max_price": null,
+            "model_count": 3
+          }
+        },
+        "overall_avg_price": null,
+        "overall_min_price": null,
+        "overall_max_price": null,
+        "total_model_count": 3
+      },
+      {
+        "standardized_name": "soundpersonalisierung",
+        "display_name": "soundpersonalisierung",
+        "category": "other",
+        "category_label": "Other",
+        "brands": {
+          "Mercedes-Benz": {
+            "name": "Soundpersonalisierung",
+            "avg_price": null,
+            "min_price": null,
+            "max_price": null,
+            "model_count": 3
+          }
+        },
+        "overall_avg_price": null,
+        "overall_min_price": null,
+        "overall_max_price": null,
+        "total_model_count": 3
+      },
+      {
+        "standardized_name": "sportsitze",
+        "display_name": "sportsitze",
+        "category": "other",
+        "category_label": "Other",
+        "brands": {
+          "Mercedes-Benz": {
+            "name": "Sportsitze",
+            "avg_price": null,
+            "min_price": null,
+            "max_price": null,
+            "model_count": 3
+          }
+        },
+        "overall_avg_price": null,
+        "overall_min_price": null,
+        "overall_max_price": null,
+        "total_model_count": 3
+      },
+      {
+        "standardized_name": "winter-paket plus mit 18\" winter-kompletträdern",
+        "display_name": "winter-paket plus mit 18\" winter-kompletträdern",
+        "category": "other",
+        "category_label": "Other",
+        "brands": {
+          "Mercedes-Benz": {
+            "name": "Winter-Paket Plus mit 18\" Winter-Kompletträdern",
+            "avg_price": null,
+            "min_price": null,
+            "max_price": null,
+            "model_count": 3
+          }
+        },
+        "overall_avg_price": null,
+        "overall_min_price": null,
+        "overall_max_price": null,
+        "total_model_count": 3
+      },
+      {
+        "standardized_name": "agility & comfort paket",
+        "display_name": "agility & comfort paket",
+        "category": "other",
+        "category_label": "Other",
+        "brands": {
+          "Mercedes-Benz": {
+            "name": "Agility & Comfort Paket",
+            "avg_price": null,
+            "min_price": null,
+            "max_price": null,
+            "model_count": 2
+          }
+        },
+        "overall_avg_price": null,
+        "overall_min_price": null,
+        "overall_max_price": null,
+        "total_model_count": 2
+      },
+      {
+        "standardized_name": "air_suspension",
+        "display_name": "Air suspension system",
+        "category": "comfort",
+        "category_label": "Comfort",
+        "brands": {
+          "Mercedes-Benz": {
+            "name": "AIRMATIC mit intelligenter Fahrwerksregelung und Digitalen Extras",
+            "avg_price": null,
+            "min_price": null,
+            "max_price": null,
+            "model_count": 2
+          }
+        },
+        "overall_avg_price": null,
+        "overall_min_price": null,
+        "overall_max_price": null,
+        "total_model_count": 2
+      },
+      {
+        "standardized_name": "digitales extra: mbux smartphone integration",
+        "display_name": "digitales extra: mbux smartphone integration",
+        "category": "other",
+        "category_label": "Other",
+        "brands": {
+          "Mercedes-Benz": {
+            "name": "Digitales Extra: MBUX Smartphone Integration",
+            "avg_price": null,
+            "min_price": null,
+            "max_price": null,
+            "model_count": 2
+          }
+        },
+        "overall_avg_price": null,
+        "overall_min_price": null,
+        "overall_max_price": null,
+        "total_model_count": 2
+      },
+      {
+        "standardized_name": "digitales extra: park-assistent",
+        "display_name": "digitales extra: park-assistent",
+        "category": "other",
+        "category_label": "Other",
+        "brands": {
+          "Mercedes-Benz": {
+            "name": "Digitales Extra: Park-Assistent",
+            "avg_price": null,
+            "min_price": null,
+            "max_price": null,
+            "model_count": 2
+          }
+        },
+        "overall_avg_price": null,
+        "overall_min_price": null,
+        "overall_max_price": null,
+        "total_model_count": 2
+      },
+      {
+        "standardized_name": "energizing air control",
+        "display_name": "energizing air control",
+        "category": "other",
+        "category_label": "Other",
+        "brands": {
+          "Mercedes-Benz": {
+            "name": "ENERGIZING AIR CONTROL",
+            "avg_price": null,
+            "min_price": null,
+            "max_price": null,
+            "model_count": 2
+          }
+        },
+        "overall_avg_price": null,
+        "overall_min_price": null,
+        "overall_max_price": null,
+        "total_model_count": 2
+      },
+      {
+        "standardized_name": "hinterachslenkung",
+        "display_name": "hinterachslenkung",
+        "category": "other",
+        "category_label": "Other",
+        "brands": {
+          "Mercedes-Benz": {
+            "name": "Hinterachslenkung",
+            "avg_price": null,
+            "min_price": null,
+            "max_price": null,
+            "model_count": 2
+          }
+        },
+        "overall_avg_price": null,
+        "overall_min_price": null,
+        "overall_max_price": null,
+        "total_model_count": 2
+      },
+      {
+        "standardized_name": "mbux hyperscreen",
+        "display_name": "mbux hyperscreen",
+        "category": "other",
+        "category_label": "Other",
+        "brands": {
+          "Mercedes-Benz": {
+            "name": "MBUX Hyperscreen",
+            "avg_price": null,
+            "min_price": null,
+            "max_price": null,
+            "model_count": 2
+          }
+        },
+        "overall_avg_price": null,
+        "overall_min_price": null,
+        "overall_max_price": null,
+        "total_model_count": 2
+      },
+      {
+        "standardized_name": "on-board ac-lader bis 22 kw",
+        "display_name": "on-board ac-lader bis 22 kw",
+        "category": "other",
+        "category_label": "Other",
+        "brands": {
+          "Mercedes-Benz": {
+            "name": "On-board AC-Lader bis 22 kW",
+            "avg_price": null,
+            "min_price": null,
+            "max_price": null,
+            "model_count": 2
+          }
+        },
+        "overall_avg_price": null,
+        "overall_min_price": null,
+        "overall_max_price": null,
+        "total_model_count": 2
+      },
+      {
+        "standardized_name": "panoramic_roof",
+        "display_name": "Panoramic glass roof / sunroof",
+        "category": "exterior",
+        "category_label": "Exterior",
+        "brands": {
+          "Mercedes-Benz": {
+            "name": "SKY CONTROL Panoramadach",
+            "avg_price": null,
+            "min_price": null,
+            "max_price": null,
+            "model_count": 2
+          }
+        },
+        "overall_avg_price": null,
+        "overall_min_price": null,
+        "overall_max_price": null,
+        "total_model_count": 2
+      },
+      {
+        "standardized_name": "winter-paket plus mit 17\" winter-kompletträdern",
+        "display_name": "winter-paket plus mit 17\" winter-kompletträdern",
+        "category": "other",
+        "category_label": "Other",
+        "brands": {
+          "Mercedes-Benz": {
+            "name": "Winter-Paket Plus mit 17\" Winter-Kompletträdern",
+            "avg_price": null,
+            "min_price": null,
+            "max_price": null,
+            "model_count": 2
+          }
+        },
+        "overall_avg_price": null,
+        "overall_min_price": null,
+        "overall_max_price": null,
+        "total_model_count": 2
+      },
+      {
+        "standardized_name": "adaptive_cruise_control",
+        "display_name": "Adaptive cruise control with distance keeping",
+        "category": "safety",
+        "category_label": "Safety",
+        "brands": {
+          "Mercedes-Benz": {
+            "name": "Digitales Extra: Aktiver Abstands-Assistent DISTRONIC",
+            "avg_price": null,
+            "min_price": null,
+            "max_price": null,
+            "model_count": 1
+          }
+        },
+        "overall_avg_price": null,
+        "overall_min_price": null,
+        "overall_max_price": null,
+        "total_model_count": 1
+      },
+      {
+        "standardized_name": "air-balance paket",
+        "display_name": "air-balance paket",
+        "category": "other",
+        "category_label": "Other",
+        "brands": {
+          "Mercedes-Benz": {
+            "name": "AIR-BALANCE Paket",
+            "avg_price": null,
+            "min_price": null,
+            "max_price": null,
+            "model_count": 1
+          }
+        },
+        "overall_avg_price": null,
+        "overall_min_price": null,
+        "overall_max_price": null,
+        "total_model_count": 1
+      },
+      {
+        "standardized_name": "aktiver lenk-assistent",
+        "display_name": "aktiver lenk-assistent",
+        "category": "other",
+        "category_label": "Other",
+        "brands": {
+          "Mercedes-Benz": {
+            "name": "Aktiver Lenk-Assistent",
+            "avg_price": null,
+            "min_price": null,
+            "max_price": null,
+            "model_count": 1
+          }
+        },
+        "overall_avg_price": null,
+        "overall_min_price": null,
+        "overall_max_price": null,
+        "total_model_count": 1
+      },
+      {
+        "standardized_name": "amg styling",
+        "display_name": "amg styling",
+        "category": "other",
+        "category_label": "Other",
+        "brands": {
+          "Mercedes-Benz": {
+            "name": "AMG Styling",
+            "avg_price": null,
+            "min_price": null,
+            "max_price": null,
+            "model_count": 1
+          }
+        },
+        "overall_avg_price": null,
+        "overall_min_price": null,
+        "overall_max_price": null,
+        "total_model_count": 1
+      },
+      {
+        "standardized_name": "assistenz-paket",
+        "display_name": "assistenz-paket",
+        "category": "other",
+        "category_label": "Other",
+        "brands": {
+          "Mercedes-Benz": {
+            "name": "Assistenz-Paket",
+            "avg_price": null,
+            "min_price": null,
+            "max_price": null,
+            "model_count": 1
+          }
+        },
+        "overall_avg_price": null,
+        "overall_min_price": null,
+        "overall_max_price": null,
+        "total_model_count": 1
+      },
+      {
+        "standardized_name": "bremsanlage mit größeren bremsscheiben an der vorderachse",
+        "display_name": "bremsanlage mit größeren bremsscheiben an der vorderachse",
+        "category": "other",
+        "category_label": "Other",
+        "brands": {
+          "Mercedes-Benz": {
+            "name": "Bremsanlage mit größeren Bremsscheiben an der Vorderachse",
+            "avg_price": null,
+            "min_price": null,
+            "max_price": null,
+            "model_count": 1
+          }
+        },
+        "overall_avg_price": null,
+        "overall_min_price": null,
+        "overall_max_price": null,
+        "total_model_count": 1
+      },
+      {
+        "standardized_name": "digitales extra: adaptiver fernlicht-assistent",
+        "display_name": "digitales extra: adaptiver fernlicht-assistent",
+        "category": "other",
+        "category_label": "Other",
+        "brands": {
+          "Mercedes-Benz": {
+            "name": "Digitales Extra: Adaptiver Fernlicht-Assistent",
+            "avg_price": null,
+            "min_price": null,
+            "max_price": null,
+            "model_count": 1
+          }
+        },
+        "overall_avg_price": null,
+        "overall_min_price": null,
+        "overall_max_price": null,
+        "total_model_count": 1
+      },
+      {
+        "standardized_name": "digitales extra: mbux entertainment 3 jahre",
+        "display_name": "digitales extra: mbux entertainment 3 jahre",
+        "category": "other",
+        "category_label": "Other",
+        "brands": {
+          "Mercedes-Benz": {
+            "name": "Digitales Extra: MBUX Entertainment 3 Jahre",
+            "avg_price": null,
+            "min_price": null,
+            "max_price": null,
+            "model_count": 1
+          }
+        },
+        "overall_avg_price": null,
+        "overall_min_price": null,
+        "overall_max_price": null,
+        "total_model_count": 1
+      },
+      {
+        "standardized_name": "digitales extra: smartphone integration",
+        "display_name": "digitales extra: smartphone integration",
+        "category": "other",
+        "category_label": "Other",
+        "brands": {
+          "Mercedes-Benz": {
+            "name": "Digitales Extra: Smartphone Integration",
+            "avg_price": null,
+            "min_price": null,
+            "max_price": null,
+            "model_count": 1
+          }
+        },
+        "overall_avg_price": null,
+        "overall_min_price": null,
+        "overall_max_price": null,
+        "total_model_count": 1
+      },
+      {
+        "standardized_name": "digitales extra: vorrüstung für digitalen fahrzeugschlüssel für smartphone",
+        "display_name": "digitales extra: vorrüstung für digitalen fahrzeugschlüssel für smartphone",
+        "category": "other",
+        "category_label": "Other",
+        "brands": {
+          "Mercedes-Benz": {
+            "name": "Digitales Extra: Vorrüstung für Digitalen Fahrzeugschlüssel für Smartphone",
+            "avg_price": null,
+            "min_price": null,
+            "max_price": null,
+            "model_count": 1
+          }
+        },
+        "overall_avg_price": null,
+        "overall_min_price": null,
+        "overall_max_price": null,
+        "total_model_count": 1
+      },
+      {
+        "standardized_name": "dynamic body control fahrwerk mit adaptiver verstelldämpfung",
+        "display_name": "dynamic body control fahrwerk mit adaptiver verstelldämpfung",
+        "category": "other",
+        "category_label": "Other",
+        "brands": {
+          "Mercedes-Benz": {
+            "name": "DYNAMIC BODY CONTROL Fahrwerk mit adaptiver Verstelldämpfung",
+            "avg_price": null,
+            "min_price": null,
+            "max_price": null,
+            "model_count": 1
+          }
+        },
+        "overall_avg_price": null,
+        "overall_min_price": null,
+        "overall_max_price": null,
+        "total_model_count": 1
+      },
+      {
+        "standardized_name": "energizing air control plus",
+        "display_name": "energizing air control plus",
+        "category": "other",
+        "category_label": "Other",
+        "brands": {
+          "Mercedes-Benz": {
+            "name": "ENERGIZING AIR CONTROL Plus",
+            "avg_price": null,
+            "min_price": null,
+            "max_price": null,
+            "model_count": 1
+          }
+        },
+        "overall_avg_price": null,
+        "overall_min_price": null,
+        "overall_max_price": null,
+        "total_model_count": 1
+      },
+      {
+        "standardized_name": "entfall farbige sicherheitsgurte",
+        "display_name": "entfall farbige sicherheitsgurte",
+        "category": "other",
+        "category_label": "Other",
+        "brands": {
+          "Mercedes-Benz": {
+            "name": "Entfall farbige Sicherheitsgurte",
+            "avg_price": null,
+            "min_price": null,
+            "max_price": null,
+            "model_count": 1
+          }
+        },
+        "overall_avg_price": null,
+        "overall_min_price": null,
+        "overall_max_price": null,
+        "total_model_count": 1
+      },
+      {
+        "standardized_name": "fahrassistenz-paket plus",
+        "display_name": "fahrassistenz-paket plus",
+        "category": "other",
+        "category_label": "Other",
+        "brands": {
+          "Mercedes-Benz": {
+            "name": "Fahrassistenz-Paket Plus",
+            "avg_price": null,
+            "min_price": null,
+            "max_price": null,
+            "model_count": 1
+          }
+        },
+        "overall_avg_price": null,
+        "overall_min_price": null,
+        "overall_max_price": null,
+        "total_model_count": 1
+      },
+      {
+        "standardized_name": "frontscheibe, beheizt",
+        "display_name": "frontscheibe, beheizt",
+        "category": "other",
+        "category_label": "Other",
+        "brands": {
+          "Mercedes-Benz": {
+            "name": "Frontscheibe, beheizt",
+            "avg_price": null,
+            "min_price": null,
+            "max_price": null,
+            "model_count": 1
+          }
+        },
+        "overall_avg_price": null,
+        "overall_min_price": null,
+        "overall_max_price": null,
+        "total_model_count": 1
+      },
+      {
+        "standardized_name": "guard 360° einbruchhemmendes verbundsicherheitsglas mit wärme- und geräuschdämmung",
+        "display_name": "guard 360° einbruchhemmendes verbundsicherheitsglas mit wärme- und geräuschdämmung",
+        "category": "other",
+        "category_label": "Other",
+        "brands": {
+          "Mercedes-Benz": {
+            "name": "GUARD 360° einbruchhemmendes Verbundsicherheitsglas mit Wärme- und Geräuschdämmung",
+            "avg_price": null,
+            "min_price": null,
+            "max_price": null,
+            "model_count": 1
+          }
+        },
+        "overall_avg_price": null,
+        "overall_min_price": null,
+        "overall_max_price": null,
+        "total_model_count": 1
+      },
+      {
+        "standardized_name": "guard 360° fahrzeugschutz plus mit digitalen extras",
+        "display_name": "guard 360° fahrzeugschutz plus mit digitalen extras",
+        "category": "other",
+        "category_label": "Other",
+        "brands": {
+          "Mercedes-Benz": {
+            "name": "GUARD 360° Fahrzeugschutz Plus mit Digitalen Extras",
+            "avg_price": null,
+            "min_price": null,
+            "max_price": null,
+            "model_count": 1
+          }
+        },
+        "overall_avg_price": null,
+        "overall_min_price": null,
+        "overall_max_price": null,
+        "total_model_count": 1
+      },
+      {
+        "standardized_name": "hinterachslenkung mit 10° lenkwinkelanpassung",
+        "display_name": "hinterachslenkung mit 10° lenkwinkelanpassung",
+        "category": "other",
+        "category_label": "Other",
+        "brands": {
+          "Mercedes-Benz": {
+            "name": "Hinterachslenkung mit 10° Lenkwinkelanpassung",
+            "avg_price": null,
+            "min_price": null,
+            "max_price": null,
+            "model_count": 1
+          }
+        },
+        "overall_avg_price": null,
+        "overall_min_price": null,
+        "overall_max_price": null,
+        "total_model_count": 1
+      },
+      {
+        "standardized_name": "hinterachslenkung mit 4,5° lenkwinkelanpassung",
+        "display_name": "hinterachslenkung mit 4,5° lenkwinkelanpassung",
+        "category": "other",
+        "category_label": "Other",
+        "brands": {
+          "Mercedes-Benz": {
+            "name": "Hinterachslenkung mit 4,5° Lenkwinkelanpassung",
+            "avg_price": null,
+            "min_price": null,
+            "max_price": null,
+            "model_count": 1
+          }
+        },
+        "overall_avg_price": null,
+        "overall_min_price": null,
+        "overall_max_price": null,
+        "total_model_count": 1
+      },
+      {
+        "standardized_name": "kabelloses ladesystem für mobile endgeräte vorn 2-fach",
+        "display_name": "kabelloses ladesystem für mobile endgeräte vorn 2-fach",
+        "category": "other",
+        "category_label": "Other",
+        "brands": {
+          "Mercedes-Benz": {
+            "name": "Kabelloses Ladesystem für mobile Endgeräte vorn 2-fach",
+            "avg_price": null,
+            "min_price": null,
+            "max_price": null,
+            "model_count": 1
+          }
+        },
+        "overall_avg_price": null,
+        "overall_min_price": null,
+        "overall_max_price": null,
+        "total_model_count": 1
+      },
+      {
+        "standardized_name": "keyless-go komfort-paket",
+        "display_name": "keyless-go komfort-paket",
+        "category": "other",
+        "category_label": "Other",
+        "brands": {
+          "Mercedes-Benz": {
+            "name": "KEYLESS-GO Komfort-Paket",
+            "avg_price": null,
+            "min_price": null,
+            "max_price": null,
+            "model_count": 1
+          }
+        },
+        "overall_avg_price": null,
+        "overall_min_price": null,
+        "overall_max_price": null,
+        "total_model_count": 1
+      },
+      {
+        "standardized_name": "keyless-go komfort-paket plus",
+        "display_name": "keyless-go komfort-paket plus",
+        "category": "other",
+        "category_label": "Other",
+        "brands": {
+          "Mercedes-Benz": {
+            "name": "KEYLESS-GO Komfort-Paket Plus",
+            "avg_price": null,
+            "min_price": null,
+            "max_price": null,
+            "model_count": 1
+          }
+        },
+        "overall_avg_price": null,
+        "overall_min_price": null,
+        "overall_max_price": null,
+        "total_model_count": 1
+      },
+      {
+        "standardized_name": "keyless-go mit flächenbündigen türgriffen",
+        "display_name": "keyless-go mit flächenbündigen türgriffen",
+        "category": "other",
+        "category_label": "Other",
+        "brands": {
+          "Mercedes-Benz": {
+            "name": "KEYLESS-GO mit flächenbündigen Türgriffen",
+            "avg_price": null,
+            "min_price": null,
+            "max_price": null,
+            "model_count": 1
+          }
+        },
+        "overall_avg_price": null,
+        "overall_min_price": null,
+        "overall_max_price": null,
+        "total_model_count": 1
+      },
+      {
+        "standardized_name": "memory park-assistent",
+        "display_name": "memory park-assistent",
+        "category": "other",
+        "category_label": "Other",
+        "brands": {
+          "Mercedes-Benz": {
+            "name": "Memory Park-Assistent",
+            "avg_price": null,
+            "min_price": null,
+            "max_price": null,
+            "model_count": 1
+          }
+        },
+        "overall_avg_price": null,
+        "overall_min_price": null,
+        "overall_max_price": null,
+        "total_model_count": 1
+      },
+      {
+        "standardized_name": "mercedes stern teilbeleuchtet",
+        "display_name": "mercedes stern teilbeleuchtet",
+        "category": "other",
+        "category_label": "Other",
+        "brands": {
+          "Mercedes-Benz": {
+            "name": "Mercedes Stern teilbeleuchtet",
+            "avg_price": null,
+            "min_price": null,
+            "max_price": null,
+            "model_count": 1
+          }
+        },
+        "overall_avg_price": null,
+        "overall_min_price": null,
+        "overall_max_price": null,
+        "total_model_count": 1
+      },
+      {
+        "standardized_name": "mercedes-benz ikonischer grill mit beleuchtetem panel",
+        "display_name": "mercedes-benz ikonischer grill mit beleuchtetem panel",
+        "category": "other",
+        "category_label": "Other",
+        "brands": {
+          "Mercedes-Benz": {
+            "name": "Mercedes-Benz ikonischer Grill mit beleuchtetem Panel",
+            "avg_price": null,
+            "min_price": null,
+            "max_price": null,
+            "model_count": 1
+          }
+        },
+        "overall_avg_price": null,
+        "overall_min_price": null,
+        "overall_max_price": null,
+        "total_model_count": 1
+      },
+      {
+        "standardized_name": "mercedes-benz ikonischer grill mit beleuchteter umrandung",
+        "display_name": "mercedes-benz ikonischer grill mit beleuchteter umrandung",
+        "category": "other",
+        "category_label": "Other",
+        "brands": {
+          "Mercedes-Benz": {
+            "name": "Mercedes-Benz ikonischer Grill mit beleuchteter Umrandung",
+            "avg_price": null,
+            "min_price": null,
+            "max_price": null,
+            "model_count": 1
+          }
+        },
+        "overall_avg_price": null,
+        "overall_min_price": null,
+        "overall_max_price": null,
+        "total_model_count": 1
+      },
+      {
+        "standardized_name": "mittelkonsole feinstrukturoptik schwarz",
+        "display_name": "mittelkonsole feinstrukturoptik schwarz",
+        "category": "other",
+        "category_label": "Other",
+        "brands": {
+          "Mercedes-Benz": {
+            "name": "Mittelkonsole Feinstrukturoptik schwarz",
+            "avg_price": null,
+            "min_price": null,
+            "max_price": null,
+            "model_count": 1
+          }
+        },
+        "overall_avg_price": null,
+        "overall_min_price": null,
+        "overall_max_price": null,
+        "total_model_count": 1
+      },
+      {
+        "standardized_name": "mittelkonsole metallstruktur",
+        "display_name": "mittelkonsole metallstruktur",
+        "category": "other",
+        "category_label": "Other",
+        "brands": {
+          "Mercedes-Benz": {
+            "name": "Mittelkonsole Metallstruktur",
+            "avg_price": null,
+            "min_price": null,
+            "max_price": null,
+            "model_count": 1
+          }
+        },
+        "overall_avg_price": null,
+        "overall_min_price": null,
+        "overall_max_price": null,
+        "total_model_count": 1
+      },
+      {
+        "standardized_name": "mittelkonsole rautenoptik silbergrau",
+        "display_name": "mittelkonsole rautenoptik silbergrau",
+        "category": "other",
+        "category_label": "Other",
+        "brands": {
+          "Mercedes-Benz": {
+            "name": "Mittelkonsole Rautenoptik silbergrau",
+            "avg_price": null,
+            "min_price": null,
+            "max_price": null,
+            "model_count": 1
+          }
+        },
+        "overall_avg_price": null,
+        "overall_min_price": null,
+        "overall_max_price": null,
+        "total_model_count": 1
+      },
+      {
+        "standardized_name": "multikontursitze für fahrer und beifahrer",
+        "display_name": "multikontursitze für fahrer und beifahrer",
+        "category": "other",
+        "category_label": "Other",
+        "brands": {
+          "Mercedes-Benz": {
+            "name": "Multikontursitze für Fahrer und Beifahrer",
+            "avg_price": null,
+            "min_price": null,
+            "max_price": null,
+            "model_count": 1
+          }
+        },
+        "overall_avg_price": null,
+        "overall_min_price": null,
+        "overall_max_price": null,
+        "total_model_count": 1
+      },
+      {
+        "standardized_name": "multikontursitze mit massagefunktion pro vorn",
+        "display_name": "multikontursitze mit massagefunktion pro vorn",
+        "category": "other",
+        "category_label": "Other",
+        "brands": {
+          "Mercedes-Benz": {
+            "name": "Multikontursitze mit Massagefunktion Pro vorn",
+            "avg_price": null,
+            "min_price": null,
+            "max_price": null,
+            "model_count": 1
+          }
+        },
+        "overall_avg_price": null,
+        "overall_min_price": null,
+        "overall_max_price": null,
+        "total_model_count": 1
+      },
+      {
+        "standardized_name": "park-paket mit remote-parkfunktionen",
+        "display_name": "park-paket mit remote-parkfunktionen",
+        "category": "other",
+        "category_label": "Other",
+        "brands": {
+          "Mercedes-Benz": {
+            "name": "Park-Paket mit Remote-Parkfunktionen",
+            "avg_price": null,
+            "min_price": null,
+            "max_price": null,
+            "model_count": 1
+          }
+        },
+        "overall_avg_price": null,
+        "overall_min_price": null,
+        "overall_max_price": null,
+        "total_model_count": 1
+      },
+      {
+        "standardized_name": "servoschließen",
+        "display_name": "servoschließen",
+        "category": "other",
+        "category_label": "Other",
+        "brands": {
+          "Mercedes-Benz": {
+            "name": "Servoschließen",
+            "avg_price": null,
+            "min_price": null,
+            "max_price": null,
+            "model_count": 1
+          }
+        },
+        "overall_avg_price": null,
+        "overall_min_price": null,
+        "overall_max_price": null,
+        "total_model_count": 1
+      },
+      {
+        "standardized_name": "sonnenblende ausziehbar",
+        "display_name": "sonnenblende ausziehbar",
+        "category": "other",
+        "category_label": "Other",
+        "brands": {
+          "Mercedes-Benz": {
+            "name": "Sonnenblende ausziehbar",
+            "avg_price": null,
+            "min_price": null,
+            "max_price": null,
+            "model_count": 1
+          }
+        },
+        "overall_avg_price": null,
+        "overall_min_price": null,
+        "overall_max_price": null,
+        "total_model_count": 1
+      },
+      {
+        "standardized_name": "sonnenrollo elektrisch für heckscheibe",
+        "display_name": "sonnenrollo elektrisch für heckscheibe",
+        "category": "other",
+        "category_label": "Other",
+        "brands": {
+          "Mercedes-Benz": {
+            "name": "Sonnenrollo elektrisch für Heckscheibe",
+            "avg_price": null,
+            "min_price": null,
+            "max_price": null,
+            "model_count": 1
+          }
+        },
+        "overall_avg_price": null,
+        "overall_min_price": null,
+        "overall_max_price": null,
+        "total_model_count": 1
+      },
+      {
+        "standardized_name": "sonnenrollos in den fondtüren links und rechts",
+        "display_name": "sonnenrollos in den fondtüren links und rechts",
+        "category": "other",
+        "category_label": "Other",
+        "brands": {
+          "Mercedes-Benz": {
+            "name": "Sonnenrollos in den Fondtüren links und rechts",
+            "avg_price": null,
+            "min_price": null,
+            "max_price": null,
+            "model_count": 1
+          }
+        },
+        "overall_avg_price": null,
+        "overall_min_price": null,
+        "overall_max_price": null,
+        "total_model_count": 1
+      },
+      {
+        "standardized_name": "sonnenschutz-paket",
+        "display_name": "sonnenschutz-paket",
+        "category": "other",
+        "category_label": "Other",
+        "brands": {
+          "Mercedes-Benz": {
+            "name": "Sonnenschutz-Paket",
+            "avg_price": null,
+            "min_price": null,
+            "max_price": null,
+            "model_count": 1
+          }
+        },
+        "overall_avg_price": null,
+        "overall_min_price": null,
+        "overall_max_price": null,
+        "total_model_count": 1
+      },
+      {
+        "standardized_name": "spiegel-paket",
+        "display_name": "spiegel-paket",
+        "category": "other",
+        "category_label": "Other",
+        "brands": {
+          "Mercedes-Benz": {
+            "name": "Spiegel-Paket",
+            "avg_price": null,
+            "min_price": null,
+            "max_price": null,
+            "model_count": 1
+          }
+        },
+        "overall_avg_price": null,
+        "overall_min_price": null,
+        "overall_max_price": null,
+        "total_model_count": 1
+      },
+      {
+        "standardized_name": "sport_suspension",
+        "display_name": "Sport-tuned suspension",
+        "category": "drivetrain",
+        "category_label": "Drivetrain",
+        "brands": {
+          "Mercedes-Benz": {
+            "name": "Sportfahrwerk",
+            "avg_price": null,
+            "min_price": null,
+            "max_price": null,
+            "model_count": 1
+          }
+        },
+        "overall_avg_price": null,
+        "overall_min_price": null,
+        "overall_max_price": null,
+        "total_model_count": 1
+      },
+      {
+        "standardized_name": "standheizung",
+        "display_name": "standheizung",
+        "category": "other",
+        "category_label": "Other",
+        "brands": {
+          "Mercedes-Benz": {
+            "name": "Standheizung",
+            "avg_price": null,
+            "min_price": null,
+            "max_price": null,
+            "model_count": 1
+          }
+        },
+        "overall_avg_price": null,
+        "overall_min_price": null,
+        "overall_max_price": null,
+        "total_model_count": 1
+      },
+      {
+        "standardized_name": "totwinkel-assistent",
+        "display_name": "totwinkel-assistent",
+        "category": "other",
+        "category_label": "Other",
+        "brands": {
+          "Mercedes-Benz": {
+            "name": "Totwinkel-Assistent",
+            "avg_price": null,
+            "min_price": null,
+            "max_price": null,
+            "model_count": 1
+          }
+        },
+        "overall_avg_price": null,
+        "overall_min_price": null,
+        "overall_max_price": null,
+        "total_model_count": 1
+      },
+      {
+        "standardized_name": "tv-tuner",
+        "display_name": "tv-tuner",
+        "category": "other",
+        "category_label": "Other",
+        "brands": {
+          "Mercedes-Benz": {
+            "name": "TV-Tuner",
+            "avg_price": null,
+            "min_price": null,
+            "max_price": null,
+            "model_count": 1
+          }
+        },
+        "overall_avg_price": null,
+        "overall_min_price": null,
+        "overall_max_price": null,
+        "total_model_count": 1
+      },
+      {
+        "standardized_name": "usb-paket plus",
+        "display_name": "usb-paket plus",
+        "category": "other",
+        "category_label": "Other",
+        "brands": {
+          "Mercedes-Benz": {
+            "name": "USB-Paket Plus",
+            "avg_price": null,
+            "min_price": null,
+            "max_price": null,
+            "model_count": 1
+          }
+        },
+        "overall_avg_price": null,
+        "overall_min_price": null,
+        "overall_max_price": null,
+        "total_model_count": 1
+      },
+      {
+        "standardized_name": "verkehrszeichen-assistent",
+        "display_name": "verkehrszeichen-assistent",
+        "category": "other",
+        "category_label": "Other",
+        "brands": {
+          "Mercedes-Benz": {
+            "name": "Verkehrszeichen-Assistent",
+            "avg_price": null,
+            "min_price": null,
+            "max_price": null,
+            "model_count": 1
+          }
+        },
+        "overall_avg_price": null,
+        "overall_min_price": null,
+        "overall_max_price": null,
+        "total_model_count": 1
+      },
+      {
+        "standardized_name": "wärme- und geräuschdämmendes akustikglas",
+        "display_name": "wärme- und geräuschdämmendes akustikglas",
+        "category": "other",
+        "category_label": "Other",
+        "brands": {
+          "Mercedes-Benz": {
+            "name": "Wärme- und geräuschdämmendes Akustikglas",
+            "avg_price": null,
+            "min_price": null,
+            "max_price": null,
+            "model_count": 1
+          }
+        },
+        "overall_avg_price": null,
+        "overall_min_price": null,
+        "overall_max_price": null,
+        "total_model_count": 1
+      }
+    ]
   },
-  "last_updated": "2026-09-07T11:16:38.770683"
+  "last_updated": "2026-09-07T13:51:18.605808"
 }
