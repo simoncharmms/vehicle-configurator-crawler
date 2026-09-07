@@ -12,15 +12,14 @@ on:
         required: false
         default: ''
 
-permissions:
-  contents: write
-  pages: write
-  id-token: write
+permissions: read-all
 
 jobs:
   crawl:
     runs-on: ubuntu-latest
     timeout-minutes: 30
+    permissions:
+      contents: write
 
     steps:
       - name: Checkout repository
@@ -41,13 +40,23 @@ jobs:
       - name: Run crawler
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          BRANDS_INPUT: ${{ github.event.inputs.brands || '' }}
         run: |
-          BRANDS_ARG=""
-          if [ -n "${{ github.event.inputs.brands }}" ]; then
-            IFS=',' read -ra BRANDS <<< "${{ github.event.inputs.brands }}"
-            BRANDS_ARG="--brands ${BRANDS[*]}"
+          if [ -n "$BRANDS_INPUT" ]; then
+            IFS=',' read -ra RAW_BRANDS <<< "$BRANDS_INPUT"
+            BRANDS=()
+            for brand in "${RAW_BRANDS[@]}"; do
+              brand="$(printf '%s' "$brand" | xargs)"
+              if ! [[ "$brand" =~ ^[a-z0-9][a-z0-9-]*$ ]]; then
+                echo "Invalid brand input: $brand" >&2
+                exit 1
+              fi
+              BRANDS+=("$brand")
+            done
+            python -m crawler.orchestrator --brands "${BRANDS[@]}" --verbose
+          else
+            python -m crawler.orchestrator --verbose
           fi
-          python -m crawler.orchestrator $BRANDS_ARG --verbose
 
       - name: Check for changes
         id: changes
@@ -57,16 +66,20 @@ jobs:
       - name: Commit and push data
         if: steps.changes.outputs.changed == 'true'
         run: |
-          git config user.name "Vehicle Crawler Bot"
-          git config user.email "crawler@users.noreply.github.com"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add data/
-          git commit -m "📊 Crawl data $(date +%Y-%m-%d)"
+          git commit -m "Update crawl data $(date +%Y-%m-%d)"
           git push
 
   deploy-dashboard:
     needs: crawl
     runs-on: ubuntu-latest
     if: always()
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
