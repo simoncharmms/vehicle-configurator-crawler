@@ -132,6 +132,17 @@ class BrowserPool:
                 logger.info("Browser pool started (Chromium)")
         return cls()
 
+    def _new_context_kwargs(self, user_agent: str | None = None) -> dict:
+        """Common browser-context keyword arguments."""
+        return {
+            "user_agent": user_agent or get_random_user_agent(),
+            "locale": "de-DE",
+            "timezone_id": "Europe/Berlin",
+            "extra_http_headers": {
+                "Accept-Language": "de-DE,de;q=0.9,en;q=0.8",
+            },
+        }
+
     async def fetch_html(
         self,
         url: str,
@@ -145,14 +156,8 @@ class BrowserPool:
         Creates a fresh browser context per call for cookie isolation,
         reusing the shared browser instance for connection pooling.
         """
-        ua = user_agent or get_random_user_agent()
         context = await self._browser.new_context(
-            user_agent=ua,
-            locale="de-DE",
-            timezone_id="Europe/Berlin",
-            extra_http_headers={
-                "Accept-Language": "de-DE,de;q=0.9,en;q=0.8",
-            },
+            **self._new_context_kwargs(user_agent),
         )
         try:
             page = await context.new_page()
@@ -168,6 +173,67 @@ class BrowserPool:
             if not html or len(html) < 100:
                 raise RuntimeError(f"Empty or minimal response from {url}")
             return html
+        finally:
+            await context.close()
+
+    async def fetch_with_api_capture(
+        self,
+        url: str,
+        *,
+        url_filter: str = "",
+        extra_wait_ms: int = 3_000,
+        timeout_ms: int = 30_000,
+        user_agent: str | None = None,
+    ) -> tuple[str, list[dict]]:
+        """Navigate to *url* and capture JSON API responses alongside the HTML.
+
+        Args:
+            url: Page URL to load.
+            url_filter: Only capture responses whose URL contains this substring.
+                        Leave empty to capture all JSON responses.
+            extra_wait_ms: Additional wait (ms) after ``domcontentloaded`` to
+                           let late XHR/fetch calls complete.
+            timeout_ms: Navigation timeout.
+
+        Returns:
+            ``(page_html, captured_responses)`` where each captured response is
+            ``{"url": str, "status": int, "data": <parsed JSON>}``.
+        """
+        context = await self._browser.new_context(
+            **self._new_context_kwargs(user_agent),
+        )
+        captured: list[dict] = []
+
+        try:
+            page = await context.new_page()
+
+            async def _on_response(response):
+                try:
+                    ct = response.headers.get("content-type", "")
+                    if "json" not in ct:
+                        return
+                    if url_filter and url_filter not in response.url:
+                        return
+                    body = await response.json()
+                    captured.append(
+                        {"url": response.url, "status": response.status, "data": body}
+                    )
+                except Exception:
+                    pass
+
+            page.on("response", _on_response)
+
+            resp = await page.goto(
+                url, wait_until="domcontentloaded", timeout=timeout_ms,
+            )
+            if resp and resp.status >= 400:
+                raise RuntimeError(f"HTTP {resp.status} for {url}")
+
+            # Give async XHR/fetch calls time to finish
+            await page.wait_for_timeout(extra_wait_ms)
+
+            html = await page.content()
+            return html, captured
         finally:
             await context.close()
 

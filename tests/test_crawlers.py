@@ -7,8 +7,15 @@ from pathlib import Path
 
 import pytest
 
-from crawler.base import VehicleData, VehicleOption, CrawlConfig, CrawlResult, EngineType
+from crawler.base import VehicleData, OptionData, VehicleOption, CrawlConfig, CrawlResult, EngineType
 from crawler.engines.base_engine import BaseEngine
+from crawler.option_mappings import (
+    normalize_option_name,
+    get_category,
+    get_brand_name,
+    get_description,
+    list_all_options,
+)
 from crawler.brands.registry import BrandRegistry
 
 # Import brands to trigger registration
@@ -51,6 +58,80 @@ class TestBaseEngine:
         assert BaseEngine.clean_text("Hello\n  World") == "Hello World"
 
 
+class TestOptionMappings:
+    """Test option name standardization."""
+
+    def test_normalize_exact_match(self):
+        assert normalize_option_name("4MATIC") == "allrad"
+        assert normalize_option_name("quattro") == "allrad"
+        assert normalize_option_name("xDrive") == "allrad"
+
+    def test_normalize_case_insensitive(self):
+        assert normalize_option_name("4matic") == "allrad"
+        assert normalize_option_name("QUATTRO") == "allrad"
+
+    def test_normalize_substring(self):
+        assert normalize_option_name("Burmester Surround-Soundsystem Premium") == "premium_sound"
+
+    def test_normalize_unknown_returns_none(self):
+        assert normalize_option_name("Unknown Widget XYZ") is None
+
+    def test_normalize_various_options(self):
+        assert normalize_option_name("Lenkradheizung") == "steering_wheel_heating"
+        assert normalize_option_name("Head-Up-Display") == "head_up_display"
+        assert normalize_option_name("Panoramadach") == "panoramic_roof"
+        assert normalize_option_name("DISTRONIC") == "adaptive_cruise_control"
+
+    def test_get_category(self):
+        assert get_category("allrad") == "drivetrain"
+        assert get_category("premium_sound") == "sound"
+        assert get_category("unknown") == "other"
+
+    def test_get_brand_name(self):
+        assert get_brand_name("allrad", "Mercedes-Benz") == "4MATIC"
+        assert get_brand_name("allrad", "Audi") == "quattro"
+
+    def test_get_description(self):
+        assert "all-wheel" in get_description("allrad").lower()
+        assert get_description("unknown") == ""
+
+    def test_list_all_options(self):
+        options = list_all_options()
+        assert len(options) >= 10
+        names = {o["standardized_name"] for o in options}
+        assert "allrad" in names
+        assert "head_up_display" in names
+
+
+class TestOptionData:
+    """Test the OptionData dataclass."""
+
+    def test_to_dict(self):
+        o = OptionData(
+            standardized_name="allrad",
+            brand_specific_name="4MATIC",
+            price=1500.0,
+            category="drivetrain",
+        )
+        d = o.to_dict()
+        assert d["standardized_name"] == "allrad"
+        assert d["brand_specific_name"] == "4MATIC"
+        assert d["price"] == 1500.0
+        assert d["category"] == "drivetrain"
+
+    def test_to_dict_strips_empty(self):
+        o = OptionData(standardized_name="test", brand_specific_name="Test")
+        d = o.to_dict()
+        assert "code" not in d  # empty string excluded
+        assert "price" not in d  # None excluded
+
+    def test_vehicle_option_alias(self):
+        """VehicleOption should be an alias for OptionData."""
+        assert VehicleOption is OptionData
+        o = VehicleOption(standardized_name="x", brand_specific_name="X", price=100)
+        assert isinstance(o, OptionData)
+
+
 class TestVehicleData:
     """Test data models."""
 
@@ -67,16 +148,36 @@ class TestVehicleData:
         assert d["model"] == "A-Klasse"
         assert d["base_price"] == 35900.0
         assert "raw_data" not in d
+        assert d["available_options"] == []
 
-    def test_option_to_dict(self):
-        o = VehicleOption(name="AMG Line", category="Packages", price=3500.0)
-        d = o.to_dict()
-        assert d["name"] == "AMG Line"
-        assert d["price"] == 3500.0
+    def test_to_dict_with_options(self):
+        v = VehicleData(
+            brand="Mercedes-Benz",
+            model="C-Klasse",
+            base_price=42000.0,
+            available_options=[
+                OptionData(
+                    standardized_name="allrad",
+                    brand_specific_name="4MATIC",
+                    price=1500.0,
+                    category="drivetrain",
+                ),
+                OptionData(
+                    standardized_name="head_up_display",
+                    brand_specific_name="Head-Up-Display",
+                    price=800.0,
+                    category="technology",
+                ),
+            ],
+        )
+        d = v.to_dict()
+        assert len(d["available_options"]) == 2
+        assert d["available_options"][0]["standardized_name"] == "allrad"
+        assert d["available_options"][1]["price"] == 800.0
 
 
 class TestCrawlResult:
-    """Test crawl result saving."""
+    """Test crawl result saving and option summary."""
 
     def test_save_json(self):
         result = CrawlResult(
@@ -104,12 +205,83 @@ class TestCrawlResult:
         with tempfile.TemporaryDirectory() as tmpdir:
             result1.save(Path(tmpdir))
             result2.save(Path(tmpdir))
-            # Both results should be in the file
             filepath = list(Path(tmpdir).glob("*.json"))[0]
             with open(filepath) as f:
                 data = json.load(f)
             assert isinstance(data, list)
             assert len(data) == 2
+
+    def test_option_summary(self):
+        result = CrawlResult(
+            brand="Mercedes-Benz",
+            vehicles=[
+                VehicleData(
+                    brand="Mercedes-Benz",
+                    model="C-Klasse",
+                    base_price=42000,
+                    available_options=[
+                        OptionData(
+                            standardized_name="allrad",
+                            brand_specific_name="4MATIC",
+                            price=1500,
+                            category="drivetrain",
+                        ),
+                        OptionData(
+                            standardized_name="head_up_display",
+                            brand_specific_name="HUD",
+                            price=800,
+                            category="technology",
+                        ),
+                    ],
+                ),
+                VehicleData(
+                    brand="Mercedes-Benz",
+                    model="E-Klasse",
+                    base_price=52000,
+                    available_options=[
+                        OptionData(
+                            standardized_name="allrad",
+                            brand_specific_name="4MATIC",
+                            price=1800,
+                            category="drivetrain",
+                        ),
+                    ],
+                ),
+            ],
+        )
+
+        summary = result.option_summary()
+        assert len(summary) == 2
+        # allrad should be first (2 models > 1 model)
+        allrad = summary[0]
+        assert allrad["standardized_name"] == "allrad"
+        assert allrad["model_count"] == 2
+        assert allrad["avg_price"] == 1650.0
+        assert allrad["min_price"] == 1500
+        assert allrad["max_price"] == 1800
+
+    def test_to_dict_includes_option_summary(self):
+        result = CrawlResult(
+            brand="TestBrand",
+            vehicles=[
+                VehicleData(
+                    brand="TestBrand",
+                    model="M1",
+                    available_options=[
+                        OptionData(
+                            standardized_name="allrad",
+                            brand_specific_name="AWD",
+                            price=2000,
+                            category="drivetrain",
+                        ),
+                    ],
+                ),
+            ],
+        )
+        d = result.to_dict()
+        assert "option_summary" in d
+        assert len(d["option_summary"]) == 1
+        assert d["option_summary"][0]["standardized_name"] == "allrad"
 
 
 class TestBrandRegistry:
@@ -148,12 +320,9 @@ class TestCrawlConfig:
 
 
 # ---------- Live crawl tests (require network + Playwright) ----------
-# Run with: pytest tests/ -m live -v
 
 @pytest.mark.live
 class TestMercedesLive:
-    """Live integration test for Mercedes crawler."""
-
     @pytest.fixture(autouse=True)
     def _setup(self):
         self.crawler = BrandRegistry.get("mercedes-benz")
@@ -167,13 +336,12 @@ class TestMercedesLive:
                 assert v.model
             print(f"\nMercedes: {len(result.vehicles)} vehicles extracted")
             for v in result.vehicles[:5]:
-                print(f"  {v.model}: €{v.base_price}")
+                opts = len(v.available_options)
+                print(f"  {v.model}: €{v.base_price}  ({opts} options)")
 
 
 @pytest.mark.live
 class TestAudiLive:
-    """Live integration test for Audi crawler."""
-
     @pytest.fixture(autouse=True)
     def _setup(self):
         self.crawler = BrandRegistry.get("audi")
@@ -187,7 +355,8 @@ class TestAudiLive:
                 assert v.model
             print(f"\nAudi: {len(result.vehicles)} vehicles extracted")
             for v in result.vehicles[:5]:
-                print(f"  {v.model}: €{v.base_price}")
+                opts = len(v.available_options)
+                print(f"  {v.model}: €{v.base_price}  ({opts} options)")
 
 
 def pytest_configure(config):

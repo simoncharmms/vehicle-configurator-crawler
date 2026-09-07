@@ -3,14 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Vehicle Configurator Price Tracker</title>
+  <title>Vehicle Option Price Tracker</title>
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <header>
-    <h1>🚗 Vehicle Configurator Price Tracker</h1>
-    <p class="subtitle">Daily price snapshots from German vehicle configurators</p>
+    <h1>🔧 Vehicle Option Price Tracker</h1>
+    <p class="subtitle">Cross-brand option pricing from German vehicle configurators</p>
   </header>
 
   <main>
@@ -22,9 +22,9 @@
         </select>
       </div>
       <div class="filter-group">
-        <label for="model-filter">Model:</label>
-        <select id="model-filter">
-          <option value="all">All Models</option>
+        <label for="category-filter">Category:</label>
+        <select id="category-filter">
+          <option value="all">All Categories</option>
         </select>
       </div>
       <div class="filter-group">
@@ -44,27 +44,53 @@
         <span class="stat-label">Brands</span>
       </div>
       <div class="stat-card">
-        <span class="stat-value" id="total-vehicles">-</span>
-        <span class="stat-label">Vehicles</span>
+        <span class="stat-value" id="total-options">-</span>
+        <span class="stat-label">Options Tracked</span>
       </div>
       <div class="stat-card">
         <span class="stat-value" id="last-updated">-</span>
         <span class="stat-label">Last Updated</span>
       </div>
       <div class="stat-card">
-        <span class="stat-value" id="avg-price">-</span>
-        <span class="stat-label">Avg. Price</span>
+        <span class="stat-value" id="avg-option-price">-</span>
+        <span class="stat-label">Avg. Option Price</span>
       </div>
     </section>
 
+    <!-- Option Price Comparison (primary view) -->
+    <section id="option-comparison">
+      <h2>⚙️ Option Price Comparison</h2>
+      <p class="section-subtitle" id="option-source-label">Cross-brand pricing for common vehicle options</p>
+      <div id="option-table-container">
+        <table id="option-table">
+          <thead>
+            <tr>
+              <th>Option</th>
+              <th>Category</th>
+              <!-- Brand columns inserted dynamically -->
+              <th>Avg Price</th>
+              <th>Range</th>
+              <th>Models</th>
+            </tr>
+          </thead>
+          <tbody id="option-table-body">
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Option Price Chart -->
     <section id="chart-section">
-      <h2>Price Trends</h2>
+      <h2>📊 Option Price Overview</h2>
       <canvas id="price-chart"></canvas>
     </section>
 
+    <!-- Vehicle List (collapsed by default) -->
     <section id="vehicle-list">
-      <h2>Current Vehicles</h2>
-      <div id="vehicles-container"></div>
+      <details>
+        <summary><h2 style="display:inline">🚗 Vehicle Models</h2></summary>
+        <div id="vehicles-container"></div>
+      </details>
     </section>
   </main>
 

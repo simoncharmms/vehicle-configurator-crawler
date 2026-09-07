@@ -1,4 +1,4 @@
-"""Orchestrator: runs all brand crawlers and saves results."""
+"""Orchestrator: runs all brand crawlers, saves results, computes option summaries."""
 
 from __future__ import annotations
 
@@ -6,11 +6,19 @@ import asyncio
 import json
 import logging
 import sys
+from collections import defaultdict
 from datetime import datetime
 from pathlib import Path
-from typing import Sequence
+from typing import Any, Sequence
 
-from crawler.base import BrandCrawler, CrawlResult
+from crawler.base import BrandCrawler, CrawlResult, OptionData
+from crawler.option_mappings import (
+    OPTION_DEFINITIONS,
+    get_category,
+    get_category_label,
+    get_description,
+    get_reference_option_summary,
+)
 from crawler.brands.registry import BrandRegistry
 
 # Import brand modules to trigger registration
@@ -28,10 +36,12 @@ async def crawl_brand(crawler: BrandCrawler) -> CrawlResult:
     logger.info(f"Starting crawl for {crawler.brand}...")
     try:
         result = await crawler.crawl()
+        vehicle_count = len(result.vehicles)
+        option_count = sum(len(v.available_options) for v in result.vehicles)
         if result.vehicles:
             logger.info(
-                f"✓ {crawler.brand}: {len(result.vehicles)} vehicles "
-                f"({result.duration_seconds:.1f}s)"
+                f"✓ {crawler.brand}: {vehicle_count} vehicles, "
+                f"{option_count} options ({result.duration_seconds:.1f}s)"
             )
         else:
             logger.warning(
@@ -72,7 +82,6 @@ async def crawl_all(
         for crawler in crawlers:
             result = await crawl_brand(crawler)
             results.append(result)
-            # Save immediately
             filepath = result.save(data_dir)
             logger.info(f"  Saved: {filepath}")
     else:
@@ -84,22 +93,36 @@ async def crawl_all(
 
     # Summary
     total_vehicles = sum(len(r.vehicles) for r in results)
+    total_options = sum(
+        len(v.available_options) for r in results for v in r.vehicles
+    )
     total_errors = sum(len(r.errors) for r in results)
     logger.info(f"\n{'='*60}")
-    logger.info(f"Crawl complete: {total_vehicles} vehicles, {total_errors} errors")
+    logger.info(
+        f"Crawl complete: {total_vehicles} vehicles, "
+        f"{total_options} options, {total_errors} errors"
+    )
     for r in results:
         status = "✓" if r.vehicles else "✗"
-        logger.info(f"  {status} {r.brand}: {len(r.vehicles)} vehicles, {len(r.errors)} errors")
+        opts = sum(len(v.available_options) for v in r.vehicles)
+        logger.info(
+            f"  {status} {r.brand}: {len(r.vehicles)} vehicles, "
+            f"{opts} options, {len(r.errors)} errors"
+        )
     logger.info(f"{'='*60}")
 
-    # Write summary index
+    # Write summary index (with option summary)
     _write_index(results, data_dir)
 
     return results
 
 
+# ------------------------------------------------------------------
+# Index & option summary
+# ------------------------------------------------------------------
+
 def _write_index(results: list[CrawlResult], data_dir: Path) -> None:
-    """Write a summary index.json for the dashboard."""
+    """Write a summary index.json including cross-brand option summary."""
     index_path = data_dir / "index.json"
     date_str = datetime.now().strftime("%Y-%m-%d")
 
@@ -119,13 +142,14 @@ def _write_index(results: list[CrawlResult], data_dir: Path) -> None:
         if brand_key not in index["brands"]:
             index["brands"][brand_key] = {"name": result.brand, "snapshots": []}
 
+        option_count = sum(len(v.available_options) for v in result.vehicles)
         snapshot = {
             "date": date_str,
             "file": f"{result.brand.lower().replace('-', '').replace(' ', '_')}_{date_str}.json",
             "vehicle_count": len(result.vehicles),
+            "option_count": option_count,
             "error_count": len(result.errors),
         }
-        # Avoid duplicate entries for same date
         existing_dates = [s["date"] for s in index["brands"][brand_key]["snapshots"]]
         if date_str not in existing_dates:
             index["brands"][brand_key]["snapshots"].append(snapshot)
@@ -134,8 +158,23 @@ def _write_index(results: list[CrawlResult], data_dir: Path) -> None:
         "date": date_str,
         "timestamp": datetime.now().isoformat(),
         "total_vehicles": sum(len(r.vehicles) for r in results),
+        "total_options": sum(
+            len(v.available_options) for r in results for v in r.vehicles
+        ),
         "brands_crawled": [r.brand for r in results],
     })
+
+    # Compute cross-brand option summary
+    # Uses live data when available, falls back to reference prices.
+    summary = _compute_option_summary(results)
+    if not summary.get("options"):
+        logger.info("No live option data — using reference prices as fallback")
+        summary = {
+            "last_updated": datetime.now().isoformat(),
+            "source": "reference",
+            "options": get_reference_option_summary(),
+        }
+    index["option_summary"] = summary
 
     index["last_updated"] = datetime.now().isoformat()
 
@@ -144,6 +183,100 @@ def _write_index(results: list[CrawlResult], data_dir: Path) -> None:
 
     logger.info(f"Updated index: {index_path}")
 
+
+def _compute_option_summary(results: list[CrawlResult]) -> dict[str, Any]:
+    """Build the cross-brand option summary for the dashboard.
+
+    Returns::
+
+        {
+            "last_updated": "2026-09-07T...",
+            "options": [
+                {
+                    "standardized_name": "allrad",
+                    "display_name": "All-Wheel Drive",
+                    "category": "drivetrain",
+                    "category_label": "Drivetrain",
+                    "brands": {
+                        "Mercedes-Benz": {
+                            "name": "4MATIC",
+                            "avg_price": 1500,
+                            "min_price": 1200,
+                            "max_price": 1800,
+                            "model_count": 5
+                        },
+                        ...
+                    },
+                    "overall_avg_price": 1650,
+                    "overall_min_price": 1200,
+                    "overall_max_price": 2000,
+                    "total_model_count": 13
+                },
+                ...
+            ]
+        }
+    """
+    # Bucket: std_name → brand → list[OptionData]
+    buckets: dict[str, dict[str, list[OptionData]]] = defaultdict(lambda: defaultdict(list))
+
+    for result in results:
+        for vehicle in result.vehicles:
+            for opt in vehicle.available_options:
+                key = opt.standardized_name or opt.brand_specific_name.lower()
+                if key:
+                    buckets[key][result.brand].append(opt)
+
+    option_rows: list[dict[str, Any]] = []
+
+    for std_name, brand_map in buckets.items():
+        defn = OPTION_DEFINITIONS.get(std_name, {})
+        all_prices: list[float] = []
+        brands_detail: dict[str, dict] = {}
+
+        for brand, opts in brand_map.items():
+            prices = [o.price for o in opts if o.price is not None and o.price > 0]
+            names = [o.brand_specific_name for o in opts if o.brand_specific_name]
+            brand_name = max(set(names), key=names.count) if names else std_name
+
+            brands_detail[brand] = {
+                "name": brand_name,
+                "avg_price": round(sum(prices) / len(prices), 2) if prices else None,
+                "min_price": min(prices) if prices else None,
+                "max_price": max(prices) if prices else None,
+                "model_count": len(opts),
+            }
+            all_prices.extend(prices)
+
+        total_count = sum(len(opts) for opts in brand_map.values())
+
+        option_rows.append({
+            "standardized_name": std_name,
+            "display_name": defn.get("description", std_name),
+            "category": get_category(std_name),
+            "category_label": get_category_label(get_category(std_name)),
+            "brands": brands_detail,
+            "overall_avg_price": (
+                round(sum(all_prices) / len(all_prices), 2)
+                if all_prices
+                else None
+            ),
+            "overall_min_price": min(all_prices) if all_prices else None,
+            "overall_max_price": max(all_prices) if all_prices else None,
+            "total_model_count": total_count,
+        })
+
+    # Sort by total model count descending, then by name
+    option_rows.sort(key=lambda r: (-r["total_model_count"], r["standardized_name"]))
+
+    return {
+        "last_updated": datetime.now().isoformat(),
+        "options": option_rows,
+    }
+
+
+# ------------------------------------------------------------------
+# CLI
+# ------------------------------------------------------------------
 
 def main():
     """CLI entry point."""
@@ -189,7 +322,6 @@ def main():
     )
 
     if args.list_brands:
-        # Trigger imports
         print("Registered brands:")
         for brand in BrandRegistry.list_brands():
             print(f"  - {brand}")

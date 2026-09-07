@@ -21,6 +21,24 @@
           "error_count": 0
         }
       ]
+    },
+    "mercedesbenz": {
+      "name": "Mercedes-Benz",
+      "snapshots": [
+        {
+          "date": "2026-09-05",
+          "file": "mercedesbenz_2026-09-05.json",
+          "vehicle_count": 0,
+          "error_count": 1
+        },
+        {
+          "date": "2026-09-07",
+          "file": "mercedesbenz_2026-09-07.json",
+          "vehicle_count": 45,
+          "option_count": 0,
+          "error_count": 0
+        }
+      ]
     }
   },
   "crawl_history": [
@@ -32,7 +50,536 @@
         "Mercedes-Benz",
         "Audi"
       ]
+    },
+    {
+      "date": "2026-09-05",
+      "timestamp": "2026-09-05T12:52:39.710172",
+      "total_vehicles": 0,
+      "brands_crawled": [
+        "Mercedes-Benz",
+        "Audi"
+      ]
+    },
+    {
+      "date": "2026-09-07",
+      "timestamp": "2026-09-07T06:53:02.962737",
+      "total_vehicles": 45,
+      "total_options": 0,
+      "brands_crawled": [
+        "Mercedes-Benz"
+      ]
+    },
+    {
+      "date": "2026-09-07",
+      "timestamp": "2026-09-07T07:00:57.052566",
+      "total_vehicles": 45,
+      "total_options": 0,
+      "brands_crawled": [
+        "Mercedes-Benz"
+      ]
     }
   ],
-  "last_updated": "2026-09-05T09:57:04"
+  "last_updated": "2026-09-07T07:00:57.052639",
+  "option_summary": {
+    "last_updated": "2026-09-07T07:00:57.052594",
+    "source": "reference",
+    "options": [
+      {
+        "standardized_name": "seat_heating_front",
+        "display_name": "Heated front seats",
+        "category": "comfort",
+        "category_label": "Comfort",
+        "brands": {
+          "Mercedes-Benz": {
+            "name": "Sitzheizung vorn",
+            "avg_price": 340,
+            "min_price": 340,
+            "max_price": 340,
+            "model_count": 4
+          },
+          "Audi": {
+            "name": "Sitzheizung vorne",
+            "avg_price": 310,
+            "min_price": 310,
+            "max_price": 310,
+            "model_count": 5
+          },
+          "Porsche": {
+            "name": "Seat Heating",
+            "avg_price": 380,
+            "min_price": 380,
+            "max_price": 380,
+            "model_count": 3
+          }
+        },
+        "overall_avg_price": 343.33,
+        "overall_min_price": 310,
+        "overall_max_price": 380,
+        "total_model_count": 12,
+        "source": "reference"
+      },
+      {
+        "standardized_name": "steering_wheel_heating",
+        "display_name": "Heated steering wheel",
+        "category": "comfort",
+        "category_label": "Comfort",
+        "brands": {
+          "Mercedes-Benz": {
+            "name": "Lenkradheizung",
+            "avg_price": 280,
+            "min_price": 280,
+            "max_price": 280,
+            "model_count": 4
+          },
+          "Audi": {
+            "name": "Lenkradheizung",
+            "avg_price": 250,
+            "min_price": 250,
+            "max_price": 250,
+            "model_count": 5
+          },
+          "Porsche": {
+            "name": "Heated Steering Wheel",
+            "avg_price": 250,
+            "min_price": 250,
+            "max_price": 250,
+            "model_count": 2
+          }
+        },
+        "overall_avg_price": 260.0,
+        "overall_min_price": 250,
+        "overall_max_price": 280,
+        "total_model_count": 11,
+        "source": "reference"
+      },
+      {
+        "standardized_name": "adaptive_cruise_control",
+        "display_name": "Adaptive cruise control with distance keeping",
+        "category": "safety",
+        "category_label": "Safety",
+        "brands": {
+          "Mercedes-Benz": {
+            "name": "DISTRONIC",
+            "avg_price": 1750,
+            "min_price": 1750,
+            "max_price": 1750,
+            "model_count": 3
+          },
+          "Audi": {
+            "name": "Adaptive Cruise Control",
+            "avg_price": 1550,
+            "min_price": 1550,
+            "max_price": 1550,
+            "model_count": 4
+          },
+          "Porsche": {
+            "name": "Adaptive Cruise Control",
+            "avg_price": 1790,
+            "min_price": 1790,
+            "max_price": 1790,
+            "model_count": 3
+          }
+        },
+        "overall_avg_price": 1696.67,
+        "overall_min_price": 1550,
+        "overall_max_price": 1790,
+        "total_model_count": 10,
+        "source": "reference"
+      },
+      {
+        "standardized_name": "air_suspension",
+        "display_name": "Air suspension system",
+        "category": "comfort",
+        "category_label": "Comfort",
+        "brands": {
+          "Mercedes-Benz": {
+            "name": "AIRMATIC",
+            "avg_price": 1850,
+            "min_price": 1850,
+            "max_price": 1850,
+            "model_count": 3
+          },
+          "Audi": {
+            "name": "Adaptive Luftfederung",
+            "avg_price": 2100,
+            "min_price": 2100,
+            "max_price": 2100,
+            "model_count": 4
+          },
+          "Porsche": {
+            "name": "Adaptive Air Suspension",
+            "avg_price": 1820,
+            "min_price": 1820,
+            "max_price": 1820,
+            "model_count": 3
+          }
+        },
+        "overall_avg_price": 1923.33,
+        "overall_min_price": 1820,
+        "overall_max_price": 2100,
+        "total_model_count": 10,
+        "source": "reference"
+      },
+      {
+        "standardized_name": "head_up_display",
+        "display_name": "Head-up display projecting info on windshield",
+        "category": "technology",
+        "category_label": "Technology",
+        "brands": {
+          "Mercedes-Benz": {
+            "name": "Head-Up-Display",
+            "avg_price": 1100,
+            "min_price": 1100,
+            "max_price": 1100,
+            "model_count": 3
+          },
+          "Audi": {
+            "name": "Head-up Display",
+            "avg_price": 1350,
+            "min_price": 1350,
+            "max_price": 1350,
+            "model_count": 4
+          },
+          "Porsche": {
+            "name": "Head-Up Display",
+            "avg_price": 1580,
+            "min_price": 1580,
+            "max_price": 1580,
+            "model_count": 3
+          }
+        },
+        "overall_avg_price": 1343.33,
+        "overall_min_price": 1100,
+        "overall_max_price": 1580,
+        "total_model_count": 10,
+        "source": "reference"
+      },
+      {
+        "standardized_name": "rear_camera",
+        "display_name": "Rear-view / 360° camera system",
+        "category": "safety",
+        "category_label": "Safety",
+        "brands": {
+          "Mercedes-Benz": {
+            "name": "Rückfahrkamera",
+            "avg_price": 450,
+            "min_price": 450,
+            "max_price": 450,
+            "model_count": 3
+          },
+          "Audi": {
+            "name": "Rückfahrkamera",
+            "avg_price": 400,
+            "min_price": 400,
+            "max_price": 400,
+            "model_count": 4
+          },
+          "Porsche": {
+            "name": "Rear Camera",
+            "avg_price": 610,
+            "min_price": 610,
+            "max_price": 610,
+            "model_count": 3
+          }
+        },
+        "overall_avg_price": 486.67,
+        "overall_min_price": 400,
+        "overall_max_price": 610,
+        "total_model_count": 10,
+        "source": "reference"
+      },
+      {
+        "standardized_name": "ambient_lighting",
+        "display_name": "Configurable ambient interior lighting",
+        "category": "interior",
+        "category_label": "Interior",
+        "brands": {
+          "Mercedes-Benz": {
+            "name": "Ambientebeleuchtung",
+            "avg_price": 480,
+            "min_price": 480,
+            "max_price": 480,
+            "model_count": 3
+          },
+          "Audi": {
+            "name": "Ambientebeleuchtung",
+            "avg_price": 420,
+            "min_price": 420,
+            "max_price": 420,
+            "model_count": 4
+          },
+          "Porsche": {
+            "name": "Ambient Lighting",
+            "avg_price": 510,
+            "min_price": 510,
+            "max_price": 510,
+            "model_count": 2
+          }
+        },
+        "overall_avg_price": 470.0,
+        "overall_min_price": 420,
+        "overall_max_price": 510,
+        "total_model_count": 9,
+        "source": "reference"
+      },
+      {
+        "standardized_name": "parking_assist",
+        "display_name": "Automated parking assistance",
+        "category": "safety",
+        "category_label": "Safety",
+        "brands": {
+          "Mercedes-Benz": {
+            "name": "PARKTRONIC",
+            "avg_price": 1200,
+            "min_price": 1200,
+            "max_price": 1200,
+            "model_count": 3
+          },
+          "Audi": {
+            "name": "Einparkassistent",
+            "avg_price": 980,
+            "min_price": 980,
+            "max_price": 980,
+            "model_count": 4
+          },
+          "Porsche": {
+            "name": "Park Assist",
+            "avg_price": 1150,
+            "min_price": 1150,
+            "max_price": 1150,
+            "model_count": 2
+          }
+        },
+        "overall_avg_price": 1110.0,
+        "overall_min_price": 980,
+        "overall_max_price": 1200,
+        "total_model_count": 9,
+        "source": "reference"
+      },
+      {
+        "standardized_name": "premium_sound",
+        "display_name": "Premium audio/sound system",
+        "category": "sound",
+        "category_label": "Sound & Entertainment",
+        "brands": {
+          "Mercedes-Benz": {
+            "name": "Burmester",
+            "avg_price": 990,
+            "min_price": 990,
+            "max_price": 990,
+            "model_count": 3
+          },
+          "Audi": {
+            "name": "Bang & Olufsen",
+            "avg_price": 850,
+            "min_price": 850,
+            "max_price": 850,
+            "model_count": 3
+          },
+          "Porsche": {
+            "name": "Bose",
+            "avg_price": 1020,
+            "min_price": 1020,
+            "max_price": 1020,
+            "model_count": 3
+          }
+        },
+        "overall_avg_price": 953.33,
+        "overall_min_price": 850,
+        "overall_max_price": 1020,
+        "total_model_count": 9,
+        "source": "reference"
+      },
+      {
+        "standardized_name": "panoramic_roof",
+        "display_name": "Panoramic glass roof / sunroof",
+        "category": "exterior",
+        "category_label": "Exterior",
+        "brands": {
+          "Mercedes-Benz": {
+            "name": "Panorama-Schiebedach",
+            "avg_price": 1500,
+            "min_price": 1500,
+            "max_price": 1500,
+            "model_count": 3
+          },
+          "Audi": {
+            "name": "Panorama-Glasdach",
+            "avg_price": 1580,
+            "min_price": 1580,
+            "max_price": 1580,
+            "model_count": 3
+          },
+          "Porsche": {
+            "name": "Panoramadach",
+            "avg_price": 1750,
+            "min_price": 1750,
+            "max_price": 1750,
+            "model_count": 2
+          }
+        },
+        "overall_avg_price": 1610.0,
+        "overall_min_price": 1500,
+        "overall_max_price": 1750,
+        "total_model_count": 8,
+        "source": "reference"
+      },
+      {
+        "standardized_name": "wireless_charging",
+        "display_name": "Wireless phone charging pad",
+        "category": "technology",
+        "category_label": "Technology",
+        "brands": {
+          "Mercedes-Benz": {
+            "name": "Kabelloses Laden",
+            "avg_price": 350,
+            "min_price": 350,
+            "max_price": 350,
+            "model_count": 3
+          },
+          "Audi": {
+            "name": "Induktives Laden",
+            "avg_price": 300,
+            "min_price": 300,
+            "max_price": 300,
+            "model_count": 3
+          },
+          "Porsche": {
+            "name": "Wireless Charging",
+            "avg_price": 380,
+            "min_price": 380,
+            "max_price": 380,
+            "model_count": 2
+          }
+        },
+        "overall_avg_price": 343.33,
+        "overall_min_price": 300,
+        "overall_max_price": 380,
+        "total_model_count": 8,
+        "source": "reference"
+      },
+      {
+        "standardized_name": "matrix_led",
+        "display_name": "Matrix/adaptive LED headlights",
+        "category": "lighting",
+        "category_label": "Lighting",
+        "brands": {
+          "Mercedes-Benz": {
+            "name": "DIGITAL LIGHT",
+            "avg_price": 1900,
+            "min_price": 1900,
+            "max_price": 1900,
+            "model_count": 2
+          },
+          "Audi": {
+            "name": "Matrix LED",
+            "avg_price": 1750,
+            "min_price": 1750,
+            "max_price": 1750,
+            "model_count": 3
+          },
+          "Porsche": {
+            "name": "LED Matrix",
+            "avg_price": 1690,
+            "min_price": 1690,
+            "max_price": 1690,
+            "model_count": 2
+          }
+        },
+        "overall_avg_price": 1780.0,
+        "overall_min_price": 1690,
+        "overall_max_price": 1900,
+        "total_model_count": 7,
+        "source": "reference"
+      },
+      {
+        "standardized_name": "sport_suspension",
+        "display_name": "Sport-tuned suspension",
+        "category": "drivetrain",
+        "category_label": "Drivetrain",
+        "brands": {
+          "Mercedes-Benz": {
+            "name": "Sportfahrwerk",
+            "avg_price": 640,
+            "min_price": 640,
+            "max_price": 640,
+            "model_count": 2
+          },
+          "Audi": {
+            "name": "Sportfahrwerk",
+            "avg_price": 590,
+            "min_price": 590,
+            "max_price": 590,
+            "model_count": 2
+          },
+          "Porsche": {
+            "name": "PASM",
+            "avg_price": 1290,
+            "min_price": 1290,
+            "max_price": 1290,
+            "model_count": 3
+          }
+        },
+        "overall_avg_price": 840.0,
+        "overall_min_price": 590,
+        "overall_max_price": 1290,
+        "total_model_count": 7,
+        "source": "reference"
+      },
+      {
+        "standardized_name": "allrad",
+        "display_name": "All-wheel drive system",
+        "category": "drivetrain",
+        "category_label": "Drivetrain",
+        "brands": {
+          "Mercedes-Benz": {
+            "name": "4MATIC",
+            "avg_price": 2856,
+            "min_price": 2856,
+            "max_price": 2856,
+            "model_count": 3
+          },
+          "Audi": {
+            "name": "quattro",
+            "avg_price": 2100,
+            "min_price": 2100,
+            "max_price": 2100,
+            "model_count": 3
+          }
+        },
+        "overall_avg_price": 2478.0,
+        "overall_min_price": 2100,
+        "overall_max_price": 2856,
+        "total_model_count": 6,
+        "source": "reference"
+      },
+      {
+        "standardized_name": "leather_seats",
+        "display_name": "Leather seat upholstery",
+        "category": "interior",
+        "category_label": "Interior",
+        "brands": {
+          "Mercedes-Benz": {
+            "name": "Lederausstattung",
+            "avg_price": 1680,
+            "min_price": 1680,
+            "max_price": 1680,
+            "model_count": 2
+          },
+          "Audi": {
+            "name": "Lederausstattung",
+            "avg_price": 1450,
+            "min_price": 1450,
+            "max_price": 1450,
+            "model_count": 2
+          }
+        },
+        "overall_avg_price": 1565.0,
+        "overall_min_price": 1450,
+        "overall_max_price": 1680,
+        "total_model_count": 4,
+        "source": "reference"
+      }
+    ]
+  }
 }

@@ -2,15 +2,13 @@
 
 robots.txt:  Only /userinfo/ disallowed — configurator paths are allowed.
 Strategy:    Static HTML extraction from Apollo GraphQL cache.
-             The Audi model overview page embeds a full GraphQL response with
-             all carline (model) data, vehicle types, and IDs.
-             Prices are fetched from individual model pages where available.
-Resilience:  Uses ``fetch_html_curl`` (rotating user-agents, built-in curl retries)
-             wrapped with ``retry_with_backoff`` (3 retries, exponential delay).
+             Option extraction via model page API capture + HTML parsing.
+Resilience:  Uses ``retry_with_backoff`` (2 attempts, exponential delay).
 """
 
 from __future__ import annotations
 
+import asyncio
 import json
 import logging
 import re
@@ -20,16 +18,28 @@ from typing import Any
 import requests
 from bs4 import BeautifulSoup
 
-from crawler.base import BrandCrawler, CrawlConfig, CrawlResult, EngineType, VehicleData
+from crawler.base import (
+    BrandCrawler, CrawlConfig, CrawlResult, EngineType,
+    OptionData, VehicleData,
+)
 from crawler.engines.base_engine import BaseEngine
+from crawler.option_mappings import normalize_option_name, get_category
 from crawler.brands.registry import BrandRegistry
+from crawler.brands.mercedes import (
+    _search_json_for_options,
+    _extract_options_from_scripts,
+    _extract_options_from_text,
+    _dedupe_options,
+)
 from crawler.network import retry_with_backoff, BrowserPool
 
 logger = logging.getLogger(__name__)
 
 MODELS_URL = "https://www.audi.de/de/brand/de/neuwagen.html"
 
-# Headers still needed for requests.Session in _enrich_prices
+# Max models to probe for options
+MAX_OPTION_PROBES = 5
+
 HEADERS = {
     "User-Agent": (
         "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) "
@@ -40,11 +50,21 @@ HEADERS = {
     "Accept-Encoding": "gzip, deflate, br",
 }
 
-
 VEHICLE_TYPE_MAP = {
     "ICEV": "petrol",
     "BEV": "electric",
     "PHEV": "hybrid",
+}
+
+# Audi model slug mapping for model pages / configurator
+_AUDI_SLUGS: dict[str, str] = {
+    "audia1": "a1", "audia3": "a3", "audia4": "a4", "audia5": "a5",
+    "audia6": "a6", "audia6e-tron": "a6-e-tron", "audia7": "a7",
+    "audia8": "a8",
+    "audiq2": "q2", "audiq3": "q3", "audiq4e-tron": "q4-e-tron",
+    "audiq5": "q5", "audiq6e-tron": "q6-e-tron",
+    "audiq8e-tron": "q8-e-tron", "audiq8": "q8",
+    "auditt": "tt", "audir8": "r8", "audie-trongt": "e-tron-gt",
 }
 
 
@@ -59,14 +79,11 @@ class AudiCrawler(BrandCrawler):
             engine=EngineType.BEAUTIFULSOUP,
             rate_limit_seconds=2.0,
             confidence=0.85,
-            notes="Static HTML extraction from Apollo GraphQL cache. No JS rendering needed.",
+            notes="Static HTML from Apollo GraphQL cache. "
+                  "Option extraction from model pages.",
         )
 
     async def crawl(self, config: CrawlConfig | None = None) -> CrawlResult:
-        """Crawl Audi models with automatic retry on transient failures.
-
-        Uses retry_with_backoff (max 2 attempts) for retriable errors.
-        """
         try:
             return await retry_with_backoff(
                 self._crawl_inner, config, max_retries=1, base_delay=1.0,
@@ -87,16 +104,15 @@ class AudiCrawler(BrandCrawler):
         try:
             logger.info(f"Audi: fetching {MODELS_URL}")
             pool = await BrowserPool.acquire()
-            # Use Playwright for better site compatibility
             html = await pool.fetch_html(MODELS_URL)
             soup = BeautifulSoup(html, "lxml")
 
-            # Strategy 1: Extract from Apollo GraphQL cache
+            # Strategy 1: Apollo GraphQL cache
             vehicles = self._extract_from_graphql_cache(soup)
             if vehicles:
                 logger.info(f"Audi: extracted {len(vehicles)} vehicles from GraphQL cache")
             else:
-                # Strategy 2: Extract model names from links
+                # Strategy 2: page links fallback
                 vehicles = self._extract_from_links(soup)
                 if vehicles:
                     logger.info(f"Audi: extracted {len(vehicles)} vehicles from page links")
@@ -104,11 +120,17 @@ class AudiCrawler(BrandCrawler):
             if not vehicles:
                 errors.append("No vehicles found in Audi page data")
 
-            # Try to get prices from individual model pages (rate limited)
+            # Enrich with prices from individual model pages
             if vehicles:
-                vehicles_with_prices = await self._enrich_prices(vehicles, cfg)
-                if vehicles_with_prices:
-                    vehicles = vehicles_with_prices
+                vehicles = await self._enrich_prices(vehicles, cfg)
+
+            # --- Option extraction phase ---
+            if vehicles:
+                try:
+                    await self._enrich_options(vehicles, pool, cfg)
+                except Exception as e:
+                    logger.warning(f"Audi: option extraction failed: {e}")
+                    errors.append(f"Option extraction partial/failed: {e}")
 
         except Exception as e:
             logger.error(f"Audi crawl error: {e}")
@@ -118,7 +140,6 @@ class AudiCrawler(BrandCrawler):
                 await BrowserPool.close()
             except Exception:
                 pass
-            raise  # Re-raise so retry_with_backoff can retry on transient errors
 
         return CrawlResult(
             brand=self.brand,
@@ -128,12 +149,12 @@ class AudiCrawler(BrandCrawler):
             duration_seconds=time.time() - start_time,
         )
 
-    def _extract_from_graphql_cache(self, soup: BeautifulSoup) -> list[VehicleData]:
-        """Extract vehicles from the embedded Apollo/GraphQL cache.
+    # ------------------------------------------------------------------
+    # Model extraction
+    # ------------------------------------------------------------------
 
-        Audi pages contain a script tag with JSON starting with {"ROOT_QUERY":...}
-        that includes a carlineStructure query result with all model groups.
-        """
+    def _extract_from_graphql_cache(self, soup: BeautifulSoup) -> list[VehicleData]:
+        """Extract vehicles from the embedded Apollo/GraphQL cache."""
         vehicles: list[VehicleData] = []
 
         for script in soup.find_all("script"):
@@ -167,17 +188,10 @@ class AudiCrawler(BrandCrawler):
                     cl_id = carline.get("identifier", {}).get("id", "")
                     vehicle_type = carline.get("vehicleType", "")
                     is_fake = carline.get("isFake", False)
-
-                    # Skip "fake" entries (discontinued / placeholder)
-                    if is_fake:
-                        continue
-
-                    if not name:
+                    if is_fake or not name:
                         continue
 
                     fuel_type = VEHICLE_TYPE_MAP.get(vehicle_type, "")
-
-                    # Build configurator URL from carline ID
                     konfig_url = (
                         f"https://www.audi.de/de/brand/de/neuwagen/konfigurator.html"
                         f"#{cl_id}"
@@ -187,14 +201,13 @@ class AudiCrawler(BrandCrawler):
                         brand=self.brand,
                         model=name,
                         variant=group_name,
-                        base_price=None,  # Prices loaded via JS, enriched below
+                        base_price=None,
                         currency="EUR",
                         fuel_type=fuel_type,
                         url=konfig_url,
                     )
                     vehicles.append(vehicle)
 
-            # Only need one GraphQL cache block
             if vehicles:
                 break
 
@@ -216,56 +229,33 @@ class AudiCrawler(BrandCrawler):
                     model=text,
                     url=f"{self.base_url}{href}" if not href.startswith("http") else href,
                 ))
-
         return vehicles
+
+    # ------------------------------------------------------------------
+    # Price enrichment (existing)
+    # ------------------------------------------------------------------
 
     async def _enrich_prices(
         self, vehicles: list[VehicleData], config: CrawlConfig
     ) -> list[VehicleData]:
-        """Try to get prices from individual model overview pages.
-
-        Rate limited to respect the server. Only fetches a sample of pages.
-        """
-        # Group by model family to avoid redundant fetches
+        """Fetch prices from individual model overview pages."""
         model_families: dict[str, list[VehicleData]] = {}
         for v in vehicles:
-            # Extract family from variant (e.g. "Audi A5" → "a5")
             family = v.variant.lower().replace("audi ", "").replace(" ", "")
             if family not in model_families:
                 model_families[family] = []
             model_families[family].append(v)
 
-        # Fetch a sample of model overview pages for prices
         session = requests.Session()
         session.headers.update(HEADERS)
-
         fetched_count = 0
-        max_fetches = 10  # Limit to avoid excessive requests
+        max_fetches = 10
 
         for family, family_vehicles in model_families.items():
             if fetched_count >= max_fetches:
                 break
 
-            # Construct model page URL
-            url_map = {
-                "audia1": "a1",
-                "audia3": "a3",
-                "audia5": "a5",
-                "audia6": "a6",
-                "audia6e-tron": "a6-e-tron",
-                "audia8": "a8",
-                "audiq3": "q3",
-                "audiq4e-tron": "q4-e-tron",
-                "audiq5": "q5",
-                "audiq6e-tron": "q6-e-tron",
-                "audiq8e-tron": "q8-e-tron",
-                "audiq8": "q8",
-                "auditt": "tt",
-                "audir8": "r8",
-                "audie-trongt": "e-tron-gt",
-            }
-
-            slug = url_map.get(family, family)
+            slug = _AUDI_SLUGS.get(family, family)
             page_url = f"https://www.audi.de/de/brand/de/neuwagen/{slug}.html"
 
             try:
@@ -279,12 +269,9 @@ class AudiCrawler(BrandCrawler):
 
                 if prices:
                     logger.info(f"Audi: found {len(prices)} prices for {family}")
-                    # Match prices to vehicles in this family
                     for v in family_vehicles:
-                        # Try exact name match first, then partial
                         price = prices.get(v.model)
                         if price is None:
-                            # Try matching by removing common prefixes
                             short_name = v.model.replace("Audi ", "")
                             price = prices.get(short_name)
                         if price is not None:
@@ -297,14 +284,9 @@ class AudiCrawler(BrandCrawler):
         return vehicles
 
     def _extract_prices_from_page(self, html: str) -> dict[str, float]:
-        """Extract model → price mapping from an Audi model page."""
         prices: dict[str, float] = {}
-
-        # Look for price patterns in the HTML
-        # Audi pages sometimes have structured data or price annotations
         soup = BeautifulSoup(html, "lxml")
 
-        # Check for JSON-LD product data
         for script in soup.find_all("script", type="application/ld+json"):
             try:
                 data = json.loads(script.string or "")
@@ -318,17 +300,14 @@ class AudiCrawler(BrandCrawler):
             except (json.JSONDecodeError, TypeError):
                 continue
 
-        # Check for price patterns in text
         price_pattern = re.compile(
             r'ab\s+([\d.]+(?:,\d{2})?)\s*€', re.IGNORECASE
         )
         for match in price_pattern.finditer(html):
             price = BaseEngine.parse_price(match.group(1))
-            if price and price > 15000:  # Sanity check for car prices
-                # Try to find the associated model name nearby
+            if price and price > 15000:
                 context_start = max(0, match.start() - 200)
                 context = html[context_start:match.start()]
-                # Look for model names in context
                 name_match = re.search(
                     r'(?:Audi\s+)?([A-Z][A-Za-z0-9\s-]{2,30}?)(?:\s*(?:<|"|$))',
                     context[-100:],
@@ -337,5 +316,61 @@ class AudiCrawler(BrandCrawler):
                     name = name_match.group(1).strip()
                     if name and name not in prices:
                         prices[name] = price
-
         return prices
+
+    # ------------------------------------------------------------------
+    # Option extraction (new)
+    # ------------------------------------------------------------------
+
+    async def _enrich_options(
+        self,
+        vehicles: list[VehicleData],
+        pool: BrowserPool,
+        config: CrawlConfig,
+    ) -> None:
+        """Probe model pages / configurator for option data."""
+        targets = [v for v in vehicles if v.url][:MAX_OPTION_PROBES]
+        if not targets:
+            return
+
+        for vehicle in targets:
+            try:
+                await asyncio.sleep(config.rate_limit_seconds)
+
+                # Build a meaningful page URL from the model variant
+                family = vehicle.variant.lower().replace("audi ", "").replace(" ", "")
+                slug = _AUDI_SLUGS.get(family, family)
+                probe_url = f"https://www.audi.de/de/brand/de/neuwagen/{slug}.html"
+
+                logger.info(f"Audi options: probing {vehicle.model} → {probe_url}")
+                html, api_responses = await pool.fetch_with_api_capture(
+                    probe_url,
+                    extra_wait_ms=4000,
+                    timeout_ms=25_000,
+                )
+
+                options: list[OptionData] = []
+
+                # 1) API response capture
+                for resp in api_responses:
+                    found = _search_json_for_options(resp.get("data"), self.brand)
+                    options.extend(found)
+
+                # 2) Embedded script data
+                if not options:
+                    soup = BeautifulSoup(html, "lxml")
+                    options = _extract_options_from_scripts(soup, self.brand)
+
+                # 3) Text regex fallback
+                if not options:
+                    options = _extract_options_from_text(html, self.brand)
+
+                if options:
+                    vehicle.available_options = _dedupe_options(options)
+                    logger.info(
+                        f"Audi options: {vehicle.model} → "
+                        f"{len(vehicle.available_options)} options"
+                    )
+
+            except Exception as e:
+                logger.debug(f"Audi options: {vehicle.model} failed: {e}")

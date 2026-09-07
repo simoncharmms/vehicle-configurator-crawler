@@ -1,23 +1,29 @@
 /**
- * Vehicle Configurator Price Tracker — Dashboard
+ * Vehicle Option Price Tracker — Dashboard
  *
- * Reads JSON data from ../data/prices/ (or from the same repo on GitHub Pages).
- * Uses Chart.js for price trend visualization.
+ * Reads JSON data from ../data/prices/ (or GitHub Pages data/prices).
+ * Displays cross-brand option pricing table + price chart.
  */
 
-// Resolve data path: works both locally (../data/prices) and on GitHub Pages (data/prices)
-const DATA_BASE = document.location.pathname.includes('/docs/') ? '../data/prices' : 'data/prices';
-let allData = {};   // { brand: { date: CrawlResult } }
+const DATA_BASE = document.location.pathname.includes('/docs/')
+  ? '../data/prices'
+  : 'data/prices';
+
+let allData = {};           // { brandKey: { name, snapshots: { date: [CrawlResult] } } }
+let optionSummary = null;   // from index.json → option_summary
 let chartInstance = null;
 
 const BRAND_COLORS = {
   'mercedes-benz': '#00adef',
   'mercedesbenz':  '#00adef',
+  'mercedes_benz': '#00adef',
   'audi':          '#bb0a30',
   'porsche':       '#c0a062',
   'bmw':           '#1c69d4',
   'tesla':         '#cc0000',
 };
+
+const BRAND_ORDER = ['Mercedes-Benz', 'Audi', 'Porsche', 'BMW'];
 
 // ---------- Initialization ----------
 
@@ -25,11 +31,12 @@ document.addEventListener('DOMContentLoaded', async () => {
   await loadData();
   populateFilters();
   updateStats();
+  renderOptionTable();
   renderChart();
   renderVehicles();
 
   document.getElementById('brand-filter').addEventListener('change', onFilterChange);
-  document.getElementById('model-filter').addEventListener('change', onFilterChange);
+  document.getElementById('category-filter').addEventListener('change', onFilterChange);
   document.getElementById('date-range').addEventListener('change', onFilterChange);
 });
 
@@ -43,6 +50,8 @@ async function loadData() {
       return;
     }
     const index = await indexResp.json();
+
+    optionSummary = index.option_summary || null;
 
     for (const [brandKey, brandInfo] of Object.entries(index.brands || {})) {
       allData[brandKey] = { name: brandInfo.name, snapshots: {} };
@@ -70,35 +79,33 @@ async function loadData() {
 
 function populateFilters() {
   const brandSel = document.getElementById('brand-filter');
-  const models = new Set();
+  const categories = new Set();
 
   for (const [key, brand] of Object.entries(allData)) {
     const opt = document.createElement('option');
     opt.value = key;
     opt.textContent = brand.name;
     brandSel.appendChild(opt);
+  }
 
-    for (const snapshots of Object.values(brand.snapshots)) {
-      for (const snap of snapshots) {
-        for (const v of (snap.vehicles || [])) {
-          models.add(v.model);
-        }
-      }
+  // Populate categories from option summary
+  if (optionSummary && optionSummary.options) {
+    for (const row of optionSummary.options) {
+      if (row.category_label) categories.add(row.category_label);
     }
   }
 
-  const modelSel = document.getElementById('model-filter');
-  for (const m of [...models].sort()) {
+  const catSel = document.getElementById('category-filter');
+  for (const c of [...categories].sort()) {
     const opt = document.createElement('option');
-    opt.value = m;
-    opt.textContent = m;
-    modelSel.appendChild(opt);
+    opt.value = c;
+    opt.textContent = c;
+    catSel.appendChild(opt);
   }
 }
 
 function getFilteredVehicles() {
   const brandFilter = document.getElementById('brand-filter').value;
-  const modelFilter = document.getElementById('model-filter').value;
   const dateRange = document.getElementById('date-range').value;
 
   const cutoff = dateRange === 'all' ? null : new Date();
@@ -114,7 +121,6 @@ function getFilteredVehicles() {
 
       for (const snap of snapshots) {
         for (const v of (snap.vehicles || [])) {
-          if (modelFilter !== 'all' && v.model !== modelFilter) continue;
           result.push({ ...v, date, brandKey: key, brandName: brand.name });
         }
       }
@@ -126,6 +132,7 @@ function getFilteredVehicles() {
 
 function onFilterChange() {
   updateStats();
+  renderOptionTable();
   renderChart();
   renderVehicles();
 }
@@ -135,74 +142,220 @@ function onFilterChange() {
 function updateStats() {
   const vehicles = getFilteredVehicles();
   const brands = new Set(vehicles.map(v => v.brandKey));
-  const models = new Set(vehicles.map(v => v.model));
-  const prices = vehicles.filter(v => v.base_price).map(v => v.base_price);
-  const avgPrice = prices.length ? prices.reduce((a, b) => a + b, 0) / prices.length : 0;
 
-  document.getElementById('total-brands').textContent = brands.size;
-  document.getElementById('total-vehicles').textContent = models.size;
-  document.getElementById('avg-price').textContent = avgPrice
-    ? `€${Math.round(avgPrice).toLocaleString('de-DE')}`
+  // Count unique options
+  const optionNames = new Set();
+  let optionPriceSum = 0;
+  let optionPriceCount = 0;
+
+  for (const v of vehicles) {
+    for (const opt of (v.available_options || [])) {
+      const key = opt.standardized_name || opt.brand_specific_name;
+      if (key) optionNames.add(key);
+      if (opt.price && opt.price > 0) {
+        optionPriceSum += opt.price;
+        optionPriceCount++;
+      }
+    }
+  }
+
+  // Also count from summary
+  if (optionSummary && optionSummary.options) {
+    for (const row of optionSummary.options) {
+      optionNames.add(row.standardized_name);
+    }
+  }
+
+  const avgOptPrice = optionPriceCount
+    ? optionPriceSum / optionPriceCount
+    : (optionSummary && optionSummary.options
+      ? avgFromSummary(optionSummary.options)
+      : 0);
+
+  document.getElementById('total-brands').textContent = brands.size || Object.keys(allData).length;
+  document.getElementById('total-options').textContent = optionNames.size || '-';
+  document.getElementById('avg-option-price').textContent = avgOptPrice
+    ? `€${Math.round(avgOptPrice).toLocaleString('de-DE')}`
     : '-';
 
-  // Last updated
   const dates = vehicles.map(v => v.date).sort();
   document.getElementById('last-updated').textContent = dates.length
     ? dates[dates.length - 1]
-    : '-';
+    : (optionSummary ? optionSummary.last_updated?.split('T')[0] || '-' : '-');
+}
+
+function avgFromSummary(options) {
+  const prices = options.filter(o => o.overall_avg_price).map(o => o.overall_avg_price);
+  return prices.length ? prices.reduce((a, b) => a + b, 0) / prices.length : 0;
+}
+
+// ---------- Option Comparison Table ----------
+
+function renderOptionTable() {
+  const container = document.getElementById('option-table-container');
+  const tbody = document.getElementById('option-table-body');
+  const thead = document.querySelector('#option-table thead tr');
+  const brandFilter = document.getElementById('brand-filter').value;
+  const catFilter = document.getElementById('category-filter').value;
+
+  if (!optionSummary || !optionSummary.options || optionSummary.options.length === 0) {
+    tbody.innerHTML = '<tr><td colspan="99" class="no-data-cell">No option data available yet. Run the crawler to extract option pricing.</td></tr>';
+    return;
+  }
+
+  // Show data source indicator
+  const sourceLabel = document.getElementById('option-source-label');
+  if (sourceLabel) {
+    if (optionSummary.source === 'reference') {
+      sourceLabel.innerHTML = 'Reference prices from German configurators <span class="source-badge">Reference Data</span>';
+    } else {
+      sourceLabel.textContent = 'Live-extracted pricing from German vehicle configurators';
+    }
+  }
+
+  // Determine which brands appear in the data
+  const brandSet = new Set();
+  for (const row of optionSummary.options) {
+    for (const b of Object.keys(row.brands || {})) {
+      brandSet.add(b);
+    }
+  }
+  const brands = BRAND_ORDER.filter(b => brandSet.has(b));
+  // Add any brands not in the predefined order
+  for (const b of brandSet) {
+    if (!brands.includes(b)) brands.push(b);
+  }
+
+  // Build header
+  thead.innerHTML = `
+    <th class="col-option">Option</th>
+    <th class="col-category">Category</th>
+    ${brands.map(b => `<th class="col-brand">${escapeHtml(b)}</th>`).join('')}
+    <th class="col-price">Avg Price</th>
+    <th class="col-range">Range</th>
+    <th class="col-count">Models</th>
+  `;
+
+  // Filter options
+  let rows = optionSummary.options;
+  if (catFilter !== 'all') {
+    rows = rows.filter(r => r.category_label === catFilter);
+  }
+  if (brandFilter !== 'all') {
+    const brandName = allData[brandFilter]?.name;
+    if (brandName) {
+      rows = rows.filter(r => r.brands && r.brands[brandName]);
+    }
+  }
+
+  if (rows.length === 0) {
+    tbody.innerHTML = '<tr><td colspan="99" class="no-data-cell">No options match the current filters.</td></tr>';
+    return;
+  }
+
+  tbody.innerHTML = rows.map(row => {
+    const brandCells = brands.map(b => {
+      const info = (row.brands || {})[b];
+      if (!info) return '<td class="col-brand brand-cell">—</td>';
+      const priceStr = info.avg_price != null
+        ? `<span class="brand-price">€${Math.round(info.avg_price).toLocaleString('de-DE')}</span>`
+        : '';
+      return `<td class="col-brand brand-cell">
+        <span class="brand-option-name">${escapeHtml(info.name)}</span>
+        ${priceStr}
+      </td>`;
+    }).join('');
+
+    const avgPrice = row.overall_avg_price != null
+      ? `€${Math.round(row.overall_avg_price).toLocaleString('de-DE')}`
+      : '—';
+    const range = (row.overall_min_price != null && row.overall_max_price != null)
+      ? `€${Math.round(row.overall_min_price).toLocaleString('de-DE')} – €${Math.round(row.overall_max_price).toLocaleString('de-DE')}`
+      : '—';
+
+    return `<tr>
+      <td class="col-option">
+        <span class="option-name">${escapeHtml(row.display_name || row.standardized_name)}</span>
+        <span class="option-key">${escapeHtml(row.standardized_name)}</span>
+      </td>
+      <td class="col-category"><span class="category-badge">${escapeHtml(row.category_label || row.category)}</span></td>
+      ${brandCells}
+      <td class="col-price avg-price">${avgPrice}</td>
+      <td class="col-range">${range}</td>
+      <td class="col-count">${row.total_model_count || '—'}</td>
+    </tr>`;
+  }).join('');
 }
 
 // ---------- Chart ----------
 
 function renderChart() {
-  const vehicles = getFilteredVehicles();
   const ctx = document.getElementById('price-chart').getContext('2d');
-
   if (chartInstance) chartInstance.destroy();
 
-  // Group by model + date for trend lines
-  const modelDates = {};
-  for (const v of vehicles) {
-    if (!v.base_price) continue;
-    const key = `${v.brandName} ${v.model}`;
-    if (!modelDates[key]) modelDates[key] = { brand: v.brandKey, points: {} };
-    modelDates[key].points[v.date] = v.base_price;
-  }
-
-  // Get all unique dates sorted
-  const allDates = [...new Set(vehicles.map(v => v.date))].sort();
-
-  if (allDates.length === 0) {
-    showNoData('No price data to chart.');
+  if (!optionSummary || !optionSummary.options || optionSummary.options.length === 0) {
     return;
   }
 
-  const datasets = Object.entries(modelDates).map(([label, info]) => {
-    const color = BRAND_COLORS[info.brand] || '#888';
+  const catFilter = document.getElementById('category-filter').value;
+  const brandFilter = document.getElementById('brand-filter').value;
+
+  let rows = optionSummary.options.filter(r => r.overall_avg_price != null);
+  if (catFilter !== 'all') {
+    rows = rows.filter(r => r.category_label === catFilter);
+  }
+
+  // Take top 15 by model count
+  rows = rows.slice(0, 15);
+
+  if (rows.length === 0) return;
+
+  // Determine brands to show
+  const brandSet = new Set();
+  for (const row of rows) {
+    for (const b of Object.keys(row.brands || {})) {
+      brandSet.add(b);
+    }
+  }
+  const brands = BRAND_ORDER.filter(b => brandSet.has(b));
+  for (const b of brandSet) {
+    if (!brands.includes(b)) brands.push(b);
+  }
+
+  // Filter brands
+  const filteredBrands = brandFilter !== 'all'
+    ? brands.filter(b => {
+        const brandName = allData[brandFilter]?.name;
+        return b === brandName;
+      })
+    : brands;
+
+  const labels = rows.map(r => r.display_name || r.standardized_name);
+
+  const datasets = filteredBrands.map(brand => {
+    const brandKey = Object.keys(BRAND_COLORS).find(k =>
+      brand.toLowerCase().replace(/[- ]/g, '').includes(k.replace(/[_-]/g, ''))
+    );
+    const color = BRAND_COLORS[brandKey] || '#888';
+
     return {
-      label,
-      data: allDates.map(d => info.points[d] || null),
+      label: brand,
+      data: rows.map(r => {
+        const info = (r.brands || {})[brand];
+        return info?.avg_price ?? null;
+      }),
+      backgroundColor: color + 'cc',
       borderColor: color,
-      backgroundColor: color + '20',
-      tension: 0.3,
-      spanGaps: true,
-      pointRadius: 3,
+      borderWidth: 1,
     };
   });
 
-  // Limit to top 15 by latest price to avoid legend clutter
-  datasets.sort((a, b) => {
-    const lastA = a.data.filter(x => x !== null).pop() || 0;
-    const lastB = b.data.filter(x => x !== null).pop() || 0;
-    return lastB - lastA;
-  });
-  const limited = datasets.slice(0, 15);
-
   chartInstance = new Chart(ctx, {
-    type: 'line',
-    data: { labels: allDates, datasets: limited },
+    type: 'bar',
+    data: { labels, datasets },
     options: {
       responsive: true,
+      indexAxis: 'y',
       interaction: { mode: 'index', intersect: false },
       plugins: {
         legend: {
@@ -211,20 +364,26 @@ function renderChart() {
         },
         tooltip: {
           callbacks: {
-            label: (ctx) => `${ctx.dataset.label}: €${ctx.parsed.y?.toLocaleString('de-DE') || '-'}`,
+            label: ctx => {
+              const val = ctx.parsed.x;
+              return val != null
+                ? `${ctx.dataset.label}: €${Math.round(val).toLocaleString('de-DE')}`
+                : `${ctx.dataset.label}: —`;
+            },
           },
         },
       },
       scales: {
         x: {
-          ticks: { color: '#8b8fa3' },
-          grid: { color: '#2a2d3a' },
-        },
-        y: {
           ticks: {
             color: '#8b8fa3',
-            callback: (v) => `€${(v / 1000).toFixed(0)}k`,
+            callback: v => `€${(v / 1000).toFixed(1)}k`,
           },
+          grid: { color: '#2a2d3a' },
+          title: { display: true, text: 'Average Price (EUR)', color: '#8b8fa3' },
+        },
+        y: {
+          ticks: { color: '#8b8fa3', font: { size: 11 } },
           grid: { color: '#2a2d3a' },
         },
       },
@@ -238,7 +397,6 @@ function renderVehicles() {
   const container = document.getElementById('vehicles-container');
   const vehicles = getFilteredVehicles();
 
-  // Show latest snapshot per model
   const latest = {};
   for (const v of vehicles) {
     const key = `${v.brandKey}|${v.model}`;
@@ -254,15 +412,22 @@ function renderVehicles() {
     return;
   }
 
-  container.innerHTML = sorted.map(v => `
+  container.innerHTML = sorted.map(v => {
+    const optCount = (v.available_options || []).length;
+    const optBadge = optCount > 0
+      ? `<span class="option-count">${optCount} options</span>`
+      : '';
+
+    return `
     <div class="vehicle-card">
       <span class="brand">${escapeHtml(v.brandName || v.brand)}</span>
       <div class="model">${escapeHtml(v.model)}</div>
       ${v.variant ? `<div class="variant">${escapeHtml(v.variant)}</div>` : ''}
       <div class="price">${v.base_price ? `€${v.base_price.toLocaleString('de-DE')}` : 'Price on request'}</div>
       ${v.fuel_type ? `<div class="fuel">${escapeHtml(v.fuel_type)}</div>` : ''}
-    </div>
-  `).join('');
+      ${optBadge}
+    </div>`;
+  }).join('');
 }
 
 // ---------- Helpers ----------
@@ -270,6 +435,8 @@ function renderVehicles() {
 function showNoData(msg) {
   document.getElementById('vehicles-container').innerHTML =
     `<div class="no-data"><p>${msg}</p></div>`;
+  document.getElementById('option-table-body').innerHTML =
+    `<tr><td colspan="99" class="no-data-cell">${msg}</td></tr>`;
 }
 
 function escapeHtml(str) {

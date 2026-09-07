@@ -17,16 +17,25 @@ class EngineType(str, Enum):
 
 
 @dataclass
-class VehicleOption:
-    """A single configurable option (color, package, accessory, etc.)."""
-    name: str
-    category: str = ""          # e.g. "Exterior", "Interior", "Packages"
-    price: float | None = None  # EUR, None if included
+class OptionData:
+    """Single option/feature available for a vehicle.
+
+    Carries both the standardized (cross-brand) name and the original
+    brand-specific label so the dashboard can display both.
+    """
+    standardized_name: str = ""       # e.g. "allrad"
+    brand_specific_name: str = ""     # e.g. "4MATIC"
+    price: float | None = None        # EUR (None if included / unknown)
+    category: str = ""                # e.g. "drivetrain", "comfort"
+    code: str = ""                    # OEM option code if available
     currency: str = "EUR"
-    code: str = ""              # OEM option code if available
 
     def to_dict(self) -> dict[str, Any]:
         return {k: v for k, v in asdict(self).items() if v is not None and v != ""}
+
+
+# Backward compatibility alias
+VehicleOption = OptionData
 
 
 @dataclass
@@ -38,7 +47,7 @@ class VehicleData:
     base_price: float | None = None
     currency: str = "EUR"
     fuel_type: str = ""         # "electric", "hybrid", "petrol", "diesel"
-    options: list[VehicleOption] = field(default_factory=list)
+    available_options: list[OptionData] = field(default_factory=list)
     url: str = ""
     image_url: str = ""
     raw_data: dict[str, Any] = field(default_factory=dict)
@@ -46,7 +55,7 @@ class VehicleData:
     def to_dict(self) -> dict[str, Any]:
         d = asdict(self)
         d.pop("raw_data", None)
-        d["options"] = [o.to_dict() for o in self.options]
+        d["available_options"] = [o.to_dict() for o in self.available_options]
         return d
 
 
@@ -78,6 +87,47 @@ class CrawlResult:
     strategy_used: CrawlConfig | None = None
     duration_seconds: float = 0.0
 
+    # --- helpers ---
+
+    def all_options(self) -> list[OptionData]:
+        """Flatten available_options from every vehicle in this result."""
+        opts: list[OptionData] = []
+        for v in self.vehicles:
+            opts.extend(v.available_options)
+        return opts
+
+    def option_summary(self) -> list[dict[str, Any]]:
+        """Compute per-standardized-option stats for this brand result.
+
+        Returns a list of dicts sorted by model_count descending:
+            {standardized_name, brand_specific_name, avg_price, min_price,
+             max_price, model_count, category}
+        """
+        from collections import defaultdict
+        buckets: dict[str, list[OptionData]] = defaultdict(list)
+        for opt in self.all_options():
+            if opt.standardized_name:
+                buckets[opt.standardized_name].append(opt)
+
+        summary = []
+        for std_name, opts in buckets.items():
+            prices = [o.price for o in opts if o.price is not None and o.price > 0]
+            # Use the most-frequent brand_specific_name
+            names = [o.brand_specific_name for o in opts if o.brand_specific_name]
+            brand_name = max(set(names), key=names.count) if names else std_name
+            summary.append({
+                "standardized_name": std_name,
+                "brand_specific_name": brand_name,
+                "avg_price": round(sum(prices) / len(prices), 2) if prices else None,
+                "min_price": min(prices) if prices else None,
+                "max_price": max(prices) if prices else None,
+                "model_count": len(opts),
+                "category": opts[0].category if opts else "",
+            })
+
+        summary.sort(key=lambda s: s["model_count"], reverse=True)
+        return summary
+
     def to_dict(self) -> dict[str, Any]:
         return {
             "brand": self.brand,
@@ -87,6 +137,7 @@ class CrawlResult:
             "errors": self.errors,
             "strategy": self.strategy_used.to_dict() if self.strategy_used else None,
             "duration_seconds": round(self.duration_seconds, 2),
+            "option_summary": self.option_summary(),
         }
 
     def save(self, data_dir: Path) -> Path:
