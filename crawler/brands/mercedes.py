@@ -30,7 +30,7 @@ logger = logging.getLogger(__name__)
 MODELS_URL = "https://www.mercedes-benz.de/passengercars/models.html"
 
 # Max models to probe for option data (rate-limited)
-MAX_OPTION_PROBES = 25  # Increased from 5 for better cross-brand coverage
+MAX_OPTION_PROBES = 50  # Probe all model families for full option coverage
 
 # Vehicle type mapping for Mercedes tags
 FUEL_MAP = {
