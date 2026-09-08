@@ -148,5 +148,80 @@
     },
     "duration_seconds": 21.0,
     "option_summary": []
+  },
+  {
+    "brand": "XPeng",
+    "timestamp": "2026-09-08T08:45:56.776797+00:00",
+    "vehicle_count": 5,
+    "vehicles": [
+      {
+        "brand": "XPeng",
+        "model": "XPENG L03",
+        "variant": "",
+        "base_price": 35600.0,
+        "currency": "EUR",
+        "fuel_type": "electric",
+        "available_options": [],
+        "url": "https://www.xpeng.com/de/model/L03",
+        "image_url": ""
+      },
+      {
+        "brand": "XPeng",
+        "model": "XPENG G6",
+        "variant": "",
+        "base_price": 43600.0,
+        "currency": "EUR",
+        "fuel_type": "electric",
+        "available_options": [],
+        "url": "https://www.xpeng.com/de/model/g6",
+        "image_url": ""
+      },
+      {
+        "brand": "XPeng",
+        "model": "XPENG G9",
+        "variant": "",
+        "base_price": 59600.0,
+        "currency": "EUR",
+        "fuel_type": "electric",
+        "available_options": [],
+        "url": "https://www.xpeng.com/de/model/g9",
+        "image_url": ""
+      },
+      {
+        "brand": "XPeng",
+        "model": "XPENG P7+",
+        "variant": "",
+        "base_price": 46600.0,
+        "currency": "EUR",
+        "fuel_type": "electric",
+        "available_options": [],
+        "url": "https://www.xpeng.com/de/model/p7plus",
+        "image_url": ""
+      },
+      {
+        "brand": "XPeng",
+        "model": "XPENG X9",
+        "variant": "",
+        "base_price": null,
+        "currency": "EUR",
+        "fuel_type": "electric",
+        "available_options": [],
+        "url": "https://www.xpeng.com/de/model/x9",
+        "image_url": ""
+      }
+    ],
+    "errors": [],
+    "strategy": {
+      "engine": "beautifulsoup",
+      "selectors": {},
+      "js_triggers": [],
+      "wait_selector": "",
+      "wait_timeout_ms": 30000,
+      "rate_limit_seconds": 3.0,
+      "confidence": 0.8,
+      "notes": "Curl fetch + model page scraping (ab prices in static HTML)."
+    },
+    "duration_seconds": 20.8,
+    "option_summary": []
   }
 ]

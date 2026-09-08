@@ -1,21 +1,44 @@
-{
-  "brand": "Audi",
-  "timestamp": "2026-09-08T05:54:43.680386+00:00",
-  "vehicle_count": 0,
-  "vehicles": [],
-  "errors": [
-    "HTTP 403 — Audi is blocking automated access. Vehicle data unavailable this run."
-  ],
-  "strategy": {
-    "engine": "beautifulsoup",
-    "selectors": {},
-    "js_triggers": [],
-    "wait_selector": "",
-    "wait_timeout_ms": 30000,
-    "rate_limit_seconds": 2.0,
-    "confidence": 0.85,
-    "notes": "Static HTML from Apollo GraphQL cache. Option extraction from model pages."
+[
+  {
+    "brand": "Audi",
+    "timestamp": "2026-09-08T05:54:43.680386+00:00",
+    "vehicle_count": 0,
+    "vehicles": [],
+    "errors": [
+      "HTTP 403 — Audi is blocking automated access. Vehicle data unavailable this run."
+    ],
+    "strategy": {
+      "engine": "beautifulsoup",
+      "selectors": {},
+      "js_triggers": [],
+      "wait_selector": "",
+      "wait_timeout_ms": 30000,
+      "rate_limit_seconds": 2.0,
+      "confidence": 0.85,
+      "notes": "Static HTML from Apollo GraphQL cache. Option extraction from model pages."
+    },
+    "duration_seconds": 15.89,
+    "option_summary": []
   },
-  "duration_seconds": 15.89,
-  "option_summary": []
-}
+  {
+    "brand": "Audi",
+    "timestamp": "2026-09-08T08:43:07.778686+00:00",
+    "vehicle_count": 0,
+    "vehicles": [],
+    "errors": [
+      "HTTP 403 — Audi is blocking automated access. Vehicle data unavailable this run."
+    ],
+    "strategy": {
+      "engine": "beautifulsoup",
+      "selectors": {},
+      "js_triggers": [],
+      "wait_selector": "",
+      "wait_timeout_ms": 30000,
+      "rate_limit_seconds": 2.0,
+      "confidence": 0.85,
+      "notes": "Static HTML from Apollo GraphQL cache. Option extraction from model pages."
+    },
+    "duration_seconds": 14.52,
+    "option_summary": []
+  }
+]
