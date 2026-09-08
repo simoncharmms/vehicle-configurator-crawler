@@ -1,0 +1,143 @@
+[
+  {
+    "brand": "BYD",
+    "timestamp": "2026-09-07T06:11:26.514941+00:00",
+    "vehicle_count": 11,
+    "vehicles": [
+      {
+        "brand": "BYD",
+        "model": "BYD DOLPHIN SURF",
+        "variant": "",
+        "base_price": 22990.0,
+        "currency": "EUR",
+        "fuel_type": "electric",
+        "available_options": [],
+        "url": "https://www.byd.com/de",
+        "image_url": ""
+      },
+      {
+        "brand": "BYD",
+        "model": "BYD ATTO 3 EVO",
+        "variant": "",
+        "base_price": 44990.0,
+        "currency": "EUR",
+        "fuel_type": "electric",
+        "available_options": [],
+        "url": "https://www.byd.com/de",
+        "image_url": ""
+      },
+      {
+        "brand": "BYD",
+        "model": "BYD SEAL",
+        "variant": "",
+        "base_price": 47990.0,
+        "currency": "EUR",
+        "fuel_type": "electric",
+        "available_options": [],
+        "url": "https://www.byd.com/de",
+        "image_url": ""
+      },
+      {
+        "brand": "BYD",
+        "model": "BYD DOLPHIN G DM-i",
+        "variant": "",
+        "base_price": 28990.0,
+        "currency": "EUR",
+        "fuel_type": "hybrid",
+        "available_options": [],
+        "url": "https://www.byd.com/de",
+        "image_url": ""
+      },
+      {
+        "brand": "BYD",
+        "model": "BYD ATTO 2",
+        "variant": "",
+        "base_price": 41990.0,
+        "currency": "EUR",
+        "fuel_type": "electric",
+        "available_options": [],
+        "url": "https://www.byd.com/de",
+        "image_url": ""
+      },
+      {
+        "brand": "BYD",
+        "model": "BYD ATTO 2 DM-i",
+        "variant": "",
+        "base_price": 35990.0,
+        "currency": "EUR",
+        "fuel_type": "hybrid",
+        "available_options": [],
+        "url": "https://www.byd.com/de",
+        "image_url": ""
+      },
+      {
+        "brand": "BYD",
+        "model": "BYD SEAL 6 DM-i TOURING",
+        "variant": "",
+        "base_price": 42990.0,
+        "currency": "EUR",
+        "fuel_type": "hybrid",
+        "available_options": [],
+        "url": "https://www.byd.com/de",
+        "image_url": ""
+      },
+      {
+        "brand": "BYD",
+        "model": "BYD SEALION 7",
+        "variant": "",
+        "base_price": 49990.0,
+        "currency": "EUR",
+        "fuel_type": "electric",
+        "available_options": [],
+        "url": "https://www.byd.com/de",
+        "image_url": ""
+      },
+      {
+        "brand": "BYD",
+        "model": "BYD SEAL U DM-i",
+        "variant": "",
+        "base_price": 39990.0,
+        "currency": "EUR",
+        "fuel_type": "hybrid",
+        "available_options": [],
+        "url": "https://www.byd.com/de",
+        "image_url": ""
+      },
+      {
+        "brand": "BYD",
+        "model": "BYD TANG",
+        "variant": "",
+        "base_price": 75000.0,
+        "currency": "EUR",
+        "fuel_type": "electric",
+        "available_options": [],
+        "url": "https://www.byd.com/de",
+        "image_url": ""
+      },
+      {
+        "brand": "BYD",
+        "model": "BYD DOLPHIN",
+        "variant": "",
+        "base_price": 33990.0,
+        "currency": "EUR",
+        "fuel_type": "electric",
+        "available_options": [],
+        "url": "https://www.byd.com/de",
+        "image_url": ""
+      }
+    ],
+    "errors": [],
+    "strategy": {
+      "engine": "playwright",
+      "selectors": {},
+      "js_triggers": [],
+      "wait_selector": "",
+      "wait_timeout_ms": 30000,
+      "rate_limit_seconds": 3.0,
+      "confidence": 0.85,
+      "notes": "Playwright fetch + DOM model card extraction (prices JS-rendered)."
+    },
+    "duration_seconds": 11.4,
+    "option_summary": []
+  }
+]

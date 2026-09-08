@@ -1,18 +1,20 @@
 {
-  "last_updated": "2026-09-08T05:31:19.795878Z",
-  "version": "2.0_cross_brand",
+  "last_updated": "2026-09-08T05:35:38.937040+00:00",
+  "version": "3.0_cross_brand",
   "brands": {
     "mercedes-benz": {
       "name": "Mercedes-Benz",
       "vehicle_count": 45,
       "option_count": 1111,
-      "latest_crawl": "2026-09-07T21:39:48.542195+00:00",
+      "standardized_option_count": 442,
+      "latest_crawl": "2026-09-07T21:32:11.975725+00:00",
       "snapshots": [
         {
-          "date": "2026-09-07",
+          "date": "2026-09-08",
           "vehicle_count": 45,
           "option_count": 1111,
-          "file": "mercedes-benz_2026-09-07.json"
+          "standardized_option_count": 442,
+          "file": "mercedes-benz_2026-09-08.json"
         }
       ]
     },
@@ -20,548 +22,1855 @@
       "name": "Lexus",
       "vehicle_count": 49,
       "option_count": 218,
-      "latest_crawl": "2026-09-07T21:33:58.402582+00:00",
+      "standardized_option_count": 195,
+      "latest_crawl": "2026-09-07T21:26:19.420767+00:00",
       "snapshots": [
         {
-          "date": "2026-09-07",
+          "date": "2026-09-08",
           "vehicle_count": 49,
           "option_count": 218,
-          "file": "lexus_2026-09-07.json"
+          "standardized_option_count": 195,
+          "file": "lexus_2026-09-08.json"
         }
       ]
     },
     "porsche": {
       "name": "Porsche",
       "vehicle_count": 85,
-      "option_count": 1445,
-      "latest_crawl": "2026-09-07T21:41:12.811522+00:00",
+      "option_count": 1800,
+      "standardized_option_count": 1080,
+      "latest_crawl": "2026-09-07T11:51:18.577817+00:00",
       "snapshots": [
         {
-          "date": "2026-09-07",
+          "date": "2026-09-08",
           "vehicle_count": 85,
-          "option_count": 1445,
-          "file": "porsche_2026-09-07.json"
+          "option_count": 1800,
+          "standardized_option_count": 1080,
+          "file": "porsche_2026-09-08.json"
+        }
+      ]
+    },
+    "audi": {
+      "name": "Audi",
+      "vehicle_count": 0,
+      "option_count": 0,
+      "standardized_option_count": 0,
+      "latest_crawl": null,
+      "snapshots": []
+    },
+    "byd": {
+      "name": "BYD",
+      "vehicle_count": 11,
+      "option_count": 0,
+      "standardized_option_count": 0,
+      "latest_crawl": "2026-09-07T06:11:26.514941+00:00",
+      "snapshots": [
+        {
+          "date": "2026-09-08",
+          "vehicle_count": 11,
+          "option_count": 0,
+          "standardized_option_count": 0,
+          "file": "byd_2026-09-08.json"
+        }
+      ]
+    },
+    "polestar": {
+      "name": "Polestar",
+      "vehicle_count": 5,
+      "option_count": 0,
+      "standardized_option_count": 0,
+      "latest_crawl": "2026-09-07T06:12:01.785263+00:00",
+      "snapshots": [
+        {
+          "date": "2026-09-08",
+          "vehicle_count": 5,
+          "option_count": 0,
+          "standardized_option_count": 0,
+          "file": "polestar_2026-09-08.json"
+        }
+      ]
+    },
+    "xpeng": {
+      "name": "XPeng",
+      "vehicle_count": 5,
+      "option_count": 0,
+      "standardized_option_count": 0,
+      "latest_crawl": "2026-09-07T06:35:08.666860+00:00",
+      "snapshots": [
+        {
+          "date": "2026-09-08",
+          "vehicle_count": 5,
+          "option_count": 0,
+          "standardized_option_count": 0,
+          "file": "xpeng_2026-09-08.json"
+        }
+      ]
+    },
+    "zeekr": {
+      "name": "Zeekr",
+      "vehicle_count": 4,
+      "option_count": 0,
+      "standardized_option_count": 0,
+      "latest_crawl": "2026-09-07T06:35:10.251897+00:00",
+      "snapshots": [
+        {
+          "date": "2026-09-08",
+          "vehicle_count": 4,
+          "option_count": 0,
+          "standardized_option_count": 0,
+          "file": "zeekr_2026-09-08.json"
         }
       ]
     }
   },
   "option_summary": {
-    "last_updated": "2026-09-08T05:31:19.797561Z",
+    "last_updated": "2026-09-08T05:35:39.024443+00:00",
+    "total_unique_options": 38,
+    "cross_brand_options": 14,
     "options": [
       {
-        "standardized_name": "premium_sound",
-        "category": "sound",
+        "standardized_name": "automatic_transmission",
+        "display_name": "Automatic transmission",
+        "description": "Automatic transmission",
+        "category": "drivetrain",
+        "category_label": "Drivetrain",
         "brands": {
-          "Mercedes-Benz": {
-            "brand_specific_name": "Burmester\u00ae 3D-Surround-Soundsystem",
-            "model_count": 37
-          },
           "Lexus": {
-            "brand_specific_name": "Premium Audiosystem mit 6 Lautsprechern",
-            "model_count": 1
+            "name": "stufenlose Automatik ",
+            "brand_specific_name": "stufenlose Automatik ",
+            "model_count": 25,
+            "models": [
+              "ES Comfort",
+              "ES Executive",
+              "ES Luxury",
+              "LBX Basis",
+              "LBX Cool",
+              "LBX Elegant",
+              "LBX Elegant Black Edition",
+              "LBX Emotion",
+              "LBX Relax",
+              "LM Executive",
+              "LM Luxury",
+              "RX Business",
+              "RX Comfort",
+              "RX Executive",
+              "RX F SPORT +",
+              "RX F SPORT Design",
+              "RX Luxury",
+              "RZ Executive",
+              "RZ F SPORT",
+              "RZ Luxury",
+              "RZ Premium",
+              "UX",
+              "UX F SPORT",
+              "UX F SPORT Design",
+              "UX Luxury Line"
+            ]
+          },
+          "Porsche": {
+            "name": "8-speed automatic gearbox",
+            "brand_specific_name": "8-speed automatic gearbox",
+            "model_count": 60,
+            "models": [
+              "718 Cayman GT4 RS",
+              "718 Spyder RS",
+              "911 Carrera",
+              "911 Carrera 4 GTS",
+              "911 Carrera 4 GTS Cabriolet",
+              "911 Carrera 4S",
+              "911 Carrera 4S Cabriolet",
+              "911 Carrera Cabriolet",
+              "911 Carrera GTS",
+              "911 Carrera GTS Cabriolet",
+              "911 Carrera S",
+              "911 Carrera S Cabriolet",
+              "911 Carrera T",
+              "911 Carrera T Cabriolet",
+              "911 GT3",
+              "911 GT3 90 F. A. Porsche",
+              "911 GT3 RS",
+              "911 GT3 S/C",
+              "911 GT3 mit Touring-Paket",
+              "911 Spirit 70",
+              "911 Targa 4 GTS",
+              "911 Targa 4S",
+              "911 Turbo S",
+              "911 Turbo S Cabriolet",
+              "Macan",
+              "Macan 4",
+              "Macan 4S",
+              "Macan GTS",
+              "Macan Turbo",
+              "Panamera",
+              "Panamera 4",
+              "Panamera 4 E-Hybrid",
+              "Panamera 4 E-Hybrid Executive",
+              "Panamera 4S E-Hybrid",
+              "Panamera GTS",
+              "Panamera Turbo E-Hybrid",
+              "Panamera Turbo S E-Hybrid",
+              "Panamera Turbo S E-Hybrid Executive",
+              "Taycan",
+              "Taycan 4",
+              "Taycan 4 Black Edition",
+              "Taycan 4 Cross Turismo",
+              "Taycan 4S",
+              "Taycan 4S Black Edition",
+              "Taycan 4S Cross Turismo",
+              "Taycan 4S Sport Turismo",
+              "Taycan 4S Sport Turismo Black Edition",
+              "Taycan Black Edition",
+              "Taycan GTS",
+              "Taycan GTS Sport Turismo",
+              "Taycan Sport Turismo",
+              "Taycan Sport Turismo Black Edition",
+              "Taycan Turbo",
+              "Taycan Turbo Cross Turismo",
+              "Taycan Turbo GT",
+              "Taycan Turbo GT mit Weissach-Paket",
+              "Taycan Turbo S",
+              "Taycan Turbo S Cross Turismo",
+              "Taycan Turbo S Sport Turismo",
+              "Taycan Turbo Sport Turismo"
+            ]
           }
         },
         "cross_brand_count": 2,
-        "total_model_count": 38
-      },
-      {
-        "standardized_name": "parking_assist",
-        "category": "safety",
-        "brands": {
-          "Mercedes-Benz": {
-            "brand_specific_name": "Digitales Extra: PARKTRONIC",
-            "model_count": 17
-          },
-          "Lexus": {
-            "brand_specific_name": "Lexus Intelligent Park Assist: Parksensoren vorne und hinten (4) mit Notbremsfunktion",
-            "model_count": 13
-          }
-        },
-        "cross_brand_count": 2,
-        "total_model_count": 30
-      },
-      {
-        "standardized_name": "rear_camera",
-        "category": "safety",
-        "brands": {
-          "Mercedes-Benz": {
-            "brand_specific_name": "Digitales Extra: 360\u00b0-Kamera",
-            "model_count": 27
-          },
-          "Lexus": {
-            "brand_specific_name": "360\u00b0 Kamera",
-            "model_count": 2
-          }
-        },
-        "cross_brand_count": 2,
-        "total_model_count": 29
-      },
-      {
-        "standardized_name": "keyless_entry",
-        "category": "comfort",
-        "brands": {
-          "Mercedes-Benz": {
-            "brand_specific_name": "KEYLESS-GO",
-            "model_count": 26
-          },
-          "Lexus": {
-            "brand_specific_name": "Lexus Smart Key: schl\u00fcsselloser Fahrzeugzugang und Motorstart",
-            "model_count": 3
-          }
-        },
-        "cross_brand_count": 2,
-        "total_model_count": 29
-      },
-      {
-        "standardized_name": "matrix_led",
-        "category": "lighting",
-        "brands": {
-          "Mercedes-Benz": {
-            "brand_specific_name": "MULTIBEAM LED",
-            "model_count": 32
-          },
-          "Lexus": {
-            "brand_specific_name": "Quad-LED Frontscheinwerfer",
-            "model_count": 5
-          }
-        },
-        "cross_brand_count": 2,
-        "total_model_count": 37
-      },
-      {
-        "standardized_name": "memory_seats",
-        "category": "comfort",
-        "brands": {
-          "Mercedes-Benz": {
-            "brand_specific_name": "Memory-Paket",
-            "model_count": 21
-          },
-          "Lexus": {
-            "brand_specific_name": "Easy-Entry Komforteinstieg: Fahrersitz f\u00e4hrt zum leichteren Ein- und Ausstieg zur\u00fcck und nach unten",
-            "model_count": 6
-          }
-        },
-        "cross_brand_count": 2,
-        "total_model_count": 27
-      },
-      {
-        "standardized_name": "climate_control",
-        "category": "climate",
-        "brands": {
-          "Mercedes-Benz": {
-            "brand_specific_name": "Klimatisierungsautomatik THERMOTRONIC",
-            "model_count": 21
-          },
-          "Lexus": {
-            "brand_specific_name": "Elektrische Klimatisierungsautomatik mit Ionisierung nanoe",
-            "model_count": 6
-          }
-        },
-        "cross_brand_count": 2,
-        "total_model_count": 27
-      },
-      {
-        "standardized_name": "ambient_lighting",
-        "category": "interior",
-        "brands": {
-          "Mercedes-Benz": {
-            "brand_specific_name": "Ambientebeleuchtung",
-            "model_count": 28
-          },
-          "Lexus": {
-            "brand_specific_name": "Ambiente Beleuchtung in 64 Farben und 14 voreingestellten Themen individualisierbar",
-            "model_count": 17
-          }
-        },
-        "cross_brand_count": 2,
-        "total_model_count": 45
-      },
-      {
-        "standardized_name": "privacy_glass",
-        "category": "exterior",
-        "brands": {
-          "Mercedes-Benz": {
-            "brand_specific_name": "W\u00e4rme- und ger\u00e4uschd\u00e4mmendes Akustikglas",
-            "model_count": 3
-          },
-          "Lexus": {
-            "brand_specific_name": "Privacy Glas: verst\u00e4rkte T\u00f6nung der hinteren Seitenscheiben und der Heckscheibe",
-            "model_count": 17
-          }
-        },
-        "cross_brand_count": 2,
-        "total_model_count": 20
-      },
-      {
-        "standardized_name": "blind_spot_monitor",
-        "category": "safety",
-        "brands": {
-          "Mercedes-Benz": {
-            "brand_specific_name": "Totwinkel-Assistent",
-            "model_count": 8
-          },
-          "Lexus": {
-            "brand_specific_name": "Ausstiegswarnung Safe Exit Assist",
-            "model_count": 2
-          }
-        },
-        "cross_brand_count": 2,
-        "total_model_count": 10
-      },
-      {
-        "standardized_name": "massage_seats",
-        "category": "comfort",
-        "brands": {
-          "Mercedes-Benz": {
-            "brand_specific_name": "Multikontursitze mit Massagefunktion Pro vorn",
-            "model_count": 8
-          },
-          "Lexus": {
-            "brand_specific_name": "Einzelsitze im Fond mit Massagefunktion",
-            "model_count": 2
-          }
-        },
-        "cross_brand_count": 2,
-        "total_model_count": 10
+        "total_model_count": 85,
+        "overall_avg_price": null,
+        "overall_min_price": null,
+        "overall_max_price": null
       },
       {
         "standardized_name": "leather_seats",
+        "display_name": "Leather seat upholstery",
+        "description": "Leather seat upholstery",
         "category": "interior",
+        "category_label": "Interior",
         "brands": {
           "Mercedes-Benz": {
+            "name": "Leder-Paket",
             "brand_specific_name": "Leder-Paket",
-            "model_count": 11
+            "model_count": 10,
+            "models": [
+              "A-Klasse Kompaktlimousine",
+              "B-Klasse",
+              "E-Klasse Limousine",
+              "E-Klasse T-Modell",
+              "E-Klasse T-Modell All-Terrain",
+              "G-Klasse",
+              "GLA",
+              "GLE",
+              "GLS",
+              "Mercedes-Maybach GLS"
+            ]
           },
           "Porsche": {
+            "name": "Race-Tex",
             "brand_specific_name": "Race-Tex",
-            "model_count": 85
+            "model_count": 60,
+            "models": [
+              "718 Cayman GT4 RS",
+              "718 Spyder RS",
+              "911 Carrera",
+              "911 Carrera 4 GTS",
+              "911 Carrera 4 GTS Cabriolet",
+              "911 Carrera 4S",
+              "911 Carrera 4S Cabriolet",
+              "911 Carrera Cabriolet",
+              "911 Carrera GTS",
+              "911 Carrera GTS Cabriolet",
+              "911 Carrera S",
+              "911 Carrera S Cabriolet",
+              "911 Carrera T",
+              "911 Carrera T Cabriolet",
+              "911 GT3",
+              "911 GT3 90 F. A. Porsche",
+              "911 GT3 RS",
+              "911 GT3 S/C",
+              "911 GT3 mit Touring-Paket",
+              "911 Spirit 70",
+              "911 Targa 4 GTS",
+              "911 Targa 4S",
+              "911 Turbo S",
+              "911 Turbo S Cabriolet",
+              "Macan",
+              "Macan 4",
+              "Macan 4S",
+              "Macan GTS",
+              "Macan Turbo",
+              "Panamera",
+              "Panamera 4",
+              "Panamera 4 E-Hybrid",
+              "Panamera 4 E-Hybrid Executive",
+              "Panamera 4S E-Hybrid",
+              "Panamera GTS",
+              "Panamera Turbo E-Hybrid",
+              "Panamera Turbo S E-Hybrid",
+              "Panamera Turbo S E-Hybrid Executive",
+              "Taycan",
+              "Taycan 4",
+              "Taycan 4 Black Edition",
+              "Taycan 4 Cross Turismo",
+              "Taycan 4S",
+              "Taycan 4S Black Edition",
+              "Taycan 4S Cross Turismo",
+              "Taycan 4S Sport Turismo",
+              "Taycan 4S Sport Turismo Black Edition",
+              "Taycan Black Edition",
+              "Taycan GTS",
+              "Taycan GTS Sport Turismo",
+              "Taycan Sport Turismo",
+              "Taycan Sport Turismo Black Edition",
+              "Taycan Turbo",
+              "Taycan Turbo Cross Turismo",
+              "Taycan Turbo GT",
+              "Taycan Turbo GT mit Weissach-Paket",
+              "Taycan Turbo S",
+              "Taycan Turbo S Cross Turismo",
+              "Taycan Turbo S Sport Turismo",
+              "Taycan Turbo Sport Turismo"
+            ]
           }
         },
         "cross_brand_count": 2,
-        "total_model_count": 96
-      },
-      {
-        "standardized_name": "automatic_transmission",
-        "category": "drivetrain",
-        "brands": {
-          "Lexus": {
-            "brand_specific_name": "stufenlose Automatik ",
-            "model_count": 35
-          },
-          "Porsche": {
-            "brand_specific_name": "8-speed automatic gearbox",
-            "model_count": 85
-          }
-        },
-        "cross_brand_count": 2,
-        "total_model_count": 120
+        "total_model_count": 70,
+        "overall_avg_price": null,
+        "overall_min_price": null,
+        "overall_max_price": null
       },
       {
         "standardized_name": "allrad",
+        "display_name": "All-wheel drive system",
+        "description": "All-wheel drive system",
         "category": "drivetrain",
+        "category_label": "Drivetrain",
         "brands": {
           "Lexus": {
+            "name": "DIRECT 4 Badge",
             "brand_specific_name": "DIRECT 4 Badge",
-            "model_count": 4
+            "model_count": 3,
+            "models": [
+              "RZ Executive",
+              "RZ F SPORT",
+              "RZ Luxury"
+            ]
           },
           "Porsche": {
+            "name": "All-Wheel Drive",
             "brand_specific_name": "All-Wheel Drive",
-            "model_count": 85
+            "model_count": 60,
+            "models": [
+              "718 Cayman GT4 RS",
+              "718 Spyder RS",
+              "911 Carrera",
+              "911 Carrera 4 GTS",
+              "911 Carrera 4 GTS Cabriolet",
+              "911 Carrera 4S",
+              "911 Carrera 4S Cabriolet",
+              "911 Carrera Cabriolet",
+              "911 Carrera GTS",
+              "911 Carrera GTS Cabriolet",
+              "911 Carrera S",
+              "911 Carrera S Cabriolet",
+              "911 Carrera T",
+              "911 Carrera T Cabriolet",
+              "911 GT3",
+              "911 GT3 90 F. A. Porsche",
+              "911 GT3 RS",
+              "911 GT3 S/C",
+              "911 GT3 mit Touring-Paket",
+              "911 Spirit 70",
+              "911 Targa 4 GTS",
+              "911 Targa 4S",
+              "911 Turbo S",
+              "911 Turbo S Cabriolet",
+              "Macan",
+              "Macan 4",
+              "Macan 4S",
+              "Macan GTS",
+              "Macan Turbo",
+              "Panamera",
+              "Panamera 4",
+              "Panamera 4 E-Hybrid",
+              "Panamera 4 E-Hybrid Executive",
+              "Panamera 4S E-Hybrid",
+              "Panamera GTS",
+              "Panamera Turbo E-Hybrid",
+              "Panamera Turbo S E-Hybrid",
+              "Panamera Turbo S E-Hybrid Executive",
+              "Taycan",
+              "Taycan 4",
+              "Taycan 4 Black Edition",
+              "Taycan 4 Cross Turismo",
+              "Taycan 4S",
+              "Taycan 4S Black Edition",
+              "Taycan 4S Cross Turismo",
+              "Taycan 4S Sport Turismo",
+              "Taycan 4S Sport Turismo Black Edition",
+              "Taycan Black Edition",
+              "Taycan GTS",
+              "Taycan GTS Sport Turismo",
+              "Taycan Sport Turismo",
+              "Taycan Sport Turismo Black Edition",
+              "Taycan Turbo",
+              "Taycan Turbo Cross Turismo",
+              "Taycan Turbo GT",
+              "Taycan Turbo GT mit Weissach-Paket",
+              "Taycan Turbo S",
+              "Taycan Turbo S Cross Turismo",
+              "Taycan Turbo S Sport Turismo",
+              "Taycan Turbo Sport Turismo"
+            ]
           }
         },
         "cross_brand_count": 2,
-        "total_model_count": 89
+        "total_model_count": 63,
+        "overall_avg_price": null,
+        "overall_min_price": null,
+        "overall_max_price": null
       },
       {
-        "standardized_name": "head_up_display",
-        "category": "technology",
-        "brands": {
-          "Mercedes-Benz": {
-            "brand_specific_name": "Head-up-Display",
-            "model_count": 30
-          }
-        },
-        "cross_brand_count": 1,
-        "total_model_count": 30
-      },
-      {
-        "standardized_name": "navigation",
-        "category": "technology",
-        "brands": {
-          "Mercedes-Benz": {
-            "brand_specific_name": "Digitales Extra: MBUX Augmented Reality f\u00fcr Navigation",
-            "model_count": 25
-          }
-        },
-        "cross_brand_count": 1,
-        "total_model_count": 25
-      },
-      {
-        "standardized_name": "steering_wheel_heating",
-        "category": "comfort",
-        "brands": {
-          "Mercedes-Benz": {
-            "brand_specific_name": "Lenkradheizung",
-            "model_count": 32
-          }
-        },
-        "cross_brand_count": 1,
-        "total_model_count": 32
-      },
-      {
-        "standardized_name": "emergency_braking",
-        "category": "safety",
-        "brands": {
-          "Mercedes-Benz": {
-            "brand_specific_name": "PRE-SAFE\u00ae Impuls Seite",
-            "model_count": 19
-          }
-        },
-        "cross_brand_count": 1,
-        "total_model_count": 19
-      },
-      {
-        "standardized_name": "air_suspension",
-        "category": "comfort",
-        "brands": {
-          "Mercedes-Benz": {
-            "brand_specific_name": "AIRMATIC mit intelligenter Fahrwerksregelung und Digitalen Extras",
-            "model_count": 8
-          }
-        },
-        "cross_brand_count": 1,
-        "total_model_count": 8
-      },
-      {
-        "standardized_name": "panoramic_roof",
-        "category": "exterior",
-        "brands": {
-          "Mercedes-Benz": {
-            "brand_specific_name": "SKY CONTROL Panoramadach",
-            "model_count": 17
-          }
-        },
-        "cross_brand_count": 1,
-        "total_model_count": 17
-      },
-      {
-        "standardized_name": "seat_ventilation",
-        "category": "comfort",
-        "brands": {
-          "Mercedes-Benz": {
-            "brand_specific_name": "Sitzklimatisierung f\u00fcr Fahrer und Beifahrer",
-            "model_count": 21
-          }
-        },
-        "cross_brand_count": 1,
-        "total_model_count": 21
-      },
-      {
-        "standardized_name": "seat_heating_front",
-        "category": "comfort",
-        "brands": {
-          "Mercedes-Benz": {
-            "brand_specific_name": "Sitzheizung im Fond",
-            "model_count": 17
-          }
-        },
-        "cross_brand_count": 1,
-        "total_model_count": 17
-      },
-      {
-        "standardized_name": "sport_suspension",
-        "category": "drivetrain",
-        "brands": {
-          "Mercedes-Benz": {
-            "brand_specific_name": "Sportfahrwerk",
-            "model_count": 2
-          }
-        },
-        "cross_brand_count": 1,
-        "total_model_count": 2
-      },
-      {
-        "standardized_name": "heated_windshield",
-        "category": "comfort",
-        "brands": {
-          "Mercedes-Benz": {
-            "brand_specific_name": "Standheizung",
-            "model_count": 20
-          }
-        },
-        "cross_brand_count": 1,
-        "total_model_count": 20
-      },
-      {
-        "standardized_name": "adaptive_cruise_control",
-        "category": "safety",
-        "brands": {
-          "Mercedes-Benz": {
-            "brand_specific_name": "Digitales Extra: Aktiver Abstands-Assistent DISTRONIC",
-            "model_count": 12
-          }
-        },
-        "cross_brand_count": 1,
-        "total_model_count": 12
-      },
-      {
-        "standardized_name": "driver_monitor",
-        "category": "safety",
+        "standardized_name": "ambient_lighting",
+        "display_name": "Configurable ambient interior lighting",
+        "description": "Configurable ambient interior lighting",
+        "category": "interior",
+        "category_label": "Interior",
         "brands": {
           "Lexus": {
-            "brand_specific_name": "Fahrer-Monitor",
-            "model_count": 1
+            "name": "Ambiente Beleuchtung in 64 Farben und 14 voreingestellten Themen individualisierbar",
+            "brand_specific_name": "Ambiente Beleuchtung in 64 Farben und 14 voreingestellten Themen individualisierbar",
+            "model_count": 8,
+            "models": [
+              "LBX Cool",
+              "NX Business",
+              "NX Comfort",
+              "NX Executive",
+              "RX Executive",
+              "RX F SPORT +",
+              "RX F SPORT Design",
+              "RX Luxury"
+            ]
+          },
+          "Mercedes-Benz": {
+            "name": "Ambientebeleuchtung",
+            "brand_specific_name": "Ambientebeleuchtung",
+            "model_count": 23,
+            "models": [
+              "A-Klasse Kompaktlimousine",
+              "B-Klasse",
+              "C-Klasse Limousine",
+              "C-Klasse T-Modell",
+              "CLA",
+              "CLA Shooting Brake",
+              "CLE Cabriolet",
+              "CLE Coupé",
+              "E-Klasse Limousine",
+              "E-Klasse T-Modell",
+              "E-Klasse T-Modell All-Terrain",
+              "EQE Limousine",
+              "EQE SUV",
+              "GLA",
+              "GLB",
+              "GLC",
+              "GLC Coupé",
+              "Mercedes-AMG GT 4-Türer Coupé",
+              "Mercedes-AMG GT Coupé",
+              "Mercedes-AMG SL Roadster",
+              "S-Klasse",
+              "S-Klasse Lang",
+              "VLE"
+            ]
           }
         },
-        "cross_brand_count": 1,
-        "total_model_count": 1
+        "cross_brand_count": 2,
+        "total_model_count": 31,
+        "overall_avg_price": null,
+        "overall_min_price": null,
+        "overall_max_price": null
       },
       {
-        "standardized_name": "active_noise_cancellation",
-        "category": "comfort",
+        "standardized_name": "premium_sound",
+        "display_name": "Premium audio/sound system",
+        "description": "Premium audio/sound system",
+        "category": "sound",
+        "category_label": "Sound & Entertainment",
         "brands": {
           "Lexus": {
-            "brand_specific_name": "Ger\u00e4uschd\u00e4mpfung ANC (Active Noise Cancellation)",
-            "model_count": 3
+            "name": "Premium Audiosystem mit 6 Lautsprechern",
+            "brand_specific_name": "Premium Audiosystem mit 6 Lautsprechern",
+            "model_count": 1,
+            "models": [
+              "LBX Basis"
+            ]
+          },
+          "Mercedes-Benz": {
+            "name": "Burmester® 3D-Surround-Soundsystem",
+            "brand_specific_name": "Burmester® 3D-Surround-Soundsystem",
+            "model_count": 30,
+            "models": [
+              "A-Klasse Kompaktlimousine",
+              "B-Klasse",
+              "C-Klasse Limousine",
+              "C-Klasse T-Modell",
+              "CLA",
+              "CLA Shooting Brake",
+              "CLE Cabriolet",
+              "CLE Coupé",
+              "E-Klasse Limousine",
+              "E-Klasse T-Modell",
+              "E-Klasse T-Modell All-Terrain",
+              "EQE Limousine",
+              "EQE SUV",
+              "EQS Limousine",
+              "G-Klasse",
+              "GLA",
+              "GLB",
+              "GLC",
+              "GLC Coupé",
+              "GLE",
+              "GLE Coupé",
+              "GLS",
+              "Mercedes-AMG GT 4-Türer Coupé",
+              "Mercedes-AMG GT Coupé",
+              "Mercedes-AMG SL Roadster",
+              "Mercedes-Maybach GLS",
+              "Mercedes-Maybach S-Klasse",
+              "S-Klasse",
+              "S-Klasse Lang",
+              "VLE"
+            ]
           }
         },
-        "cross_brand_count": 1,
-        "total_model_count": 3
+        "cross_brand_count": 2,
+        "total_model_count": 31,
+        "overall_avg_price": null,
+        "overall_min_price": null,
+        "overall_max_price": null
       },
       {
-        "standardized_name": "alloy_wheels",
-        "category": "wheels",
-        "brands": {
-          "Lexus": {
-            "brand_specific_name": "17'' Leichtmetallfelgen, 225/60R17",
-            "model_count": 37
-          }
-        },
-        "cross_brand_count": 1,
-        "total_model_count": 37
-      },
-      {
-        "standardized_name": "electric_tailgate",
-        "category": "comfort",
-        "brands": {
-          "Lexus": {
-            "brand_specific_name": "Heckklappe elektrisch \u00f6ffnend und schlie\u00dfend",
-            "model_count": 3
-          }
-        },
-        "cross_brand_count": 1,
-        "total_model_count": 3
-      },
-      {
-        "standardized_name": "fog_lights",
+        "standardized_name": "matrix_led",
+        "display_name": "Matrix/adaptive LED headlights",
+        "description": "Matrix/adaptive LED headlights",
         "category": "lighting",
+        "category_label": "Lighting",
         "brands": {
           "Lexus": {
-            "brand_specific_name": "Abbiegelicht",
-            "model_count": 2
+            "name": "Quad-LED Frontscheinwerfer",
+            "brand_specific_name": "Quad-LED Frontscheinwerfer",
+            "model_count": 2,
+            "models": [
+              "NX F SPORT",
+              "NX Luxury"
+            ]
+          },
+          "Mercedes-Benz": {
+            "name": "MULTIBEAM LED",
+            "brand_specific_name": "MULTIBEAM LED",
+            "model_count": 26,
+            "models": [
+              "A-Klasse Kompaktlimousine",
+              "B-Klasse",
+              "C-Klasse Limousine",
+              "C-Klasse T-Modell",
+              "CLA",
+              "CLA Shooting Brake",
+              "CLE Cabriolet",
+              "CLE Coupé",
+              "E-Klasse Limousine",
+              "E-Klasse T-Modell",
+              "E-Klasse T-Modell All-Terrain",
+              "EQE Limousine",
+              "EQE SUV",
+              "EQS Limousine",
+              "G-Klasse",
+              "GLA",
+              "GLB",
+              "GLC",
+              "GLC Coupé",
+              "GLE",
+              "GLE Coupé",
+              "GLS",
+              "Mercedes-Maybach GLS",
+              "Mercedes-Maybach S-Klasse",
+              "S-Klasse",
+              "S-Klasse Lang"
+            ]
           }
         },
-        "cross_brand_count": 1,
-        "total_model_count": 2
+        "cross_brand_count": 2,
+        "total_model_count": 28,
+        "overall_avg_price": null,
+        "overall_min_price": null,
+        "overall_max_price": null
       },
       {
-        "standardized_name": "auto_high_beam",
-        "category": "lighting",
-        "brands": {
-          "Lexus": {
-            "brand_specific_name": "Leuchtweitenregulierung dynamisch",
-            "model_count": 4
-          }
-        },
-        "cross_brand_count": 1,
-        "total_model_count": 4
-      },
-      {
-        "standardized_name": "theft_protection",
+        "standardized_name": "rear_camera",
+        "display_name": "Rear-view / 360° camera system",
+        "description": "Rear-view / 360° camera system",
         "category": "safety",
+        "category_label": "Safety",
         "brands": {
           "Lexus": {
-            "brand_specific_name": "Diebstahlschutzsystem",
-            "model_count": 17
+            "name": "360° Kamera",
+            "brand_specific_name": "360° Kamera",
+            "model_count": 1,
+            "models": [
+              "LBX Cool"
+            ]
+          },
+          "Mercedes-Benz": {
+            "name": "Digitales Extra: 360°-Kamera",
+            "brand_specific_name": "Digitales Extra: 360°-Kamera",
+            "model_count": 23,
+            "models": [
+              "A-Klasse Kompaktlimousine",
+              "B-Klasse",
+              "C-Klasse Limousine",
+              "CLA",
+              "CLA Shooting Brake",
+              "CLE Cabriolet",
+              "CLE Coupé",
+              "E-Klasse Limousine",
+              "E-Klasse T-Modell",
+              "E-Klasse T-Modell All-Terrain",
+              "EQE Limousine",
+              "EQE SUV",
+              "G-Klasse",
+              "GLA",
+              "GLB",
+              "GLC",
+              "GLC Coupé",
+              "GLE",
+              "GLE Coupé",
+              "Mercedes-AMG GT Coupé",
+              "Mercedes-AMG SL Roadster",
+              "S-Klasse",
+              "S-Klasse Lang"
+            ]
           }
         },
-        "cross_brand_count": 1,
-        "total_model_count": 17
+        "cross_brand_count": 2,
+        "total_model_count": 24,
+        "overall_avg_price": null,
+        "overall_min_price": null,
+        "overall_max_price": null
       },
       {
-        "standardized_name": "ac_charging",
-        "category": "technology",
-        "brands": {
-          "Lexus": {
-            "brand_specific_name": "22 kW AC Ladeanschluss (3-phasig) Typ 2/Mennekes",
-            "model_count": 5
-          }
-        },
-        "cross_brand_count": 1,
-        "total_model_count": 5
-      },
-      {
-        "standardized_name": "tow_hitch",
-        "category": "exterior",
-        "brands": {
-          "Lexus": {
-            "brand_specific_name": "Anh\u00e4ngelast 1.500kg",
-            "model_count": 4
-          }
-        },
-        "cross_brand_count": 1,
-        "total_model_count": 4
-      },
-      {
-        "standardized_name": "heated_rear_seats",
+        "standardized_name": "keyless_entry",
+        "display_name": "Keyless entry and start",
+        "description": "Keyless entry and start",
         "category": "comfort",
+        "category_label": "Comfort",
         "brands": {
           "Lexus": {
-            "brand_specific_name": "Knieheizung (Infrarot)",
-            "model_count": 3
+            "name": "Lexus Smart Key: schlüsselloser Fahrzeugzugang und Motorstart",
+            "brand_specific_name": "Lexus Smart Key: schlüsselloser Fahrzeugzugang und Motorstart",
+            "model_count": 3,
+            "models": [
+              "LBX Elegant",
+              "LBX Emotion",
+              "UX"
+            ]
+          },
+          "Mercedes-Benz": {
+            "name": "KEYLESS-GO",
+            "brand_specific_name": "KEYLESS-GO",
+            "model_count": 20,
+            "models": [
+              "A-Klasse Kompaktlimousine",
+              "B-Klasse",
+              "C-Klasse Limousine",
+              "C-Klasse T-Modell",
+              "CLA",
+              "CLA Shooting Brake",
+              "CLE Coupé",
+              "E-Klasse Limousine",
+              "E-Klasse T-Modell",
+              "E-Klasse T-Modell All-Terrain",
+              "EQE Limousine",
+              "EQE SUV",
+              "EQS Limousine",
+              "G-Klasse",
+              "GLA",
+              "GLB",
+              "GLC",
+              "GLC Coupé",
+              "GLE",
+              "VLE"
+            ]
           }
         },
-        "cross_brand_count": 1,
-        "total_model_count": 3
+        "cross_brand_count": 2,
+        "total_model_count": 23,
+        "overall_avg_price": null,
+        "overall_min_price": null,
+        "overall_max_price": null
       },
       {
-        "standardized_name": "digital_cockpit",
-        "category": "technology",
+        "standardized_name": "climate_control",
+        "display_name": "Automatic climate control",
+        "description": "Automatic climate control",
+        "category": "climate",
+        "category_label": "Climate",
         "brands": {
           "Lexus": {
-            "brand_specific_name": "Digitaler R\u00fcckspiegel",
-            "model_count": 3
+            "name": "Elektrische Klimatisierungsautomatik mit Ionisierung nanoe",
+            "brand_specific_name": "Elektrische Klimatisierungsautomatik mit Ionisierung nanoe",
+            "model_count": 5,
+            "models": [
+              "ES Comfort",
+              "ES Luxury",
+              "LBX Elegant",
+              "LBX Emotion",
+              "NX ADVANTAGE"
+            ]
+          },
+          "Mercedes-Benz": {
+            "name": "Klimatisierungsautomatik THERMOTRONIC",
+            "brand_specific_name": "Klimatisierungsautomatik THERMOTRONIC",
+            "model_count": 17,
+            "models": [
+              "B-Klasse",
+              "C-Klasse Limousine",
+              "CLA",
+              "CLA Shooting Brake",
+              "E-Klasse Limousine",
+              "E-Klasse T-Modell",
+              "E-Klasse T-Modell All-Terrain",
+              "EQE Limousine",
+              "EQE SUV",
+              "GLA",
+              "GLB",
+              "GLC",
+              "GLC Coupé",
+              "GLE",
+              "GLE Coupé",
+              "Mercedes-AMG GT 4-Türer Coupé",
+              "S-Klasse Lang"
+            ]
           }
         },
-        "cross_brand_count": 1,
-        "total_model_count": 3
+        "cross_brand_count": 2,
+        "total_model_count": 22,
+        "overall_avg_price": null,
+        "overall_min_price": null,
+        "overall_max_price": null
+      },
+      {
+        "standardized_name": "parking_assist",
+        "display_name": "Automated parking assistance",
+        "description": "Automated parking assistance",
+        "category": "safety",
+        "category_label": "Safety",
+        "brands": {
+          "Lexus": {
+            "name": "Lexus Intelligent Park Assist: Parksensoren vorne und hinten (4) mit Notbremsfunktion",
+            "brand_specific_name": "Lexus Intelligent Park Assist: Parksensoren vorne und hinten (4) mit Notbremsfunktion",
+            "model_count": 8,
+            "models": [
+              "RX Business",
+              "RX Comfort",
+              "RX Executive",
+              "RX F SPORT +",
+              "RX F SPORT Design",
+              "RX Luxury",
+              "RZ F SPORT",
+              "RZ Premium"
+            ]
+          },
+          "Mercedes-Benz": {
+            "name": "Digitales Extra: PARKTRONIC",
+            "brand_specific_name": "Digitales Extra: PARKTRONIC",
+            "model_count": 13,
+            "models": [
+              "A-Klasse Kompaktlimousine",
+              "C-Klasse Limousine",
+              "C-Klasse T-Modell",
+              "CLA",
+              "CLA Shooting Brake",
+              "EQS Limousine",
+              "GLB",
+              "GLC",
+              "GLE",
+              "GLE Coupé",
+              "S-Klasse",
+              "S-Klasse Lang",
+              "VLE"
+            ]
+          }
+        },
+        "cross_brand_count": 2,
+        "total_model_count": 21,
+        "overall_avg_price": null,
+        "overall_min_price": null,
+        "overall_max_price": null
+      },
+      {
+        "standardized_name": "memory_seats",
+        "display_name": "Seat memory / easy-entry function",
+        "description": "Seat memory / easy-entry function",
+        "category": "comfort",
+        "category_label": "Comfort",
+        "brands": {
+          "Lexus": {
+            "name": "Easy-Entry Komforteinstieg: Fahrersitz fährt zum leichteren Ein- und Ausstieg zurück und nach unten",
+            "brand_specific_name": "Easy-Entry Komforteinstieg: Fahrersitz fährt zum leichteren Ein- und Ausstieg zurück und nach unten",
+            "model_count": 3,
+            "models": [
+              "ES Comfort",
+              "ES Executive",
+              "RX F SPORT Design"
+            ]
+          },
+          "Mercedes-Benz": {
+            "name": "Memory-Paket",
+            "brand_specific_name": "Memory-Paket",
+            "model_count": 16,
+            "models": [
+              "C-Klasse Limousine",
+              "C-Klasse T-Modell",
+              "CLA",
+              "CLA Shooting Brake",
+              "E-Klasse Limousine",
+              "E-Klasse T-Modell",
+              "E-Klasse T-Modell All-Terrain",
+              "EQE Limousine",
+              "GLB",
+              "GLC",
+              "GLC Coupé",
+              "GLE",
+              "GLE Coupé",
+              "Mercedes-AMG GT 4-Türer Coupé",
+              "S-Klasse",
+              "S-Klasse Lang"
+            ]
+          }
+        },
+        "cross_brand_count": 2,
+        "total_model_count": 19,
+        "overall_avg_price": null,
+        "overall_min_price": null,
+        "overall_max_price": null
+      },
+      {
+        "standardized_name": "privacy_glass",
+        "display_name": "Tinted / privacy glass",
+        "description": "Tinted / privacy glass",
+        "category": "exterior",
+        "category_label": "Exterior",
+        "brands": {
+          "Lexus": {
+            "name": "Privacy Glas: verstärkte Tönung der hinteren Seitenscheiben und der Heckscheibe",
+            "brand_specific_name": "Privacy Glas: verstärkte Tönung der hinteren Seitenscheiben und der Heckscheibe",
+            "model_count": 9,
+            "models": [
+              "NX ADVANTAGE",
+              "NX Business",
+              "NX Comfort",
+              "NX Executive",
+              "NX F SPORT",
+              "NX Luxury",
+              "UX F SPORT",
+              "UX F SPORT Design",
+              "UX Luxury Line"
+            ]
+          },
+          "Mercedes-Benz": {
+            "name": "Wärme- und geräuschdämmendes Akustikglas",
+            "brand_specific_name": "Wärme- und geräuschdämmendes Akustikglas",
+            "model_count": 3,
+            "models": [
+              "C-Klasse Limousine",
+              "GLC",
+              "GLC Coupé"
+            ]
+          }
+        },
+        "cross_brand_count": 2,
+        "total_model_count": 12,
+        "overall_avg_price": null,
+        "overall_min_price": null,
+        "overall_max_price": null
+      },
+      {
+        "standardized_name": "massage_seats",
+        "display_name": "Seats with massage function",
+        "description": "Seats with massage function",
+        "category": "comfort",
+        "category_label": "Comfort",
+        "brands": {
+          "Lexus": {
+            "name": "Einzelsitze im Fond mit Massagefunktion",
+            "brand_specific_name": "Einzelsitze im Fond mit Massagefunktion",
+            "model_count": 2,
+            "models": [
+              "LM Executive",
+              "LM Luxury"
+            ]
+          },
+          "Mercedes-Benz": {
+            "name": "Multikontursitze mit Massagefunktion Pro vorn",
+            "brand_specific_name": "Multikontursitze mit Massagefunktion Pro vorn",
+            "model_count": 8,
+            "models": [
+              "EQE Limousine",
+              "EQS Limousine",
+              "GLE",
+              "GLE Coupé",
+              "GLS",
+              "S-Klasse",
+              "S-Klasse Lang",
+              "VLE"
+            ]
+          }
+        },
+        "cross_brand_count": 2,
+        "total_model_count": 10,
+        "overall_avg_price": null,
+        "overall_min_price": null,
+        "overall_max_price": null
+      },
+      {
+        "standardized_name": "blind_spot_monitor",
+        "display_name": "Blind spot monitoring / exit warning",
+        "description": "Blind spot monitoring / exit warning",
+        "category": "safety",
+        "category_label": "Safety",
+        "brands": {
+          "Lexus": {
+            "name": "Ausstiegswarnung Safe Exit Assist",
+            "brand_specific_name": "Ausstiegswarnung Safe Exit Assist",
+            "model_count": 1,
+            "models": [
+              "LBX Cool"
+            ]
+          },
+          "Mercedes-Benz": {
+            "name": "Totwinkel-Assistent",
+            "brand_specific_name": "Totwinkel-Assistent",
+            "model_count": 8,
+            "models": [
+              "A-Klasse Kompaktlimousine",
+              "B-Klasse",
+              "CLE Cabriolet",
+              "CLE Coupé",
+              "EQE Limousine",
+              "GLA",
+              "GLC",
+              "GLC Coupé"
+            ]
+          }
+        },
+        "cross_brand_count": 2,
+        "total_model_count": 9,
+        "overall_avg_price": null,
+        "overall_min_price": null,
+        "overall_max_price": null
       },
       {
         "standardized_name": "dual_clutch_transmission",
+        "display_name": "Dual-clutch transmission",
+        "description": "Dual-clutch transmission",
         "category": "drivetrain",
+        "category_label": "Drivetrain",
         "brands": {
           "Porsche": {
+            "name": "Porsche Doppelkupplung (PDK)",
             "brand_specific_name": "Porsche Doppelkupplung (PDK)",
-            "model_count": 85
+            "model_count": 60,
+            "models": [
+              "718 Cayman GT4 RS",
+              "718 Spyder RS",
+              "911 Carrera",
+              "911 Carrera 4 GTS",
+              "911 Carrera 4 GTS Cabriolet",
+              "911 Carrera 4S",
+              "911 Carrera 4S Cabriolet",
+              "911 Carrera Cabriolet",
+              "911 Carrera GTS",
+              "911 Carrera GTS Cabriolet",
+              "911 Carrera S",
+              "911 Carrera S Cabriolet",
+              "911 Carrera T",
+              "911 Carrera T Cabriolet",
+              "911 GT3",
+              "911 GT3 90 F. A. Porsche",
+              "911 GT3 RS",
+              "911 GT3 S/C",
+              "911 GT3 mit Touring-Paket",
+              "911 Spirit 70",
+              "911 Targa 4 GTS",
+              "911 Targa 4S",
+              "911 Turbo S",
+              "911 Turbo S Cabriolet",
+              "Macan",
+              "Macan 4",
+              "Macan 4S",
+              "Macan GTS",
+              "Macan Turbo",
+              "Panamera",
+              "Panamera 4",
+              "Panamera 4 E-Hybrid",
+              "Panamera 4 E-Hybrid Executive",
+              "Panamera 4S E-Hybrid",
+              "Panamera GTS",
+              "Panamera Turbo E-Hybrid",
+              "Panamera Turbo S E-Hybrid",
+              "Panamera Turbo S E-Hybrid Executive",
+              "Taycan",
+              "Taycan 4",
+              "Taycan 4 Black Edition",
+              "Taycan 4 Cross Turismo",
+              "Taycan 4S",
+              "Taycan 4S Black Edition",
+              "Taycan 4S Cross Turismo",
+              "Taycan 4S Sport Turismo",
+              "Taycan 4S Sport Turismo Black Edition",
+              "Taycan Black Edition",
+              "Taycan GTS",
+              "Taycan GTS Sport Turismo",
+              "Taycan Sport Turismo",
+              "Taycan Sport Turismo Black Edition",
+              "Taycan Turbo",
+              "Taycan Turbo Cross Turismo",
+              "Taycan Turbo GT",
+              "Taycan Turbo GT mit Weissach-Paket",
+              "Taycan Turbo S",
+              "Taycan Turbo S Cross Turismo",
+              "Taycan Turbo S Sport Turismo",
+              "Taycan Turbo Sport Turismo"
+            ]
           }
         },
         "cross_brand_count": 1,
-        "total_model_count": 85
+        "total_model_count": 60,
+        "overall_avg_price": null,
+        "overall_min_price": null,
+        "overall_max_price": null
       },
       {
         "standardized_name": "manual_transmission",
+        "display_name": "Manual transmission",
+        "description": "Manual transmission",
         "category": "drivetrain",
+        "category_label": "Drivetrain",
         "brands": {
           "Porsche": {
+            "name": "6-speed manual transmission with dual-mass flywheel",
             "brand_specific_name": "6-speed manual transmission with dual-mass flywheel",
-            "model_count": 85
+            "model_count": 60,
+            "models": [
+              "718 Cayman GT4 RS",
+              "718 Spyder RS",
+              "911 Carrera",
+              "911 Carrera 4 GTS",
+              "911 Carrera 4 GTS Cabriolet",
+              "911 Carrera 4S",
+              "911 Carrera 4S Cabriolet",
+              "911 Carrera Cabriolet",
+              "911 Carrera GTS",
+              "911 Carrera GTS Cabriolet",
+              "911 Carrera S",
+              "911 Carrera S Cabriolet",
+              "911 Carrera T",
+              "911 Carrera T Cabriolet",
+              "911 GT3",
+              "911 GT3 90 F. A. Porsche",
+              "911 GT3 RS",
+              "911 GT3 S/C",
+              "911 GT3 mit Touring-Paket",
+              "911 Spirit 70",
+              "911 Targa 4 GTS",
+              "911 Targa 4S",
+              "911 Turbo S",
+              "911 Turbo S Cabriolet",
+              "Macan",
+              "Macan 4",
+              "Macan 4S",
+              "Macan GTS",
+              "Macan Turbo",
+              "Panamera",
+              "Panamera 4",
+              "Panamera 4 E-Hybrid",
+              "Panamera 4 E-Hybrid Executive",
+              "Panamera 4S E-Hybrid",
+              "Panamera GTS",
+              "Panamera Turbo E-Hybrid",
+              "Panamera Turbo S E-Hybrid",
+              "Panamera Turbo S E-Hybrid Executive",
+              "Taycan",
+              "Taycan 4",
+              "Taycan 4 Black Edition",
+              "Taycan 4 Cross Turismo",
+              "Taycan 4S",
+              "Taycan 4S Black Edition",
+              "Taycan 4S Cross Turismo",
+              "Taycan 4S Sport Turismo",
+              "Taycan 4S Sport Turismo Black Edition",
+              "Taycan Black Edition",
+              "Taycan GTS",
+              "Taycan GTS Sport Turismo",
+              "Taycan Sport Turismo",
+              "Taycan Sport Turismo Black Edition",
+              "Taycan Turbo",
+              "Taycan Turbo Cross Turismo",
+              "Taycan Turbo GT",
+              "Taycan Turbo GT mit Weissach-Paket",
+              "Taycan Turbo S",
+              "Taycan Turbo S Cross Turismo",
+              "Taycan Turbo S Sport Turismo",
+              "Taycan Turbo Sport Turismo"
+            ]
           }
         },
         "cross_brand_count": 1,
-        "total_model_count": 85
+        "total_model_count": 60,
+        "overall_avg_price": null,
+        "overall_min_price": null,
+        "overall_max_price": null
+      },
+      {
+        "standardized_name": "head_up_display",
+        "display_name": "Head-up display projecting info on windshield",
+        "description": "Head-up display projecting info on windshield",
+        "category": "technology",
+        "category_label": "Technology",
+        "brands": {
+          "Mercedes-Benz": {
+            "name": "Head-up-Display",
+            "brand_specific_name": "Head-up-Display",
+            "model_count": 27,
+            "models": [
+              "A-Klasse Kompaktlimousine",
+              "B-Klasse",
+              "C-Klasse Limousine",
+              "C-Klasse T-Modell",
+              "CLA",
+              "CLA Shooting Brake",
+              "CLE Cabriolet",
+              "CLE Coupé",
+              "E-Klasse Limousine",
+              "E-Klasse T-Modell",
+              "E-Klasse T-Modell All-Terrain",
+              "EQE Limousine",
+              "EQE SUV",
+              "EQS Limousine",
+              "GLA",
+              "GLB",
+              "GLC",
+              "GLC Coupé",
+              "GLE",
+              "GLE Coupé",
+              "Mercedes-AMG GT 4-Türer Coupé",
+              "Mercedes-AMG GT Coupé",
+              "Mercedes-AMG SL Roadster",
+              "Mercedes-Maybach EQS SUV",
+              "S-Klasse",
+              "S-Klasse Lang",
+              "VLE"
+            ]
+          }
+        },
+        "cross_brand_count": 1,
+        "total_model_count": 27,
+        "overall_avg_price": null,
+        "overall_min_price": null,
+        "overall_max_price": null
+      },
+      {
+        "standardized_name": "steering_wheel_heating",
+        "display_name": "Heated steering wheel",
+        "description": "Heated steering wheel",
+        "category": "comfort",
+        "category_label": "Comfort",
+        "brands": {
+          "Mercedes-Benz": {
+            "name": "Lenkradheizung",
+            "brand_specific_name": "Lenkradheizung",
+            "model_count": 26,
+            "models": [
+              "A-Klasse Kompaktlimousine",
+              "B-Klasse",
+              "C-Klasse Limousine",
+              "CLA",
+              "CLA Shooting Brake",
+              "CLE Cabriolet",
+              "CLE Coupé",
+              "E-Klasse Limousine",
+              "E-Klasse T-Modell",
+              "E-Klasse T-Modell All-Terrain",
+              "EQE Limousine",
+              "EQE SUV",
+              "G-Klasse",
+              "GLA",
+              "GLB",
+              "GLC",
+              "GLC Coupé",
+              "GLE",
+              "GLE Coupé",
+              "GLS",
+              "Mercedes-AMG GT Coupé",
+              "Mercedes-AMG SL Roadster",
+              "Mercedes-Maybach GLS",
+              "Mercedes-Maybach S-Klasse",
+              "S-Klasse",
+              "S-Klasse Lang"
+            ]
+          }
+        },
+        "cross_brand_count": 1,
+        "total_model_count": 26,
+        "overall_avg_price": null,
+        "overall_min_price": null,
+        "overall_max_price": null
+      },
+      {
+        "standardized_name": "alloy_wheels",
+        "display_name": "Alloy wheels",
+        "description": "Alloy wheels",
+        "category": "wheels",
+        "category_label": "Wheels & Tyres",
+        "brands": {
+          "Lexus": {
+            "name": "17'' Leichtmetallfelgen, 225/60R17",
+            "brand_specific_name": "17'' Leichtmetallfelgen, 225/60R17",
+            "model_count": 21,
+            "models": [
+              "ES Comfort",
+              "ES Executive",
+              "ES Luxury",
+              "LBX Basis",
+              "LBX Cool",
+              "LBX Relax",
+              "NX ADVANTAGE",
+              "NX Business",
+              "NX Comfort",
+              "NX Executive",
+              "NX F SPORT",
+              "NX Luxury",
+              "RX Business",
+              "RX Comfort",
+              "RX Executive",
+              "RX F SPORT +",
+              "RX Luxury",
+              "UX",
+              "UX F SPORT",
+              "UX F SPORT Design",
+              "UX Luxury Line"
+            ]
+          }
+        },
+        "cross_brand_count": 1,
+        "total_model_count": 21,
+        "overall_avg_price": null,
+        "overall_min_price": null,
+        "overall_max_price": null
+      },
+      {
+        "standardized_name": "navigation",
+        "display_name": "Built-in navigation system",
+        "description": "Built-in navigation system",
+        "category": "technology",
+        "category_label": "Technology",
+        "brands": {
+          "Mercedes-Benz": {
+            "name": "Digitales Extra: MBUX Augmented Reality für Navigation",
+            "brand_specific_name": "Digitales Extra: MBUX Augmented Reality für Navigation",
+            "model_count": 21,
+            "models": [
+              "A-Klasse Kompaktlimousine",
+              "B-Klasse",
+              "C-Klasse Limousine",
+              "CLA",
+              "CLA Shooting Brake",
+              "CLE Cabriolet",
+              "CLE Coupé",
+              "E-Klasse Limousine",
+              "E-Klasse T-Modell",
+              "E-Klasse T-Modell All-Terrain",
+              "EQE Limousine",
+              "EQE SUV",
+              "GLA",
+              "GLB",
+              "GLC",
+              "GLC Coupé",
+              "GLE",
+              "GLE Coupé",
+              "Mercedes-AMG GT 4-Türer Coupé",
+              "Mercedes-AMG GT Coupé",
+              "Mercedes-AMG SL Roadster"
+            ]
+          }
+        },
+        "cross_brand_count": 1,
+        "total_model_count": 21,
+        "overall_avg_price": null,
+        "overall_min_price": null,
+        "overall_max_price": null
+      },
+      {
+        "standardized_name": "heated_windshield",
+        "display_name": "Heated windshield / auxiliary heater",
+        "description": "Heated windshield / auxiliary heater",
+        "category": "comfort",
+        "category_label": "Comfort",
+        "brands": {
+          "Mercedes-Benz": {
+            "name": "Standheizung",
+            "brand_specific_name": "Standheizung",
+            "model_count": 20,
+            "models": [
+              "A-Klasse Kompaktlimousine",
+              "B-Klasse",
+              "C-Klasse Limousine",
+              "C-Klasse T-Modell",
+              "CLE Cabriolet",
+              "CLE Coupé",
+              "E-Klasse Limousine",
+              "E-Klasse T-Modell",
+              "E-Klasse T-Modell All-Terrain",
+              "G-Klasse",
+              "GLA",
+              "GLC",
+              "GLC Coupé",
+              "GLE",
+              "GLE Coupé",
+              "GLS",
+              "Mercedes-Maybach GLS",
+              "Mercedes-Maybach S-Klasse",
+              "S-Klasse",
+              "S-Klasse Lang"
+            ]
+          }
+        },
+        "cross_brand_count": 1,
+        "total_model_count": 20,
+        "overall_avg_price": null,
+        "overall_min_price": null,
+        "overall_max_price": null
+      },
+      {
+        "standardized_name": "seat_ventilation",
+        "display_name": "Ventilated / cooled front seats",
+        "description": "Ventilated / cooled front seats",
+        "category": "comfort",
+        "category_label": "Comfort",
+        "brands": {
+          "Mercedes-Benz": {
+            "name": "Sitzklimatisierung für Fahrer und Beifahrer",
+            "brand_specific_name": "Sitzklimatisierung für Fahrer und Beifahrer",
+            "model_count": 19,
+            "models": [
+              "C-Klasse Limousine",
+              "C-Klasse T-Modell",
+              "CLE Cabriolet",
+              "CLE Coupé",
+              "E-Klasse Limousine",
+              "E-Klasse T-Modell",
+              "E-Klasse T-Modell All-Terrain",
+              "EQE Limousine",
+              "EQE SUV",
+              "GLC",
+              "GLC Coupé",
+              "GLE",
+              "GLE Coupé",
+              "GLS",
+              "Mercedes-AMG GT 4-Türer Coupé",
+              "Mercedes-AMG GT Coupé",
+              "Mercedes-AMG SL Roadster",
+              "S-Klasse",
+              "S-Klasse Lang"
+            ]
+          }
+        },
+        "cross_brand_count": 1,
+        "total_model_count": 19,
+        "overall_avg_price": null,
+        "overall_min_price": null,
+        "overall_max_price": null
+      },
+      {
+        "standardized_name": "emergency_braking",
+        "display_name": "Automatic emergency braking system",
+        "description": "Automatic emergency braking system",
+        "category": "safety",
+        "category_label": "Safety",
+        "brands": {
+          "Mercedes-Benz": {
+            "name": "PRE-SAFE® Impuls Seite",
+            "brand_specific_name": "PRE-SAFE® Impuls Seite",
+            "model_count": 17,
+            "models": [
+              "A-Klasse Kompaktlimousine",
+              "B-Klasse",
+              "C-Klasse Limousine",
+              "CLE Cabriolet",
+              "CLE Coupé",
+              "E-Klasse Limousine",
+              "E-Klasse T-Modell",
+              "E-Klasse T-Modell All-Terrain",
+              "EQE Limousine",
+              "EQE SUV",
+              "GLA",
+              "GLC",
+              "GLC Coupé",
+              "GLE",
+              "GLE Coupé",
+              "GLS",
+              "Mercedes-AMG GT 4-Türer Coupé"
+            ]
+          }
+        },
+        "cross_brand_count": 1,
+        "total_model_count": 17,
+        "overall_avg_price": null,
+        "overall_min_price": null,
+        "overall_max_price": null
+      },
+      {
+        "standardized_name": "panoramic_roof",
+        "display_name": "Panoramic glass roof / sunroof",
+        "description": "Panoramic glass roof / sunroof",
+        "category": "exterior",
+        "category_label": "Exterior",
+        "brands": {
+          "Mercedes-Benz": {
+            "name": "SKY CONTROL Panoramadach",
+            "brand_specific_name": "SKY CONTROL Panoramadach",
+            "model_count": 16,
+            "models": [
+              "A-Klasse Kompaktlimousine",
+              "B-Klasse",
+              "C-Klasse Limousine",
+              "CLE Coupé",
+              "E-Klasse Limousine",
+              "E-Klasse T-Modell",
+              "E-Klasse T-Modell All-Terrain",
+              "EQE Limousine",
+              "EQS Limousine",
+              "GLA",
+              "GLC",
+              "GLC Coupé",
+              "Mercedes-AMG GT 4-Türer Coupé",
+              "Mercedes-AMG GT Coupé",
+              "S-Klasse",
+              "VLE"
+            ]
+          }
+        },
+        "cross_brand_count": 1,
+        "total_model_count": 16,
+        "overall_avg_price": null,
+        "overall_min_price": null,
+        "overall_max_price": null
+      },
+      {
+        "standardized_name": "seat_heating_front",
+        "display_name": "Heated front seats",
+        "description": "Heated front seats",
+        "category": "comfort",
+        "category_label": "Comfort",
+        "brands": {
+          "Mercedes-Benz": {
+            "name": "Sitzheizung im Fond",
+            "brand_specific_name": "Sitzheizung im Fond",
+            "model_count": 15,
+            "models": [
+              "C-Klasse Limousine",
+              "C-Klasse T-Modell",
+              "E-Klasse Limousine",
+              "E-Klasse T-Modell",
+              "E-Klasse T-Modell All-Terrain",
+              "EQE Limousine",
+              "EQE SUV",
+              "GLC",
+              "GLC Coupé",
+              "GLE",
+              "GLE Coupé",
+              "GLS",
+              "Mercedes-AMG GT 4-Türer Coupé",
+              "S-Klasse",
+              "S-Klasse Lang"
+            ]
+          }
+        },
+        "cross_brand_count": 1,
+        "total_model_count": 15,
+        "overall_avg_price": null,
+        "overall_min_price": null,
+        "overall_max_price": null
+      },
+      {
+        "standardized_name": "adaptive_cruise_control",
+        "display_name": "Adaptive cruise control with distance keeping",
+        "description": "Adaptive cruise control with distance keeping",
+        "category": "safety",
+        "category_label": "Safety",
+        "brands": {
+          "Mercedes-Benz": {
+            "name": "Digitales Extra: Aktiver Abstands-Assistent DISTRONIC",
+            "brand_specific_name": "Digitales Extra: Aktiver Abstands-Assistent DISTRONIC",
+            "model_count": 12,
+            "models": [
+              "A-Klasse Kompaktlimousine",
+              "B-Klasse",
+              "CLE Cabriolet",
+              "CLE Coupé",
+              "E-Klasse Limousine",
+              "E-Klasse T-Modell",
+              "E-Klasse T-Modell All-Terrain",
+              "EQE Limousine",
+              "EQE SUV",
+              "GLA",
+              "GLC",
+              "GLC Coupé"
+            ]
+          }
+        },
+        "cross_brand_count": 1,
+        "total_model_count": 12,
+        "overall_avg_price": null,
+        "overall_min_price": null,
+        "overall_max_price": null
+      },
+      {
+        "standardized_name": "theft_protection",
+        "display_name": "Vehicle theft protection / alarm system",
+        "description": "Vehicle theft protection / alarm system",
+        "category": "safety",
+        "category_label": "Safety",
+        "brands": {
+          "Lexus": {
+            "name": "Diebstahlschutzsystem",
+            "brand_specific_name": "Diebstahlschutzsystem",
+            "model_count": 12,
+            "models": [
+              "LM Executive",
+              "LM Luxury",
+              "RX Business",
+              "RX Comfort",
+              "RX Executive",
+              "RX F SPORT +",
+              "RX F SPORT Design",
+              "RX Luxury",
+              "UX",
+              "UX F SPORT",
+              "UX F SPORT Design",
+              "UX Luxury Line"
+            ]
+          }
+        },
+        "cross_brand_count": 1,
+        "total_model_count": 12,
+        "overall_avg_price": null,
+        "overall_min_price": null,
+        "overall_max_price": null
+      },
+      {
+        "standardized_name": "air_suspension",
+        "display_name": "Air suspension system",
+        "description": "Air suspension system",
+        "category": "comfort",
+        "category_label": "Comfort",
+        "brands": {
+          "Mercedes-Benz": {
+            "name": "AIRMATIC mit intelligenter Fahrwerksregelung und Digitalen Extras",
+            "brand_specific_name": "AIRMATIC mit intelligenter Fahrwerksregelung und Digitalen Extras",
+            "model_count": 7,
+            "models": [
+              "C-Klasse Limousine",
+              "E-Klasse Limousine",
+              "E-Klasse T-Modell",
+              "EQE Limousine",
+              "EQE SUV",
+              "GLC",
+              "GLC Coupé"
+            ]
+          }
+        },
+        "cross_brand_count": 1,
+        "total_model_count": 7,
+        "overall_avg_price": null,
+        "overall_min_price": null,
+        "overall_max_price": null
+      },
+      {
+        "standardized_name": "ac_charging",
+        "display_name": "AC charging capability",
+        "description": "AC charging capability",
+        "category": "technology",
+        "category_label": "Technology",
+        "brands": {
+          "Lexus": {
+            "name": "22 kW AC Ladeanschluss (3-phasig) Typ 2/Mennekes",
+            "brand_specific_name": "22 kW AC Ladeanschluss (3-phasig) Typ 2/Mennekes",
+            "model_count": 4,
+            "models": [
+              "RZ Executive",
+              "RZ F SPORT",
+              "RZ Luxury",
+              "RZ Premium"
+            ]
+          }
+        },
+        "cross_brand_count": 1,
+        "total_model_count": 4,
+        "overall_avg_price": null,
+        "overall_min_price": null,
+        "overall_max_price": null
+      },
+      {
+        "standardized_name": "active_noise_cancellation",
+        "display_name": "Active noise cancellation",
+        "description": "Active noise cancellation",
+        "category": "comfort",
+        "category_label": "Comfort",
+        "brands": {
+          "Lexus": {
+            "name": "Geräuschdämpfung ANC (Active Noise Cancellation)",
+            "brand_specific_name": "Geräuschdämpfung ANC (Active Noise Cancellation)",
+            "model_count": 3,
+            "models": [
+              "LBX Basis",
+              "LBX Elegant",
+              "LBX Emotion"
+            ]
+          }
+        },
+        "cross_brand_count": 1,
+        "total_model_count": 3,
+        "overall_avg_price": null,
+        "overall_min_price": null,
+        "overall_max_price": null
+      },
+      {
+        "standardized_name": "auto_high_beam",
+        "display_name": "Automatic high beam control",
+        "description": "Automatic high beam control",
+        "category": "lighting",
+        "category_label": "Lighting",
+        "brands": {
+          "Lexus": {
+            "name": "Leuchtweitenregulierung dynamisch",
+            "brand_specific_name": "Leuchtweitenregulierung dynamisch",
+            "model_count": 3,
+            "models": [
+              "LBX Relax",
+              "RZ F SPORT",
+              "RZ Luxury"
+            ]
+          }
+        },
+        "cross_brand_count": 1,
+        "total_model_count": 3,
+        "overall_avg_price": null,
+        "overall_min_price": null,
+        "overall_max_price": null
+      },
+      {
+        "standardized_name": "electric_tailgate",
+        "display_name": "Electrically operated tailgate",
+        "description": "Electrically operated tailgate",
+        "category": "comfort",
+        "category_label": "Comfort",
+        "brands": {
+          "Lexus": {
+            "name": "Heckklappe elektrisch öffnend und schließend",
+            "brand_specific_name": "Heckklappe elektrisch öffnend und schließend",
+            "model_count": 3,
+            "models": [
+              "LBX Elegant",
+              "LBX Emotion",
+              "UX F SPORT Design"
+            ]
+          }
+        },
+        "cross_brand_count": 1,
+        "total_model_count": 3,
+        "overall_avg_price": null,
+        "overall_min_price": null,
+        "overall_max_price": null
+      },
+      {
+        "standardized_name": "tow_hitch",
+        "display_name": "Trailer hitch / towing capability",
+        "description": "Trailer hitch / towing capability",
+        "category": "exterior",
+        "category_label": "Exterior",
+        "brands": {
+          "Lexus": {
+            "name": "Anhängelast 1.500kg",
+            "brand_specific_name": "Anhängelast 1.500kg",
+            "model_count": 3,
+            "models": [
+              "RZ Executive",
+              "RZ Luxury",
+              "RZ Premium"
+            ]
+          }
+        },
+        "cross_brand_count": 1,
+        "total_model_count": 3,
+        "overall_avg_price": null,
+        "overall_min_price": null,
+        "overall_max_price": null
+      },
+      {
+        "standardized_name": "digital_cockpit",
+        "display_name": "Digital instrument cluster / cockpit",
+        "description": "Digital instrument cluster / cockpit",
+        "category": "technology",
+        "category_label": "Technology",
+        "brands": {
+          "Lexus": {
+            "name": "Digitaler Rückspiegel",
+            "brand_specific_name": "Digitaler Rückspiegel",
+            "model_count": 2,
+            "models": [
+              "ES Executive",
+              "ES Luxury"
+            ]
+          }
+        },
+        "cross_brand_count": 1,
+        "total_model_count": 2,
+        "overall_avg_price": null,
+        "overall_min_price": null,
+        "overall_max_price": null
+      },
+      {
+        "standardized_name": "heated_rear_seats",
+        "display_name": "Rear seat / knee heating",
+        "description": "Rear seat / knee heating",
+        "category": "comfort",
+        "category_label": "Comfort",
+        "brands": {
+          "Lexus": {
+            "name": "Knieheizung (Infrarot)",
+            "brand_specific_name": "Knieheizung (Infrarot)",
+            "model_count": 2,
+            "models": [
+              "ES Comfort",
+              "ES Luxury"
+            ]
+          }
+        },
+        "cross_brand_count": 1,
+        "total_model_count": 2,
+        "overall_avg_price": null,
+        "overall_min_price": null,
+        "overall_max_price": null
+      },
+      {
+        "standardized_name": "sport_suspension",
+        "display_name": "Sport-tuned suspension",
+        "description": "Sport-tuned suspension",
+        "category": "drivetrain",
+        "category_label": "Drivetrain",
+        "brands": {
+          "Mercedes-Benz": {
+            "name": "Sportfahrwerk",
+            "brand_specific_name": "Sportfahrwerk",
+            "model_count": 2,
+            "models": [
+              "C-Klasse Limousine",
+              "C-Klasse T-Modell"
+            ]
+          }
+        },
+        "cross_brand_count": 1,
+        "total_model_count": 2,
+        "overall_avg_price": null,
+        "overall_min_price": null,
+        "overall_max_price": null
+      },
+      {
+        "standardized_name": "driver_monitor",
+        "display_name": "Driver attention / fatigue monitoring",
+        "description": "Driver attention / fatigue monitoring",
+        "category": "safety",
+        "category_label": "Safety",
+        "brands": {
+          "Lexus": {
+            "name": "Fahrer-Monitor",
+            "brand_specific_name": "Fahrer-Monitor",
+            "model_count": 1,
+            "models": [
+              "LBX Basis"
+            ]
+          }
+        },
+        "cross_brand_count": 1,
+        "total_model_count": 1,
+        "overall_avg_price": null,
+        "overall_min_price": null,
+        "overall_max_price": null
+      },
+      {
+        "standardized_name": "fog_lights",
+        "display_name": "Front fog lights / cornering lights",
+        "description": "Front fog lights / cornering lights",
+        "category": "lighting",
+        "category_label": "Lighting",
+        "brands": {
+          "Lexus": {
+            "name": "Abbiegelicht",
+            "brand_specific_name": "Abbiegelicht",
+            "model_count": 1,
+            "models": [
+              "LBX Relax"
+            ]
+          }
+        },
+        "cross_brand_count": 1,
+        "total_model_count": 1,
+        "overall_avg_price": null,
+        "overall_min_price": null,
+        "overall_max_price": null
       }
     ],
-    "total_unique_options": 38,
-    "cross_brand_options": 14
+    "categories": {
+      "climate": {
+        "option_count": 1,
+        "cross_brand_count": 1
+      },
+      "comfort": {
+        "option_count": 11,
+        "cross_brand_count": 3
+      },
+      "drivetrain": {
+        "option_count": 5,
+        "cross_brand_count": 2
+      },
+      "exterior": {
+        "option_count": 3,
+        "cross_brand_count": 1
+      },
+      "interior": {
+        "option_count": 2,
+        "cross_brand_count": 2
+      },
+      "lighting": {
+        "option_count": 3,
+        "cross_brand_count": 1
+      },
+      "safety": {
+        "option_count": 7,
+        "cross_brand_count": 3
+      },
+      "sound": {
+        "option_count": 1,
+        "cross_brand_count": 1
+      },
+      "technology": {
+        "option_count": 4,
+        "cross_brand_count": 0
+      },
+      "wheels": {
+        "option_count": 1,
+        "cross_brand_count": 0
+      }
+    }
   }
 }
