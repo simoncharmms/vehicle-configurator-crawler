@@ -2111,7 +2111,7 @@
   },
   {
     "brand": "Lexus",
-    "timestamp": "2026-09-08T05:55:53.177462+00:00",
+    "timestamp": "2026-09-08T07:19:28.619252+00:00",
     "vehicle_count": 49,
     "vehicles": [
       {
@@ -3999,7 +3999,7 @@
       "confidence": 0.95,
       "notes": "Playwright rendering + embedded JSON state (modelResults with prices, grades, and feature lists)."
     },
-    "duration_seconds": 5.56,
+    "duration_seconds": 1.9,
     "option_summary": [
       {
         "standardized_name": "alloy_wheels",

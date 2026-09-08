@@ -192,15 +192,23 @@ class PorscheCrawler(BrandCrawler):
     ) -> None:
         """Probe Porsche model family pages for option/equipment data.
 
-        Navigates to per-family detail pages (e.g. ``/germany/models/911/``)
-        and captures:
-        1. MPI compare API responses with technical data / option info
-        2. Leasing data API with pricing per model code
-        3. Embedded script data with feature / equipment details
+        Uses a two-phase approach:
+
+        Phase 1 — Option names from model family pages:
+            Navigates to per-family detail pages and extracts options
+            from the MPI compare API and leasing data.  Also discovers
+            configurator links with model codes.
+
+        Phase 2 — Real prices from the configurator DOM:
+            For each model family, navigates to the Porsche configurator
+            SPA (``configurator.porsche.com``) and extracts option-price
+            pairs from the rendered DOM.
         """
         # Deduplicate by model family — only probe each family once
         probed_families: set[str] = set()
         probe_count = 0
+        # Collect configurator model codes per family from page links
+        family_model_codes: dict[str, list[str]] = {}
 
         for vehicle in vehicles:
             if probe_count >= MAX_OPTION_PROBES:
@@ -248,7 +256,6 @@ class PorscheCrawler(BrandCrawler):
                     if "leasing-data" in api_url and isinstance(data, dict):
                         for code, info in data.items():
                             if isinstance(info, dict):
-                                # Extract total/base price from summary
                                 for item in info.get("summary", {}).get("items", []):
                                     label = item.get("label", "")
                                     if "Listenpreis" in label or "Grundpreis" in label:
@@ -279,6 +286,15 @@ class PorscheCrawler(BrandCrawler):
                         html, self.brand,
                     )
 
+                # Discover configurator model codes from page links
+                model_codes = _extract_porsche_configurator_codes(html)
+                if model_codes:
+                    family_model_codes[family] = model_codes
+                    logger.info(
+                        f"Porsche options: {family} configurator codes: "
+                        f"{model_codes[:3]}{'...' if len(model_codes) > 3 else ''}"
+                    )
+
                 # Apply collected options to all vehicles in this family
                 if family_options:
                     deduped = _dedupe_options(family_options)
@@ -297,6 +313,197 @@ class PorscheCrawler(BrandCrawler):
 
             except Exception as e:
                 logger.debug(f"Porsche options: family {family} failed: {e}")
+
+        # Phase 2: fetch real prices from the configurator DOM
+        if family_model_codes:
+            try:
+                await self._apply_configurator_prices(
+                    vehicles, pool, family_model_codes,
+                )
+            except Exception as e:
+                logger.warning(f"Porsche configurator pricing failed: {e}")
+
+    async def _apply_configurator_prices(
+        self,
+        vehicles: list[VehicleData],
+        pool: BrowserPool,
+        family_model_codes: dict[str, list[str]],
+    ) -> None:
+        """Fetch real per-option prices from the Porsche configurator SPA.
+
+        For each model family, navigates to the Porsche configurator page
+        for one representative model code and extracts option-price pairs
+        from the rendered DOM via ``BrowserPool.extract_dom_prices()``.
+        """
+        applied_count = 0
+
+        # Limit to 2 families max — the configurator SPA is very heavy
+        families_to_probe = list(family_model_codes.items())[:2]
+
+        for family, codes in families_to_probe:
+            if not codes:
+                continue
+
+            # Use first model code as representative
+            model_code = codes[0]
+            config_url = (
+                f"https://configurator.porsche.com/de-DE/mode/model/{model_code}"
+            )
+            logger.info(
+                f"Porsche prices: loading configurator for {family} "
+                f"({model_code}) → {config_url}"
+            )
+
+            try:
+                raw_pairs = await pool.extract_dom_prices(
+                    config_url,
+                    timeout_ms=120_000,
+                    extra_wait_ms=20_000,
+                )
+
+                if not raw_pairs:
+                    logger.debug(f"Porsche prices: no DOM prices for {family}")
+                    continue
+
+                # Parse extracted name-price pairs
+                price_map: dict[str, float] = {}  # name_lower → price
+                for pair in raw_pairs:
+                    name = pair.get("name", "")
+                    price_text = pair.get("price", "")
+                    if not name or not price_text:
+                        continue
+                    price = BaseEngine.parse_price(price_text)
+                    if price and 50 <= price <= 100_000:
+                        price_map[name.lower()] = price
+                        # Also store by first significant word for fuzzy match
+                        words = name.split()
+                        if len(words) > 0:
+                            price_map[name] = price  # Keep original case too
+
+                logger.info(
+                    f"Porsche prices: {family} → {len(price_map)} price entries"
+                )
+
+                # Apply prices to vehicles in this family
+                family_vehicles = [
+                    v for v in vehicles
+                    if (v.variant or "").lower() == family
+                ]
+
+                for v in family_vehicles:
+                    # Match existing options by name
+                    for opt in v.available_options:
+                        if opt.price is not None:
+                            continue  # Already has a price
+                        matched_price = _match_porsche_price(
+                            opt.brand_specific_name, price_map,
+                        )
+                        if matched_price is not None:
+                            opt.price = matched_price
+                            applied_count += 1
+
+                    # Also add priced options from the configurator
+                    # that weren't already present
+                    existing_names = {
+                        (o.standardized_name or o.brand_specific_name.lower())
+                        for o in v.available_options
+                    }
+                    for pair in raw_pairs:
+                        name = pair.get("name", "")
+                        price_text = pair.get("price", "")
+                        if not name or not price_text:
+                            continue
+                        # Skip "Gesamtpreis" (total price)
+                        if "Gesamtpreis" in name:
+                            continue
+                        price = BaseEngine.parse_price(price_text)
+                        if not price or price < 50 or price > 100_000:
+                            continue
+                        std = normalize_option_name(name, self.brand)
+                        key = std or name.lower()
+                        if key in existing_names:
+                            continue
+                        existing_names.add(key)
+                        cat = (
+                            get_category(std)
+                            if std
+                            else _categorize_porsche_option(name)
+                        )
+                        v.available_options.append(OptionData(
+                            standardized_name=std or "",
+                            brand_specific_name=name,
+                            price=price,
+                            category=cat,
+                        ))
+                        applied_count += 1
+
+                    v.available_options = _dedupe_options(
+                        v.available_options,
+                    )
+
+            except Exception as e:
+                logger.debug(
+                    f"Porsche prices: {family} ({model_code}) failed: {e}"
+                )
+
+            # Rate-limit between configurator loads
+            await asyncio.sleep(5.0)
+
+        logger.info(f"Porsche prices: applied {applied_count} prices total")
+
+
+# ------------------------------------------------------------------
+# Porsche configurator code extraction & price matching
+# ------------------------------------------------------------------
+
+def _extract_porsche_configurator_codes(html: str) -> list[str]:
+    """Extract Porsche configurator model codes from page links.
+
+    Configurator links on model family pages follow the pattern::
+
+        https://configurator.porsche.com/de-DE/mode/model/{code}
+
+    Returns a deduplicated list of model codes.
+    """
+    codes = re.findall(
+        r'configurator\.porsche\.com/de-DE/mode/model/([A-Za-z0-9]+)',
+        html,
+    )
+    # Deduplicate while preserving order
+    seen: set[str] = set()
+    result: list[str] = []
+    for code in codes:
+        if code not in seen:
+            seen.add(code)
+            result.append(code)
+    return result
+
+
+def _match_porsche_price(
+    option_name: str, price_map: dict[str, float],
+) -> float | None:
+    """Match a Porsche option name to extracted configurator prices.
+
+    Tries exact match first, then substring matching (longest name
+    first to avoid false positives).
+    """
+    name_lower = option_name.lower().strip()
+    if not name_lower:
+        return None
+
+    # Exact match
+    if name_lower in price_map:
+        return price_map[name_lower]
+
+    # Substring match: check if any price_map key contains or is contained in the name
+    for price_name, price in sorted(
+        price_map.items(), key=lambda x: -len(x[0]),
+    ):
+        pn = price_name.lower()
+        if len(pn) >= 6 and (pn in name_lower or name_lower in pn):
+            return price
+
+    return None
 
 
 # ------------------------------------------------------------------

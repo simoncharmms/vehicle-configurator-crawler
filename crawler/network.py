@@ -242,6 +242,272 @@ class BrowserPool:
         finally:
             await context.close()
 
+    async def fetch_configurator_prices(
+        self,
+        url: str,
+        *,
+        extra_wait_ms: int = 8_000,
+        timeout_ms: int = 60_000,
+        user_agent: str | None = None,
+    ) -> tuple[str, list[dict], list[dict]]:
+        """Navigate to a *configurator* page and capture both JSON API
+        responses **and** per-motorization pricing data.
+
+        Designed for the Mercedes configurator start page which loads
+        multiple motorization configurations with pricing via the NCOS
+        API.  After the page is loaded, the method:
+
+        1. Accepts cookie banners ("Alle akzeptieren").
+        2. Waits for API responses.
+        3. Parses configuration-prices responses into structured dicts
+           containing ``config_id``, ``purchase_price``, ``list_price``,
+           ``base_price_net``, and ``sa_codes``.
+
+        Returns:
+            ``(page_html, captured_json, motorization_configs)``
+        """
+        import re as _re
+
+        context = await self._browser.new_context(
+            **self._new_context_kwargs(user_agent),
+        )
+        captured: list[dict] = []
+        pricing_responses: list[dict] = []
+
+        try:
+            page = await context.new_page()
+
+            async def _on_response(response):
+                try:
+                    ct = response.headers.get("content-type", "")
+                    if "json" not in ct:
+                        return
+                    body = await response.json()
+                    captured.append(
+                        {"url": response.url, "status": response.status, "data": body}
+                    )
+                    # Specifically capture configuration-prices responses
+                    if "configuration-prices" in response.url and isinstance(body, dict):
+                        pp = body.get("purchasePrice", {})
+                        addl = body.get("additionalPriceInformation", [])
+                        config_id = body.get("id", "")
+
+                        # Parse SA codes from the configuration ID
+                        sa_match = _re.search(r"_SA-([^_]+)", config_id)
+                        sa_codes = sa_match.group(1).split("-") if sa_match else []
+
+                        list_price = None
+                        for info in addl:
+                            if info.get("type") == "LIST_PRICE":
+                                try:
+                                    list_price = float(info["amount"])
+                                except (KeyError, ValueError, TypeError):
+                                    pass
+
+                        base_net = None
+                        fli = body.get("financeLeasingInfo", {}).get("vehicle", {}).get("prices", [])
+                        for p in fli:
+                            if p.get("id") == "netBaseListPrice":
+                                try:
+                                    base_net = float(p["rawValue"])
+                                except (KeyError, ValueError, TypeError):
+                                    pass
+
+                        purchase_price = None
+                        try:
+                            purchase_price = float(pp["amount"])
+                        except (KeyError, ValueError, TypeError):
+                            pass
+
+                        if purchase_price:
+                            pricing_responses.append({
+                                "config_id": config_id,
+                                "purchase_price": purchase_price,
+                                "list_price": list_price,
+                                "base_price_net": base_net,
+                                "sa_codes": sa_codes,
+                            })
+                except Exception:
+                    pass
+
+            page.on("response", _on_response)
+
+            resp = await page.goto(
+                url, wait_until="domcontentloaded", timeout=timeout_ms,
+            )
+            if resp and resp.status >= 400:
+                raise RuntimeError(f"HTTP {resp.status} for {url}")
+
+            # Wait for content to load
+            await page.wait_for_timeout(extra_wait_ms)
+
+            # Accept cookie banners
+            try:
+                cookie_btn = page.locator("button").filter(has_text="Alle akzeptieren")
+                if await cookie_btn.count() > 0:
+                    await cookie_btn.first.click()
+                    await page.wait_for_timeout(2_000)
+            except Exception:
+                pass
+
+            # Click "Jetzt starten" if present (Mercedes configurator)
+            try:
+                start_btn = page.locator("button, a").filter(has_text="Jetzt starten")
+                if await start_btn.count() > 0:
+                    await start_btn.first.click()
+                    await page.wait_for_timeout(extra_wait_ms)
+            except Exception:
+                pass
+
+            html = await page.content()
+            return html, captured, pricing_responses
+        finally:
+            await context.close()
+
+    async def call_json_api(
+        self,
+        api_url: str,
+        *,
+        origin_url: str = "https://www.mercedes-benz.de",
+        timeout_ms: int = 30_000,
+        user_agent: str | None = None,
+    ) -> dict | list | None:
+        """Navigate to *origin_url* then call *api_url* via ``fetch()``.
+
+        Useful for JSON APIs that require a same-origin browser context
+        (CORS) but don't need full page navigation.  Returns the parsed
+        JSON body or *None* on failure.
+        """
+        context = await self._browser.new_context(
+            **self._new_context_kwargs(user_agent),
+        )
+        try:
+            page = await context.new_page()
+            await page.goto(
+                origin_url, wait_until="domcontentloaded", timeout=timeout_ms,
+            )
+            await page.wait_for_timeout(1_000)
+
+            result = await page.evaluate(
+                """
+                async (url) => {
+                    try {
+                        const resp = await fetch(url, {
+                            headers: {'Accept': 'application/json'},
+                            credentials: 'omit',
+                        });
+                        if (!resp.ok) return {__error: resp.status};
+                        return await resp.json();
+                    } catch (e) {
+                        return {__error: e.message};
+                    }
+                }
+                """,
+                api_url,
+            )
+            if isinstance(result, dict) and "__error" in result:
+                logger.debug(f"API call failed: {result['__error']} for {api_url}")
+                return None
+            return result
+        finally:
+            await context.close()
+
+    async def extract_dom_prices(
+        self,
+        url: str,
+        *,
+        timeout_ms: int = 120_000,
+        extra_wait_ms: int = 20_000,
+        user_agent: str | None = None,
+    ) -> list[dict]:
+        """Navigate to a configurator SPA and extract option-price pairs
+        from the rendered DOM.
+
+        Designed for SPAs (like the Porsche configurator) that render
+        pricing data in the DOM rather than via interceptable JSON APIs.
+
+        Returns a list of ``{"name": str, "price": str}`` dicts where
+        *price* is the raw text (e.g. ``"1.237,60 €"``).
+        """
+        context = await self._browser.new_context(
+            **self._new_context_kwargs(user_agent),
+        )
+        try:
+            page = await context.new_page()
+            await page.goto(
+                url, wait_until="commit", timeout=timeout_ms,
+            )
+            await page.wait_for_timeout(extra_wait_ms)
+
+            # Accept cookie banners
+            try:
+                import re as _re
+                cookie_btn = page.locator("button").filter(
+                    has_text=_re.compile(
+                        r"Alle akzeptieren|Accept All|Akzeptieren",
+                        _re.IGNORECASE,
+                    ),
+                )
+                if await cookie_btn.count() > 0:
+                    await cookie_btn.first.click()
+                    await page.wait_for_timeout(3_000)
+            except Exception:
+                pass
+
+            # Scroll through sections so lazy-loaded content appears
+            await page.evaluate("window.scrollTo(0, document.body.scrollHeight)")
+            await page.wait_for_timeout(3_000)
+
+            # Extract option-price pairs from DOM
+            pairs = await page.evaluate(
+                r"""
+                () => {
+                    const pairs = [];
+                    const seen = new Set();
+
+                    document.querySelectorAll('*').forEach(el => {
+                        const text = el.textContent.trim();
+                        if (
+                            (text.match(/^\d{1,3}\.\d{3},\d{2}\s*€$/) ||
+                             text.match(/^\d{1,3}\.\d{3}\s*€$/))
+                            && el.children.length === 0
+                        ) {
+                            const price = text;
+                            let parent = el.parentElement;
+                            for (let i = 0; i < 6 && parent; i++) {
+                                const parts = parent.textContent.trim().split(price);
+                                if (parts[0]) {
+                                    let name = parts[0].trim().replace(/\s+/g, ' ');
+                                    if (
+                                        name.length > 3 &&
+                                        name.length < 150 &&
+                                        !name.match(/\d{2,}\.\d{3}/)
+                                    ) {
+                                        const key = name + '|' + price;
+                                        if (!seen.has(key)) {
+                                            seen.add(key);
+                                            pairs.push({name, price});
+                                        }
+                                        break;
+                                    }
+                                }
+                                parent = parent.parentElement;
+                            }
+                        }
+                    });
+
+                    return pairs;
+                }
+                """
+            )
+
+            return pairs if isinstance(pairs, list) else []
+        except Exception as e:
+            logger.warning(f"DOM price extraction failed for {url}: {e}")
+            return []
+        finally:
+            await context.close()
+
     @classmethod
     async def close(cls) -> None:
         """Shut down the shared browser."""

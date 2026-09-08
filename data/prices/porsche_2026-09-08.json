@@ -12342,7 +12342,7 @@
   },
   {
     "brand": "Porsche",
-    "timestamp": "2026-09-08T05:55:47.583892+00:00",
+    "timestamp": "2026-09-08T07:19:26.701451+00:00",
     "vehicle_count": 85,
     "vehicles": [
       {
@@ -12363,6 +12363,7 @@
           {
             "standardized_name": "leather_seats",
             "brand_specific_name": "Race-Tex",
+            "price": 1106.7,
             "category": "interior",
             "currency": "EUR"
           },
@@ -12450,6 +12451,104 @@
             "brand_specific_name": "Performance Battery - Offroad Package",
             "category": "drivetrain",
             "code": "G1Z-VM4",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Metallicfarbe",
+            "price": 3213.0,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Sonderfarbe",
+            "price": 3213.0,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Räder lackiert in Schwarz (seidenglanz) mit umlaufendem Felgenrand lackiert in racinggelb",
+            "price": 1142.4,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "20-Zoll 718 Cayman GT4 RS Winterkomplettradsatz lackiert in Schwarz (seidenglanz)",
+            "price": 8627.5,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "3D-Druck Bodyform Vollschalensitz mit Härtegrad weich6 Farben",
+            "price": 2677.5,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "3D-Druck Bodyform Vollschalensitz mit Härtegrad mittel6 Farben",
+            "price": 2677.5,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "3D-Druck Bodyform Vollschalensitz mit Härtegrad hart6 Farben",
+            "price": 2677.5,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Weissach-Paket",
+            "price": 11965.45,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Frontdeckel in Sichtcarbon mit Teillackierung",
+            "price": 1309.0,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "LED-Hauptscheinwerfer inkl. Porsche Dynamic Light System (PDLS)",
+            "price": 1416.1,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Interieur-Paket Ziernähte und Stickungen in abweichender Farbe",
+            "price": 2737.0,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Personalisierte Türeinstiegsblenden Carbon, beleuchtet",
+            "price": 1309.0,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Liftsystem Vorderachse",
+            "price": 2594.2,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Porsche Ceramic Composite Brake (PCCB)",
+            "price": 7913.5,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "standardized_name": "rear_camera",
+            "brand_specific_name": "ParkAssistent hinten inkl. Rückfahrkamera",
+            "price": 1166.2,
+            "category": "safety",
+            "currency": "EUR"
+          },
+          {
+            "standardized_name": "premium_sound",
+            "brand_specific_name": "BOSE® Surround Sound-System",
+            "price": 1178.1,
+            "category": "sound",
             "currency": "EUR"
           }
         ],
@@ -12474,6 +12573,7 @@
           {
             "standardized_name": "leather_seats",
             "brand_specific_name": "Race-Tex",
+            "price": 1106.7,
             "category": "interior",
             "currency": "EUR"
           },
@@ -12561,6 +12661,104 @@
             "brand_specific_name": "Performance Battery - Offroad Package",
             "category": "drivetrain",
             "code": "G1Z-VM4",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Metallicfarbe",
+            "price": 3213.0,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Sonderfarbe",
+            "price": 3213.0,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Räder lackiert in Schwarz (seidenglanz) mit umlaufendem Felgenrand lackiert in racinggelb",
+            "price": 1142.4,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "20-Zoll 718 Cayman GT4 RS Winterkomplettradsatz lackiert in Schwarz (seidenglanz)",
+            "price": 8627.5,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "3D-Druck Bodyform Vollschalensitz mit Härtegrad weich6 Farben",
+            "price": 2677.5,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "3D-Druck Bodyform Vollschalensitz mit Härtegrad mittel6 Farben",
+            "price": 2677.5,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "3D-Druck Bodyform Vollschalensitz mit Härtegrad hart6 Farben",
+            "price": 2677.5,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Weissach-Paket",
+            "price": 11965.45,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Frontdeckel in Sichtcarbon mit Teillackierung",
+            "price": 1309.0,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "LED-Hauptscheinwerfer inkl. Porsche Dynamic Light System (PDLS)",
+            "price": 1416.1,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Interieur-Paket Ziernähte und Stickungen in abweichender Farbe",
+            "price": 2737.0,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Personalisierte Türeinstiegsblenden Carbon, beleuchtet",
+            "price": 1309.0,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Liftsystem Vorderachse",
+            "price": 2594.2,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Porsche Ceramic Composite Brake (PCCB)",
+            "price": 7913.5,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "standardized_name": "rear_camera",
+            "brand_specific_name": "ParkAssistent hinten inkl. Rückfahrkamera",
+            "price": 1166.2,
+            "category": "safety",
+            "currency": "EUR"
+          },
+          {
+            "standardized_name": "premium_sound",
+            "brand_specific_name": "BOSE® Surround Sound-System",
+            "price": 1178.1,
+            "category": "sound",
             "currency": "EUR"
           }
         ],
@@ -12585,6 +12783,7 @@
           {
             "standardized_name": "leather_seats",
             "brand_specific_name": "Race-Tex",
+            "price": 1106.7,
             "category": "interior",
             "currency": "EUR"
           },
@@ -12672,6 +12871,104 @@
             "brand_specific_name": "Performance Battery - Offroad Package",
             "category": "drivetrain",
             "code": "G1Z-VM4",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Metallicfarbe",
+            "price": 3213.0,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Sonderfarbe",
+            "price": 3213.0,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Räder lackiert in Schwarz (seidenglanz) mit umlaufendem Felgenrand lackiert in racinggelb",
+            "price": 1142.4,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "20-Zoll 718 Cayman GT4 RS Winterkomplettradsatz lackiert in Schwarz (seidenglanz)",
+            "price": 8627.5,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "3D-Druck Bodyform Vollschalensitz mit Härtegrad weich6 Farben",
+            "price": 2677.5,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "3D-Druck Bodyform Vollschalensitz mit Härtegrad mittel6 Farben",
+            "price": 2677.5,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "3D-Druck Bodyform Vollschalensitz mit Härtegrad hart6 Farben",
+            "price": 2677.5,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Weissach-Paket",
+            "price": 11965.45,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Frontdeckel in Sichtcarbon mit Teillackierung",
+            "price": 1309.0,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "LED-Hauptscheinwerfer inkl. Porsche Dynamic Light System (PDLS)",
+            "price": 1416.1,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Interieur-Paket Ziernähte und Stickungen in abweichender Farbe",
+            "price": 2737.0,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Personalisierte Türeinstiegsblenden Carbon, beleuchtet",
+            "price": 1309.0,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Liftsystem Vorderachse",
+            "price": 2594.2,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Porsche Ceramic Composite Brake (PCCB)",
+            "price": 7913.5,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "standardized_name": "rear_camera",
+            "brand_specific_name": "ParkAssistent hinten inkl. Rückfahrkamera",
+            "price": 1166.2,
+            "category": "safety",
+            "currency": "EUR"
+          },
+          {
+            "standardized_name": "premium_sound",
+            "brand_specific_name": "BOSE® Surround Sound-System",
+            "price": 1178.1,
+            "category": "sound",
             "currency": "EUR"
           }
         ],
@@ -12696,6 +12993,7 @@
           {
             "standardized_name": "leather_seats",
             "brand_specific_name": "Race-Tex",
+            "price": 1106.7,
             "category": "interior",
             "currency": "EUR"
           },
@@ -12783,6 +13081,104 @@
             "brand_specific_name": "Performance Battery - Offroad Package",
             "category": "drivetrain",
             "code": "G1Z-VM4",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Metallicfarbe",
+            "price": 3213.0,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Sonderfarbe",
+            "price": 3213.0,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Räder lackiert in Schwarz (seidenglanz) mit umlaufendem Felgenrand lackiert in racinggelb",
+            "price": 1142.4,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "20-Zoll 718 Cayman GT4 RS Winterkomplettradsatz lackiert in Schwarz (seidenglanz)",
+            "price": 8627.5,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "3D-Druck Bodyform Vollschalensitz mit Härtegrad weich6 Farben",
+            "price": 2677.5,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "3D-Druck Bodyform Vollschalensitz mit Härtegrad mittel6 Farben",
+            "price": 2677.5,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "3D-Druck Bodyform Vollschalensitz mit Härtegrad hart6 Farben",
+            "price": 2677.5,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Weissach-Paket",
+            "price": 11965.45,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Frontdeckel in Sichtcarbon mit Teillackierung",
+            "price": 1309.0,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "LED-Hauptscheinwerfer inkl. Porsche Dynamic Light System (PDLS)",
+            "price": 1416.1,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Interieur-Paket Ziernähte und Stickungen in abweichender Farbe",
+            "price": 2737.0,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Personalisierte Türeinstiegsblenden Carbon, beleuchtet",
+            "price": 1309.0,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Liftsystem Vorderachse",
+            "price": 2594.2,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Porsche Ceramic Composite Brake (PCCB)",
+            "price": 7913.5,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "standardized_name": "rear_camera",
+            "brand_specific_name": "ParkAssistent hinten inkl. Rückfahrkamera",
+            "price": 1166.2,
+            "category": "safety",
+            "currency": "EUR"
+          },
+          {
+            "standardized_name": "premium_sound",
+            "brand_specific_name": "BOSE® Surround Sound-System",
+            "price": 1178.1,
+            "category": "sound",
             "currency": "EUR"
           }
         ],
@@ -12807,6 +13203,7 @@
           {
             "standardized_name": "leather_seats",
             "brand_specific_name": "Race-Tex",
+            "price": 1106.7,
             "category": "interior",
             "currency": "EUR"
           },
@@ -12894,6 +13291,104 @@
             "brand_specific_name": "Performance Battery - Offroad Package",
             "category": "drivetrain",
             "code": "G1Z-VM4",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Metallicfarbe",
+            "price": 3213.0,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Sonderfarbe",
+            "price": 3213.0,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Räder lackiert in Schwarz (seidenglanz) mit umlaufendem Felgenrand lackiert in racinggelb",
+            "price": 1142.4,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "20-Zoll 718 Cayman GT4 RS Winterkomplettradsatz lackiert in Schwarz (seidenglanz)",
+            "price": 8627.5,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "3D-Druck Bodyform Vollschalensitz mit Härtegrad weich6 Farben",
+            "price": 2677.5,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "3D-Druck Bodyform Vollschalensitz mit Härtegrad mittel6 Farben",
+            "price": 2677.5,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "3D-Druck Bodyform Vollschalensitz mit Härtegrad hart6 Farben",
+            "price": 2677.5,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Weissach-Paket",
+            "price": 11965.45,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Frontdeckel in Sichtcarbon mit Teillackierung",
+            "price": 1309.0,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "LED-Hauptscheinwerfer inkl. Porsche Dynamic Light System (PDLS)",
+            "price": 1416.1,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Interieur-Paket Ziernähte und Stickungen in abweichender Farbe",
+            "price": 2737.0,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Personalisierte Türeinstiegsblenden Carbon, beleuchtet",
+            "price": 1309.0,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Liftsystem Vorderachse",
+            "price": 2594.2,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Porsche Ceramic Composite Brake (PCCB)",
+            "price": 7913.5,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "standardized_name": "rear_camera",
+            "brand_specific_name": "ParkAssistent hinten inkl. Rückfahrkamera",
+            "price": 1166.2,
+            "category": "safety",
+            "currency": "EUR"
+          },
+          {
+            "standardized_name": "premium_sound",
+            "brand_specific_name": "BOSE® Surround Sound-System",
+            "price": 1178.1,
+            "category": "sound",
             "currency": "EUR"
           }
         ],
@@ -12918,6 +13413,7 @@
           {
             "standardized_name": "leather_seats",
             "brand_specific_name": "Race-Tex",
+            "price": 1106.7,
             "category": "interior",
             "currency": "EUR"
           },
@@ -13005,6 +13501,104 @@
             "brand_specific_name": "Performance Battery - Offroad Package",
             "category": "drivetrain",
             "code": "G1Z-VM4",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Metallicfarbe",
+            "price": 3213.0,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Sonderfarbe",
+            "price": 3213.0,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Räder lackiert in Schwarz (seidenglanz) mit umlaufendem Felgenrand lackiert in racinggelb",
+            "price": 1142.4,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "20-Zoll 718 Cayman GT4 RS Winterkomplettradsatz lackiert in Schwarz (seidenglanz)",
+            "price": 8627.5,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "3D-Druck Bodyform Vollschalensitz mit Härtegrad weich6 Farben",
+            "price": 2677.5,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "3D-Druck Bodyform Vollschalensitz mit Härtegrad mittel6 Farben",
+            "price": 2677.5,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "3D-Druck Bodyform Vollschalensitz mit Härtegrad hart6 Farben",
+            "price": 2677.5,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Weissach-Paket",
+            "price": 11965.45,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Frontdeckel in Sichtcarbon mit Teillackierung",
+            "price": 1309.0,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "LED-Hauptscheinwerfer inkl. Porsche Dynamic Light System (PDLS)",
+            "price": 1416.1,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Interieur-Paket Ziernähte und Stickungen in abweichender Farbe",
+            "price": 2737.0,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Personalisierte Türeinstiegsblenden Carbon, beleuchtet",
+            "price": 1309.0,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Liftsystem Vorderachse",
+            "price": 2594.2,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Porsche Ceramic Composite Brake (PCCB)",
+            "price": 7913.5,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "standardized_name": "rear_camera",
+            "brand_specific_name": "ParkAssistent hinten inkl. Rückfahrkamera",
+            "price": 1166.2,
+            "category": "safety",
+            "currency": "EUR"
+          },
+          {
+            "standardized_name": "premium_sound",
+            "brand_specific_name": "BOSE® Surround Sound-System",
+            "price": 1178.1,
+            "category": "sound",
             "currency": "EUR"
           }
         ],
@@ -13029,6 +13623,7 @@
           {
             "standardized_name": "leather_seats",
             "brand_specific_name": "Race-Tex",
+            "price": 1106.7,
             "category": "interior",
             "currency": "EUR"
           },
@@ -13116,6 +13711,104 @@
             "brand_specific_name": "Performance Battery - Offroad Package",
             "category": "drivetrain",
             "code": "G1Z-VM4",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Metallicfarbe",
+            "price": 3213.0,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Sonderfarbe",
+            "price": 3213.0,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Räder lackiert in Schwarz (seidenglanz) mit umlaufendem Felgenrand lackiert in racinggelb",
+            "price": 1142.4,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "20-Zoll 718 Cayman GT4 RS Winterkomplettradsatz lackiert in Schwarz (seidenglanz)",
+            "price": 8627.5,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "3D-Druck Bodyform Vollschalensitz mit Härtegrad weich6 Farben",
+            "price": 2677.5,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "3D-Druck Bodyform Vollschalensitz mit Härtegrad mittel6 Farben",
+            "price": 2677.5,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "3D-Druck Bodyform Vollschalensitz mit Härtegrad hart6 Farben",
+            "price": 2677.5,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Weissach-Paket",
+            "price": 11965.45,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Frontdeckel in Sichtcarbon mit Teillackierung",
+            "price": 1309.0,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "LED-Hauptscheinwerfer inkl. Porsche Dynamic Light System (PDLS)",
+            "price": 1416.1,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Interieur-Paket Ziernähte und Stickungen in abweichender Farbe",
+            "price": 2737.0,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Personalisierte Türeinstiegsblenden Carbon, beleuchtet",
+            "price": 1309.0,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Liftsystem Vorderachse",
+            "price": 2594.2,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Porsche Ceramic Composite Brake (PCCB)",
+            "price": 7913.5,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "standardized_name": "rear_camera",
+            "brand_specific_name": "ParkAssistent hinten inkl. Rückfahrkamera",
+            "price": 1166.2,
+            "category": "safety",
+            "currency": "EUR"
+          },
+          {
+            "standardized_name": "premium_sound",
+            "brand_specific_name": "BOSE® Surround Sound-System",
+            "price": 1178.1,
+            "category": "sound",
             "currency": "EUR"
           }
         ],
@@ -13140,6 +13833,7 @@
           {
             "standardized_name": "leather_seats",
             "brand_specific_name": "Race-Tex",
+            "price": 1106.7,
             "category": "interior",
             "currency": "EUR"
           },
@@ -13227,6 +13921,104 @@
             "brand_specific_name": "Performance Battery - Offroad Package",
             "category": "drivetrain",
             "code": "G1Z-VM4",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Metallicfarbe",
+            "price": 3213.0,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Sonderfarbe",
+            "price": 3213.0,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Räder lackiert in Schwarz (seidenglanz) mit umlaufendem Felgenrand lackiert in racinggelb",
+            "price": 1142.4,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "20-Zoll 718 Cayman GT4 RS Winterkomplettradsatz lackiert in Schwarz (seidenglanz)",
+            "price": 8627.5,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "3D-Druck Bodyform Vollschalensitz mit Härtegrad weich6 Farben",
+            "price": 2677.5,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "3D-Druck Bodyform Vollschalensitz mit Härtegrad mittel6 Farben",
+            "price": 2677.5,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "3D-Druck Bodyform Vollschalensitz mit Härtegrad hart6 Farben",
+            "price": 2677.5,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Weissach-Paket",
+            "price": 11965.45,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Frontdeckel in Sichtcarbon mit Teillackierung",
+            "price": 1309.0,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "LED-Hauptscheinwerfer inkl. Porsche Dynamic Light System (PDLS)",
+            "price": 1416.1,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Interieur-Paket Ziernähte und Stickungen in abweichender Farbe",
+            "price": 2737.0,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Personalisierte Türeinstiegsblenden Carbon, beleuchtet",
+            "price": 1309.0,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Liftsystem Vorderachse",
+            "price": 2594.2,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Porsche Ceramic Composite Brake (PCCB)",
+            "price": 7913.5,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "standardized_name": "rear_camera",
+            "brand_specific_name": "ParkAssistent hinten inkl. Rückfahrkamera",
+            "price": 1166.2,
+            "category": "safety",
+            "currency": "EUR"
+          },
+          {
+            "standardized_name": "premium_sound",
+            "brand_specific_name": "BOSE® Surround Sound-System",
+            "price": 1178.1,
+            "category": "sound",
             "currency": "EUR"
           }
         ],
@@ -13251,6 +14043,7 @@
           {
             "standardized_name": "leather_seats",
             "brand_specific_name": "Race-Tex",
+            "price": 1106.7,
             "category": "interior",
             "currency": "EUR"
           },
@@ -13338,6 +14131,104 @@
             "brand_specific_name": "Performance Battery - Offroad Package",
             "category": "drivetrain",
             "code": "G1Z-VM4",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Metallicfarbe",
+            "price": 3213.0,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Sonderfarbe",
+            "price": 3213.0,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Räder lackiert in Schwarz (seidenglanz) mit umlaufendem Felgenrand lackiert in racinggelb",
+            "price": 1142.4,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "20-Zoll 718 Cayman GT4 RS Winterkomplettradsatz lackiert in Schwarz (seidenglanz)",
+            "price": 8627.5,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "3D-Druck Bodyform Vollschalensitz mit Härtegrad weich6 Farben",
+            "price": 2677.5,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "3D-Druck Bodyform Vollschalensitz mit Härtegrad mittel6 Farben",
+            "price": 2677.5,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "3D-Druck Bodyform Vollschalensitz mit Härtegrad hart6 Farben",
+            "price": 2677.5,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Weissach-Paket",
+            "price": 11965.45,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Frontdeckel in Sichtcarbon mit Teillackierung",
+            "price": 1309.0,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "LED-Hauptscheinwerfer inkl. Porsche Dynamic Light System (PDLS)",
+            "price": 1416.1,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Interieur-Paket Ziernähte und Stickungen in abweichender Farbe",
+            "price": 2737.0,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Personalisierte Türeinstiegsblenden Carbon, beleuchtet",
+            "price": 1309.0,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Liftsystem Vorderachse",
+            "price": 2594.2,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Porsche Ceramic Composite Brake (PCCB)",
+            "price": 7913.5,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "standardized_name": "rear_camera",
+            "brand_specific_name": "ParkAssistent hinten inkl. Rückfahrkamera",
+            "price": 1166.2,
+            "category": "safety",
+            "currency": "EUR"
+          },
+          {
+            "standardized_name": "premium_sound",
+            "brand_specific_name": "BOSE® Surround Sound-System",
+            "price": 1178.1,
+            "category": "sound",
             "currency": "EUR"
           }
         ],
@@ -13362,6 +14253,7 @@
           {
             "standardized_name": "leather_seats",
             "brand_specific_name": "Race-Tex",
+            "price": 1106.7,
             "category": "interior",
             "currency": "EUR"
           },
@@ -13449,6 +14341,104 @@
             "brand_specific_name": "Performance Battery - Offroad Package",
             "category": "drivetrain",
             "code": "G1Z-VM4",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Metallicfarbe",
+            "price": 3213.0,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Sonderfarbe",
+            "price": 3213.0,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Räder lackiert in Schwarz (seidenglanz) mit umlaufendem Felgenrand lackiert in racinggelb",
+            "price": 1142.4,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "20-Zoll 718 Cayman GT4 RS Winterkomplettradsatz lackiert in Schwarz (seidenglanz)",
+            "price": 8627.5,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "3D-Druck Bodyform Vollschalensitz mit Härtegrad weich6 Farben",
+            "price": 2677.5,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "3D-Druck Bodyform Vollschalensitz mit Härtegrad mittel6 Farben",
+            "price": 2677.5,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "3D-Druck Bodyform Vollschalensitz mit Härtegrad hart6 Farben",
+            "price": 2677.5,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Weissach-Paket",
+            "price": 11965.45,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Frontdeckel in Sichtcarbon mit Teillackierung",
+            "price": 1309.0,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "LED-Hauptscheinwerfer inkl. Porsche Dynamic Light System (PDLS)",
+            "price": 1416.1,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Interieur-Paket Ziernähte und Stickungen in abweichender Farbe",
+            "price": 2737.0,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Personalisierte Türeinstiegsblenden Carbon, beleuchtet",
+            "price": 1309.0,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Liftsystem Vorderachse",
+            "price": 2594.2,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Porsche Ceramic Composite Brake (PCCB)",
+            "price": 7913.5,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "standardized_name": "rear_camera",
+            "brand_specific_name": "ParkAssistent hinten inkl. Rückfahrkamera",
+            "price": 1166.2,
+            "category": "safety",
+            "currency": "EUR"
+          },
+          {
+            "standardized_name": "premium_sound",
+            "brand_specific_name": "BOSE® Surround Sound-System",
+            "price": 1178.1,
+            "category": "sound",
             "currency": "EUR"
           }
         ],
@@ -13473,6 +14463,7 @@
           {
             "standardized_name": "leather_seats",
             "brand_specific_name": "Race-Tex",
+            "price": 1106.7,
             "category": "interior",
             "currency": "EUR"
           },
@@ -13560,6 +14551,104 @@
             "brand_specific_name": "Performance Battery - Offroad Package",
             "category": "drivetrain",
             "code": "G1Z-VM4",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Metallicfarbe",
+            "price": 3213.0,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Sonderfarbe",
+            "price": 3213.0,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Räder lackiert in Schwarz (seidenglanz) mit umlaufendem Felgenrand lackiert in racinggelb",
+            "price": 1142.4,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "20-Zoll 718 Cayman GT4 RS Winterkomplettradsatz lackiert in Schwarz (seidenglanz)",
+            "price": 8627.5,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "3D-Druck Bodyform Vollschalensitz mit Härtegrad weich6 Farben",
+            "price": 2677.5,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "3D-Druck Bodyform Vollschalensitz mit Härtegrad mittel6 Farben",
+            "price": 2677.5,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "3D-Druck Bodyform Vollschalensitz mit Härtegrad hart6 Farben",
+            "price": 2677.5,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Weissach-Paket",
+            "price": 11965.45,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Frontdeckel in Sichtcarbon mit Teillackierung",
+            "price": 1309.0,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "LED-Hauptscheinwerfer inkl. Porsche Dynamic Light System (PDLS)",
+            "price": 1416.1,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Interieur-Paket Ziernähte und Stickungen in abweichender Farbe",
+            "price": 2737.0,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Personalisierte Türeinstiegsblenden Carbon, beleuchtet",
+            "price": 1309.0,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Liftsystem Vorderachse",
+            "price": 2594.2,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Porsche Ceramic Composite Brake (PCCB)",
+            "price": 7913.5,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "standardized_name": "rear_camera",
+            "brand_specific_name": "ParkAssistent hinten inkl. Rückfahrkamera",
+            "price": 1166.2,
+            "category": "safety",
+            "currency": "EUR"
+          },
+          {
+            "standardized_name": "premium_sound",
+            "brand_specific_name": "BOSE® Surround Sound-System",
+            "price": 1178.1,
+            "category": "sound",
             "currency": "EUR"
           }
         ],
@@ -13584,6 +14673,7 @@
           {
             "standardized_name": "leather_seats",
             "brand_specific_name": "Race-Tex",
+            "price": 1106.7,
             "category": "interior",
             "currency": "EUR"
           },
@@ -13671,6 +14761,104 @@
             "brand_specific_name": "Performance Battery - Offroad Package",
             "category": "drivetrain",
             "code": "G1Z-VM4",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Metallicfarbe",
+            "price": 3213.0,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Sonderfarbe",
+            "price": 3213.0,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Räder lackiert in Schwarz (seidenglanz) mit umlaufendem Felgenrand lackiert in racinggelb",
+            "price": 1142.4,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "20-Zoll 718 Cayman GT4 RS Winterkomplettradsatz lackiert in Schwarz (seidenglanz)",
+            "price": 8627.5,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "3D-Druck Bodyform Vollschalensitz mit Härtegrad weich6 Farben",
+            "price": 2677.5,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "3D-Druck Bodyform Vollschalensitz mit Härtegrad mittel6 Farben",
+            "price": 2677.5,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "3D-Druck Bodyform Vollschalensitz mit Härtegrad hart6 Farben",
+            "price": 2677.5,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Weissach-Paket",
+            "price": 11965.45,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Frontdeckel in Sichtcarbon mit Teillackierung",
+            "price": 1309.0,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "LED-Hauptscheinwerfer inkl. Porsche Dynamic Light System (PDLS)",
+            "price": 1416.1,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Interieur-Paket Ziernähte und Stickungen in abweichender Farbe",
+            "price": 2737.0,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Personalisierte Türeinstiegsblenden Carbon, beleuchtet",
+            "price": 1309.0,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Liftsystem Vorderachse",
+            "price": 2594.2,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Porsche Ceramic Composite Brake (PCCB)",
+            "price": 7913.5,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "standardized_name": "rear_camera",
+            "brand_specific_name": "ParkAssistent hinten inkl. Rückfahrkamera",
+            "price": 1166.2,
+            "category": "safety",
+            "currency": "EUR"
+          },
+          {
+            "standardized_name": "premium_sound",
+            "brand_specific_name": "BOSE® Surround Sound-System",
+            "price": 1178.1,
+            "category": "sound",
             "currency": "EUR"
           }
         ],
@@ -13695,6 +14883,7 @@
           {
             "standardized_name": "leather_seats",
             "brand_specific_name": "Race-Tex",
+            "price": 1106.7,
             "category": "interior",
             "currency": "EUR"
           },
@@ -13782,6 +14971,104 @@
             "brand_specific_name": "Performance Battery - Offroad Package",
             "category": "drivetrain",
             "code": "G1Z-VM4",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Metallicfarbe",
+            "price": 3213.0,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Sonderfarbe",
+            "price": 3213.0,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Räder lackiert in Schwarz (seidenglanz) mit umlaufendem Felgenrand lackiert in racinggelb",
+            "price": 1142.4,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "20-Zoll 718 Cayman GT4 RS Winterkomplettradsatz lackiert in Schwarz (seidenglanz)",
+            "price": 8627.5,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "3D-Druck Bodyform Vollschalensitz mit Härtegrad weich6 Farben",
+            "price": 2677.5,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "3D-Druck Bodyform Vollschalensitz mit Härtegrad mittel6 Farben",
+            "price": 2677.5,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "3D-Druck Bodyform Vollschalensitz mit Härtegrad hart6 Farben",
+            "price": 2677.5,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Weissach-Paket",
+            "price": 11965.45,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Frontdeckel in Sichtcarbon mit Teillackierung",
+            "price": 1309.0,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "LED-Hauptscheinwerfer inkl. Porsche Dynamic Light System (PDLS)",
+            "price": 1416.1,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Interieur-Paket Ziernähte und Stickungen in abweichender Farbe",
+            "price": 2737.0,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Personalisierte Türeinstiegsblenden Carbon, beleuchtet",
+            "price": 1309.0,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Liftsystem Vorderachse",
+            "price": 2594.2,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Porsche Ceramic Composite Brake (PCCB)",
+            "price": 7913.5,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "standardized_name": "rear_camera",
+            "brand_specific_name": "ParkAssistent hinten inkl. Rückfahrkamera",
+            "price": 1166.2,
+            "category": "safety",
+            "currency": "EUR"
+          },
+          {
+            "standardized_name": "premium_sound",
+            "brand_specific_name": "BOSE® Surround Sound-System",
+            "price": 1178.1,
+            "category": "sound",
             "currency": "EUR"
           }
         ],
@@ -13806,6 +15093,7 @@
           {
             "standardized_name": "leather_seats",
             "brand_specific_name": "Race-Tex",
+            "price": 1106.7,
             "category": "interior",
             "currency": "EUR"
           },
@@ -13893,6 +15181,104 @@
             "brand_specific_name": "Performance Battery - Offroad Package",
             "category": "drivetrain",
             "code": "G1Z-VM4",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Metallicfarbe",
+            "price": 3213.0,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Sonderfarbe",
+            "price": 3213.0,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Räder lackiert in Schwarz (seidenglanz) mit umlaufendem Felgenrand lackiert in racinggelb",
+            "price": 1142.4,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "20-Zoll 718 Cayman GT4 RS Winterkomplettradsatz lackiert in Schwarz (seidenglanz)",
+            "price": 8627.5,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "3D-Druck Bodyform Vollschalensitz mit Härtegrad weich6 Farben",
+            "price": 2677.5,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "3D-Druck Bodyform Vollschalensitz mit Härtegrad mittel6 Farben",
+            "price": 2677.5,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "3D-Druck Bodyform Vollschalensitz mit Härtegrad hart6 Farben",
+            "price": 2677.5,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Weissach-Paket",
+            "price": 11965.45,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Frontdeckel in Sichtcarbon mit Teillackierung",
+            "price": 1309.0,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "LED-Hauptscheinwerfer inkl. Porsche Dynamic Light System (PDLS)",
+            "price": 1416.1,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Interieur-Paket Ziernähte und Stickungen in abweichender Farbe",
+            "price": 2737.0,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Personalisierte Türeinstiegsblenden Carbon, beleuchtet",
+            "price": 1309.0,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Liftsystem Vorderachse",
+            "price": 2594.2,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Porsche Ceramic Composite Brake (PCCB)",
+            "price": 7913.5,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "standardized_name": "rear_camera",
+            "brand_specific_name": "ParkAssistent hinten inkl. Rückfahrkamera",
+            "price": 1166.2,
+            "category": "safety",
+            "currency": "EUR"
+          },
+          {
+            "standardized_name": "premium_sound",
+            "brand_specific_name": "BOSE® Surround Sound-System",
+            "price": 1178.1,
+            "category": "sound",
             "currency": "EUR"
           }
         ],
@@ -13917,6 +15303,7 @@
           {
             "standardized_name": "leather_seats",
             "brand_specific_name": "Race-Tex",
+            "price": 1106.7,
             "category": "interior",
             "currency": "EUR"
           },
@@ -14004,6 +15391,104 @@
             "brand_specific_name": "Performance Battery - Offroad Package",
             "category": "drivetrain",
             "code": "G1Z-VM4",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Metallicfarbe",
+            "price": 3213.0,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Sonderfarbe",
+            "price": 3213.0,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Räder lackiert in Schwarz (seidenglanz) mit umlaufendem Felgenrand lackiert in racinggelb",
+            "price": 1142.4,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "20-Zoll 718 Cayman GT4 RS Winterkomplettradsatz lackiert in Schwarz (seidenglanz)",
+            "price": 8627.5,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "3D-Druck Bodyform Vollschalensitz mit Härtegrad weich6 Farben",
+            "price": 2677.5,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "3D-Druck Bodyform Vollschalensitz mit Härtegrad mittel6 Farben",
+            "price": 2677.5,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "3D-Druck Bodyform Vollschalensitz mit Härtegrad hart6 Farben",
+            "price": 2677.5,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Weissach-Paket",
+            "price": 11965.45,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Frontdeckel in Sichtcarbon mit Teillackierung",
+            "price": 1309.0,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "LED-Hauptscheinwerfer inkl. Porsche Dynamic Light System (PDLS)",
+            "price": 1416.1,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Interieur-Paket Ziernähte und Stickungen in abweichender Farbe",
+            "price": 2737.0,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Personalisierte Türeinstiegsblenden Carbon, beleuchtet",
+            "price": 1309.0,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Liftsystem Vorderachse",
+            "price": 2594.2,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Porsche Ceramic Composite Brake (PCCB)",
+            "price": 7913.5,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "standardized_name": "rear_camera",
+            "brand_specific_name": "ParkAssistent hinten inkl. Rückfahrkamera",
+            "price": 1166.2,
+            "category": "safety",
+            "currency": "EUR"
+          },
+          {
+            "standardized_name": "premium_sound",
+            "brand_specific_name": "BOSE® Surround Sound-System",
+            "price": 1178.1,
+            "category": "sound",
             "currency": "EUR"
           }
         ],
@@ -14028,6 +15513,7 @@
           {
             "standardized_name": "leather_seats",
             "brand_specific_name": "Race-Tex",
+            "price": 1106.7,
             "category": "interior",
             "currency": "EUR"
           },
@@ -14115,6 +15601,104 @@
             "brand_specific_name": "Performance Battery - Offroad Package",
             "category": "drivetrain",
             "code": "G1Z-VM4",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Metallicfarbe",
+            "price": 3213.0,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Sonderfarbe",
+            "price": 3213.0,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Räder lackiert in Schwarz (seidenglanz) mit umlaufendem Felgenrand lackiert in racinggelb",
+            "price": 1142.4,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "20-Zoll 718 Cayman GT4 RS Winterkomplettradsatz lackiert in Schwarz (seidenglanz)",
+            "price": 8627.5,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "3D-Druck Bodyform Vollschalensitz mit Härtegrad weich6 Farben",
+            "price": 2677.5,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "3D-Druck Bodyform Vollschalensitz mit Härtegrad mittel6 Farben",
+            "price": 2677.5,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "3D-Druck Bodyform Vollschalensitz mit Härtegrad hart6 Farben",
+            "price": 2677.5,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Weissach-Paket",
+            "price": 11965.45,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Frontdeckel in Sichtcarbon mit Teillackierung",
+            "price": 1309.0,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "LED-Hauptscheinwerfer inkl. Porsche Dynamic Light System (PDLS)",
+            "price": 1416.1,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Interieur-Paket Ziernähte und Stickungen in abweichender Farbe",
+            "price": 2737.0,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Personalisierte Türeinstiegsblenden Carbon, beleuchtet",
+            "price": 1309.0,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Liftsystem Vorderachse",
+            "price": 2594.2,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Porsche Ceramic Composite Brake (PCCB)",
+            "price": 7913.5,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "standardized_name": "rear_camera",
+            "brand_specific_name": "ParkAssistent hinten inkl. Rückfahrkamera",
+            "price": 1166.2,
+            "category": "safety",
+            "currency": "EUR"
+          },
+          {
+            "standardized_name": "premium_sound",
+            "brand_specific_name": "BOSE® Surround Sound-System",
+            "price": 1178.1,
+            "category": "sound",
             "currency": "EUR"
           }
         ],
@@ -14139,6 +15723,7 @@
           {
             "standardized_name": "leather_seats",
             "brand_specific_name": "Race-Tex",
+            "price": 1106.7,
             "category": "interior",
             "currency": "EUR"
           },
@@ -14226,6 +15811,104 @@
             "brand_specific_name": "Performance Battery - Offroad Package",
             "category": "drivetrain",
             "code": "G1Z-VM4",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Metallicfarbe",
+            "price": 3213.0,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Sonderfarbe",
+            "price": 3213.0,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Räder lackiert in Schwarz (seidenglanz) mit umlaufendem Felgenrand lackiert in racinggelb",
+            "price": 1142.4,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "20-Zoll 718 Cayman GT4 RS Winterkomplettradsatz lackiert in Schwarz (seidenglanz)",
+            "price": 8627.5,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "3D-Druck Bodyform Vollschalensitz mit Härtegrad weich6 Farben",
+            "price": 2677.5,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "3D-Druck Bodyform Vollschalensitz mit Härtegrad mittel6 Farben",
+            "price": 2677.5,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "3D-Druck Bodyform Vollschalensitz mit Härtegrad hart6 Farben",
+            "price": 2677.5,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Weissach-Paket",
+            "price": 11965.45,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Frontdeckel in Sichtcarbon mit Teillackierung",
+            "price": 1309.0,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "LED-Hauptscheinwerfer inkl. Porsche Dynamic Light System (PDLS)",
+            "price": 1416.1,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Interieur-Paket Ziernähte und Stickungen in abweichender Farbe",
+            "price": 2737.0,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Personalisierte Türeinstiegsblenden Carbon, beleuchtet",
+            "price": 1309.0,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Liftsystem Vorderachse",
+            "price": 2594.2,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Porsche Ceramic Composite Brake (PCCB)",
+            "price": 7913.5,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "standardized_name": "rear_camera",
+            "brand_specific_name": "ParkAssistent hinten inkl. Rückfahrkamera",
+            "price": 1166.2,
+            "category": "safety",
+            "currency": "EUR"
+          },
+          {
+            "standardized_name": "premium_sound",
+            "brand_specific_name": "BOSE® Surround Sound-System",
+            "price": 1178.1,
+            "category": "sound",
             "currency": "EUR"
           }
         ],
@@ -14250,6 +15933,7 @@
           {
             "standardized_name": "leather_seats",
             "brand_specific_name": "Race-Tex",
+            "price": 1106.7,
             "category": "interior",
             "currency": "EUR"
           },
@@ -14337,6 +16021,104 @@
             "brand_specific_name": "Performance Battery - Offroad Package",
             "category": "drivetrain",
             "code": "G1Z-VM4",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Metallicfarbe",
+            "price": 3213.0,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Sonderfarbe",
+            "price": 3213.0,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Räder lackiert in Schwarz (seidenglanz) mit umlaufendem Felgenrand lackiert in racinggelb",
+            "price": 1142.4,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "20-Zoll 718 Cayman GT4 RS Winterkomplettradsatz lackiert in Schwarz (seidenglanz)",
+            "price": 8627.5,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "3D-Druck Bodyform Vollschalensitz mit Härtegrad weich6 Farben",
+            "price": 2677.5,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "3D-Druck Bodyform Vollschalensitz mit Härtegrad mittel6 Farben",
+            "price": 2677.5,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "3D-Druck Bodyform Vollschalensitz mit Härtegrad hart6 Farben",
+            "price": 2677.5,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Weissach-Paket",
+            "price": 11965.45,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Frontdeckel in Sichtcarbon mit Teillackierung",
+            "price": 1309.0,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "LED-Hauptscheinwerfer inkl. Porsche Dynamic Light System (PDLS)",
+            "price": 1416.1,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Interieur-Paket Ziernähte und Stickungen in abweichender Farbe",
+            "price": 2737.0,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Personalisierte Türeinstiegsblenden Carbon, beleuchtet",
+            "price": 1309.0,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Liftsystem Vorderachse",
+            "price": 2594.2,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Porsche Ceramic Composite Brake (PCCB)",
+            "price": 7913.5,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "standardized_name": "rear_camera",
+            "brand_specific_name": "ParkAssistent hinten inkl. Rückfahrkamera",
+            "price": 1166.2,
+            "category": "safety",
+            "currency": "EUR"
+          },
+          {
+            "standardized_name": "premium_sound",
+            "brand_specific_name": "BOSE® Surround Sound-System",
+            "price": 1178.1,
+            "category": "sound",
             "currency": "EUR"
           }
         ],
@@ -14361,6 +16143,7 @@
           {
             "standardized_name": "leather_seats",
             "brand_specific_name": "Race-Tex",
+            "price": 1106.7,
             "category": "interior",
             "currency": "EUR"
           },
@@ -14448,6 +16231,104 @@
             "brand_specific_name": "Performance Battery - Offroad Package",
             "category": "drivetrain",
             "code": "G1Z-VM4",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Metallicfarbe",
+            "price": 3213.0,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Sonderfarbe",
+            "price": 3213.0,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Räder lackiert in Schwarz (seidenglanz) mit umlaufendem Felgenrand lackiert in racinggelb",
+            "price": 1142.4,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "20-Zoll 718 Cayman GT4 RS Winterkomplettradsatz lackiert in Schwarz (seidenglanz)",
+            "price": 8627.5,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "3D-Druck Bodyform Vollschalensitz mit Härtegrad weich6 Farben",
+            "price": 2677.5,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "3D-Druck Bodyform Vollschalensitz mit Härtegrad mittel6 Farben",
+            "price": 2677.5,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "3D-Druck Bodyform Vollschalensitz mit Härtegrad hart6 Farben",
+            "price": 2677.5,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Weissach-Paket",
+            "price": 11965.45,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Frontdeckel in Sichtcarbon mit Teillackierung",
+            "price": 1309.0,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "LED-Hauptscheinwerfer inkl. Porsche Dynamic Light System (PDLS)",
+            "price": 1416.1,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Interieur-Paket Ziernähte und Stickungen in abweichender Farbe",
+            "price": 2737.0,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Personalisierte Türeinstiegsblenden Carbon, beleuchtet",
+            "price": 1309.0,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Liftsystem Vorderachse",
+            "price": 2594.2,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Porsche Ceramic Composite Brake (PCCB)",
+            "price": 7913.5,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "standardized_name": "rear_camera",
+            "brand_specific_name": "ParkAssistent hinten inkl. Rückfahrkamera",
+            "price": 1166.2,
+            "category": "safety",
+            "currency": "EUR"
+          },
+          {
+            "standardized_name": "premium_sound",
+            "brand_specific_name": "BOSE® Surround Sound-System",
+            "price": 1178.1,
+            "category": "sound",
             "currency": "EUR"
           }
         ],
@@ -14472,6 +16353,7 @@
           {
             "standardized_name": "leather_seats",
             "brand_specific_name": "Race-Tex",
+            "price": 1106.7,
             "category": "interior",
             "currency": "EUR"
           },
@@ -14559,6 +16441,104 @@
             "brand_specific_name": "Performance Battery - Offroad Package",
             "category": "drivetrain",
             "code": "G1Z-VM4",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Metallicfarbe",
+            "price": 3213.0,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Sonderfarbe",
+            "price": 3213.0,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Räder lackiert in Schwarz (seidenglanz) mit umlaufendem Felgenrand lackiert in racinggelb",
+            "price": 1142.4,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "20-Zoll 718 Cayman GT4 RS Winterkomplettradsatz lackiert in Schwarz (seidenglanz)",
+            "price": 8627.5,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "3D-Druck Bodyform Vollschalensitz mit Härtegrad weich6 Farben",
+            "price": 2677.5,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "3D-Druck Bodyform Vollschalensitz mit Härtegrad mittel6 Farben",
+            "price": 2677.5,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "3D-Druck Bodyform Vollschalensitz mit Härtegrad hart6 Farben",
+            "price": 2677.5,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Weissach-Paket",
+            "price": 11965.45,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Frontdeckel in Sichtcarbon mit Teillackierung",
+            "price": 1309.0,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "LED-Hauptscheinwerfer inkl. Porsche Dynamic Light System (PDLS)",
+            "price": 1416.1,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Interieur-Paket Ziernähte und Stickungen in abweichender Farbe",
+            "price": 2737.0,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Personalisierte Türeinstiegsblenden Carbon, beleuchtet",
+            "price": 1309.0,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Liftsystem Vorderachse",
+            "price": 2594.2,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Porsche Ceramic Composite Brake (PCCB)",
+            "price": 7913.5,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "standardized_name": "rear_camera",
+            "brand_specific_name": "ParkAssistent hinten inkl. Rückfahrkamera",
+            "price": 1166.2,
+            "category": "safety",
+            "currency": "EUR"
+          },
+          {
+            "standardized_name": "premium_sound",
+            "brand_specific_name": "BOSE® Surround Sound-System",
+            "price": 1178.1,
+            "category": "sound",
             "currency": "EUR"
           }
         ],
@@ -14583,6 +16563,7 @@
           {
             "standardized_name": "leather_seats",
             "brand_specific_name": "Race-Tex",
+            "price": 1106.7,
             "category": "interior",
             "currency": "EUR"
           },
@@ -14670,6 +16651,104 @@
             "brand_specific_name": "Performance Battery - Offroad Package",
             "category": "drivetrain",
             "code": "G1Z-VM4",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Metallicfarbe",
+            "price": 3213.0,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Sonderfarbe",
+            "price": 3213.0,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Räder lackiert in Schwarz (seidenglanz) mit umlaufendem Felgenrand lackiert in racinggelb",
+            "price": 1142.4,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "20-Zoll 718 Cayman GT4 RS Winterkomplettradsatz lackiert in Schwarz (seidenglanz)",
+            "price": 8627.5,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "3D-Druck Bodyform Vollschalensitz mit Härtegrad weich6 Farben",
+            "price": 2677.5,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "3D-Druck Bodyform Vollschalensitz mit Härtegrad mittel6 Farben",
+            "price": 2677.5,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "3D-Druck Bodyform Vollschalensitz mit Härtegrad hart6 Farben",
+            "price": 2677.5,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Weissach-Paket",
+            "price": 11965.45,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Frontdeckel in Sichtcarbon mit Teillackierung",
+            "price": 1309.0,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "LED-Hauptscheinwerfer inkl. Porsche Dynamic Light System (PDLS)",
+            "price": 1416.1,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Interieur-Paket Ziernähte und Stickungen in abweichender Farbe",
+            "price": 2737.0,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Personalisierte Türeinstiegsblenden Carbon, beleuchtet",
+            "price": 1309.0,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Liftsystem Vorderachse",
+            "price": 2594.2,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Porsche Ceramic Composite Brake (PCCB)",
+            "price": 7913.5,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "standardized_name": "rear_camera",
+            "brand_specific_name": "ParkAssistent hinten inkl. Rückfahrkamera",
+            "price": 1166.2,
+            "category": "safety",
+            "currency": "EUR"
+          },
+          {
+            "standardized_name": "premium_sound",
+            "brand_specific_name": "BOSE® Surround Sound-System",
+            "price": 1178.1,
+            "category": "sound",
             "currency": "EUR"
           }
         ],
@@ -14694,6 +16773,7 @@
           {
             "standardized_name": "leather_seats",
             "brand_specific_name": "Race-Tex",
+            "price": 1106.7,
             "category": "interior",
             "currency": "EUR"
           },
@@ -14781,6 +16861,104 @@
             "brand_specific_name": "Performance Battery - Offroad Package",
             "category": "drivetrain",
             "code": "G1Z-VM4",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Metallicfarbe",
+            "price": 3213.0,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Sonderfarbe",
+            "price": 3213.0,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Räder lackiert in Schwarz (seidenglanz) mit umlaufendem Felgenrand lackiert in racinggelb",
+            "price": 1142.4,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "20-Zoll 718 Cayman GT4 RS Winterkomplettradsatz lackiert in Schwarz (seidenglanz)",
+            "price": 8627.5,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "3D-Druck Bodyform Vollschalensitz mit Härtegrad weich6 Farben",
+            "price": 2677.5,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "3D-Druck Bodyform Vollschalensitz mit Härtegrad mittel6 Farben",
+            "price": 2677.5,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "3D-Druck Bodyform Vollschalensitz mit Härtegrad hart6 Farben",
+            "price": 2677.5,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Weissach-Paket",
+            "price": 11965.45,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Frontdeckel in Sichtcarbon mit Teillackierung",
+            "price": 1309.0,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "LED-Hauptscheinwerfer inkl. Porsche Dynamic Light System (PDLS)",
+            "price": 1416.1,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Interieur-Paket Ziernähte und Stickungen in abweichender Farbe",
+            "price": 2737.0,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Personalisierte Türeinstiegsblenden Carbon, beleuchtet",
+            "price": 1309.0,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Liftsystem Vorderachse",
+            "price": 2594.2,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Porsche Ceramic Composite Brake (PCCB)",
+            "price": 7913.5,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "standardized_name": "rear_camera",
+            "brand_specific_name": "ParkAssistent hinten inkl. Rückfahrkamera",
+            "price": 1166.2,
+            "category": "safety",
+            "currency": "EUR"
+          },
+          {
+            "standardized_name": "premium_sound",
+            "brand_specific_name": "BOSE® Surround Sound-System",
+            "price": 1178.1,
+            "category": "sound",
             "currency": "EUR"
           }
         ],
@@ -14805,6 +16983,7 @@
           {
             "standardized_name": "leather_seats",
             "brand_specific_name": "Race-Tex",
+            "price": 1106.7,
             "category": "interior",
             "currency": "EUR"
           },
@@ -14892,6 +17071,104 @@
             "brand_specific_name": "Performance Battery - Offroad Package",
             "category": "drivetrain",
             "code": "G1Z-VM4",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Metallicfarbe",
+            "price": 3213.0,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Sonderfarbe",
+            "price": 3213.0,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Räder lackiert in Schwarz (seidenglanz) mit umlaufendem Felgenrand lackiert in racinggelb",
+            "price": 1142.4,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "20-Zoll 718 Cayman GT4 RS Winterkomplettradsatz lackiert in Schwarz (seidenglanz)",
+            "price": 8627.5,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "3D-Druck Bodyform Vollschalensitz mit Härtegrad weich6 Farben",
+            "price": 2677.5,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "3D-Druck Bodyform Vollschalensitz mit Härtegrad mittel6 Farben",
+            "price": 2677.5,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "3D-Druck Bodyform Vollschalensitz mit Härtegrad hart6 Farben",
+            "price": 2677.5,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Weissach-Paket",
+            "price": 11965.45,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Frontdeckel in Sichtcarbon mit Teillackierung",
+            "price": 1309.0,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "LED-Hauptscheinwerfer inkl. Porsche Dynamic Light System (PDLS)",
+            "price": 1416.1,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Interieur-Paket Ziernähte und Stickungen in abweichender Farbe",
+            "price": 2737.0,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Personalisierte Türeinstiegsblenden Carbon, beleuchtet",
+            "price": 1309.0,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Liftsystem Vorderachse",
+            "price": 2594.2,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Porsche Ceramic Composite Brake (PCCB)",
+            "price": 7913.5,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "standardized_name": "rear_camera",
+            "brand_specific_name": "ParkAssistent hinten inkl. Rückfahrkamera",
+            "price": 1166.2,
+            "category": "safety",
+            "currency": "EUR"
+          },
+          {
+            "standardized_name": "premium_sound",
+            "brand_specific_name": "BOSE® Surround Sound-System",
+            "price": 1178.1,
+            "category": "sound",
             "currency": "EUR"
           }
         ],
@@ -14916,6 +17193,7 @@
           {
             "standardized_name": "leather_seats",
             "brand_specific_name": "Race-Tex",
+            "price": 1106.7,
             "category": "interior",
             "currency": "EUR"
           },
@@ -15003,6 +17281,104 @@
             "brand_specific_name": "Performance Battery - Offroad Package",
             "category": "drivetrain",
             "code": "G1Z-VM4",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Metallicfarbe",
+            "price": 3213.0,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Sonderfarbe",
+            "price": 3213.0,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Räder lackiert in Schwarz (seidenglanz) mit umlaufendem Felgenrand lackiert in racinggelb",
+            "price": 1142.4,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "20-Zoll 718 Cayman GT4 RS Winterkomplettradsatz lackiert in Schwarz (seidenglanz)",
+            "price": 8627.5,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "3D-Druck Bodyform Vollschalensitz mit Härtegrad weich6 Farben",
+            "price": 2677.5,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "3D-Druck Bodyform Vollschalensitz mit Härtegrad mittel6 Farben",
+            "price": 2677.5,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "3D-Druck Bodyform Vollschalensitz mit Härtegrad hart6 Farben",
+            "price": 2677.5,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Weissach-Paket",
+            "price": 11965.45,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Frontdeckel in Sichtcarbon mit Teillackierung",
+            "price": 1309.0,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "LED-Hauptscheinwerfer inkl. Porsche Dynamic Light System (PDLS)",
+            "price": 1416.1,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Interieur-Paket Ziernähte und Stickungen in abweichender Farbe",
+            "price": 2737.0,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Personalisierte Türeinstiegsblenden Carbon, beleuchtet",
+            "price": 1309.0,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Liftsystem Vorderachse",
+            "price": 2594.2,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "brand_specific_name": "Porsche Ceramic Composite Brake (PCCB)",
+            "price": 7913.5,
+            "category": "other",
+            "currency": "EUR"
+          },
+          {
+            "standardized_name": "rear_camera",
+            "brand_specific_name": "ParkAssistent hinten inkl. Rückfahrkamera",
+            "price": 1166.2,
+            "category": "safety",
+            "currency": "EUR"
+          },
+          {
+            "standardized_name": "premium_sound",
+            "brand_specific_name": "BOSE® Surround Sound-System",
+            "price": 1178.1,
+            "category": "sound",
             "currency": "EUR"
           }
         ],
@@ -21792,7 +24168,7 @@
       "confidence": 0.7,
       "notes": "Porsche SPA models page (networkidle); no prices on overview."
     },
-    "duration_seconds": 63.9,
+    "duration_seconds": 146.22,
     "option_summary": [
       {
         "standardized_name": "dual_clutch_transmission",
@@ -21806,9 +24182,9 @@
       {
         "standardized_name": "leather_seats",
         "brand_specific_name": "Race-Tex",
-        "avg_price": null,
-        "min_price": null,
-        "max_price": null,
+        "avg_price": 1106.7,
+        "min_price": 1106.7,
+        "max_price": 1106.7,
         "model_count": 85,
         "category": "interior"
       },
@@ -21838,6 +24214,24 @@
         "max_price": null,
         "model_count": 85,
         "category": "drivetrain"
+      },
+      {
+        "standardized_name": "rear_camera",
+        "brand_specific_name": "ParkAssistent hinten inkl. Rückfahrkamera",
+        "avg_price": 1166.2,
+        "min_price": 1166.2,
+        "max_price": 1166.2,
+        "model_count": 24,
+        "category": "safety"
+      },
+      {
+        "standardized_name": "premium_sound",
+        "brand_specific_name": "BOSE® Surround Sound-System",
+        "avg_price": 1178.1,
+        "min_price": 1178.1,
+        "max_price": 1178.1,
+        "model_count": 24,
+        "category": "sound"
       }
     ]
   }

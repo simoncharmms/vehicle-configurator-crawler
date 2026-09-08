@@ -221,21 +221,31 @@ class MercedesCrawler(BrandCrawler):
     ) -> None:
         """Probe individual model pages for option/equipment data.
 
-        Picks a sample of models with known base prices and navigates to
-        their overview pages.  Equipment data is extracted from:
-        1. API JSON responses captured during page load
-        2. Embedded ``ssrData`` scripts containing equipment objects
-           (with ``equipmentId``, ``title``, ``isIncluded`` fields)
-        3. HTML text regex fallback for price patterns
+        Uses a two-phase approach:
+
+        Phase 1 — Equipment names from model overview pages:
+            Navigates to each model overview page and extracts equipment
+            items from embedded ``ssrData`` scripts (with ``equipmentId``,
+            ``title``, ``isIncluded`` fields).  Also discovers the
+            configurator typeClass from embedded links.
+
+        Phase 2 — Real prices from the configurator entry API:
+            For each unique typeClass, calls the Mercedes ``owcc-backend``
+            entry API which returns ``curatedComponents`` with real gross
+            and net prices per option (SA/PC codes).
         """
-        # Probe all vehicles with URLs up to limit (was [:MAX_OPTION_PROBES])
+        import asyncio
+
         targets = [v for v in vehicles if v.base_price and v.url][:MAX_OPTION_PROBES]
         if not targets:
             return
 
+        # Phase 1: extract equipment names + discover typeClasses
+        type_class_map: dict[str, str] = {}  # typeClass → first vehicle URL
+        vehicle_tc: dict[str, str] = {}  # vehicle URL → typeClass
+
         for vehicle in targets:
             try:
-                import asyncio
                 await asyncio.sleep(config.rate_limit_seconds)
 
                 logger.info(f"Mercedes options: probing {vehicle.model} → {vehicle.url}")
@@ -253,7 +263,6 @@ class MercedesCrawler(BrandCrawler):
                     options.extend(found)
 
                 # 2) Extract equipment from Mercedes ssrData scripts
-                #    (the primary source on model overview pages)
                 soup = BeautifulSoup(html, "lxml")
                 equip_options = _extract_equipment_from_ssr(soup, self.brand)
                 if equip_options:
@@ -274,8 +283,184 @@ class MercedesCrawler(BrandCrawler):
                         f"{len(vehicle.available_options)} options"
                     )
 
+                # Discover typeClass from configurator links in the HTML
+                tc = _extract_type_class(html)
+                if tc:
+                    vehicle_tc[vehicle.url] = tc
+                    type_class_map.setdefault(tc, vehicle.url)
+
             except Exception as e:
                 logger.debug(f"Mercedes options: {vehicle.model} failed: {e}")
+
+        # Phase 2: fetch real prices from the configurator entry API
+        if type_class_map:
+            try:
+                await self._apply_configurator_prices(
+                    vehicles, pool, type_class_map, vehicle_tc,
+                )
+            except Exception as e:
+                logger.warning(f"Mercedes configurator pricing failed: {e}")
+
+    async def _apply_configurator_prices(
+        self,
+        vehicles: list[VehicleData],
+        pool: BrowserPool,
+        type_class_map: dict[str, str],
+        vehicle_tc: dict[str, str],
+    ) -> None:
+        """Fetch real per-option prices from the configurator entry API.
+
+        The Mercedes ``owcc-backend`` entry API returns
+        ``startPage.preConfigs[].curatedComponents[]`` with per-option
+        gross and net prices for each equipment item (SA/PC codes).
+        """
+        import asyncio
+
+        # Build price lookup: typeClass → {sa_code: price}
+        tc_prices: dict[str, dict[str, float]] = {}
+        tc_price_options: dict[str, list[OptionData]] = {}
+
+        for tc in type_class_map:
+            try:
+                await asyncio.sleep(1.0)
+                api_url = (
+                    f"https://api.oneweb.mercedes-benz.com/owcc-backend/"
+                    f"api/v3/de_DE/CCci/48097edf/entry?typeClass={tc}"
+                )
+                logger.info(f"Mercedes prices: fetching entry API for {tc}")
+                data = await pool.call_json_api(
+                    api_url,
+                    origin_url="https://www.mercedes-benz.de",
+                    timeout_ms=30_000,
+                )
+
+                if not isinstance(data, dict):
+                    logger.debug(f"Mercedes prices: no data for {tc}")
+                    continue
+
+                prices: dict[str, float] = {}
+                priced_opts: list[OptionData] = []
+
+                pre_configs = (
+                    data.get("startPage", {}).get("preConfigs", [])
+                )
+                for pc in pre_configs:
+                    for comp in pc.get("curatedComponents", []):
+                        comp_id = comp.get("id", "")
+                        comp_name = comp.get("name", "")
+                        price_obj = comp.get("price", {})
+                        if not isinstance(price_obj, dict):
+                            continue
+                        gross = price_obj.get("price")
+                        if not gross or not isinstance(gross, (int, float)):
+                            continue
+                        if gross < 50 or gross > 100_000:
+                            continue
+
+                        prices[comp_id] = float(gross)
+
+                        # Also build OptionData from the configurator
+                        std = normalize_option_name(comp_name, self.brand)
+                        cat = (
+                            get_category(std)
+                            if std
+                            else _guess_category_from_title(comp_name)
+                        )
+                        priced_opts.append(OptionData(
+                            standardized_name=std or "",
+                            brand_specific_name=comp_name,
+                            price=float(gross),
+                            category=cat,
+                            code=comp_id,
+                        ))
+
+                tc_prices[tc] = prices
+                tc_price_options[tc] = priced_opts
+                logger.info(
+                    f"Mercedes prices: {tc} → {len(prices)} priced options"
+                )
+
+            except Exception as e:
+                logger.debug(f"Mercedes prices: {tc} failed: {e}")
+
+        if not tc_prices:
+            return
+
+        # Apply prices to vehicles
+        applied_count = 0
+        for vehicle in vehicles:
+            tc = vehicle_tc.get(vehicle.url, "")
+            if not tc or tc not in tc_prices:
+                # Try matching by any typeClass that has matching SA codes
+                for try_tc, try_prices in tc_prices.items():
+                    if any(
+                        opt.code in try_prices
+                        for opt in vehicle.available_options
+                        if opt.code
+                    ):
+                        tc = try_tc
+                        break
+
+            if not tc or tc not in tc_prices:
+                # No typeClass match — still merge configurator options
+                # as new options for this vehicle
+                continue
+
+            prices = tc_prices[tc]
+            priced_opts = tc_price_options.get(tc, [])
+
+            # Match existing options by SA code and set price
+            matched_codes: set[str] = set()
+            for opt in vehicle.available_options:
+                if opt.code and opt.code in prices:
+                    opt.price = prices[opt.code]
+                    matched_codes.add(opt.code)
+                    applied_count += 1
+
+            # Add priced options from configurator that weren't
+            # already present (new options the model page missed)
+            existing_codes = {o.code for o in vehicle.available_options if o.code}
+            existing_names = {
+                o.standardized_name or o.brand_specific_name.lower()
+                for o in vehicle.available_options
+            }
+            for opt in priced_opts:
+                if opt.code and opt.code not in existing_codes:
+                    key = opt.standardized_name or opt.brand_specific_name.lower()
+                    if key not in existing_names:
+                        vehicle.available_options.append(opt)
+                        existing_codes.add(opt.code)
+                        existing_names.add(key)
+                        applied_count += 1
+
+            vehicle.available_options = _dedupe_options(
+                vehicle.available_options,
+            )
+
+        logger.info(
+            f"Mercedes prices: applied {applied_count} prices "
+            f"across {len(tc_prices)} typeClasses"
+        )
+
+
+# ------------------------------------------------------------------
+# TypeClass extraction from configurator links
+# ------------------------------------------------------------------
+
+def _extract_type_class(html: str) -> str | None:
+    """Extract the Mercedes typeClass from car-configurator links in HTML.
+
+    Configurator links follow the pattern::
+
+        car-configurator.html/start/CCci/DE/de/tc/{typeClass}
+
+    Returns the first typeClass found (e.g. ``"W206"``) or ``None``.
+    """
+    match = re.search(
+        r'car-configurator\.html/start/CCci/DE/de/tc/([A-Z0-9]+)',
+        html,
+    )
+    return match.group(1) if match else None
 
 
 # ------------------------------------------------------------------
