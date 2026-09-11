@@ -278,6 +278,7 @@ select:focus { outline: none; border-color: var(--accent); }
   color: var(--text-dim);
 }
 #price-chart { max-height: 500px; }
+#option-price-bar-chart { max-height: 500px; }
 
 /* --- Vehicle List --- */
 

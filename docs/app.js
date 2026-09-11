@@ -12,6 +12,8 @@ const DATA_BASE = document.location.pathname.includes('/docs/')
 let allData = {};           // { brandKey: { name, snapshots: { date: [CrawlResult] } } }
 let optionSummary = null;   // from index.json → option_summary
 let chartInstance = null;
+let barChartInstance = null;
+let comparisonRows = [];
 
 const BRAND_COLORS = {
   'mercedes-benz': '#00adef',
@@ -35,6 +37,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   updateStats();
   renderOptionTable();
   renderChart();
+  renderBarChart();
   renderVehicles();
 
 });
@@ -78,6 +81,7 @@ async function loadData() {
         }
       }
     }
+    buildComparisonRows();
   } catch (e) {
     console.error('Failed to load data:', e);
     showNoData('Failed to load data. Make sure the crawler has run at least once.');
@@ -143,6 +147,7 @@ function onFilterChange() {
   updateStats();
   renderOptionTable();
   renderChart();
+  renderBarChart();
   renderVehicles();
 }
 
@@ -208,6 +213,62 @@ function isExcludedOption(option) {
   return name.includes('gesamtbetrag') || name.includes('total amount');
 }
 
+function buildComparisonRows() {
+  const brand = allData['mercedes-benz'];
+  if (!brand || !optionSummary?.options) return;
+
+  const source = Object.entries(brand.snapshots || {})
+    .sort(([dateA], [dateB]) => dateB.localeCompare(dateA))
+    .map(([, snapshots]) => snapshots)
+    .flat()
+    .find(snapshot => (snapshot.vehicles || []).some(vehicle =>
+      (vehicle.available_options || []).some(option => option.price > 0)
+    ));
+  if (!source) return;
+
+  const mercedesOptions = new Map();
+  for (const vehicle of source.vehicles || []) {
+    for (const option of vehicle.available_options || []) {
+      if (!option.price || option.price <= 0 || !option.standardized_name) continue;
+      const entry = mercedesOptions.get(option.standardized_name) || {
+        names: [],
+        models: new Set(),
+        prices: [],
+      };
+      if (option.brand_specific_name && !entry.names.includes(option.brand_specific_name)) {
+        entry.names.push(option.brand_specific_name);
+      }
+      entry.models.add(vehicle.model);
+      entry.prices.push(option.price);
+      mercedesOptions.set(option.standardized_name, entry);
+    }
+  }
+
+  comparisonRows = optionSummary.options.map(row => {
+    const porsche = row.brands?.Porsche;
+    const mercedes = mercedesOptions.get(row.standardized_name);
+    if (!porsche?.avg_price || !mercedes) return null;
+
+    const mercedesInfo = {
+      name: mercedes.names[0] || row.standardized_name,
+      avg_price: mercedes.prices.reduce((sum, price) => sum + price, 0) / mercedes.prices.length,
+      min_price: Math.min(...mercedes.prices),
+      max_price: Math.max(...mercedes.prices),
+      model_count: mercedes.models.size,
+    };
+    const prices = [mercedesInfo.avg_price, porsche.avg_price];
+    return {
+      ...row,
+      brands: { 'Mercedes-Benz': mercedesInfo, Porsche: porsche },
+      cross_brand_count: 2,
+      total_model_count: mercedesInfo.model_count + porsche.model_count,
+      overall_avg_price: prices.reduce((sum, price) => sum + price, 0) / prices.length,
+      overall_min_price: Math.min(...prices),
+      overall_max_price: Math.max(...prices),
+    };
+  }).filter(Boolean);
+}
+
 // ---------- Option Comparison Table ----------
 
 function renderOptionTable() {
@@ -217,7 +278,7 @@ function renderOptionTable() {
   const brandFilter = getSelectedValues('brand-filter');
   const catFilter = getSelectedValues('category-filter');
 
-  if (!optionSummary || !optionSummary.options || optionSummary.options.length === 0) {
+  if (comparisonRows.length === 0) {
     tbody.innerHTML = '<tr><td colspan="99" class="no-data-cell">No option data available yet. Run the crawler to extract option pricing.</td></tr>';
     return;
   }
@@ -233,7 +294,7 @@ function renderOptionTable() {
 
   // Determine which brands appear in the data
   const brandSet = new Set();
-  for (const row of optionSummary.options) {
+  for (const row of comparisonRows) {
     for (const b of Object.keys(row.brands || {})) {
       brandSet.add(b);
     }
@@ -254,7 +315,7 @@ function renderOptionTable() {
   `;
 
   // Filter options
-  let rows = optionSummary.options.filter(row => row.overall_avg_price != null);
+  let rows = comparisonRows;
   if (catFilter.length) {
     rows = rows.filter(r => catFilter.includes(r.category_label));
   }
@@ -381,6 +442,69 @@ function renderChart() {
           },
           grid: { color: '#2a2d3a' },
           title: { display: true, text: 'Average Option Price (EUR)', color: '#8b8fa3' },
+        },
+      },
+    },
+  });
+}
+
+function renderBarChart() {
+  const canvas = document.getElementById('option-price-bar-chart');
+  if (!canvas) return;
+  if (barChartInstance) barChartInstance.destroy();
+
+  const categoryFilter = getSelectedValues('category-filter');
+  const selectedBrandNames = new Set(getSelectedValues('brand-filter').map(key => allData[key]?.name));
+  const rows = comparisonRows.filter(row =>
+    (!categoryFilter.length || categoryFilter.includes(row.category_label)) &&
+    (!selectedBrandNames.size || [...selectedBrandNames].some(name => row.brands[name]))
+  );
+  const brands = ['Mercedes-Benz', 'Porsche'].filter(brand =>
+    !selectedBrandNames.size || selectedBrandNames.has(brand)
+  );
+  if (!rows.length || !brands.length) return;
+
+  const datasets = brands.map(brand => {
+    const color = brand === 'Mercedes-Benz' ? BRAND_COLORS['mercedes-benz'] : BRAND_COLORS.porsche;
+    return {
+      label: brand,
+      data: rows.map(row => row.brands[brand]?.avg_price ?? null),
+      backgroundColor: `${color}cc`,
+      borderColor: color,
+      borderWidth: 1,
+    };
+  });
+
+  barChartInstance = new Chart(canvas.getContext('2d'), {
+    type: 'bar',
+    data: {
+      labels: rows.map(row => row.display_name || row.standardized_name),
+      datasets,
+    },
+    options: {
+      responsive: true,
+      indexAxis: 'y',
+      interaction: { mode: 'index', intersect: false },
+      plugins: {
+        legend: {
+          position: 'bottom',
+          labels: { color: '#8b8fa3', font: { size: 11 }, boxWidth: 12 },
+        },
+        tooltip: {
+          callbacks: {
+            label: ctx => `${ctx.dataset.label}: ${formatEuro(ctx.parsed.x)}`,
+          },
+        },
+      },
+      scales: {
+        x: {
+          ticks: { color: '#8b8fa3', callback: value => formatEuro(value) },
+          grid: { color: '#2a2d3a' },
+          title: { display: true, text: 'Average Price (EUR)', color: '#8b8fa3' },
+        },
+        y: {
+          ticks: { color: '#8b8fa3', font: { size: 11 } },
+          grid: { color: '#2a2d3a' },
         },
       },
     },
