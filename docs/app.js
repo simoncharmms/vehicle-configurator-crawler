@@ -30,14 +30,13 @@ const BRAND_ORDER = ['Mercedes-Benz', 'Audi', 'Porsche', 'BMW'];
 document.addEventListener('DOMContentLoaded', async () => {
   await loadData();
   populateFilters();
+  setupCheckboxDropdown('brand-filter', 'All Brands');
+  setupCheckboxDropdown('category-filter', 'All Categories');
   updateStats();
   renderOptionTable();
   renderChart();
   renderVehicles();
 
-  document.getElementById('brand-filter').addEventListener('change', onFilterChange);
-  document.getElementById('category-filter').addEventListener('change', onFilterChange);
-  document.getElementById('date-range').addEventListener('change', onFilterChange);
 });
 
 // ---------- Data Loading ----------
@@ -88,7 +87,7 @@ async function loadData() {
 // ---------- Filters ----------
 
 function populateFilters() {
-  const brandSel = document.getElementById('brand-filter');
+  const brands = [];
   const categories = new Set();
 
   // Deduplicate brands by display name — only show brands with real vehicle data
@@ -103,10 +102,7 @@ function populateFilters() {
     if (seenBrandNames.has(brand.name)) continue;
     seenBrandNames.add(brand.name);
 
-    const opt = document.createElement('option');
-    opt.value = key;
-    opt.textContent = brand.name;
-    brandSel.appendChild(opt);
+    brands.push({ value: key, label: brand.name });
   }
 
   // Populate categories from option summary
@@ -116,30 +112,22 @@ function populateFilters() {
     }
   }
 
-  const catSel = document.getElementById('category-filter');
-  for (const c of [...categories].sort()) {
-    const opt = document.createElement('option');
-    opt.value = c;
-    opt.textContent = c;
-    catSel.appendChild(opt);
-  }
+  populateCheckboxOptions('brand-filter', brands);
+  populateCheckboxOptions(
+    'category-filter',
+    [...categories].sort().map(category => ({ value: category, label: category })),
+  );
 }
 
 function getFilteredVehicles() {
-  const brandFilter = document.getElementById('brand-filter').value;
-  const dateRange = document.getElementById('date-range').value;
-
-  const cutoff = dateRange === 'all' ? null : new Date();
-  if (cutoff) cutoff.setDate(cutoff.getDate() - parseInt(dateRange));
+  const brandFilter = getSelectedValues('brand-filter');
 
   const result = [];
 
   for (const [key, brand] of Object.entries(allData)) {
-    if (brandFilter !== 'all' && key !== brandFilter) continue;
+    if (brandFilter.length && !brandFilter.includes(key)) continue;
 
     for (const [date, snapshots] of Object.entries(brand.snapshots)) {
-      if (cutoff && new Date(date) < cutoff) continue;
-
       for (const snap of snapshots) {
         for (const v of (snap.vehicles || [])) {
           result.push({ ...v, date, brandKey: key, brandName: brand.name });
@@ -226,8 +214,8 @@ function renderOptionTable() {
   const container = document.getElementById('option-table-container');
   const tbody = document.getElementById('option-table-body');
   const thead = document.querySelector('#option-table thead tr');
-  const brandFilter = document.getElementById('brand-filter').value;
-  const catFilter = document.getElementById('category-filter').value;
+  const brandFilter = getSelectedValues('brand-filter');
+  const catFilter = getSelectedValues('category-filter');
 
   if (!optionSummary || !optionSummary.options || optionSummary.options.length === 0) {
     tbody.innerHTML = '<tr><td colspan="99" class="no-data-cell">No option data available yet. Run the crawler to extract option pricing.</td></tr>';
@@ -250,11 +238,10 @@ function renderOptionTable() {
       brandSet.add(b);
     }
   }
-  const brands = BRAND_ORDER.filter(b => brandSet.has(b));
-  // Add any brands not in the predefined order
-  for (const b of brandSet) {
-    if (!brands.includes(b)) brands.push(b);
-  }
+  const selectedBrandNames = new Set(brandFilter.map(key => allData[key]?.name));
+  const brands = [...BRAND_ORDER.filter(b => brandSet.has(b)), ...[...brandSet].filter(b => !BRAND_ORDER.includes(b))]
+    .filter((brand, index, list) => list.indexOf(brand) === index)
+    .filter(brand => !selectedBrandNames.size || selectedBrandNames.has(brand));
 
   // Build header
   thead.innerHTML = `
@@ -267,15 +254,12 @@ function renderOptionTable() {
   `;
 
   // Filter options
-  let rows = optionSummary.options;
-  if (catFilter !== 'all') {
-    rows = rows.filter(r => r.category_label === catFilter);
+  let rows = optionSummary.options.filter(row => row.overall_avg_price != null);
+  if (catFilter.length) {
+    rows = rows.filter(r => catFilter.includes(r.category_label));
   }
-  if (brandFilter !== 'all') {
-    const brandName = allData[brandFilter]?.name;
-    if (brandName) {
-      rows = rows.filter(r => r.brands && r.brands[brandName]);
-    }
+  if (selectedBrandNames.size) {
+    rows = rows.filter(r => r.brands && [...selectedBrandNames].some(name => r.brands[name]));
   }
 
   if (rows.length === 0) {
@@ -286,10 +270,8 @@ function renderOptionTable() {
   tbody.innerHTML = rows.map(row => {
     const brandCells = brands.map(b => {
       const info = (row.brands || {})[b];
-      if (!info) return '<td class="col-brand brand-cell">—</td>';
-      const priceStr = info.avg_price != null
-        ? `<span class="brand-price">€${Math.round(info.avg_price).toLocaleString('de-DE')}</span>`
-        : '';
+      if (!info || info.avg_price == null) return '<td class="col-brand brand-cell">—</td>';
+      const priceStr = `<span class="brand-price">€${Math.round(info.avg_price).toLocaleString('de-DE')}</span>`;
       return `<td class="col-brand brand-cell">
         <span class="brand-option-name">${escapeHtml(info.name)}</span>
         ${priceStr}
@@ -320,49 +302,30 @@ function renderOptionTable() {
 // ---------- Chart ----------
 
 function renderChart() {
-  const ctx = document.getElementById('price-chart').getContext('2d');
+  const canvas = document.getElementById('price-chart');
+  const ctx = canvas.getContext('2d');
   if (chartInstance) chartInstance.destroy();
 
-  if (!optionSummary || !optionSummary.options || optionSummary.options.length === 0) {
-    return;
-  }
-
-  const catFilter = document.getElementById('category-filter').value;
-  const brandFilter = document.getElementById('brand-filter').value;
-
-  let rows = optionSummary.options.filter(r => r.overall_avg_price != null);
-  if (catFilter !== 'all') {
-    rows = rows.filter(r => r.category_label === catFilter);
-  }
-
-  // Take top 15 by model count
-  rows = rows.slice(0, 15);
-
-  if (rows.length === 0) return;
-
-  // Determine brands to show
-  const brandSet = new Set();
-  for (const row of rows) {
-    for (const b of Object.keys(row.brands || {})) {
-      brandSet.add(b);
+  const categoryFilter = getSelectedValues('category-filter');
+  const series = {};
+  for (const vehicle of getFilteredVehicles()) {
+    for (const option of vehicle.available_options || []) {
+      if (!option.price || option.price <= 0) continue;
+      if (categoryFilter.length && !categoryFilter.includes(getOptionCategory(option))) continue;
+      const key = `${vehicle.brandName}|${vehicle.date}`;
+      if (!series[key]) series[key] = { brand: vehicle.brandName, date: vehicle.date, sum: 0, count: 0 };
+      series[key].sum += option.price;
+      series[key].count += 1;
     }
   }
-  const brands = BRAND_ORDER.filter(b => brandSet.has(b));
-  for (const b of brandSet) {
-    if (!brands.includes(b)) brands.push(b);
-  }
 
-  // Filter brands
-  const filteredBrands = brandFilter !== 'all'
-    ? brands.filter(b => {
-        const brandName = allData[brandFilter]?.name;
-        return b === brandName;
-      })
-    : brands;
+  const points = Object.values(series);
+  const dates = [...new Set(points.map(point => point.date))].sort();
+  const brands = [...new Set(points.map(point => point.brand))];
+  if (!dates.length || !brands.length) return;
+  const displayDates = dates.map(formatDate);
 
-  const labels = rows.map(r => r.display_name || r.standardized_name);
-
-  const datasets = filteredBrands.map(brand => {
+  const datasets = brands.map(brand => {
     const brandKey = Object.keys(BRAND_COLORS).find(k =>
       brand.toLowerCase().replace(/[- ]/g, '').includes(k.replace(/[_-]/g, ''))
     );
@@ -370,22 +333,24 @@ function renderChart() {
 
     return {
       label: brand,
-      data: rows.map(r => {
-        const info = (r.brands || {})[brand];
-        return info?.avg_price ?? null;
+      data: dates.map(date => {
+        const point = series[`${brand}|${date}`];
+        return point ? point.sum / point.count : null;
       }),
-      backgroundColor: color + 'cc',
+      fill: false,
       borderColor: color,
-      borderWidth: 1,
+      backgroundColor: color,
+      borderWidth: 2,
+      tension: 0.2,
+      pointRadius: 4,
     };
   });
 
   chartInstance = new Chart(ctx, {
-    type: 'bar',
-    data: { labels, datasets },
+    type: 'line',
+    data: { labels: displayDates, datasets },
     options: {
       responsive: true,
-      indexAxis: 'y',
       interaction: { mode: 'index', intersect: false },
       plugins: {
         legend: {
@@ -395,9 +360,9 @@ function renderChart() {
         tooltip: {
           callbacks: {
             label: ctx => {
-              const val = ctx.parsed.x;
+              const val = ctx.parsed.y;
               return val != null
-                ? `${ctx.dataset.label}: €${Math.round(val).toLocaleString('de-DE')}`
+                ? `${ctx.dataset.label}: ${formatEuro(val)}`
                 : `${ctx.dataset.label}: —`;
             },
           },
@@ -405,20 +370,97 @@ function renderChart() {
       },
       scales: {
         x: {
-          ticks: {
-            color: '#8b8fa3',
-            callback: v => `€${(v / 1000).toFixed(1)}k`,
-          },
+          ticks: { color: '#8b8fa3', maxRotation: 0, autoSkip: true },
           grid: { color: '#2a2d3a' },
-          title: { display: true, text: 'Average Price (EUR)', color: '#8b8fa3' },
+          title: { display: true, text: 'Date', color: '#8b8fa3' },
         },
         y: {
-          ticks: { color: '#8b8fa3', font: { size: 11 } },
+          ticks: {
+            color: '#8b8fa3',
+            callback: v => formatEuro(v),
+          },
           grid: { color: '#2a2d3a' },
+          title: { display: true, text: 'Average Option Price (EUR)', color: '#8b8fa3' },
         },
       },
     },
   });
+}
+
+function getSelectedValues(id) {
+  const container = document.getElementById(id);
+  const allOption = container.querySelector('input[value="all"]');
+  if (!allOption || allOption.checked) return [];
+  return [...container.querySelectorAll('input[type="checkbox"]:checked')]
+    .map(option => option.value)
+    .filter(value => value !== 'all');
+}
+
+function populateCheckboxOptions(id, options) {
+  const container = document.querySelector(`#${id} .dropdown-options`);
+  container.innerHTML = [
+    { value: 'all', label: id === 'brand-filter' ? 'All Brands' : 'All Categories' },
+    ...options,
+  ].map(option => `
+    <label>
+      <input type="checkbox" value="${escapeHtml(option.value)}" ${option.value === 'all' ? 'checked' : ''}>
+      <span>${escapeHtml(option.label)}</span>
+    </label>
+  `).join('');
+}
+
+function setupCheckboxDropdown(id, allLabel) {
+  const container = document.getElementById(id);
+  const toggle = container.querySelector('.dropdown-toggle');
+  container.addEventListener('click', event => {
+    if (event.target !== toggle) return;
+    const isOpen = container.classList.toggle('open');
+    toggle.setAttribute('aria-expanded', String(isOpen));
+  });
+  container.addEventListener('change', event => {
+    if (!event.target.matches('input[type="checkbox"]')) return;
+    const checkboxes = [...container.querySelectorAll('input[type="checkbox"]')];
+    const allOption = checkboxes.find(option => option.value === 'all');
+    if (event.target === allOption && allOption.checked) {
+      checkboxes.filter(option => option !== allOption).forEach(option => { option.checked = false; });
+    } else if (event.target !== allOption && event.target.checked) {
+      allOption.checked = false;
+    } else if (!checkboxes.some(option => option !== allOption && option.checked)) {
+      allOption.checked = true;
+    }
+    updateDropdownLabel(container, allLabel);
+    onFilterChange();
+  });
+}
+
+function updateDropdownLabel(container, allLabel) {
+  const selected = getSelectedValues(container.id);
+  container.querySelector('.dropdown-toggle').textContent = selected.length
+    ? `${selected.length} selected`
+    : allLabel;
+}
+
+function getOptionCategory(option) {
+  const row = optionSummary?.options?.find(item =>
+    item.standardized_name === option.standardized_name
+  );
+  return row?.category_label || option.category || 'Other';
+}
+
+function formatDate(date) {
+  return new Date(`${date}T00:00:00`).toLocaleDateString('de-DE', {
+    day: '2-digit',
+    month: '2-digit',
+    year: 'numeric',
+  });
+}
+
+function formatEuro(value) {
+  return new Intl.NumberFormat('de-DE', {
+    style: 'currency',
+    currency: 'EUR',
+    maximumFractionDigits: 0,
+  }).format(value);
 }
 
 // ---------- Vehicle Cards ----------

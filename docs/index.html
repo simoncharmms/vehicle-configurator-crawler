@@ -17,24 +17,17 @@
     <section id="controls">
       <div class="filter-group">
         <label for="brand-filter">Brand:</label>
-        <select id="brand-filter">
-          <option value="all">All Brands</option>
-        </select>
+        <div class="checkbox-dropdown" id="brand-filter">
+          <button class="dropdown-toggle" type="button" aria-expanded="false">All Brands</button>
+          <div class="dropdown-options" role="group" aria-label="Brands"></div>
+        </div>
       </div>
       <div class="filter-group">
         <label for="category-filter">Category:</label>
-        <select id="category-filter">
-          <option value="all">All Categories</option>
-        </select>
-      </div>
-      <div class="filter-group">
-        <label for="date-range">Period:</label>
-        <select id="date-range">
-          <option value="7">Last 7 days</option>
-          <option value="30" selected>Last 30 days</option>
-          <option value="90">Last 90 days</option>
-          <option value="all">All time</option>
-        </select>
+        <div class="checkbox-dropdown" id="category-filter">
+          <button class="dropdown-toggle" type="button" aria-expanded="false">All Categories</button>
+          <div class="dropdown-options" role="group" aria-label="Categories"></div>
+        </div>
       </div>
     </section>
 
@@ -79,9 +72,9 @@
       </div>
     </section>
 
-    <!-- Option Price Chart -->
+    <!-- Option Price Time Series -->
     <section id="chart-section">
-      <h2>Option Price Overview</h2>
+      <h2>Option Price Trend</h2>
       <canvas id="price-chart"></canvas>
     </section>
 
