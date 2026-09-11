@@ -2,6 +2,8 @@
 
 Automated vehicle price tracker with multi-brand support, network-hardened Playwright fetching, and a GitHub Pages dashboard for daily price tracking.
 
+![BMW M Concept](docs/P90643939_highRes_bmw-m-concept-neue-k.jpg)
+
 ## Current Status
 
 | Brand | Status | Vehicles | Notes |
@@ -11,12 +13,22 @@ Automated vehicle price tracker with multi-brand support, network-hardened Playw
 | **Porsche** | ✅ Active | 85 | SPA rendering (networkidle) |
 | **BYD** | ✅ Active | 11 | Playwright rendering |
 | **Polestar** | ✅ Active | 5 | Model page price probes |
+| **XPeng** | ✅ Active | 5 | Model page scraping |
+| **Zeekr** | ✅ Active | 4 | Homepage text extraction |
 | **Audi** | ⛔ Blocked | 0 | HTTP 403 (was working 2026-09-05) |
 | **Volvo** | ⛔ Blocked | 0 | HTTP 403 on all endpoints |
 
 - **Dashboard:** https://simoncharmms.github.io/vehicle-configurator-crawler
 - **Update Frequency:** Daily at 6:00 AM CET
 - **Data Policy:** Only real extracted data — no reference or fallback pricing
+
+### Dashboard Snapshot (2026-09-10)
+
+- **7 brands** with vehicle data and **204 vehicle models**
+- **441 options tracked**, including **24 option rows with numeric prices**
+- **Average option price shown:** €5,700
+- **Highest observed priced entries:** one-time payment €23,805; Weissach Package €11,965; Porsche Ceramic Composite Brake (PCCB) €7,914
+- Prices are daily snapshots from official configurators. Many tracked equipment labels do not currently include a numeric price.
 
 ### Brands Tested But Not Added
 

@@ -413,8 +413,8 @@ class PorscheCrawler(BrandCrawler):
                         price_text = pair.get("price", "")
                         if not name or not price_text:
                             continue
-                        # Skip "Gesamtpreis" (total price)
-                        if "Gesamtpreis" in name:
+                        # Skip total-price attributes, not vehicle options.
+                        if re.search(r"Gesamtpreis|Gesamtbetrag", name, re.IGNORECASE):
                             continue
                         price = BaseEngine.parse_price(price_text)
                         if not price or price < 50 or price > 100_000:

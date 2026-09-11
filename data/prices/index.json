@@ -826,25 +826,6 @@
         "total_model_count": 24
       },
       {
-        "standardized_name": "gesamtbetrag",
-        "display_name": "gesamtbetrag",
-        "category": "other",
-        "category_label": "Other",
-        "brands": {
-          "Porsche": {
-            "name": "Gesamtbetrag",
-            "avg_price": 94610.52,
-            "min_price": 94610.52,
-            "max_price": 94610.52,
-            "model_count": 24
-          }
-        },
-        "overall_avg_price": 94610.52,
-        "overall_min_price": 94610.52,
-        "overall_max_price": 94610.52,
-        "total_model_count": 24
-      },
-      {
         "standardized_name": "interieur-paket ziernähte und stickungen in abweichender farbe",
         "display_name": "interieur-paket ziernähte und stickungen in abweichender farbe",
         "category": "other",

@@ -27,20 +27,37 @@
     }
     
     header {
+      position: relative;
       border-bottom: 3px solid #0066cc;
       padding-bottom: 20px;
       margin-bottom: 30px;
+      padding: 48px 28px 28px;
+      background: url('P90643939_highRes_bmw-m-concept-neue-k.jpg') center 42% / cover no-repeat;
+      color: white;
+      overflow: hidden;
+    }
+
+    header::before {
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.52);
+      content: '';
+    }
+
+    header h1,
+    header .subtitle {
+      position: relative;
     }
     
     h1 {
       font-size: 2.5em;
-      color: #0066cc;
+      color: white;
       margin-bottom: 10px;
     }
     
     .subtitle {
       font-size: 1.1em;
-      color: #666;
+      color: white;
       font-style: italic;
     }
     
@@ -187,249 +204,48 @@
     </header>
 
     <div class="intro-box">
-      <strong>Executive Summary:</strong> This project automates the extraction, standardization, and analysis of vehicle pricing from German and international automotive configurators (Mercedes-Benz, Lexus, Polestar, Porsche, BYD). It provides real-time pricing visibility into automotive models across brands. Only real extracted data is shown — no reference or fallback pricing.
+      <strong>Current status:</strong> The live dashboard tracks cross-brand vehicle configurator data, standardizes option names, and displays extracted prices in EUR. It contains no reference or fallback pricing.
     </div>
 
-    <h2>Project Goal</h2>
-    <div class="section">
-      <p>Automatically monitor and track vehicle option pricing across multiple premium automotive brands to provide:</p>
-      <ul>
-        <li>Cross-brand option price comparison (same feature, different brands)</li>
-        <li>Option standardization across brands (e.g., "4MATIC" = "Quattro" = "xDrive" = AWD)</li>
-        <li>Historical price tracking and trend analysis</li>
-        <li>Automated daily data collection and reporting</li>
-        <li>Accessible web-based dashboard for stakeholders</li>
-      </ul>
-    </div>
-
-    <h2>High-Level Architecture</h2>
-    <div class="section">
-      <p>The system consists of four primary components working in concert:</p>
-      
-      <h3>1. Data Collection Layer (Python/Playwright)</h3>
-      <p>Automated crawlers that extract vehicle data from configurator websites:</p>
-      <ul>
-        <li>Browser-based scraping using Playwright (modern, JavaScript-capable)</li>
-        <li>Multi-brand support: Mercedes-Benz, Audi, Porsche (easily extensible)</li>
-        <li>Resilient error handling: automatic retries, graceful fallbacks, detailed logging</li>
-        <li>Option extraction from product pages with price capture</li>
-      </ul>
-
-      <h3>2. Data Processing & Standardization (Python)</h3>
-      <p>Normalize brand-specific option names and aggregate pricing data:</p>
-      <ul>
-        <li>Option mapping database (100+ brand aliases -> 15 standardized categories)</li>
-        <li>Cross-brand price aggregation and statistical analysis</li>
-        <li>Historical data preservation for trend analysis</li>
-        <li>JSON-based data storage (human-readable, version-controllable)</li>
-      </ul>
-
-      <h3>3. Automation & Deployment (GitHub Actions)</h3>
-      <p>Scheduled execution and continuous deployment:</p>
-      <ul>
-        <li>Daily automated crawls at 6:00 AM CET</li>
-        <li>Automatic commit of new data to repository</li>
-        <li>Continuous deployment of dashboard updates</li>
-        <li>No manual intervention required</li>
-      </ul>
-
-      <h3>4. Data Visualization (Web Dashboard)</h3>
-      <p>Real-time, interactive price comparison interface:</p>
-      <ul>
-        <li>HTML5 responsive design (mobile-friendly, no backend required)</li>
-        <li>Cross-brand option pricing comparison table</li>
-        <li>Price distribution charts and trends</li>
-        <li>Category-based filtering and sorting</li>
-        <li>Hosted on GitHub Pages (free, reliable, auto-updating)</li>
-      </ul>
-    </div>
-
-    <div class="architecture">System Data Flow:
-
-    Vehicle Configurator Websites
-           |
-           v
-    Playwright Browser Engine
-           |
-           v
-    Data Extraction (model/option/price)
-           |
-           v
-    Option Name Normalization
-           |
-           v
-    JSON Data Storage (git-tracked)
-           |
-           v
-    GitHub Pages Dashboard
-           |
-           v
-    Web Interface (Live, Updated Daily)
-    </div>
-
-    <h2>Option Standardization</h2>
-    <div class="section">
-      <p>One of the system's key strengths is normalizing option names across brands. Example mappings:</p>
-      <table>
-        <tr>
-          <th>Standardized Name</th>
-          <th>Mercedes-Benz</th>
-          <th>Audi</th>
-          <th>Porsche</th>
-          <th>Avg Price</th>
-        </tr>
-        <tr>
-          <td>All-Wheel Drive</td>
-          <td>4MATIC</td>
-          <td>Quattro</td>
-          <td>AWD</td>
-          <td>~1,500-2,000 EUR</td>
-        </tr>
-        <tr>
-          <td>Head-Up Display</td>
-          <td>Head-Up-Display</td>
-          <td>Head-up Display</td>
-          <td>Head-Up Display</td>
-          <td>~1,100-1,600 EUR</td>
-        </tr>
-        <tr>
-          <td>Panoramic Roof</td>
-          <td>Panorama-Schiebedach</td>
-          <td>Panorama-Glasdach</td>
-          <td>Panoramadach</td>
-          <td>~1,500-1,750 EUR</td>
-        </tr>
-        <tr>
-          <td>Premium Sound System</td>
-          <td>Burmester</td>
-          <td>Bang & Olufsen</td>
-          <td>Bose</td>
-          <td>~850-1,000 EUR</td>
-        </tr>
-        <tr>
-          <td>Air Suspension</td>
-          <td>AIRMATIC</td>
-          <td>Adaptive Luftfederung</td>
-          <td>Adaptive Air Suspension</td>
-          <td>~1,820-2,100 EUR</td>
-        </tr>
-      </table>
-    </div>
-
-    <h2>Latest Crawl Results (2026-09-07 07:25 CET)</h2>
-    <div class="results-table">
-      <h3>Data Collection Summary</h3>
-      <table>
-        <tr>
-          <th>Brand</th>
-          <th>Vehicles Extracted</th>
-          <th>Status</th>
-          <th>Duration</th>
-        </tr>
-        <tr>
-          <td>Mercedes-Benz</td>
-          <td>45 models</td>
-          <td>Success</td>
-          <td>37.8 seconds</td>
-        </tr>
-        <tr style="background: #fff3cd;">
-          <td>Audi</td>
-          <td>0 models</td>
-          <td>Blocked (HTTP 403)</td>
-          <td>0.5 seconds</td>
-        </tr>
-        <tr style="background: #fff3cd;">
-          <td>Porsche</td>
-          <td>0 models</td>
-          <td>No data found</td>
-          <td>0.8 seconds</td>
-        </tr>
-      </table>
-      
-      <p style="margin-top: 20px;"><strong>Overall:</strong> 195 vehicles captured from 5 brands. Only real extracted data — no reference or fallback pricing.</p>
-    </div>
-
-    <h2>Top 10 Options by Average Price</h2>
+    <h2>Dashboard Snapshot</h2>
     <div class="results-table">
       <table>
-        <tr>
-          <th>Rank</th>
-          <th>Option</th>
-          <th>Category</th>
-          <th>Avg Price (EUR)</th>
-          <th>Price Range</th>
-        </tr>
-        <tr>
-          <td>1</td>
-          <td>Air Suspension System</td>
-          <td>Comfort</td>
-          <td>1,923</td>
-          <td>1,820 - 2,100</td>
-        </tr>
-        <tr>
-          <td>2</td>
-          <td>Panoramic Glass Roof</td>
-          <td>Exterior</td>
-          <td>1,610</td>
-          <td>1,500 - 1,750</td>
-        </tr>
-        <tr>
-          <td>3</td>
-          <td>Adaptive Cruise Control</td>
-          <td>Safety</td>
-          <td>1,697</td>
-          <td>1,550 - 1,790</td>
-        </tr>
-        <tr>
-          <td>4</td>
-          <td>Head-Up Display</td>
-          <td>Technology</td>
-          <td>1,343</td>
-          <td>1,100 - 1,580</td>
-        </tr>
-        <tr>
-          <td>5</td>
-          <td>Parking Assist</td>
-          <td>Safety</td>
-          <td>1,110</td>
-          <td>980 - 1,200</td>
-        </tr>
-        <tr>
-          <td>6</td>
-          <td>Premium Sound System</td>
-          <td>Audio</td>
-          <td>953</td>
-          <td>850 - 1,020</td>
-        </tr>
-        <tr>
-          <td>7</td>
-          <td>360-Degree Camera</td>
-          <td>Safety</td>
-          <td>487</td>
-          <td>400 - 610</td>
-        </tr>
-        <tr>
-          <td>8</td>
-          <td>Ambient Lighting</td>
-          <td>Interior</td>
-          <td>470</td>
-          <td>420 - 510</td>
-        </tr>
-        <tr>
-          <td>9</td>
-          <td>Heated Front Seats</td>
-          <td>Comfort</td>
-          <td>343</td>
-          <td>310 - 380</td>
-        </tr>
-        <tr>
-          <td>10</td>
-          <td>Heated Steering Wheel</td>
-          <td>Comfort</td>
-          <td>260</td>
-          <td>250 - 280</td>
-        </tr>
+        <tr><th>Metric</th><th>Current value</th></tr>
+        <tr><td>Brands with vehicle data</td><td>7</td></tr>
+        <tr><td>Vehicle models</td><td>204</td></tr>
+        <tr><td>Options tracked</td><td>441</td></tr>
+        <tr><td>Priced option rows</td><td>24</td></tr>
+        <tr><td>Average option price shown</td><td>€5,700</td></tr>
+        <tr><td>Last dashboard update</td><td>2026-09-10</td></tr>
       </table>
+      <p><strong>Brands:</strong> Mercedes-Benz, Lexus, Porsche, BYD, Polestar, XPeng, and Zeekr. Audi is currently tracked but has no extracted vehicles.</p>
+    </div>
+
+    <h2>Observed Price Information</h2>
+    <div class="results-table">
+      <p>Current numeric prices are concentrated in Porsche and Lexus data. The dashboard's highest observed entries are:</p>
+      <table>
+        <tr><th>Entry</th><th>Average price</th><th>Price range</th></tr>
+        <tr><td>One-time payment</td><td>€23,805</td><td>€23,805</td></tr>
+        <tr><td>Weissach Package</td><td>€11,965</td><td>€11,965</td></tr>
+        <tr><td>Porsche Ceramic Composite Brake (PCCB)</td><td>€7,914</td><td>€7,914</td></tr>
+        <tr><td>Race-Tex seat upholstery</td><td>€1,107</td><td>€1,107</td></tr>
+      </table>
+      <p>Many tracked entries are equipment or configuration labels without a numeric price. Prices are daily snapshots from official configurators and should be read in that context.</p>
+    </div>
+
+    <h2>How It Works</h2>
+    <div class="section">
+      <p>Playwright-based crawlers collect model, option, and price data. Python processing normalizes brand-specific names, stores dated JSON snapshots, and publishes the dashboard through GitHub Pages. GitHub Actions runs the collection workflow daily at 06:00 CET.</p>
+    </div>
+
+    <h2>Current Limitations</h2>
+    <div class="status-box warning">
+      <ul>
+        <li>Audi has no extracted vehicles because its endpoints remain blocked by HTTP 403 protection.</li>
+        <li>Not every tracked option has a numeric price; several brands currently provide vehicle data without priced options.</li>
+        <li>The dashboard stores daily snapshots, not continuous real-time price changes.</li>
+      </ul>
     </div>
 
     <h2>Access the Live Dashboard</h2>
@@ -440,55 +256,9 @@
       <p style="font-size: 1.1em; margin-top: 10px;"><a href="https://github.com/simoncharmms/vehicle-configurator-crawler" target="_blank">https://github.com/simoncharmms/vehicle-configurator-crawler</a></p>
     </div>
 
-    <h2>Key Benefits</h2>
-    <div class="section">
-      <ul>
-        <li><strong>Automation:</strong> No manual data collection required. Daily crawls at 6 AM CET.</li>
-        <li><strong>Standardization:</strong> Cross-brand comparison made possible via option name normalization.</li>
-        <li><strong>Accessibility:</strong> Real-time web dashboard, no special software required.</li>
-        <li><strong>Resilience:</strong> Automatic retry logic, graceful error handling.</li>
-        <li><strong>Scalability:</strong> Framework easily extends to additional brands and options.</li>
-        <li><strong>Transparency:</strong> All code and data tracked in git, transparent history and changes.</li>
-      </ul>
-    </div>
-
-    <h2>Current Status</h2>
-    <div class="status-box">
-      <strong>Production Ready</strong>
-      <ul>
-        <li>Mercedes-Benz extraction: Operational (45 vehicles)</li>
-        <li>Option price database: 15 standardized categories with 100+ brand aliases</li>
-        <li>Dashboard: Live at https://simoncharmms.github.io/vehicle-configurator-crawler</li>
-        <li>GitHub Actions: Scheduled daily at 6:00 AM CET</li>
-      </ul>
-    </div>
-
-    <div class="status-box warning">
-      <strong>Known Limitations</strong>
-      <ul>
-        <li>Audi: Blocked by HTTP 403 anti-bot protection (was working 2026-09-05)</li>
-        <li>Volvo: Blocked by HTTP 403 on all endpoints</li>
-        <li>Option extraction: Per-model option pricing not yet enriched for most brands</li>
-        <li>Dynamic pricing: Real-time price updates not captured; daily snapshots only.</li>
-      </ul>
-    </div>
-
-    <h2>Future Roadmap</h2>
-    <div class="section">
-      <ul>
-        <li>Expand to additional manufacturers (Lexus, Tesla, Volvo, BYD, Polestar, etc.) - requires anti-bot protection assessment</li>
-        <li>Implement proxy rotation to bypass Audi/Porsche blocks</li>
-        <li>Advanced option extraction from individual model configuration pages</li>
-        <li>Historical trend analysis and price forecasting</li>
-        <li>Email reports with pricing alerts</li>
-        <li>Export data to Excel/CSV for external analysis</li>
-        <li>Integration with internal pricing systems</li>
-      </ul>
-    </div>
-
     <div class="footer">
-      <p>Vehicle Option Price Tracker | Project Overview | Generated 2026-09-07 08:00 CET</p>
-      <p>Latest Update: Mercedes-Benz operational with 45 vehicles. Audi/Porsche blocked by anti-bot protection.</p>
+      <p>Vehicle Option Price Tracker | Management Summary | Updated 2026-09-11</p>
+      <p>Dashboard data snapshot: 2026-09-10 | Prices in EUR | <a href="https://simoncharmms.github.io/vehicle-configurator-crawler/" target="_blank">Open live dashboard</a></p>
       <p>Repository: https://github.com/simoncharmms/vehicle-configurator-crawler</p>
     </div>
   </div>

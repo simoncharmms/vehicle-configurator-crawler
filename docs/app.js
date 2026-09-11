@@ -52,6 +52,9 @@ async function loadData() {
     const index = await indexResp.json();
 
     optionSummary = index.option_summary || null;
+    if (optionSummary?.options) {
+      optionSummary.options = optionSummary.options.filter(row => !isExcludedOption(row));
+    }
 
     for (const [brandKey, brandInfo] of Object.entries(index.brands || {})) {
       allData[brandKey] = { name: brandInfo.name, snapshots: {} };
@@ -62,7 +65,14 @@ async function loadData() {
           if (resp.ok) {
             let data = await resp.json();
             if (!Array.isArray(data)) data = [data];
-            allData[brandKey].snapshots[snap.date] = data;
+            allData[brandKey].snapshots[snap.date] = data.map(snapshot => ({
+              ...snapshot,
+              vehicles: (snapshot.vehicles || []).map(vehicle => ({
+                ...vehicle,
+                available_options: (vehicle.available_options || [])
+                  .filter(option => !isExcludedOption(option)),
+              })),
+            }));
           }
         } catch (e) {
           console.warn(`Failed to load ${snap.file}:`, e);
@@ -198,6 +208,16 @@ function updateStats() {
 function avgFromSummary(options) {
   const prices = options.filter(o => o.overall_avg_price).map(o => o.overall_avg_price);
   return prices.length ? prices.reduce((a, b) => a + b, 0) / prices.length : 0;
+}
+
+function isExcludedOption(option) {
+  const name = [
+    option?.standardized_name,
+    option?.display_name,
+    option?.brand_specific_name,
+    option?.name,
+  ].filter(Boolean).join(' ').toLowerCase();
+  return name.includes('gesamtbetrag') || name.includes('total amount');
 }
 
 // ---------- Option Comparison Table ----------

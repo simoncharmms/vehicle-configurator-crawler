@@ -21,12 +21,26 @@ body {
 }
 
 header {
+  position: relative;
   text-align: center;
   padding: 2rem 1rem;
   border-bottom: 1px solid var(--border);
+  background: url('P90643939_highRes_bmw-m-concept-neue-k.jpg') center 42% / cover no-repeat;
+  color: #fff;
+  overflow: hidden;
+}
+header::before {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.52);
+  content: '';
+}
+header h1,
+header .subtitle {
+  position: relative;
 }
 header h1 { font-size: 1.8rem; font-weight: 600; }
-.subtitle { color: var(--text-dim); margin-top: 0.5rem; }
+.subtitle { color: #fff; margin-top: 0.5rem; }
 
 main { max-width: 1400px; margin: 0 auto; padding: 1.5rem; }
 
