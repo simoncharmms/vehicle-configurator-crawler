@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "vehicle-configurator-crawler"
 version = "0.1.0"
-description = "AI-powered vehicle configurator crawler with multi-brand support"
+description = "AI-powered vehicle configurator and option price crawler with multi-brand support"
 requires-python = ">=3.11"
 dependencies = [
     "anthropic>=0.39.0",

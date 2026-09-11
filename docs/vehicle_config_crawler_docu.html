@@ -194,6 +194,66 @@
       padding: 2px 4px;
       border-radius: 2px;
     }
+
+    .bar-chart {
+      margin-top: 20px;
+    }
+
+    .bar-group {
+      margin: 18px 0;
+    }
+
+    .bar-label {
+      display: block;
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+
+    .bar-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin: 5px 0;
+    }
+
+    .bar-brand {
+      width: 120px;
+      flex: 0 0 120px;
+      font-size: 0.9em;
+    }
+
+    .bar-track {
+      flex: 1;
+      height: 22px;
+      background: #e8e8e8;
+      border-radius: 3px;
+      overflow: hidden;
+    }
+
+    .bar {
+      height: 100%;
+      color: white;
+      font-size: 0.85em;
+      line-height: 22px;
+      padding-left: 8px;
+      min-width: 64px;
+    }
+
+    .bar.mercedes {
+      background: #00a3d9;
+    }
+
+    .bar.porsche {
+      background: #9b7b3d;
+    }
+
+    @media (max-width: 600px) {
+      .bar-brand {
+        width: 92px;
+        flex-basis: 92px;
+        font-size: 0.8em;
+      }
+    }
   </style>
 </head>
 <body>
@@ -213,25 +273,43 @@
         <tr><th>Metric</th><th>Current value</th></tr>
         <tr><td>Brands with vehicle data</td><td>7</td></tr>
         <tr><td>Vehicle models</td><td>204</td></tr>
-        <tr><td>Options tracked</td><td>441</td></tr>
-        <tr><td>Priced option rows</td><td>24</td></tr>
-        <tr><td>Average option price shown</td><td>€5,700</td></tr>
-        <tr><td>Last dashboard update</td><td>2026-09-10</td></tr>
+        <tr><td>Options tracked</td><td>439</td></tr>
+        <tr><td>Priced option rows</td><td>23</td></tr>
+        <tr><td>Last dashboard update</td><td>2026-09-11</td></tr>
       </table>
       <p><strong>Brands:</strong> Mercedes-Benz, Lexus, Porsche, BYD, Polestar, XPeng, and Zeekr. Audi is currently tracked but has no extracted vehicles.</p>
     </div>
 
     <h2>Observed Price Information</h2>
     <div class="results-table">
-      <p>Current numeric prices are concentrated in Porsche and Lexus data. The dashboard's highest observed entries are:</p>
+      <p>The dashboard currently compares Mercedes-Benz with Porsche, the only brands with comparable numeric option prices.</p>
       <table>
-        <tr><th>Entry</th><th>Average price</th><th>Price range</th></tr>
-        <tr><td>One-time payment</td><td>€23,805</td><td>€23,805</td></tr>
-        <tr><td>Weissach Package</td><td>€11,965</td><td>€11,965</td></tr>
-        <tr><td>Porsche Ceramic Composite Brake (PCCB)</td><td>€7,914</td><td>€7,914</td></tr>
-        <tr><td>Race-Tex seat upholstery</td><td>€1,107</td><td>€1,107</td></tr>
+        <tr><th>Shared category</th><th>Mercedes-Benz</th><th>Porsche</th></tr>
+        <tr><td>Leather seats</td><td>€1,760</td><td>€1,107</td></tr>
+        <tr><td>Rear / 360° camera</td><td>€547</td><td>€1,166</td></tr>
+        <tr><td>Premium sound</td><td>€2,522</td><td>€1,178</td></tr>
       </table>
-      <p>Many tracked entries are equipment or configuration labels without a numeric price. Prices are daily snapshots from official configurators and should be read in that context.</p>
+      <p>Mercedes data comes from the successful 2026-09-08 crawl: 45 vehicles and 1,111 extracted options. Crawls on 2026-09-09, 2026-09-10, and 2026-09-11 returned HTTP 403 anti-bot responses. Many tracked entries remain equipment labels without numeric prices.</p>
+    </div>
+
+    <h2>Mercedes-Benz vs Porsche Price Chart</h2>
+    <div class="results-table bar-chart" role="img" aria-label="Grouped bar chart comparing Mercedes-Benz and Porsche option prices in euros">
+      <div class="bar-group">
+        <span class="bar-label">Leather seats</span>
+        <div class="bar-row"><span class="bar-brand">Mercedes-Benz</span><div class="bar-track"><div class="bar mercedes" style="width: 69.8%;">€1,760</div></div></div>
+        <div class="bar-row"><span class="bar-brand">Porsche</span><div class="bar-track"><div class="bar porsche" style="width: 43.9%;">€1,107</div></div></div>
+      </div>
+      <div class="bar-group">
+        <span class="bar-label">Rear / 360° camera</span>
+        <div class="bar-row"><span class="bar-brand">Mercedes-Benz</span><div class="bar-track"><div class="bar mercedes" style="width: 21.7%;">€547</div></div></div>
+        <div class="bar-row"><span class="bar-brand">Porsche</span><div class="bar-track"><div class="bar porsche" style="width: 46.2%;">€1,166</div></div></div>
+      </div>
+      <div class="bar-group">
+        <span class="bar-label">Premium sound</span>
+        <div class="bar-row"><span class="bar-brand">Mercedes-Benz</span><div class="bar-track"><div class="bar mercedes" style="width: 100%;">€2,522</div></div></div>
+        <div class="bar-row"><span class="bar-brand">Porsche</span><div class="bar-track"><div class="bar porsche" style="width: 46.7%;">€1,178</div></div></div>
+      </div>
+      <p style="margin-top: 18px; color: #666;">Bars are scaled against the highest observed price in this comparison (€2,522).</p>
     </div>
 
     <h2>How It Works</h2>
@@ -243,6 +321,7 @@
     <div class="status-box warning">
       <ul>
         <li>Audi has no extracted vehicles because its endpoints remain blocked by HTTP 403 protection.</li>
+        <li>Mercedes-Benz has no newer option prices after 2026-09-08 because subsequent crawls returned HTTP 403.</li>
         <li>Not every tracked option has a numeric price; several brands currently provide vehicle data without priced options.</li>
         <li>The dashboard stores daily snapshots, not continuous real-time price changes.</li>
       </ul>
@@ -258,7 +337,7 @@
 
     <div class="footer">
       <p>Vehicle Option Price Tracker | Management Summary | Updated 2026-09-11</p>
-      <p>Dashboard data snapshot: 2026-09-10 | Prices in EUR | <a href="https://simoncharmms.github.io/vehicle-configurator-crawler/" target="_blank">Open live dashboard</a></p>
+      <p>Dashboard data snapshot: 2026-09-11 | Prices in EUR | <a href="https://simoncharmms.github.io/vehicle-configurator-crawler/" target="_blank">Open live dashboard</a></p>
       <p>Repository: https://github.com/simoncharmms/vehicle-configurator-crawler</p>
     </div>
   </div>

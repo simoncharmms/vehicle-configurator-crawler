@@ -22,13 +22,15 @@ Automated vehicle price tracker with multi-brand support, network-hardened Playw
 - **Update Frequency:** Daily at 6:00 AM CET
 - **Data Policy:** Only real extracted data — no reference or fallback pricing
 
-### Dashboard Snapshot (2026-09-10)
+### Dashboard Snapshot (2026-09-11)
 
 - **7 brands** with vehicle data and **204 vehicle models**
-- **441 options tracked**, including **24 option rows with numeric prices**
-- **Average option price shown:** €5,700
-- **Highest observed priced entries:** one-time payment €23,805; Weissach Package €11,965; Porsche Ceramic Composite Brake (PCCB) €7,914
+- **439 options tracked**, including **23 option rows with numeric prices**
+- The dashboard comparison currently uses **Mercedes-Benz and Porsche**, the only brands with comparable numeric option prices.
+- **Shared priced categories:** leather seats (Mercedes €1,760; Porsche €1,107), rear/360° camera (Mercedes €547; Porsche €1,166), and premium sound (Mercedes €2,522; Porsche €1,178).
 - Prices are daily snapshots from official configurators. Many tracked equipment labels do not currently include a numeric price.
+
+Mercedes-Benz has 45 vehicles and 1,111 extracted options in its successful 2026-09-08 snapshot. Crawls on 2026-09-09, 2026-09-10, and 2026-09-11 returned HTTP 403 anti-bot responses, so no newer Mercedes option prices are available yet.
 
 ### Brands Tested But Not Added
 
