@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-09-11T06:18:29.298112",
+  "last_updated": "2026-09-11T06:55:50.281556",
   "version": "3.0_cross_brand",
   "brands": {
     "mercedes-benz": {
@@ -300,7 +300,7 @@
     }
   },
   "option_summary": {
-    "last_updated": "2026-09-11T06:18:29.298082",
+    "last_updated": "2026-09-11T06:55:50.281525",
     "options": [
       {
         "standardized_name": "automatic_transmission",
@@ -1629,6 +1629,22 @@
     {
       "date": "2026-09-11",
       "timestamp": "2026-09-11T06:18:29.296601",
+      "total_vehicles": 159,
+      "total_options": 2191,
+      "brands_crawled": [
+        "Mercedes-Benz",
+        "Audi",
+        "Porsche",
+        "Lexus",
+        "BYD",
+        "XPeng",
+        "Zeekr",
+        "Polestar"
+      ]
+    },
+    {
+      "date": "2026-09-11",
+      "timestamp": "2026-09-11T06:55:50.279863",
       "total_vehicles": 159,
       "total_options": 2191,
       "brands_crawled": [
