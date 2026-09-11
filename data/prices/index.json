@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-09-10T08:49:43.409574",
+  "last_updated": "2026-09-11T06:18:29.298112",
   "version": "3.0_cross_brand",
   "brands": {
     "mercedes-benz": {
@@ -26,6 +26,13 @@
         {
           "date": "2026-09-10",
           "file": "mercedes-benz_2026-09-10.json",
+          "vehicle_count": 0,
+          "option_count": 0,
+          "error_count": 1
+        },
+        {
+          "date": "2026-09-11",
+          "file": "mercedes-benz_2026-09-11.json",
           "vehicle_count": 0,
           "option_count": 0,
           "error_count": 1
@@ -59,6 +66,13 @@
           "vehicle_count": 49,
           "option_count": 218,
           "error_count": 0
+        },
+        {
+          "date": "2026-09-11",
+          "file": "lexus_2026-09-11.json",
+          "vehicle_count": 49,
+          "option_count": 218,
+          "error_count": 0
         }
       ]
     },
@@ -89,6 +103,13 @@
           "vehicle_count": 85,
           "option_count": 1997,
           "error_count": 0
+        },
+        {
+          "date": "2026-09-11",
+          "file": "porsche_2026-09-11.json",
+          "vehicle_count": 85,
+          "option_count": 1973,
+          "error_count": 0
         }
       ]
     },
@@ -116,6 +137,13 @@
         {
           "date": "2026-09-10",
           "file": "audi_2026-09-10.json",
+          "vehicle_count": 0,
+          "option_count": 0,
+          "error_count": 1
+        },
+        {
+          "date": "2026-09-11",
+          "file": "audi_2026-09-11.json",
           "vehicle_count": 0,
           "option_count": 0,
           "error_count": 1
@@ -149,6 +177,13 @@
           "vehicle_count": 11,
           "option_count": 0,
           "error_count": 0
+        },
+        {
+          "date": "2026-09-11",
+          "file": "byd_2026-09-11.json",
+          "vehicle_count": 11,
+          "option_count": 0,
+          "error_count": 0
         }
       ]
     },
@@ -176,6 +211,13 @@
         {
           "date": "2026-09-10",
           "file": "polestar_2026-09-10.json",
+          "vehicle_count": 5,
+          "option_count": 0,
+          "error_count": 0
+        },
+        {
+          "date": "2026-09-11",
+          "file": "polestar_2026-09-11.json",
           "vehicle_count": 5,
           "option_count": 0,
           "error_count": 0
@@ -209,6 +251,13 @@
           "vehicle_count": 5,
           "option_count": 0,
           "error_count": 0
+        },
+        {
+          "date": "2026-09-11",
+          "file": "xpeng_2026-09-11.json",
+          "vehicle_count": 5,
+          "option_count": 0,
+          "error_count": 0
         }
       ]
     },
@@ -239,12 +288,19 @@
           "vehicle_count": 4,
           "option_count": 0,
           "error_count": 0
+        },
+        {
+          "date": "2026-09-11",
+          "file": "zeekr_2026-09-11.json",
+          "vehicle_count": 4,
+          "option_count": 0,
+          "error_count": 0
         }
       ]
     }
   },
   "option_summary": {
-    "last_updated": "2026-09-10T08:49:43.409541",
+    "last_updated": "2026-09-11T06:18:29.298082",
     "options": [
       {
         "standardized_name": "automatic_transmission",
@@ -1559,6 +1615,22 @@
       "timestamp": "2026-09-10T08:49:43.407935",
       "total_vehicles": 159,
       "total_options": 2215,
+      "brands_crawled": [
+        "Mercedes-Benz",
+        "Audi",
+        "Porsche",
+        "Lexus",
+        "BYD",
+        "XPeng",
+        "Zeekr",
+        "Polestar"
+      ]
+    },
+    {
+      "date": "2026-09-11",
+      "timestamp": "2026-09-11T06:18:29.296601",
+      "total_vehicles": 159,
+      "total_options": 2191,
       "brands_crawled": [
         "Mercedes-Benz",
         "Audi",
