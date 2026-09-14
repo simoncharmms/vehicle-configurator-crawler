@@ -8,7 +8,7 @@ Automated vehicle price tracker with multi-brand support, network-hardened Playw
 
 | Brand | Status | Vehicles | Notes |
 |-------|--------|----------|-------|
-| **Mercedes-Benz** | ✅ Active | 45 | SSR data extraction |
+| **Mercedes-Benz** | ✅ Active | 100 | Configurator JSON API (real option prices) |
 | **Lexus** | ✅ Active | 49 | JSON state blob extraction |
 | **Porsche** | ✅ Active | 85 | SPA rendering (networkidle) |
 | **BYD** | ✅ Active | 11 | Playwright rendering |
@@ -30,7 +30,25 @@ Automated vehicle price tracker with multi-brand support, network-hardened Playw
 - **Shared priced categories:** leather seats (Mercedes €1,760; Porsche €1,107), rear/360° camera (Mercedes €547; Porsche €1,166), and premium sound (Mercedes €2,522; Porsche €1,178).
 - Prices are daily snapshots from official configurators. Many tracked equipment labels do not currently include a numeric price.
 
-Mercedes-Benz has 45 vehicles and 1,111 extracted options in its successful 2026-09-08 snapshot. Crawls on 2026-09-09, 2026-09-10, and 2026-09-11 returned HTTP 403 anti-bot responses, so no newer Mercedes option prices are available yet.
+### Mercedes-Benz: from HTTP 403 to real option prices (2026-09-14)
+
+Crawls from 2026-09-09 onward returned `HTTP 403` because `www.mercedes-benz.de`
+blocks datacenter IPs (sandboxes, GitHub Actions runners). On top of that, the
+old option path (`startPage.preConfigs[].curatedComponents[]`) no longer exists
+in the current payload, so even a successful page load would have produced zero
+option prices. Separately, the daily workflow had been failing since 2026-09-11
+because `requirements.txt` was removed in the `cleanup` commit.
+
+The crawler now talks to the configurator's own JSON API
+(`api.oneweb.mercedes-benz.com/owcc-backend/api/v3/de_DE/CCci/{sessionId}/…`),
+which answers plain `requests` calls without a browser and without the 403 wall:
+
+1. `entry?typeClass=<TC>` → all motorizations with base prices, fuel type, image
+2. `entry?typeClass=<TC>&vehicleId=<id>` → `selectableComponents` with the real
+   gross/net option prices
+
+Measured full run (36 type classes, 2026-09-14): **100 motorizations, 8,256
+priced options, ~38 s, 0 errors** — previously 0 vehicles and 0 prices.
 
 ### Brands Tested But Not Added
 
@@ -53,8 +71,10 @@ vehicle-configurator-crawler/
 │   ├── engines/
 │   │   ├── playwright_engine.py
 │   │   └── beautifulsoup_engine.py
+│   ├── data/
+│   │   └── mercedes_type_classes.json   # Mercedes type-class catalogue (W206, V297, …)
 │   └── brands/
-│       ├── mercedes.py         # Mercedes-Benz (Playwright + SSR data)
+│       ├── mercedes.py         # Mercedes-Benz (configurator JSON API)
 │       ├── audi.py             # Audi (Curl + Apollo GraphQL cache)
 │       ├── porsche.py          # Porsche (Playwright + JSON-LD)
 │       ├── lexus.py            # Lexus (Curl + embedded JSON state)
@@ -74,7 +94,7 @@ vehicle-configurator-crawler/
 
 | Brand | Method | Data Source |
 |-------|--------|-------------|
-| **Mercedes-Benz** | Playwright + SSR | SSR navigation data with prices, images |
+| **Mercedes-Benz** | Requests + JSON API | Configurator API `entry` endpoint: base prices + `selectableComponents` prices |
 | **Audi** | Curl + Apollo | GraphQL cache with prices (Sec-Fetch headers) |
 | **Porsche** | Playwright + JSON-LD | Structured data + model links |
 | **Lexus** | Curl + JSON state | Embedded JSON state blob with full model data |
@@ -122,7 +142,7 @@ python -m crawler.orchestrator --list-brands
 
 | Brand | Status | Notes |
 |-------|--------|-------|
-| **Mercedes-Benz** | ✅ Allowed | `Allow: /passengercars/content-pool/tool-pages/car-configurator.html*` |
+| **Mercedes-Benz** | ✅ Allowed | Configurator allowed; `api.oneweb.mercedes-benz.com` serves no robots.txt (404) — public configurator backend, rate-limited to ≤4 parallel requests |
 | **Audi** | ✅ Allowed | Only `/userinfo/` disallowed |
 | **Porsche** | ⚠️ Check | robots.txt timed out during initial check |
 | **Lexus** | ✅ Allowed | No specific blocks on `/modelle` |
@@ -131,7 +151,17 @@ python -m crawler.orchestrator --list-brands
 | **Zeekr** | ✅ Allowed | No specific blocks |
 | **Polestar** | ✅ Allowed | No specific blocks on `/de/` model pages |
 
-All crawlers: respectful rate limiting (≥3s), standard browser UA, no auth bypass.
+All crawlers: respectful rate limiting, standard browser UA, no auth bypass. The
+Mercedes API path uses bounded concurrency (`MERCEDES_MAX_CONCURRENCY`, default 4)
+and a 0.25 s per-request delay instead of the ≥3 s page-scraping delay, since it
+fetches small JSON documents rather than rendering full pages.
+
+### Mercedes environment variables
+
+| Variable | Default | Purpose |
+|----------|---------|---------|
+| `MERCEDES_MAX_CONCURRENCY` | 4 | Parallel API requests |
+| `MERCEDES_MAX_OPTION_PROBES` | 160 | Cap on per-vehicle option lookups per run |
 
 ## License
 

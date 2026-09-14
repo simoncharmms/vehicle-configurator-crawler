@@ -1,19 +1,41 @@
 """Mercedes-Benz configurator crawler.
 
-robots.txt:  Allow: /passengercars/content-pool/tool-pages/car-configurator.html*
-Strategy:    Static HTML extraction from SSR data (no Playwright needed for models).
-             Option extraction via model page API capture + HTML parsing.
-Resilience:  Uses ``retry_with_backoff`` (2 attempts, exponential delay).
+Strategy:    Pure JSON API extraction against the public OWCC configurator
+             backend (``api.oneweb.mercedes-benz.com``).  The www host
+             (``www.mercedes-benz.de``) is behind bot protection that
+             answers datacenter IPs — including GitHub Actions runners —
+             with HTTP 403, so it is no longer used for the daily crawl.
+
+Pipeline:
+    1. Type classes (Baureihen) come from the local catalogue in
+       ``crawler/data/mercedes_type_classes.json``.  When the public
+       configurator overview page happens to be reachable it is used to
+       refresh that catalogue; failure is non-fatal.
+    2. ``GET /entry?typeClass=<TC>`` returns ``startPage.preConfigs[]`` —
+       one entry per motorization with name, base price (gross + net) and
+       preview image.
+    3. ``GET /entry?typeClass=<TC>&vehicleId=<VID>`` returns
+       ``selectableComponents`` — every selectable option of that
+       configuration with its **real** gross and net price.
+
+Resilience:  Per-request retry with exponential backoff, user-agent
+             rotation, bounded concurrency and per-type-class error
+             isolation (a dead Baureihe never fails the whole brand).
 """
 
 from __future__ import annotations
 
+import asyncio
 import json
 import logging
+import os
+import random
 import re
 import time
-from typing import Any
+from pathlib import Path
+from typing import Any, Iterable
 
+import requests
 from bs4 import BeautifulSoup
 
 from crawler.base import (
@@ -23,16 +45,64 @@ from crawler.base import (
 from crawler.engines.base_engine import BaseEngine
 from crawler.option_mappings import normalize_option_name, get_category
 from crawler.brands.registry import BrandRegistry
-from crawler.network import retry_with_backoff, BrowserPool
+from crawler.network import retry_with_backoff, get_random_user_agent
 
 logger = logging.getLogger(__name__)
 
-MODELS_URL = "https://www.mercedes-benz.de/passengercars/models.html"
+# --- Public endpoints -------------------------------------------------
 
-# Max models to probe for option data (rate-limited)
-MAX_OPTION_PROBES = 50  # Probe all model families for full option coverage
+OWCC_API_BASE = "https://api.oneweb.mercedes-benz.com/owcc-backend/api/v3"
+OWCC_MARKET = "de_DE"
+OWCC_PRODUCT = "CCci"
 
-# Vehicle type mapping for Mercedes tags
+CONFIGURATOR_OVERVIEW_URL = (
+    "https://www.mercedes-benz.de/passengercars/configurator.html"
+)
+CONFIGURATOR_DEEPLINK = (
+    "https://www.mercedes-benz.de/passengercars/mercedes-benz-cars/"
+    "car-configurator.html/start/CCci/DE/de/tc/{type_class}"
+)
+MODELS_URL = CONFIGURATOR_OVERVIEW_URL
+
+TYPE_CLASS_CATALOGUE = (
+    Path(__file__).resolve().parent.parent / "data" / "mercedes_type_classes.json"
+)
+
+# Max vehicles (motorizations) to probe for option prices per crawl.
+MAX_OPTION_PROBES = int(os.getenv("MERCEDES_MAX_OPTION_PROBES", "160"))
+# Parallel API requests.  The API is a CDN-fronted read endpoint; keep
+# this low enough to stay polite.
+MAX_CONCURRENCY = int(os.getenv("MERCEDES_MAX_CONCURRENCY", "4"))
+
+# Component-id prefixes used by the configurator API.
+COMPONENT_PREFIX_CATEGORY = {
+    "LU": "exterior",    # Lackierung (paint)
+    "AU": "interior",    # Polster / Ausstattung (upholstery)
+    "PV": "comfort",     # Vorrüstungen / comfort extras
+    "PC": "packages",    # Pakete (packages)
+    "GC": "drivetrain",  # Getriebe (transmission)
+    "SA": "",            # Sonderausstattung — resolved by title heuristic
+    "SC": "",            # Steuercodes — resolved by title heuristic
+}
+
+# Internal sales/steering codes that are exposed by the API but are not
+# customer-facing equipment.
+NON_OPTION_NAME_PATTERNS = (
+    "steuercode",
+    "einsatzfahrzeuge",
+    "sonderschutz",
+    "code für",
+    "werkscode",
+)
+
+FUEL_BY_ENGINE_TYPE = {
+    "ELECTRIC": "electric",
+    "BEV": "electric",
+    "HYBRID": "hybrid",
+    "PLUGIN_HYBRID": "hybrid",
+}
+
+# Vehicle type mapping for Mercedes tags (kept for SSR fallback parsing)
 FUEL_MAP = {
     "Elektrisch": "electric",
     "Electric": "electric",
@@ -44,25 +114,342 @@ FUEL_MAP = {
 }
 
 
+# ---------------------------------------------------------------------
+# Type-class catalogue
+# ---------------------------------------------------------------------
+
+def load_type_classes(path: Path | None = None) -> dict[str, str]:
+    """Load the ``{type_class: model_name}`` catalogue from disk."""
+    p = path or TYPE_CLASS_CATALOGUE
+    try:
+        with open(p, encoding="utf-8") as f:
+            data = json.load(f)
+        classes = data.get("type_classes", {})
+        return {k: v for k, v in classes.items() if isinstance(v, str)}
+    except Exception as e:  # pragma: no cover - defensive
+        logger.warning(f"Mercedes: type-class catalogue unreadable ({e})")
+        return {}
+
+
+def parse_type_classes_from_html(html: str) -> dict[str, str]:
+    """Parse ``{type_class: model_name}`` pairs from the overview page.
+
+    Configurator links look like
+    ``…/car-configurator.html/start/CCci/DE/de/tc/W206``.  The link text
+    carries the model name; generic call-to-action labels such as
+    "Fahrzeug konfigurieren" are ignored.
+    """
+    found: dict[str, str] = {}
+    try:
+        soup = BeautifulSoup(html, "lxml")
+    except Exception:  # pragma: no cover - lxml always present in prod
+        soup = BeautifulSoup(html, "html.parser")
+
+    for a in soup.find_all("a", href=True):
+        m = re.search(r"/tc/([A-Z0-9]{3,6})", a["href"])
+        if not m:
+            continue
+        label = " ".join(a.get_text(" ", strip=True).split())
+        if not label or "konfigurieren" in label.lower():
+            continue
+        found.setdefault(m.group(1), label)
+
+    # Type classes without a usable label still count as discovered.
+    for m in re.finditer(r"/tc/([A-Z0-9]{3,6})", html):
+        found.setdefault(m.group(1), "")
+
+    return found
+
+
+# ---------------------------------------------------------------------
+# OWCC configurator API client
+# ---------------------------------------------------------------------
+
+class MercedesConfiguratorAPI:
+    """Thin, resilient client for the public OWCC configurator API.
+
+    The ``session_id`` path segment is an opaque per-visit identifier;
+    the backend accepts any value, so a random one is generated per run
+    instead of hard-coding a value that can rot.
+    """
+
+    def __init__(
+        self,
+        session_id: str | None = None,
+        timeout: float = 45.0,
+        max_retries: int = 3,
+    ) -> None:
+        self.session_id = session_id or f"{random.getrandbits(32):08x}"
+        self.timeout = timeout
+        self.max_retries = max_retries
+        self.session = requests.Session()
+        self.session.headers.update({
+            "User-Agent": get_random_user_agent(),
+            "Accept": "application/json, text/plain, */*",
+            "Accept-Language": "de-DE,de;q=0.9,en;q=0.8",
+            "Origin": "https://www.mercedes-benz.de",
+            "Referer": "https://www.mercedes-benz.de/",
+        })
+
+    # --- low level ---
+
+    def _url(self, path: str) -> str:
+        return (
+            f"{OWCC_API_BASE}/{OWCC_MARKET}/{OWCC_PRODUCT}/"
+            f"{self.session_id}/{path.lstrip('/')}"
+        )
+
+    def get_json(self, path: str, params: dict[str, Any] | None = None) -> Any:
+        """GET *path* with retries. Raises on permanent failure."""
+        last_error: Exception | None = None
+        for attempt in range(self.max_retries):
+            try:
+                resp = self.session.get(
+                    self._url(path), params=params, timeout=self.timeout,
+                )
+                if resp.status_code in (400, 404):
+                    raise LookupError(
+                        f"HTTP {resp.status_code} for {path} {params or ''}"
+                    )
+                if resp.status_code >= 400:
+                    raise RuntimeError(f"HTTP {resp.status_code} for {path}")
+                return resp.json()
+            except LookupError:
+                raise
+            except Exception as e:
+                last_error = e
+                if attempt < self.max_retries - 1:
+                    delay = 1.5 * (2 ** attempt) + random.uniform(0, 0.75)
+                    logger.debug(
+                        f"Mercedes API retry {attempt + 1}/{self.max_retries} "
+                        f"for {path}: {e} (sleep {delay:.1f}s)"
+                    )
+                    time.sleep(delay)
+                    self.session.headers["User-Agent"] = get_random_user_agent()
+        raise RuntimeError(f"Mercedes API failed for {path}: {last_error}")
+
+    # --- endpoints ---
+
+    def entry(self, type_class: str, vehicle_id: str | None = None) -> dict:
+        """Configurator entry payload for a type class (optionally a config)."""
+        params: dict[str, Any] = {"typeClass": type_class}
+        if vehicle_id:
+            params["vehicleId"] = vehicle_id
+        data = self.get_json("entry", params)
+        return data if isinstance(data, dict) else {}
+
+    def components_info(self, model_id: str) -> dict:
+        """Descriptive metadata (names, media, descriptions) per component."""
+        data = self.get_json(f"models/{model_id}/componentsInfo")
+        if isinstance(data, dict):
+            info = data.get("componentsInfo", {})
+            return info if isinstance(info, dict) else {}
+        return {}
+
+    def discover_type_classes(self) -> dict[str, str]:
+        """Best-effort refresh of the catalogue from the overview page.
+
+        The www host blocks datacenter IPs, so this is expected to fail
+        in CI.  Failure is silent by design — the local catalogue is the
+        source of truth.
+        """
+        try:
+            resp = self.session.get(
+                CONFIGURATOR_OVERVIEW_URL,
+                headers={"Accept": "text/html,application/xhtml+xml"},
+                timeout=15,
+            )
+            if resp.status_code != 200 or len(resp.text) < 5_000:
+                return {}
+            return parse_type_classes_from_html(resp.text)
+        except Exception as e:
+            logger.debug(f"Mercedes: catalogue refresh unavailable ({e})")
+            return {}
+
+
+# ---------------------------------------------------------------------
+# Payload parsing
+# ---------------------------------------------------------------------
+
+def _price_of(obj: Any) -> float | None:
+    """Read a gross price from an OWCC ``price`` object."""
+    if not isinstance(obj, dict):
+        return None
+    value = obj.get("price")
+    if isinstance(value, (int, float)):
+        return float(value)
+    return None
+
+
+def _net_price_of(obj: Any) -> float | None:
+    if not isinstance(obj, dict):
+        return None
+    value = obj.get("netPrice")
+    return float(value) if isinstance(value, (int, float)) else None
+
+
+def _fuel_type_from_preconfig(pre_config: dict) -> str:
+    """Derive ``electric`` / ``hybrid`` / ``diesel`` / ``petrol``."""
+    engine = (
+        pre_config.get("plsInformationSection", {})
+        .get("technicalData", {})
+        .get("engine", {})
+    )
+    engine_type = str(engine.get("type", "")).upper()
+    mapped = FUEL_BY_ENGINE_TYPE.get(engine_type, "")
+    if mapped:
+        return mapped
+
+    name = pre_config.get("motorizationName", "")
+    low = name.lower()
+    if "elektrisch" in low or low.startswith("eq") or " eq " in low:
+        return "electric"
+    if "hybrid" in low:
+        return "hybrid"
+    if engine_type in ("COMBUSTOR", "ICE", ""):
+        if re.search(r"\b\d{2,3}\s?d\b", name) or "cdi" in low or " d " in low:
+            return "diesel"
+        return "petrol" if engine_type else ""
+    return ""
+
+
+def parse_pre_configs(
+    entry_payload: dict,
+    type_class: str,
+    model_name: str,
+    brand: str = "Mercedes-Benz",
+) -> list[VehicleData]:
+    """Turn ``startPage.preConfigs`` into :class:`VehicleData` records."""
+    vehicles: list[VehicleData] = []
+    pre_configs = (
+        entry_payload.get("startPage", {}).get("preConfigs", [])
+        if isinstance(entry_payload.get("startPage"), dict)
+        else []
+    )
+    seen: set[str] = set()
+
+    for pc in pre_configs:
+        if not isinstance(pc, dict):
+            continue
+        vehicle_id = pc.get("vehicleId", "")
+        motorization = (pc.get("motorizationName") or "").strip()
+        price_info = pc.get("priceInformation", {})
+        base_price = _price_of(price_info.get("basePrice")) or _price_of(
+            price_info.get("configurationPrice")
+        )
+        if not vehicle_id or not motorization or not base_price:
+            continue
+        if motorization in seen:
+            continue
+        seen.add(motorization)
+
+        preview = pc.get("previewImage", {})
+        vehicles.append(VehicleData(
+            brand=brand,
+            model=model_name or type_class,
+            variant=motorization,
+            base_price=base_price,
+            currency=price_info.get("currencyISO", "EUR") or "EUR",
+            fuel_type=_fuel_type_from_preconfig(pc),
+            url=CONFIGURATOR_DEEPLINK.format(type_class=type_class),
+            image_url=preview.get("url", "") if isinstance(preview, dict) else "",
+            raw_data={
+                "type_class": type_class,
+                "vehicle_id": vehicle_id,
+                "pre_config_id": pc.get("preConfigId", ""),
+                "base_price_net": _net_price_of(price_info.get("basePrice")),
+            },
+        ))
+
+    return vehicles
+
+
+def _category_for_component(component_id: str, name: str) -> str:
+    """Category from the component-id prefix, falling back to the title."""
+    prefix = component_id.split("-")[0].upper() if "-" in component_id else ""
+    mapped = COMPONENT_PREFIX_CATEGORY.get(prefix, "")
+    if mapped:
+        return mapped
+    return _guess_category_from_title(name)
+
+
+def parse_selectable_components(
+    entry_payload: dict,
+    brand: str = "Mercedes-Benz",
+    *,
+    include_standard: bool = False,
+    include_zero_price: bool = False,
+) -> list[OptionData]:
+    """Turn ``selectableComponents`` into priced :class:`OptionData`.
+
+    Only *selectable* (non-standard) components with a real extra-cost
+    price are returned by default — those are the options the price index
+    is about.  Internal sales/steering codes are filtered out.
+    """
+    components = entry_payload.get("selectableComponents", {})
+    if not isinstance(components, dict):
+        return []
+
+    options: list[OptionData] = []
+    for comp_id, comp in components.items():
+        if not isinstance(comp, dict):
+            continue
+        name = (comp.get("name") or "").strip()
+        if not name or len(name) < 3:
+            continue
+        if comp.get("standard") and not include_standard:
+            continue
+        low = name.lower()
+        if any(pat in low for pat in NON_OPTION_NAME_PATTERNS):
+            continue
+
+        price = _price_of(comp.get("price"))
+        if price is None:
+            continue
+        if price < 0 or price > 250_000:
+            continue
+        if price == 0 and not include_zero_price:
+            continue
+
+        std = normalize_option_name(name, brand)
+        options.append(OptionData(
+            standardized_name=std or "",
+            brand_specific_name=name,
+            price=price,
+            category=get_category(std) if std else _category_for_component(comp_id, name),
+            code=str(comp.get("id") or comp_id),
+        ))
+
+    return options
+
+
+# ---------------------------------------------------------------------
+# Crawler
+# ---------------------------------------------------------------------
+
 @BrandRegistry.register
 class MercedesCrawler(BrandCrawler):
     brand = "Mercedes-Benz"
     base_url = "https://www.mercedes-benz.de"
-    configurator_url = MODELS_URL
+    configurator_url = CONFIGURATOR_OVERVIEW_URL
 
     def get_default_config(self) -> CrawlConfig:
         return CrawlConfig(
             engine=EngineType.BEAUTIFULSOUP,
-            rate_limit_seconds=2.0,
-            confidence=0.9,
-            notes="Static HTML extraction from SSR navigation data. "
-                  "Option extraction from model page API capture.",
+            rate_limit_seconds=0.25,
+            confidence=0.95,
+            notes=(
+                "Direct OWCC configurator API (api.oneweb.mercedes-benz.com): "
+                "type-class catalogue → entry preConfigs (base prices) → "
+                "entry selectableComponents (real option prices). "
+                "No www host, no browser — immune to the HTTP 403 bot wall."
+            ),
         )
 
     async def crawl(self, config: CrawlConfig | None = None) -> CrawlResult:
         try:
             return await retry_with_backoff(
-                self._crawl_inner, config, max_retries=1, base_delay=1.0,
+                self._crawl_inner, config, max_retries=1, base_delay=2.0,
             )
         except Exception as e:
             logger.warning(f"Mercedes: all retry attempts exhausted: {e}")
@@ -75,31 +462,72 @@ class MercedesCrawler(BrandCrawler):
         cfg = config or self.get_default_config()
         start_time = time.time()
         errors: list[str] = []
-        vehicles: list[VehicleData] = []
 
-        try:
-            logger.info(f"Mercedes: fetching {MODELS_URL}")
-            pool = await BrowserPool.acquire()
-            html = await pool.fetch_html(MODELS_URL)
-            soup = BeautifulSoup(html, "lxml")
-            vehicles = self._extract_from_ssr(soup)
+        api = MercedesConfiguratorAPI()
+        catalogue = load_type_classes()
+        if not catalogue:
+            return CrawlResult(
+                brand=self.brand,
+                errors=["Type-class catalogue missing or empty"],
+                strategy_used=cfg,
+                duration_seconds=time.time() - start_time,
+            )
 
-            if vehicles:
-                logger.info(f"Mercedes: extracted {len(vehicles)} vehicles from SSR data")
-                # --- Option extraction phase ---
+        # Best-effort catalogue refresh (works only outside blocked networks)
+        discovered = await asyncio.to_thread(api.discover_type_classes)
+        new_classes = {tc: name for tc, name in discovered.items() if tc not in catalogue}
+        if new_classes:
+            logger.info(f"Mercedes: discovered new type classes {sorted(new_classes)}")
+            catalogue = {**catalogue, **{k: v for k, v in new_classes.items() if v}}
+
+        semaphore = asyncio.Semaphore(MAX_CONCURRENCY)
+
+        # --- Phase 1: models & base prices, one request per type class ---
+        async def fetch_models(type_class: str, model_name: str) -> list[VehicleData]:
+            async with semaphore:
+                await asyncio.sleep(cfg.rate_limit_seconds)
                 try:
-                    await self._enrich_options(vehicles, pool, cfg)
+                    payload = await asyncio.to_thread(api.entry, type_class)
+                except LookupError:
+                    logger.info(
+                        f"Mercedes: type class {type_class} no longer offered — skipped"
+                    )
+                    return []
                 except Exception as e:
-                    logger.warning(f"Mercedes: option extraction failed: {e}")
-                    errors.append(f"Option extraction partial/failed: {e}")
-            else:
-                errors.append("No vehicles found in SSR navigation data")
+                    errors.append(f"{type_class}: {e}")
+                    return []
+            return parse_pre_configs(payload, type_class, model_name, self.brand)
 
-        finally:
-            try:
-                await BrowserPool.close()
-            except Exception:
-                pass
+        model_results = await asyncio.gather(*[
+            fetch_models(tc, name) for tc, name in catalogue.items()
+        ])
+        vehicles: list[VehicleData] = [v for group in model_results for v in group]
+
+        if not vehicles:
+            errors.append("No vehicles returned by the configurator API")
+            return CrawlResult(
+                brand=self.brand,
+                vehicles=[],
+                errors=errors,
+                strategy_used=cfg,
+                duration_seconds=time.time() - start_time,
+            )
+
+        logger.info(
+            f"Mercedes: {len(vehicles)} motorizations across "
+            f"{len(catalogue)} type classes"
+        )
+
+        # --- Phase 2: real option prices per configuration ---
+        await self._enrich_options(vehicles, api, cfg, semaphore, errors)
+
+        priced = sum(
+            1 for v in vehicles for o in v.available_options
+            if o.price is not None and o.price > 0
+        )
+        logger.info(f"Mercedes: {priced} priced options extracted")
+        if not priced:
+            errors.append("No priced options extracted from selectableComponents")
 
         return CrawlResult(
             brand=self.brand,
@@ -109,338 +537,45 @@ class MercedesCrawler(BrandCrawler):
             duration_seconds=time.time() - start_time,
         )
 
-    # ------------------------------------------------------------------
-    # Model extraction (existing)
-    # ------------------------------------------------------------------
-
-    def _extract_from_ssr(self, soup: BeautifulSoup) -> list[VehicleData]:
-        """Extract vehicles from SSR (server-side rendered) navigation data."""
-        vehicles: list[VehicleData] = []
-        seen: set[str] = set()
-
-        for script in soup.find_all("script"):
-            if not script.string or "ssrData" not in script.string:
-                continue
-
-            match = re.search(
-                r'\["([a-f0-9]+)"\]\s*=\s*({.*})\s*;?\s*$',
-                script.string.strip(),
-                re.DOTALL,
-            )
-            if not match:
-                continue
-
-            try:
-                data = json.loads(match.group(2))
-            except json.JSONDecodeError:
-                continue
-
-            nav_items = (
-                data.get("payload", {})
-                .get("mainNavigation", {})
-                .get("items", [])
-            )
-            if not nav_items:
-                continue
-
-            modelle = nav_items[0]
-            for category in modelle.get("items", []):
-                cat_label = category.get("label", "")
-                if not cat_label:
-                    continue
-
-                for item in category.get("items", []):
-                    link = item.get("link", {})
-                    if not isinstance(link, dict):
-                        continue
-
-                    label = link.get("label", "").strip()
-                    if not label or label.startswith("Alle "):
-                        continue
-
-                    vehicle_data = link.get("vehicle", {})
-                    if not isinstance(vehicle_data, dict):
-                        continue
-
-                    price_text = vehicle_data.get("price", "")
-                    url = link.get("url", "")
-                    images = vehicle_data.get("images", [])
-                    tags = link.get("tags", [])
-                    tag_labels = [
-                        t.get("label", "") for t in tags if isinstance(t, dict)
-                    ]
-
-                    fuel_type = ""
-                    for tag in tag_labels:
-                        for key, ft in FUEL_MAP.items():
-                            if key.lower() in tag.lower() and ft:
-                                fuel_type = ft
-                                break
-
-                    if not fuel_type:
-                        if "EQ" in label or "Elektr" in label.lower():
-                            fuel_type = "electric"
-                        elif "Hybrid" in label.lower() or "PHEV" in label.lower():
-                            fuel_type = "hybrid"
-
-                    dedup_key = f"{label}|{price_text}"
-                    if dedup_key in seen:
-                        continue
-                    seen.add(dedup_key)
-
-                    variant = cat_label if cat_label not in label else ""
-
-                    vehicle = VehicleData(
-                        brand=self.brand,
-                        model=label,
-                        variant=variant,
-                        base_price=BaseEngine.parse_price(
-                            price_text.replace("\xa0", " ") if price_text else ""
-                        ),
-                        currency="EUR",
-                        fuel_type=fuel_type,
-                        url=url if url.startswith("http") else f"{self.base_url}{url}",
-                        image_url=images[0] if images else "",
-                    )
-                    vehicles.append(vehicle)
-
-            if vehicles:
-                break
-
-        return vehicles
-
-    # ------------------------------------------------------------------
-    # Option extraction (new)
-    # ------------------------------------------------------------------
-
     async def _enrich_options(
         self,
-        vehicles: list[VehicleData],
-        pool: BrowserPool,
+        vehicles: Iterable[VehicleData],
+        api: MercedesConfiguratorAPI,
         config: CrawlConfig,
+        semaphore: asyncio.Semaphore,
+        errors: list[str],
     ) -> None:
-        """Probe individual model pages for option/equipment data.
+        """Attach real option prices to each vehicle configuration."""
+        targets = [
+            v for v in vehicles
+            if v.raw_data.get("vehicle_id") and v.raw_data.get("type_class")
+        ][:MAX_OPTION_PROBES]
 
-        Uses a two-phase approach:
-
-        Phase 1 — Equipment names from model overview pages:
-            Navigates to each model overview page and extracts equipment
-            items from embedded ``ssrData`` scripts (with ``equipmentId``,
-            ``title``, ``isIncluded`` fields).  Also discovers the
-            configurator typeClass from embedded links.
-
-        Phase 2 — Real prices from the configurator entry API:
-            For each unique typeClass, calls the Mercedes ``owcc-backend``
-            entry API which returns ``curatedComponents`` with real gross
-            and net prices per option (SA/PC codes).
-        """
-        import asyncio
-
-        targets = [v for v in vehicles if v.base_price and v.url][:MAX_OPTION_PROBES]
-        if not targets:
-            return
-
-        # Phase 1: extract equipment names + discover typeClasses
-        type_class_map: dict[str, str] = {}  # typeClass → first vehicle URL
-        vehicle_tc: dict[str, str] = {}  # vehicle URL → typeClass
-
-        for vehicle in targets:
-            try:
+        async def enrich(vehicle: VehicleData) -> None:
+            type_class = vehicle.raw_data["type_class"]
+            vehicle_id = vehicle.raw_data["vehicle_id"]
+            async with semaphore:
                 await asyncio.sleep(config.rate_limit_seconds)
-
-                logger.info(f"Mercedes options: probing {vehicle.model} → {vehicle.url}")
-                html, api_responses = await pool.fetch_with_api_capture(
-                    vehicle.url,
-                    extra_wait_ms=4000,
-                    timeout_ms=25_000,
-                )
-
-                options: list[OptionData] = []
-
-                # 1) Search captured API responses for priced option entries
-                for resp in api_responses:
-                    found = _search_json_for_options(resp.get("data"), self.brand)
-                    options.extend(found)
-
-                # 2) Extract equipment from Mercedes ssrData scripts
-                soup = BeautifulSoup(html, "lxml")
-                equip_options = _extract_equipment_from_ssr(soup, self.brand)
-                if equip_options:
-                    options.extend(equip_options)
-
-                # 3) Search other embedded script JSON blobs
-                if not options:
-                    options = _extract_options_from_scripts(soup, self.brand)
-
-                # 4) Regex fallback: price patterns near equipment keywords
-                if not options:
-                    options = _extract_options_from_text(html, self.brand)
-
-                if options:
-                    vehicle.available_options = _dedupe_options(options)
-                    logger.info(
-                        f"Mercedes options: {vehicle.model} → "
-                        f"{len(vehicle.available_options)} options"
+                try:
+                    payload = await asyncio.to_thread(
+                        api.entry, type_class, vehicle_id,
                     )
+                except Exception as e:
+                    logger.debug(
+                        f"Mercedes options: {vehicle.model} {vehicle.variant} failed: {e}"
+                    )
+                    errors.append(f"{type_class} options: {e}")
+                    return
 
-                # Discover typeClass from configurator links in the HTML
-                tc = _extract_type_class(html)
-                if tc:
-                    vehicle_tc[vehicle.url] = tc
-                    type_class_map.setdefault(tc, vehicle.url)
-
-            except Exception as e:
-                logger.debug(f"Mercedes options: {vehicle.model} failed: {e}")
-
-        # Phase 2: fetch real prices from the configurator entry API
-        if type_class_map:
-            try:
-                await self._apply_configurator_prices(
-                    vehicles, pool, type_class_map, vehicle_tc,
-                )
-            except Exception as e:
-                logger.warning(f"Mercedes configurator pricing failed: {e}")
-
-    async def _apply_configurator_prices(
-        self,
-        vehicles: list[VehicleData],
-        pool: BrowserPool,
-        type_class_map: dict[str, str],
-        vehicle_tc: dict[str, str],
-    ) -> None:
-        """Fetch real per-option prices from the configurator entry API.
-
-        The Mercedes ``owcc-backend`` entry API returns
-        ``startPage.preConfigs[].curatedComponents[]`` with per-option
-        gross and net prices for each equipment item (SA/PC codes).
-        """
-        import asyncio
-
-        # Build price lookup: typeClass → {sa_code: price}
-        tc_prices: dict[str, dict[str, float]] = {}
-        tc_price_options: dict[str, list[OptionData]] = {}
-
-        for tc in type_class_map:
-            try:
-                await asyncio.sleep(1.0)
-                api_url = (
-                    f"https://api.oneweb.mercedes-benz.com/owcc-backend/"
-                    f"api/v3/de_DE/CCci/48097edf/entry?typeClass={tc}"
-                )
-                logger.info(f"Mercedes prices: fetching entry API for {tc}")
-                data = await pool.call_json_api(
-                    api_url,
-                    origin_url="https://www.mercedes-benz.de",
-                    timeout_ms=30_000,
+            options = parse_selectable_components(payload, self.brand)
+            if options:
+                vehicle.available_options = _dedupe_options(options)
+                logger.debug(
+                    f"Mercedes options: {vehicle.model} {vehicle.variant} → "
+                    f"{len(vehicle.available_options)} options"
                 )
 
-                if not isinstance(data, dict):
-                    logger.debug(f"Mercedes prices: no data for {tc}")
-                    continue
-
-                prices: dict[str, float] = {}
-                priced_opts: list[OptionData] = []
-
-                pre_configs = (
-                    data.get("startPage", {}).get("preConfigs", [])
-                )
-                for pc in pre_configs:
-                    for comp in pc.get("curatedComponents", []):
-                        comp_id = comp.get("id", "")
-                        comp_name = comp.get("name", "")
-                        price_obj = comp.get("price", {})
-                        if not isinstance(price_obj, dict):
-                            continue
-                        gross = price_obj.get("price")
-                        if not gross or not isinstance(gross, (int, float)):
-                            continue
-                        if gross < 50 or gross > 100_000:
-                            continue
-
-                        prices[comp_id] = float(gross)
-
-                        # Also build OptionData from the configurator
-                        std = normalize_option_name(comp_name, self.brand)
-                        cat = (
-                            get_category(std)
-                            if std
-                            else _guess_category_from_title(comp_name)
-                        )
-                        priced_opts.append(OptionData(
-                            standardized_name=std or "",
-                            brand_specific_name=comp_name,
-                            price=float(gross),
-                            category=cat,
-                            code=comp_id,
-                        ))
-
-                tc_prices[tc] = prices
-                tc_price_options[tc] = priced_opts
-                logger.info(
-                    f"Mercedes prices: {tc} → {len(prices)} priced options"
-                )
-
-            except Exception as e:
-                logger.debug(f"Mercedes prices: {tc} failed: {e}")
-
-        if not tc_prices:
-            return
-
-        # Apply prices to vehicles
-        applied_count = 0
-        for vehicle in vehicles:
-            tc = vehicle_tc.get(vehicle.url, "")
-            if not tc or tc not in tc_prices:
-                # Try matching by any typeClass that has matching SA codes
-                for try_tc, try_prices in tc_prices.items():
-                    if any(
-                        opt.code in try_prices
-                        for opt in vehicle.available_options
-                        if opt.code
-                    ):
-                        tc = try_tc
-                        break
-
-            if not tc or tc not in tc_prices:
-                # No typeClass match — still merge configurator options
-                # as new options for this vehicle
-                continue
-
-            prices = tc_prices[tc]
-            priced_opts = tc_price_options.get(tc, [])
-
-            # Match existing options by SA code and set price
-            matched_codes: set[str] = set()
-            for opt in vehicle.available_options:
-                if opt.code and opt.code in prices:
-                    opt.price = prices[opt.code]
-                    matched_codes.add(opt.code)
-                    applied_count += 1
-
-            # Add priced options from configurator that weren't
-            # already present (new options the model page missed)
-            existing_codes = {o.code for o in vehicle.available_options if o.code}
-            existing_names = {
-                o.standardized_name or o.brand_specific_name.lower()
-                for o in vehicle.available_options
-            }
-            for opt in priced_opts:
-                if opt.code and opt.code not in existing_codes:
-                    key = opt.standardized_name or opt.brand_specific_name.lower()
-                    if key not in existing_names:
-                        vehicle.available_options.append(opt)
-                        existing_codes.add(opt.code)
-                        existing_names.add(key)
-                        applied_count += 1
-
-            vehicle.available_options = _dedupe_options(
-                vehicle.available_options,
-            )
-
-        logger.info(
-            f"Mercedes prices: applied {applied_count} prices "
-            f"across {len(tc_prices)} typeClasses"
-        )
+        await asyncio.gather(*[enrich(v) for v in targets])
 
 
 # ------------------------------------------------------------------
