@@ -181,7 +181,7 @@ class PorscheCrawler(BrandCrawler):
             # --- Option extraction phase ---
             if vehicles:
                 try:
-                    await self._enrich_options(vehicles, pool, cfg)
+                    await self._enrich_options(vehicles, pool, cfg, html)
                 except Exception as e:
                     logger.warning(
                         f"Porsche [{self.market}]: option extraction failed: {e}"
@@ -268,6 +268,7 @@ class PorscheCrawler(BrandCrawler):
         vehicles: list[VehicleData],
         pool: BrowserPool,
         config: CrawlConfig,
+        overview_html: str = "",
     ) -> None:
         """Probe Porsche model family pages for option/equipment data.
 
@@ -402,6 +403,22 @@ class PorscheCrawler(BrandCrawler):
                 logger.debug(
                     f"Porsche [{self.market}] options: family {family} failed: {e}"
                 )
+
+        # Markets without per-family detail pages (e.g. AT) link to the
+        # configurator directly from the models overview — use those codes
+        # for every family that produced none.
+        if overview_html:
+            overview_codes = _extract_porsche_codes_by_family(
+                overview_html, self.market_config.locale,
+            )
+            for family, codes in overview_codes.items():
+                if codes and not family_model_codes.get(family):
+                    family_model_codes[family] = codes
+                    logger.info(
+                        f"Porsche [{self.market}] options: {family} "
+                        f"configurator codes from overview: {codes[:3]}"
+                        f"{'...' if len(codes) > 3 else ''}"
+                    )
 
         # Phase 2: fetch real prices from the configurator DOM
         if family_model_codes:
@@ -687,6 +704,39 @@ def _extract_porsche_configurator_codes(
             seen.add(code)
             result.append(code)
     return result
+
+
+def _extract_porsche_codes_by_family(
+    html: str, locale: str = "de-DE",
+) -> dict[str, list[str]]:
+    """Map model families to configurator codes found in a page.
+
+    Some markets (e.g. Austria) have no per-family detail pages; their
+    models overview links straight to ``configurator.porsche.com`` instead.
+    Scanning the document linearly and attaching every configurator code to
+    the most recently mentioned model family recovers those codes without
+    guessing any URL.
+    """
+    pattern = re.compile(
+        r"(?P<family>" + "|".join(sorted(MODEL_FAMILIES)) + r")"
+        r"|configurator\.porsche\.com/" + re.escape(locale)
+        + r"/mode/model/(?P<code>[A-Za-z0-9]+)",
+        re.IGNORECASE,
+    )
+    by_family: dict[str, list[str]] = {}
+    current: str | None = None
+    for match in pattern.finditer(html):
+        family = match.group("family")
+        if family:
+            current = family.lower()
+            continue
+        code = match.group("code")
+        if not current or not code:
+            continue
+        codes = by_family.setdefault(current, [])
+        if code not in codes:
+            codes.append(code)
+    return by_family
 
 
 def _match_porsche_price(
