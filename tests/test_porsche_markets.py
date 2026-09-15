@@ -68,3 +68,33 @@ def test_porsche_extracts_locale_specific_configurator_codes():
         "982890", "9921B2",
     ]
     assert _extract_porsche_configurator_codes(html, "de-DE") == []
+
+
+class TestPorscheOverviewCodes:
+    """Markets without family detail pages (e.g. AT) link to the configurator."""
+
+    HTML = """
+      <h2>718</h2>
+      <a href="https://configurator.porsche.com/de-AT/mode/model/982890">Konfigurieren</a>
+      <a href="https://configurator.porsche.com/de-AT/mode/model/982890">Konfigurieren</a>
+      <h2>911</h2>
+      <a href="https://configurator.porsche.com/de-AT/mode/model/9921B2">Konfigurieren</a>
+      <h2>Cayenne</h2>
+      <a href="https://configurator.porsche.com/de-AT/mode/model/X1AAA1">Konfigurieren</a>
+    """
+
+    def test_codes_are_grouped_by_family(self):
+        from crawler.brands.porsche import _extract_porsche_codes_by_family
+        codes = _extract_porsche_codes_by_family(self.HTML, "de-AT")
+        assert codes["718"] == ["982890"]        # deduplicated
+        assert codes["911"] == ["9921B2"]
+        assert codes["cayenne"] == ["X1AAA1"]
+
+    def test_other_locales_are_ignored(self):
+        from crawler.brands.porsche import _extract_porsche_codes_by_family
+        assert _extract_porsche_codes_by_family(self.HTML, "de-DE") == {}
+
+    def test_codes_before_any_family_are_dropped(self):
+        from crawler.brands.porsche import _extract_porsche_codes_by_family
+        html = '<a href="https://configurator.porsche.com/de-AT/mode/model/ZZZZ1">x</a>'
+        assert _extract_porsche_codes_by_family(html, "de-AT") == {}
