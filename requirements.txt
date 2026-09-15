@@ -1,0 +1,8 @@
+# Runtime dependencies (mirrors [project].dependencies in pyproject.toml).
+# The daily GitHub Actions workflow installs from this file.
+anthropic>=0.39.0
+playwright>=1.48.0
+beautifulsoup4>=4.12.0
+requests>=2.31.0
+python-dotenv>=1.0.0
+lxml>=5.0.0

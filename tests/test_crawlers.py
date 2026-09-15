@@ -20,6 +20,12 @@ from crawler.option_mappings import (
 )
 from crawler.brands.registry import BrandRegistry
 from crawler.brands.mercedes import (
+    MercedesConfiguratorAPI,
+    load_type_classes,
+    parse_type_classes_from_html,
+    parse_pre_configs,
+    parse_selectable_components,
+    _fuel_type_from_preconfig,
     _search_json_for_options,
     _extract_options_from_scripts,
     _extract_options_from_text,
@@ -876,7 +882,9 @@ class TestCrawlConfig:
         crawler = BrandRegistry.get("mercedes-benz")
         cfg = crawler.get_default_config()
         assert cfg.engine in (EngineType.PLAYWRIGHT, EngineType.BEAUTIFULSOUP)
-        assert cfg.rate_limit_seconds >= 2.0
+        # Mercedes runs against the JSON configurator API with bounded
+        # concurrency, so the per-request delay is small but non-zero.
+        assert cfg.rate_limit_seconds >= 0.2
         assert cfg.confidence > 0.5
 
     def test_lexus_config(self):
@@ -965,6 +973,195 @@ class TestCrossBrandNormalization:
         assert set(buckets["allrad"].keys()) == {"Mercedes-Benz", "Lexus", "Porsche"}
 
 
+# ---------- Mercedes configurator API (offline unit tests) ----------
+
+
+class TestMercedesTypeClasses:
+    """The type-class catalogue drives the whole Mercedes crawl."""
+
+    def test_catalogue_loads(self):
+        tcs = load_type_classes()
+        assert len(tcs) >= 30
+        assert "W206" in tcs   # C-Klasse Limousine
+        assert "V297" in tcs   # EQS
+        assert all(isinstance(code, str) and code for code in tcs)
+        assert all(isinstance(name, str) and name for name in tcs.values())
+
+    def test_parse_type_classes_from_html(self):
+        html = '''
+        <a href="/passengercars/mercedes-benz-cars/car-configurator.html/start/CCci/DE/de/tc/W206">
+          C-Klasse Limousine
+        </a>
+        <a href="/passengercars/mercedes-benz-cars/car-configurator.html/start/CCci/DE/de/tc/X296">
+          EQS SUV
+        </a>
+        <a href="/passengercars/other.html">Nothing</a>
+        '''
+        tcs = parse_type_classes_from_html(html)
+        assert tcs["W206"] == "C-Klasse Limousine"
+        assert tcs["X296"] == "EQS SUV"
+        assert len(tcs) == 2
+
+
+class TestMercedesPreConfigs:
+    """``startPage.preConfigs`` carries the motorizations and base prices."""
+
+    PAYLOAD = {
+        "startPage": {
+            "preConfigs": [
+                {
+                    "preConfigId": "pc1",
+                    "vehicleId": "de_DE__2060581__AU-301_LU-040",
+                    "motorizationName": "C 200",
+                    "priceInformation": {
+                        "currencyISO": "EUR",
+                        "basePrice": {
+                            "price": 55501.0,
+                            "netPrice": 46639.5,
+                            "formattedPrice": "55.501,00 \u20ac",
+                        },
+                    },
+                    "previewImage": {"url": "https://example.com/c200.png"},
+                    "plsInformationSection": {
+                        "technicalData": {"engine": {"type": "COMBUSTOR", "fuel": "Diesel"}}
+                    },
+                },
+                {
+                    "preConfigId": "pc2",
+                    "vehicleId": "de_DE__2060582__AU-301",
+                    "motorizationName": "C 300 e",
+                    "priceInformation": {"basePrice": {"price": 62000.0}},
+                    "plsInformationSection": {
+                        "technicalData": {"engine": {"type": "HYBRID"}}
+                    },
+                },
+                {"motorizationName": "broken"},  # no vehicleId -> skipped
+            ]
+        }
+    }
+
+    def test_parses_motorizations(self):
+        vehicles = parse_pre_configs(self.PAYLOAD, "W206", "C-Klasse Limousine")
+        assert len(vehicles) == 2
+        v = vehicles[0]
+        assert v.brand == "Mercedes-Benz"
+        assert v.model == "C-Klasse Limousine"
+        assert v.variant == "C 200"
+        assert v.base_price == 55501.0
+        assert v.currency == "EUR"
+        assert v.image_url == "https://example.com/c200.png"
+        assert v.raw_data["vehicle_id"].startswith("de_DE__2060581")
+        assert v.raw_data["type_class"] == "W206"
+        assert v.raw_data["base_price_net"] == 46639.5
+        assert "tc/W206" in v.url
+
+    def test_fuel_type_detection(self):
+        vehicles = parse_pre_configs(self.PAYLOAD, "W206", "C-Klasse Limousine")
+        assert vehicles[0].fuel_type == "petrol"   # COMBUSTOR, no diesel marker
+        assert vehicles[1].fuel_type == "hybrid"
+        assert _fuel_type_from_preconfig(
+            {"plsInformationSection": {"technicalData": {"engine": {"type": "ELECTRIC"}}}}
+        ) == "electric"
+        assert _fuel_type_from_preconfig({
+            "motorizationName": "C 220 d",
+            "plsInformationSection": {"technicalData": {"engine": {"type": "COMBUSTOR"}}},
+        }) == "diesel"
+
+    def test_empty_payload(self):
+        assert parse_pre_configs({}, "W206", "C-Klasse") == []
+        assert parse_pre_configs({"startPage": {}}, "W206", "C-Klasse") == []
+
+
+class TestMercedesSelectableComponents:
+    """``selectableComponents`` is where the real option prices live."""
+
+    PAYLOAD = {
+        "selectableComponents": {
+            "SA-443": {
+                "id": "SA-443",
+                "name": "Lenkradheizung",
+                "standard": False,
+                "price": {"price": 297.5, "netPrice": 250.0, "currencyISO": "EUR"},
+            },
+            "SA-810": {
+                "id": "SA-810",
+                "name": "Burmester\u00ae 3D-Surround-Soundsystem",
+                "standard": False,
+                "price": {"price": 1428.0, "currencyISO": "EUR"},
+            },
+            "SA-873": {  # standard equipment -> skipped
+                "id": "SA-873",
+                "name": "Sitzheizung f\u00fcr Fahrer und Beifahrer",
+                "standard": True,
+                "price": {"price": 0.0},
+            },
+            "SC-DRR": {  # internal sales code -> skipped
+                "id": "SC-DRR",
+                "name": "Steuercode Vertrieb",
+                "standard": False,
+                "price": {"price": 0.0},
+            },
+            "PC-PDA": {  # no extra cost -> skipped by default
+                "id": "PC-PDA",
+                "name": "Advanced-Paket",
+                "standard": False,
+                "price": {"price": 0.0},
+            },
+        }
+    }
+
+    def test_extracts_priced_options_only(self):
+        opts = parse_selectable_components(self.PAYLOAD, "Mercedes-Benz")
+        names = {o.brand_specific_name for o in opts}
+        assert names == {"Lenkradheizung", "Burmester\u00ae 3D-Surround-Soundsystem"}
+        assert all(o.price and o.price > 0 for o in opts)
+        assert all(o.currency == "EUR" for o in opts)
+
+    def test_standardizes_and_categorizes(self):
+        opts = {o.code: o for o in parse_selectable_components(self.PAYLOAD, "Mercedes-Benz")}
+        assert opts["SA-443"].standardized_name == "steering_wheel_heating"
+        assert opts["SA-443"].category == "comfort"
+        assert opts["SA-810"].standardized_name == "premium_sound"
+        assert opts["SA-810"].category == "sound"
+        assert opts["SA-810"].price == 1428.0
+
+    def test_include_zero_price_opt_in(self):
+        opts = parse_selectable_components(
+            self.PAYLOAD, "Mercedes-Benz", include_zero_price=True
+        )
+        names = {o.brand_specific_name for o in opts}
+        assert "Advanced-Paket" in names
+        assert "Steuercode Vertrieb" not in names  # still filtered
+
+    def test_rejects_absurd_prices(self):
+        payload = {
+            "selectableComponents": {
+                "SA-X": {"id": "SA-X", "name": "Ganzes Auto", "price": {"price": 999999.0}},
+                "SA-Y": {"id": "SA-Y", "name": "Negativ", "price": {"price": -100.0}},
+            }
+        }
+        assert parse_selectable_components(payload, "Mercedes-Benz") == []
+
+    def test_empty_payload(self):
+        assert parse_selectable_components({}, "Mercedes-Benz") == []
+        assert parse_selectable_components({"selectableComponents": []}, "Mercedes-Benz") == []
+
+
+class TestMercedesApiClient:
+    """URL construction for the OWCC configurator API."""
+
+    def test_session_id_is_generated(self):
+        api = MercedesConfiguratorAPI()
+        assert api.session_id and len(api.session_id) >= 8
+        assert MercedesConfiguratorAPI().session_id != api.session_id
+
+    def test_base_url_contains_market_and_product(self):
+        api = MercedesConfiguratorAPI(session_id="deadbeef")
+        url = api._url("entry")
+        assert "/de_DE/CCci/deadbeef/entry" in url
+        assert url.startswith("https://api.oneweb.mercedes-benz.com/")
+
+
 # ---------- Live crawl tests (require network + Playwright) ----------
 
 @pytest.mark.live
@@ -973,17 +1170,25 @@ class TestMercedesLive:
     def _setup(self):
         self.crawler = BrandRegistry.get("mercedes-benz")
 
-    def test_crawl_extracts_vehicles(self):
+    def test_crawl_extracts_vehicles_and_option_prices(self):
         result = asyncio.run(self.crawler.crawl())
-        assert len(result.errors) == 0 or len(result.vehicles) > 0
-        if result.vehicles:
-            for v in result.vehicles:
-                assert v.brand == "Mercedes-Benz"
-                assert v.model
-            print(f"\nMercedes: {len(result.vehicles)} vehicles extracted")
-            for v in result.vehicles[:5]:
-                opts = len(v.available_options)
-                print(f"  {v.model}: €{v.base_price}  ({opts} options)")
+        assert len(result.vehicles) >= 50, result.errors[:3]
+        priced = [
+            o
+            for v in result.vehicles
+            for o in v.available_options
+            if o.price and o.price > 0
+        ]
+        print(
+            f"\nMercedes: {len(result.vehicles)} motorizations, "
+            f"{len(priced)} priced options"
+        )
+        for v in result.vehicles[:5]:
+            print(f"  {v.model} {v.variant}: €{v.base_price}  ({len(v.available_options)} options)")
+        # Acceptance: real option prices must be back.
+        assert len(priced) >= 1000
+        assert all(v.brand == "Mercedes-Benz" and v.model for v in result.vehicles)
+        assert all(v.base_price and v.base_price > 10000 for v in result.vehicles)
 
 
 @pytest.mark.live
