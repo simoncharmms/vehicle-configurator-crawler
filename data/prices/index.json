@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-09-14T20:00:29.687909",
+  "last_updated": "2026-09-15T06:58:09.269775",
   "version": "3.0_cross_brand",
   "brands": {
     "mercedes-benz": {
@@ -43,6 +43,13 @@
           "vehicle_count": 100,
           "option_count": 8256,
           "error_count": 0
+        },
+        {
+          "date": "2026-09-15",
+          "file": "mercedes-benz_2026-09-15.json",
+          "vehicle_count": 98,
+          "option_count": 8092,
+          "error_count": 0
         }
       ]
     },
@@ -77,6 +84,13 @@
         {
           "date": "2026-09-11",
           "file": "lexus_2026-09-11.json",
+          "vehicle_count": 49,
+          "option_count": 218,
+          "error_count": 0
+        },
+        {
+          "date": "2026-09-15",
+          "file": "lexus_2026-09-15.json",
           "vehicle_count": 49,
           "option_count": 218,
           "error_count": 0
@@ -117,6 +131,13 @@
           "vehicle_count": 85,
           "option_count": 1973,
           "error_count": 0
+        },
+        {
+          "date": "2026-09-15",
+          "file": "porsche_2026-09-15.json",
+          "vehicle_count": 85,
+          "option_count": 1973,
+          "error_count": 0
         }
       ]
     },
@@ -151,6 +172,13 @@
         {
           "date": "2026-09-11",
           "file": "audi_2026-09-11.json",
+          "vehicle_count": 0,
+          "option_count": 0,
+          "error_count": 1
+        },
+        {
+          "date": "2026-09-15",
+          "file": "audi_2026-09-15.json",
           "vehicle_count": 0,
           "option_count": 0,
           "error_count": 1
@@ -191,6 +219,13 @@
           "vehicle_count": 11,
           "option_count": 0,
           "error_count": 0
+        },
+        {
+          "date": "2026-09-15",
+          "file": "byd_2026-09-15.json",
+          "vehicle_count": 11,
+          "option_count": 0,
+          "error_count": 0
         }
       ]
     },
@@ -225,6 +260,13 @@
         {
           "date": "2026-09-11",
           "file": "polestar_2026-09-11.json",
+          "vehicle_count": 5,
+          "option_count": 0,
+          "error_count": 0
+        },
+        {
+          "date": "2026-09-15",
+          "file": "polestar_2026-09-15.json",
           "vehicle_count": 5,
           "option_count": 0,
           "error_count": 0
@@ -265,6 +307,13 @@
           "vehicle_count": 5,
           "option_count": 0,
           "error_count": 0
+        },
+        {
+          "date": "2026-09-15",
+          "file": "xpeng_2026-09-15.json",
+          "vehicle_count": 5,
+          "option_count": 0,
+          "error_count": 0
         }
       ]
     },
@@ -302,12 +351,19 @@
           "vehicle_count": 4,
           "option_count": 0,
           "error_count": 0
+        },
+        {
+          "date": "2026-09-15",
+          "file": "zeekr_2026-09-15.json",
+          "vehicle_count": 4,
+          "option_count": 0,
+          "error_count": 0
         }
       ]
     }
   },
   "option_summary": {
-    "last_updated": "2026-09-14T20:00:29.687804",
+    "last_updated": "2026-09-15T06:58:09.269332",
     "options": [
       {
         "standardized_name": "leather_seats",
@@ -317,16 +373,23 @@
         "brands": {
           "Mercedes-Benz": {
             "name": "Ledernachbildung ARTICO schwarz",
-            "avg_price": 988.66,
+            "avg_price": 937.89,
             "min_price": 172.55,
             "max_price": 8330.0,
-            "model_count": 99
+            "model_count": 97
+          },
+          "Porsche": {
+            "name": "Race-Tex",
+            "avg_price": 1106.7,
+            "min_price": 1106.7,
+            "max_price": 1106.7,
+            "model_count": 85
           }
         },
-        "overall_avg_price": 988.66,
+        "overall_avg_price": 971.37,
         "overall_min_price": 172.55,
         "overall_max_price": 8330.0,
-        "total_model_count": 99
+        "total_model_count": 182
       },
       {
         "standardized_name": "alloy_wheels",
@@ -336,16 +399,374 @@
         "brands": {
           "Mercedes-Benz": {
             "name": "18\" Aerodynamik-Leichtmetallräder im 5-Speichen-Design",
-            "avg_price": 911.44,
+            "avg_price": 906.62,
             "min_price": 178.5,
             "max_price": 3760.4,
-            "model_count": 93
+            "model_count": 91
+          },
+          "Lexus": {
+            "name": "18'' Aluminiumfelgen, 15 Speichen, 235/60 R18",
+            "avg_price": null,
+            "min_price": null,
+            "max_price": null,
+            "model_count": 37
           }
         },
-        "overall_avg_price": 911.44,
+        "overall_avg_price": 906.62,
         "overall_min_price": 178.5,
         "overall_max_price": 3760.4,
-        "total_model_count": 93
+        "total_model_count": 128
+      },
+      {
+        "standardized_name": "automatic_transmission",
+        "display_name": "Automatic transmission",
+        "category": "drivetrain",
+        "category_label": "Drivetrain",
+        "brands": {
+          "Porsche": {
+            "name": "8-speed automatic gearbox",
+            "avg_price": null,
+            "min_price": null,
+            "max_price": null,
+            "model_count": 85
+          },
+          "Lexus": {
+            "name": "stufenlose Automatik",
+            "avg_price": null,
+            "min_price": null,
+            "max_price": null,
+            "model_count": 35
+          }
+        },
+        "overall_avg_price": null,
+        "overall_min_price": null,
+        "overall_max_price": null,
+        "total_model_count": 120
+      },
+      {
+        "standardized_name": "premium_sound",
+        "display_name": "Premium audio/sound system",
+        "category": "sound",
+        "category_label": "Sound & Entertainment",
+        "brands": {
+          "Mercedes-Benz": {
+            "name": "Burmester® 3D-Surround-Soundsystem",
+            "avg_price": 2255.36,
+            "min_price": 708.05,
+            "max_price": 8002.75,
+            "model_count": 78
+          },
+          "Porsche": {
+            "name": "BOSE® Surround Sound-System",
+            "avg_price": 1178.1,
+            "min_price": 1178.1,
+            "max_price": 1178.1,
+            "model_count": 24
+          },
+          "Lexus": {
+            "name": "Premium Audiosystem mit 6 Lautsprechern",
+            "avg_price": null,
+            "min_price": null,
+            "max_price": null,
+            "model_count": 1
+          }
+        },
+        "overall_avg_price": 2001.88,
+        "overall_min_price": 708.05,
+        "overall_max_price": 8002.75,
+        "total_model_count": 103
+      },
+      {
+        "standardized_name": "allrad",
+        "display_name": "All-wheel drive system",
+        "category": "drivetrain",
+        "category_label": "Drivetrain",
+        "brands": {
+          "Porsche": {
+            "name": "All-Wheel Drive",
+            "avg_price": null,
+            "min_price": null,
+            "max_price": null,
+            "model_count": 85
+          },
+          "Lexus": {
+            "name": "DIRECT 4 Badge",
+            "avg_price": null,
+            "min_price": null,
+            "max_price": null,
+            "model_count": 4
+          }
+        },
+        "overall_avg_price": null,
+        "overall_min_price": null,
+        "overall_max_price": null,
+        "total_model_count": 89
+      },
+      {
+        "standardized_name": "\tstandard",
+        "display_name": "\tstandard",
+        "category": "other",
+        "category_label": "Other",
+        "brands": {
+          "Porsche": {
+            "name": "\tStandard",
+            "avg_price": null,
+            "min_price": null,
+            "max_price": null,
+            "model_count": 85
+          }
+        },
+        "overall_avg_price": null,
+        "overall_min_price": null,
+        "overall_max_price": null,
+        "total_model_count": 85
+      },
+      {
+        "standardized_name": "dual_clutch_transmission",
+        "display_name": "Dual-clutch transmission",
+        "category": "drivetrain",
+        "category_label": "Drivetrain",
+        "brands": {
+          "Porsche": {
+            "name": "Porsche Doppelkupplung (PDK)",
+            "avg_price": null,
+            "min_price": null,
+            "max_price": null,
+            "model_count": 85
+          }
+        },
+        "overall_avg_price": null,
+        "overall_min_price": null,
+        "overall_max_price": null,
+        "total_model_count": 85
+      },
+      {
+        "standardized_name": "gts interior package",
+        "display_name": "gts interior package",
+        "category": "other",
+        "category_label": "Other",
+        "brands": {
+          "Porsche": {
+            "name": "GTS interior package",
+            "avg_price": null,
+            "min_price": null,
+            "max_price": null,
+            "model_count": 85
+          }
+        },
+        "overall_avg_price": null,
+        "overall_min_price": null,
+        "overall_max_price": null,
+        "total_model_count": 85
+      },
+      {
+        "standardized_name": "heritage design",
+        "display_name": "heritage design",
+        "category": "other",
+        "category_label": "Other",
+        "brands": {
+          "Porsche": {
+            "name": "Heritage Design",
+            "avg_price": null,
+            "min_price": null,
+            "max_price": null,
+            "model_count": 85
+          }
+        },
+        "overall_avg_price": null,
+        "overall_min_price": null,
+        "overall_max_price": null,
+        "total_model_count": 85
+      },
+      {
+        "standardized_name": "interior package",
+        "display_name": "interior package",
+        "category": "other",
+        "category_label": "Other",
+        "brands": {
+          "Porsche": {
+            "name": "Interior package",
+            "avg_price": null,
+            "min_price": null,
+            "max_price": null,
+            "model_count": 85
+          }
+        },
+        "overall_avg_price": null,
+        "overall_min_price": null,
+        "overall_max_price": null,
+        "total_model_count": 85
+      },
+      {
+        "standardized_name": "manual_transmission",
+        "display_name": "Manual transmission",
+        "category": "drivetrain",
+        "category_label": "Drivetrain",
+        "brands": {
+          "Porsche": {
+            "name": "6-speed manual transmission with dual-mass flywheel",
+            "avg_price": null,
+            "min_price": null,
+            "max_price": null,
+            "model_count": 85
+          }
+        },
+        "overall_avg_price": null,
+        "overall_min_price": null,
+        "overall_max_price": null,
+        "total_model_count": 85
+      },
+      {
+        "standardized_name": "performance battery",
+        "display_name": "performance battery",
+        "category": "other",
+        "category_label": "Other",
+        "brands": {
+          "Porsche": {
+            "name": "Performance Battery",
+            "avg_price": null,
+            "min_price": null,
+            "max_price": null,
+            "model_count": 85
+          }
+        },
+        "overall_avg_price": null,
+        "overall_min_price": null,
+        "overall_max_price": null,
+        "total_model_count": 85
+      },
+      {
+        "standardized_name": "performance battery - offroad package",
+        "display_name": "performance battery - offroad package",
+        "category": "other",
+        "category_label": "Other",
+        "brands": {
+          "Porsche": {
+            "name": "Performance Battery - Offroad Package",
+            "avg_price": null,
+            "min_price": null,
+            "max_price": null,
+            "model_count": 85
+          }
+        },
+        "overall_avg_price": null,
+        "overall_min_price": null,
+        "overall_max_price": null,
+        "total_model_count": 85
+      },
+      {
+        "standardized_name": "performance battery - rear-axle steering",
+        "display_name": "performance battery - rear-axle steering",
+        "category": "other",
+        "category_label": "Other",
+        "brands": {
+          "Porsche": {
+            "name": "Performance Battery - Rear-Axle Steering",
+            "avg_price": null,
+            "min_price": null,
+            "max_price": null,
+            "model_count": 85
+          }
+        },
+        "overall_avg_price": null,
+        "overall_min_price": null,
+        "overall_max_price": null,
+        "total_model_count": 85
+      },
+      {
+        "standardized_name": "performance battery plus",
+        "display_name": "performance battery plus",
+        "category": "other",
+        "category_label": "Other",
+        "brands": {
+          "Porsche": {
+            "name": "Performance Battery Plus",
+            "avg_price": null,
+            "min_price": null,
+            "max_price": null,
+            "model_count": 85
+          }
+        },
+        "overall_avg_price": null,
+        "overall_min_price": null,
+        "overall_max_price": null,
+        "total_model_count": 85
+      },
+      {
+        "standardized_name": "performance battery plus - manthey kit",
+        "display_name": "performance battery plus - manthey kit",
+        "category": "other",
+        "category_label": "Other",
+        "brands": {
+          "Porsche": {
+            "name": "Performance Battery Plus - Manthey Kit",
+            "avg_price": null,
+            "min_price": null,
+            "max_price": null,
+            "model_count": 85
+          }
+        },
+        "overall_avg_price": null,
+        "overall_min_price": null,
+        "overall_max_price": null,
+        "total_model_count": 85
+      },
+      {
+        "standardized_name": "performance battery plus - rear-axle steering",
+        "display_name": "performance battery plus - rear-axle steering",
+        "category": "other",
+        "category_label": "Other",
+        "brands": {
+          "Porsche": {
+            "name": "Performance Battery Plus - Rear-Axle Steering",
+            "avg_price": null,
+            "min_price": null,
+            "max_price": null,
+            "model_count": 85
+          }
+        },
+        "overall_avg_price": null,
+        "overall_min_price": null,
+        "overall_max_price": null,
+        "total_model_count": 85
+      },
+      {
+        "standardized_name": "sport-tex",
+        "display_name": "sport-tex",
+        "category": "other",
+        "category_label": "Other",
+        "brands": {
+          "Porsche": {
+            "name": "Sport-Tex",
+            "avg_price": null,
+            "min_price": null,
+            "max_price": null,
+            "model_count": 85
+          }
+        },
+        "overall_avg_price": null,
+        "overall_min_price": null,
+        "overall_max_price": null,
+        "total_model_count": 85
+      },
+      {
+        "standardized_name": "standard",
+        "display_name": "standard",
+        "category": "other",
+        "category_label": "Other",
+        "brands": {
+          "Porsche": {
+            "name": "Standard",
+            "avg_price": null,
+            "min_price": null,
+            "max_price": null,
+            "model_count": 85
+          }
+        },
+        "overall_avg_price": null,
+        "overall_min_price": null,
+        "overall_max_price": null,
+        "total_model_count": 85
       },
       {
         "standardized_name": "manufaktur patagonienrot metallic",
@@ -355,16 +776,16 @@
         "brands": {
           "Mercedes-Benz": {
             "name": "MANUFAKTUR patagonienrot metallic",
-            "avg_price": 1755.8,
+            "avg_price": 1739.53,
             "min_price": 1190.0,
             "max_price": 2439.5,
-            "model_count": 86
+            "model_count": 84
           }
         },
-        "overall_avg_price": 1755.8,
+        "overall_avg_price": 1739.53,
         "overall_min_price": 1190.0,
         "overall_max_price": 2439.5,
-        "total_model_count": 86
+        "total_model_count": 84
       },
       {
         "standardized_name": "premium-paket mit digitalen extras",
@@ -374,16 +795,16 @@
         "brands": {
           "Mercedes-Benz": {
             "name": "Premium-Paket mit Digitalen Extras",
-            "avg_price": 6339.88,
+            "avg_price": 6288.89,
             "min_price": 1725.5,
             "max_price": 14645.33,
-            "model_count": 81
+            "model_count": 79
           }
         },
-        "overall_avg_price": 6339.88,
+        "overall_avg_price": 6288.89,
         "overall_min_price": 1725.5,
         "overall_max_price": 14645.33,
-        "total_model_count": 81
+        "total_model_count": 79
       },
       {
         "standardized_name": "anhängevorrichtung mit esp® anhängerstabilisierung",
@@ -393,16 +814,16 @@
         "brands": {
           "Mercedes-Benz": {
             "name": "Anhängevorrichtung mit ESP® Anhängerstabilisierung",
-            "avg_price": 1139.05,
+            "avg_price": 1142.63,
             "min_price": 357.0,
             "max_price": 1368.5,
-            "model_count": 80
+            "model_count": 78
           }
         },
-        "overall_avg_price": 1139.05,
+        "overall_avg_price": 1142.63,
         "overall_min_price": 357.0,
         "overall_max_price": 1368.5,
-        "total_model_count": 80
+        "total_model_count": 78
       },
       {
         "standardized_name": "hightechsilber metallic",
@@ -412,16 +833,16 @@
         "brands": {
           "Mercedes-Benz": {
             "name": "hightechsilber metallic",
-            "avg_price": 983.98,
+            "avg_price": 979.0,
             "min_price": 749.7,
             "max_price": 1178.1,
-            "model_count": 80
+            "model_count": 78
           }
         },
-        "overall_avg_price": 983.98,
+        "overall_avg_price": 979.0,
         "overall_min_price": 749.7,
         "overall_max_price": 1178.1,
-        "total_model_count": 80
+        "total_model_count": 78
       },
       {
         "standardized_name": "manufaktur alpingrau uni",
@@ -443,23 +864,30 @@
         "total_model_count": 78
       },
       {
-        "standardized_name": "premium_sound",
-        "display_name": "Premium audio/sound system",
-        "category": "sound",
-        "category_label": "Sound & Entertainment",
+        "standardized_name": "matrix_led",
+        "display_name": "Matrix/adaptive LED headlights",
+        "category": "lighting",
+        "category_label": "Lighting",
         "brands": {
           "Mercedes-Benz": {
-            "name": "Burmester® 3D-Surround-Soundsystem",
-            "avg_price": 2255.36,
-            "min_price": 708.05,
-            "max_price": 8002.75,
-            "model_count": 78
+            "name": "DIGITAL LIGHT",
+            "avg_price": 1087.11,
+            "min_price": 345.1,
+            "max_price": 2290.75,
+            "model_count": 72
+          },
+          "Lexus": {
+            "name": "Quad-LED Frontscheinwerfer",
+            "avg_price": null,
+            "min_price": null,
+            "max_price": null,
+            "model_count": 5
           }
         },
-        "overall_avg_price": 2255.36,
-        "overall_min_price": 708.05,
-        "overall_max_price": 8002.75,
-        "total_model_count": 78
+        "overall_avg_price": 1087.11,
+        "overall_min_price": 345.1,
+        "overall_max_price": 2290.75,
+        "total_model_count": 77
       },
       {
         "standardized_name": "feuerlöscher",
@@ -469,16 +897,16 @@
         "brands": {
           "Mercedes-Benz": {
             "name": "Feuerlöscher",
-            "avg_price": 138.47,
+            "avg_price": 138.36,
             "min_price": 130.9,
             "max_price": 148.75,
-            "model_count": 77
+            "model_count": 75
           }
         },
-        "overall_avg_price": 138.47,
+        "overall_avg_price": 138.36,
         "overall_min_price": 130.9,
         "overall_max_price": 148.75,
-        "total_model_count": 77
+        "total_model_count": 75
       },
       {
         "standardized_name": "head_up_display",
@@ -488,16 +916,16 @@
         "brands": {
           "Mercedes-Benz": {
             "name": "Head-up-Display",
-            "avg_price": 1147.96,
+            "avg_price": 1149.7,
             "min_price": 892.5,
             "max_price": 2380.0,
-            "model_count": 77
+            "model_count": 75
           }
         },
-        "overall_avg_price": 1147.96,
+        "overall_avg_price": 1149.7,
         "overall_min_price": 892.5,
         "overall_max_price": 2380.0,
-        "total_model_count": 77
+        "total_model_count": 75
       },
       {
         "standardized_name": "sportreifen",
@@ -507,35 +935,16 @@
         "brands": {
           "Mercedes-Benz": {
             "name": "Sportreifen",
-            "avg_price": 417.74,
+            "avg_price": 418.4,
             "min_price": 357.0,
             "max_price": 1071.0,
-            "model_count": 77
+            "model_count": 75
           }
         },
-        "overall_avg_price": 417.74,
+        "overall_avg_price": 418.4,
         "overall_min_price": 357.0,
         "overall_max_price": 1071.0,
-        "total_model_count": 77
-      },
-      {
-        "standardized_name": "matrix_led",
-        "display_name": "Matrix/adaptive LED headlights",
-        "category": "lighting",
-        "category_label": "Lighting",
-        "brands": {
-          "Mercedes-Benz": {
-            "name": "DIGITAL LIGHT",
-            "avg_price": 1073.81,
-            "min_price": 345.1,
-            "max_price": 2290.75,
-            "model_count": 74
-          }
-        },
-        "overall_avg_price": 1073.81,
-        "overall_min_price": 345.1,
-        "overall_max_price": 2290.75,
-        "total_model_count": 74
+        "total_model_count": 75
       },
       {
         "standardized_name": "polarweiß uni",
@@ -545,16 +954,16 @@
         "brands": {
           "Mercedes-Benz": {
             "name": "polarweiß uni",
-            "avg_price": 333.28,
+            "avg_price": 332.61,
             "min_price": 273.7,
             "max_price": 357.0,
-            "model_count": 73
+            "model_count": 71
           }
         },
-        "overall_avg_price": 333.28,
+        "overall_avg_price": 332.61,
         "overall_min_price": 273.7,
         "overall_max_price": 357.0,
-        "total_model_count": 73
+        "total_model_count": 71
       },
       {
         "standardized_name": "einstiegsschutz links in schwarz",
@@ -567,13 +976,13 @@
             "avg_price": 226.1,
             "min_price": 226.1,
             "max_price": 226.1,
-            "model_count": 71
+            "model_count": 69
           }
         },
         "overall_avg_price": 226.1,
         "overall_min_price": 226.1,
         "overall_max_price": 226.1,
-        "total_model_count": 71
+        "total_model_count": 69
       },
       {
         "standardized_name": "einstiegsschutz rechts in schwarz",
@@ -586,13 +995,13 @@
             "avg_price": 226.1,
             "min_price": 226.1,
             "max_price": 226.1,
-            "model_count": 71
+            "model_count": 69
           }
         },
         "overall_avg_price": 226.1,
         "overall_min_price": 226.1,
         "overall_max_price": 226.1,
-        "total_model_count": 71
+        "total_model_count": 69
       },
       {
         "standardized_name": "fahrpedalverlegung",
@@ -605,13 +1014,13 @@
             "avg_price": 2261.0,
             "min_price": 2261.0,
             "max_price": 2261.0,
-            "model_count": 71
+            "model_count": 69
           }
         },
         "overall_avg_price": 2261.0,
         "overall_min_price": 2261.0,
         "overall_max_price": 2261.0,
-        "total_model_count": 71
+        "total_model_count": 69
       },
       {
         "standardized_name": "gurtschlossöffner für fahrer",
@@ -624,13 +1033,13 @@
             "avg_price": 208.25,
             "min_price": 208.25,
             "max_price": 208.25,
-            "model_count": 71
+            "model_count": 69
           }
         },
         "overall_avg_price": 208.25,
         "overall_min_price": 208.25,
         "overall_max_price": 208.25,
-        "total_model_count": 71
+        "total_model_count": 69
       },
       {
         "standardized_name": "handbediengerät classic",
@@ -643,13 +1052,13 @@
             "avg_price": 2975.0,
             "min_price": 2975.0,
             "max_price": 2975.0,
-            "model_count": 71
+            "model_count": 69
           }
         },
         "overall_avg_price": 2975.0,
         "overall_min_price": 2975.0,
         "overall_max_price": 2975.0,
-        "total_model_count": 71
+        "total_model_count": 69
       },
       {
         "standardized_name": "kombischalterverlegung",
@@ -662,13 +1071,13 @@
             "avg_price": 297.5,
             "min_price": 297.5,
             "max_price": 297.5,
-            "model_count": 71
+            "model_count": 69
           }
         },
         "overall_avg_price": 297.5,
         "overall_min_price": 297.5,
         "overall_max_price": 297.5,
-        "total_model_count": 71
+        "total_model_count": 69
       },
       {
         "standardized_name": "lenkraddrehknauf links",
@@ -681,13 +1090,13 @@
             "avg_price": 535.5,
             "min_price": 535.5,
             "max_price": 535.5,
-            "model_count": 71
+            "model_count": 69
           }
         },
         "overall_avg_price": 535.5,
         "overall_min_price": 535.5,
         "overall_max_price": 535.5,
-        "total_model_count": 71
+        "total_model_count": 69
       },
       {
         "standardized_name": "lenkraddrehknauf rechts",
@@ -700,13 +1109,13 @@
             "avg_price": 535.5,
             "min_price": 535.5,
             "max_price": 535.5,
-            "model_count": 71
+            "model_count": 69
           }
         },
         "overall_avg_price": 535.5,
         "overall_min_price": 535.5,
         "overall_max_price": 535.5,
-        "total_model_count": 71
+        "total_model_count": 69
       },
       {
         "standardized_name": "manufaktur opalithweiß bright",
@@ -716,16 +1125,16 @@
         "brands": {
           "Mercedes-Benz": {
             "name": "MANUFAKTUR opalithweiß bright",
-            "avg_price": 2149.71,
+            "avg_price": 2141.31,
             "min_price": 1487.5,
             "max_price": 4700.5,
-            "model_count": 71
+            "model_count": 69
           }
         },
-        "overall_avg_price": 2149.71,
+        "overall_avg_price": 2141.31,
         "overall_min_price": 1487.5,
         "overall_max_price": 4700.5,
-        "total_model_count": 71
+        "total_model_count": 69
       },
       {
         "standardized_name": "pedalabdeckung",
@@ -738,88 +1147,12 @@
             "avg_price": 595.0,
             "min_price": 595.0,
             "max_price": 595.0,
-            "model_count": 71
+            "model_count": 69
           }
         },
         "overall_avg_price": 595.0,
         "overall_min_price": 595.0,
         "overall_max_price": 595.0,
-        "total_model_count": 71
-      },
-      {
-        "standardized_name": "zulassungsgutachten für fahrhilfen",
-        "display_name": "zulassungsgutachten für fahrhilfen",
-        "category": "other",
-        "category_label": "Other",
-        "brands": {
-          "Mercedes-Benz": {
-            "name": "Zulassungsgutachten für Fahrhilfen",
-            "avg_price": 226.1,
-            "min_price": 226.1,
-            "max_price": 226.1,
-            "model_count": 71
-          }
-        },
-        "overall_avg_price": 226.1,
-        "overall_min_price": 226.1,
-        "overall_max_price": 226.1,
-        "total_model_count": 71
-      },
-      {
-        "standardized_name": "gurtschlossöffner für beifahrer",
-        "display_name": "gurtschlossöffner für beifahrer",
-        "category": "other",
-        "category_label": "Other",
-        "brands": {
-          "Mercedes-Benz": {
-            "name": "Gurtschlossöffner für Beifahrer",
-            "avg_price": 208.25,
-            "min_price": 208.25,
-            "max_price": 208.25,
-            "model_count": 70
-          }
-        },
-        "overall_avg_price": 208.25,
-        "overall_min_price": 208.25,
-        "overall_max_price": 208.25,
-        "total_model_count": 70
-      },
-      {
-        "standardized_name": "night-paket",
-        "display_name": "night-paket",
-        "category": "other",
-        "category_label": "Other",
-        "brands": {
-          "Mercedes-Benz": {
-            "name": "Night-Paket",
-            "avg_price": 971.29,
-            "min_price": 428.4,
-            "max_price": 2903.6,
-            "model_count": 70
-          }
-        },
-        "overall_avg_price": 971.29,
-        "overall_min_price": 428.4,
-        "overall_max_price": 2903.6,
-        "total_model_count": 70
-      },
-      {
-        "standardized_name": "handbediengerät easy speed",
-        "display_name": "handbediengerät easy speed",
-        "category": "other",
-        "category_label": "Other",
-        "brands": {
-          "Mercedes-Benz": {
-            "name": "Handbediengerät Easy Speed",
-            "avg_price": 3094.0,
-            "min_price": 3094.0,
-            "max_price": 3094.0,
-            "model_count": 69
-          }
-        },
-        "overall_avg_price": 3094.0,
-        "overall_min_price": 3094.0,
-        "overall_max_price": 3094.0,
         "total_model_count": 69
       },
       {
@@ -840,6 +1173,108 @@
         "overall_min_price": 148.75,
         "overall_max_price": 452.2,
         "total_model_count": 69
+      },
+      {
+        "standardized_name": "zulassungsgutachten für fahrhilfen",
+        "display_name": "zulassungsgutachten für fahrhilfen",
+        "category": "other",
+        "category_label": "Other",
+        "brands": {
+          "Mercedes-Benz": {
+            "name": "Zulassungsgutachten für Fahrhilfen",
+            "avg_price": 226.1,
+            "min_price": 226.1,
+            "max_price": 226.1,
+            "model_count": 69
+          }
+        },
+        "overall_avg_price": 226.1,
+        "overall_min_price": 226.1,
+        "overall_max_price": 226.1,
+        "total_model_count": 69
+      },
+      {
+        "standardized_name": "gurtschlossöffner für beifahrer",
+        "display_name": "gurtschlossöffner für beifahrer",
+        "category": "other",
+        "category_label": "Other",
+        "brands": {
+          "Mercedes-Benz": {
+            "name": "Gurtschlossöffner für Beifahrer",
+            "avg_price": 208.25,
+            "min_price": 208.25,
+            "max_price": 208.25,
+            "model_count": 68
+          }
+        },
+        "overall_avg_price": 208.25,
+        "overall_min_price": 208.25,
+        "overall_max_price": 208.25,
+        "total_model_count": 68
+      },
+      {
+        "standardized_name": "night-paket",
+        "display_name": "night-paket",
+        "category": "other",
+        "category_label": "Other",
+        "brands": {
+          "Mercedes-Benz": {
+            "name": "Night-Paket",
+            "avg_price": 973.61,
+            "min_price": 428.4,
+            "max_price": 2903.6,
+            "model_count": 68
+          }
+        },
+        "overall_avg_price": 973.61,
+        "overall_min_price": 428.4,
+        "overall_max_price": 2903.6,
+        "total_model_count": 68
+      },
+      {
+        "standardized_name": "handbediengerät easy speed",
+        "display_name": "handbediengerät easy speed",
+        "category": "other",
+        "category_label": "Other",
+        "brands": {
+          "Mercedes-Benz": {
+            "name": "Handbediengerät Easy Speed",
+            "avg_price": 3094.0,
+            "min_price": 3094.0,
+            "max_price": 3094.0,
+            "model_count": 67
+          }
+        },
+        "overall_avg_price": 3094.0,
+        "overall_min_price": 3094.0,
+        "overall_max_price": 3094.0,
+        "total_model_count": 67
+      },
+      {
+        "standardized_name": "privacy_glass",
+        "display_name": "Tinted / privacy glass",
+        "category": "exterior",
+        "category_label": "Exterior",
+        "brands": {
+          "Mercedes-Benz": {
+            "name": "Wärmedämmend dunkel getöntes Glas",
+            "avg_price": 406.06,
+            "min_price": 142.8,
+            "max_price": 464.1,
+            "model_count": 49
+          },
+          "Lexus": {
+            "name": "Privacy Glas: verstärkte Tönung der hinteren Seitenscheiben und der Heckscheibe",
+            "avg_price": null,
+            "min_price": null,
+            "max_price": null,
+            "model_count": 17
+          }
+        },
+        "overall_avg_price": 406.06,
+        "overall_min_price": 142.8,
+        "overall_max_price": 464.1,
+        "total_model_count": 66
       },
       {
         "standardized_name": "winter-paket",
@@ -871,13 +1306,13 @@
             "avg_price": 1035.3,
             "min_price": 1035.3,
             "max_price": 1035.3,
-            "model_count": 63
+            "model_count": 61
           }
         },
         "overall_avg_price": 1035.3,
         "overall_min_price": 1035.3,
         "overall_max_price": 1035.3,
-        "total_model_count": 63
+        "total_model_count": 61
       },
       {
         "standardized_name": "guard 360° fahrzeugschutz plus mit digitalen extras",
@@ -887,16 +1322,16 @@
         "brands": {
           "Mercedes-Benz": {
             "name": "GUARD 360° Fahrzeugschutz Plus mit Digitalen Extras",
-            "avg_price": 800.95,
+            "avg_price": 799.08,
             "min_price": 737.8,
             "max_price": 856.8,
-            "model_count": 62
+            "model_count": 60
           }
         },
-        "overall_avg_price": 800.95,
+        "overall_avg_price": 799.08,
         "overall_min_price": 737.8,
         "overall_max_price": 856.8,
-        "total_model_count": 62
+        "total_model_count": 60
       },
       {
         "standardized_name": "sitzverlagerung links nach hinten",
@@ -909,13 +1344,13 @@
             "avg_price": 892.5,
             "min_price": 892.5,
             "max_price": 892.5,
-            "model_count": 62
+            "model_count": 60
           }
         },
         "overall_avg_price": 892.5,
         "overall_min_price": 892.5,
         "overall_max_price": 892.5,
-        "total_model_count": 62
+        "total_model_count": 60
       },
       {
         "standardized_name": "sitzverlagerung rechts nach hinten",
@@ -928,13 +1363,13 @@
             "avg_price": 892.5,
             "min_price": 892.5,
             "max_price": 892.5,
-            "model_count": 62
+            "model_count": 60
           }
         },
         "overall_avg_price": 892.5,
         "overall_min_price": 892.5,
         "overall_max_price": 892.5,
-        "total_model_count": 62
+        "total_model_count": 60
       },
       {
         "standardized_name": "advanced-plus-paket mit  digitalen extras",
@@ -944,16 +1379,68 @@
         "brands": {
           "Mercedes-Benz": {
             "name": "Advanced-Plus-Paket mit  Digitalen Extras",
-            "avg_price": 3506.44,
+            "avg_price": 3450.76,
             "min_price": 1469.65,
             "max_price": 9334.36,
-            "model_count": 56
+            "model_count": 54
           }
         },
-        "overall_avg_price": 3506.44,
+        "overall_avg_price": 3450.76,
         "overall_min_price": 1469.65,
         "overall_max_price": 9334.36,
-        "total_model_count": 56
+        "total_model_count": 54
+      },
+      {
+        "standardized_name": "parking_assist",
+        "display_name": "Automated parking assistance",
+        "category": "safety",
+        "category_label": "Safety",
+        "brands": {
+          "Mercedes-Benz": {
+            "name": "Digitales Extra: MB.DRIVE PARKING ASSIST",
+            "avg_price": 783.51,
+            "min_price": 690.2,
+            "max_price": 952.0,
+            "model_count": 41
+          },
+          "Lexus": {
+            "name": "Lexus Intelligent Park Assist: Parksensoren vorne und hinten (4) mit Notbremsfunktion",
+            "avg_price": null,
+            "min_price": null,
+            "max_price": null,
+            "model_count": 13
+          }
+        },
+        "overall_avg_price": 783.51,
+        "overall_min_price": 690.2,
+        "overall_max_price": 952.0,
+        "total_model_count": 54
+      },
+      {
+        "standardized_name": "climate_control",
+        "display_name": "Automatic climate control",
+        "category": "climate",
+        "category_label": "Climate",
+        "brands": {
+          "Mercedes-Benz": {
+            "name": "Klimatisierungsautomatik THERMOTRONIC",
+            "avg_price": 757.3,
+            "min_price": 606.9,
+            "max_price": 1011.5,
+            "model_count": 47
+          },
+          "Lexus": {
+            "name": "Klimatisierungsautomatik mit Luftfeuchtigkeitssensor",
+            "avg_price": null,
+            "min_price": null,
+            "max_price": null,
+            "model_count": 6
+          }
+        },
+        "overall_avg_price": 757.3,
+        "overall_min_price": 606.9,
+        "overall_max_price": 1011.5,
+        "total_model_count": 53
       },
       {
         "standardized_name": "digitales extra: energizing comfort",
@@ -966,32 +1453,13 @@
             "avg_price": 238.0,
             "min_price": 238.0,
             "max_price": 238.0,
-            "model_count": 55
+            "model_count": 53
           }
         },
         "overall_avg_price": 238.0,
         "overall_min_price": 238.0,
         "overall_max_price": 238.0,
-        "total_model_count": 55
-      },
-      {
-        "standardized_name": "obsidianschwarz metallic",
-        "display_name": "obsidianschwarz metallic",
-        "category": "other",
-        "category_label": "Other",
-        "brands": {
-          "Mercedes-Benz": {
-            "name": "obsidianschwarz metallic",
-            "avg_price": 1041.25,
-            "min_price": 963.9,
-            "max_price": 1178.1,
-            "model_count": 54
-          }
-        },
-        "overall_avg_price": 1041.25,
-        "overall_min_price": 963.9,
-        "overall_max_price": 1178.1,
-        "total_model_count": 54
+        "total_model_count": 53
       },
       {
         "standardized_name": "navigation",
@@ -1013,6 +1481,25 @@
         "total_model_count": 53
       },
       {
+        "standardized_name": "obsidianschwarz metallic",
+        "display_name": "obsidianschwarz metallic",
+        "category": "other",
+        "category_label": "Other",
+        "brands": {
+          "Mercedes-Benz": {
+            "name": "obsidianschwarz metallic",
+            "avg_price": 1035.99,
+            "min_price": 963.9,
+            "max_price": 1178.1,
+            "model_count": 52
+          }
+        },
+        "overall_avg_price": 1035.99,
+        "overall_min_price": 963.9,
+        "overall_max_price": 1178.1,
+        "total_model_count": 52
+      },
+      {
         "standardized_name": "premium-plus-paket mit digitalen extras",
         "display_name": "premium-plus-paket mit digitalen extras",
         "category": "other",
@@ -1030,25 +1517,6 @@
         "overall_min_price": 5117.0,
         "overall_max_price": 20512.03,
         "total_model_count": 52
-      },
-      {
-        "standardized_name": "privacy_glass",
-        "display_name": "Tinted / privacy glass",
-        "category": "exterior",
-        "category_label": "Exterior",
-        "brands": {
-          "Mercedes-Benz": {
-            "name": "Wärmedämmend dunkel getöntes Glas",
-            "avg_price": 407.22,
-            "min_price": 142.8,
-            "max_price": 464.1,
-            "model_count": 50
-          }
-        },
-        "overall_avg_price": 407.22,
-        "overall_min_price": 142.8,
-        "overall_max_price": 464.1,
-        "total_model_count": 50
       },
       {
         "standardized_name": "amg line plus",
@@ -1089,61 +1557,37 @@
         "total_model_count": 48
       },
       {
-        "standardized_name": "climate_control",
-        "display_name": "Automatic climate control",
-        "category": "climate",
-        "category_label": "Climate",
+        "standardized_name": "rear_camera",
+        "display_name": "Rear-view / 360° camera system",
+        "category": "safety",
+        "category_label": "Safety",
         "brands": {
           "Mercedes-Benz": {
-            "name": "Klimatisierungsautomatik THERMOTRONIC",
-            "avg_price": 757.3,
-            "min_price": 606.9,
-            "max_price": 1011.5,
-            "model_count": 47
+            "name": "Park-Paket mit 360°-Kamera",
+            "avg_price": 613.7,
+            "min_price": 487.9,
+            "max_price": 1130.5,
+            "model_count": 21
+          },
+          "Porsche": {
+            "name": "ParkAssistent hinten inkl. Rückfahrkamera",
+            "avg_price": 1166.2,
+            "min_price": 1166.2,
+            "max_price": 1166.2,
+            "model_count": 24
+          },
+          "Lexus": {
+            "name": "360° Kamera",
+            "avg_price": null,
+            "min_price": null,
+            "max_price": null,
+            "model_count": 2
           }
         },
-        "overall_avg_price": 757.3,
-        "overall_min_price": 606.9,
-        "overall_max_price": 1011.5,
+        "overall_avg_price": 908.37,
+        "overall_min_price": 487.9,
+        "overall_max_price": 1166.2,
         "total_model_count": 47
-      },
-      {
-        "standardized_name": "digitales extra: mb.drive assist",
-        "display_name": "digitales extra: mb.drive assist",
-        "category": "other",
-        "category_label": "Other",
-        "brands": {
-          "Mercedes-Benz": {
-            "name": "Digitales Extra: MB.DRIVE ASSIST",
-            "avg_price": 1893.65,
-            "min_price": 1785.0,
-            "max_price": 2201.5,
-            "model_count": 46
-          }
-        },
-        "overall_avg_price": 1893.65,
-        "overall_min_price": 1785.0,
-        "overall_max_price": 2201.5,
-        "total_model_count": 46
-      },
-      {
-        "standardized_name": "panoramic_roof",
-        "display_name": "Panoramic glass roof / sunroof",
-        "category": "exterior",
-        "category_label": "Exterior",
-        "brands": {
-          "Mercedes-Benz": {
-            "name": "Panorama-Schiebedach",
-            "avg_price": 1659.66,
-            "min_price": 535.5,
-            "max_price": 2975.0,
-            "model_count": 46
-          }
-        },
-        "overall_avg_price": 1659.66,
-        "overall_min_price": 535.5,
-        "overall_max_price": 2975.0,
-        "total_model_count": 46
       },
       {
         "standardized_name": "winter-paket plus mit 18\" winter-kompletträdern",
@@ -1165,23 +1609,23 @@
         "total_model_count": 46
       },
       {
-        "standardized_name": "winter-paket plus mit 19\" winter-kompletträdern",
-        "display_name": "winter-paket plus mit 19\" winter-kompletträdern",
+        "standardized_name": "digitales extra: mb.drive assist",
+        "display_name": "digitales extra: mb.drive assist",
         "category": "other",
         "category_label": "Other",
         "brands": {
           "Mercedes-Benz": {
-            "name": "Winter-Paket Plus mit 19\" Winter-Kompletträdern",
-            "avg_price": 3515.54,
-            "min_price": 2766.75,
-            "max_price": 4295.9,
-            "model_count": 46
+            "name": "Digitales Extra: MB.DRIVE ASSIST",
+            "avg_price": 1879.66,
+            "min_price": 1785.0,
+            "max_price": 2201.5,
+            "model_count": 44
           }
         },
-        "overall_avg_price": 3515.54,
-        "overall_min_price": 2766.75,
-        "overall_max_price": 4295.9,
-        "total_model_count": 46
+        "overall_avg_price": 1879.66,
+        "overall_min_price": 1785.0,
+        "overall_max_price": 2201.5,
+        "total_model_count": 44
       },
       {
         "standardized_name": "energizing air control",
@@ -1203,23 +1647,68 @@
         "total_model_count": 44
       },
       {
-        "standardized_name": "parking_assist",
-        "display_name": "Automated parking assistance",
-        "category": "safety",
-        "category_label": "Safety",
+        "standardized_name": "panoramic_roof",
+        "display_name": "Panoramic glass roof / sunroof",
+        "category": "exterior",
+        "category_label": "Exterior",
         "brands": {
           "Mercedes-Benz": {
-            "name": "Digitales Extra: MB.DRIVE PARKING ASSIST",
-            "avg_price": 791.35,
-            "min_price": 690.2,
-            "max_price": 952.0,
-            "model_count": 43
+            "name": "Panorama-Schiebedach",
+            "avg_price": 1646.93,
+            "min_price": 535.5,
+            "max_price": 2975.0,
+            "model_count": 44
           }
         },
-        "overall_avg_price": 791.35,
-        "overall_min_price": 690.2,
-        "overall_max_price": 952.0,
-        "total_model_count": 43
+        "overall_avg_price": 1646.93,
+        "overall_min_price": 535.5,
+        "overall_max_price": 2975.0,
+        "total_model_count": 44
+      },
+      {
+        "standardized_name": "winter-paket plus mit 19\" winter-kompletträdern",
+        "display_name": "winter-paket plus mit 19\" winter-kompletträdern",
+        "category": "other",
+        "category_label": "Other",
+        "brands": {
+          "Mercedes-Benz": {
+            "name": "Winter-Paket Plus mit 19\" Winter-Kompletträdern",
+            "avg_price": 3542.01,
+            "min_price": 2766.75,
+            "max_price": 4295.9,
+            "model_count": 44
+          }
+        },
+        "overall_avg_price": 3542.01,
+        "overall_min_price": 2766.75,
+        "overall_max_price": 4295.9,
+        "total_model_count": 44
+      },
+      {
+        "standardized_name": "massage_seats",
+        "display_name": "Seats with massage function",
+        "category": "comfort",
+        "category_label": "Comfort",
+        "brands": {
+          "Mercedes-Benz": {
+            "name": "Digitales Extra: Massagefunktion vorn",
+            "avg_price": 799.68,
+            "min_price": 59.5,
+            "max_price": 2499.0,
+            "model_count": 40
+          },
+          "Lexus": {
+            "name": "Einzelsitze im Fond mit Massagefunktion",
+            "avg_price": null,
+            "min_price": null,
+            "max_price": null,
+            "model_count": 2
+          }
+        },
+        "overall_avg_price": 799.68,
+        "overall_min_price": 59.5,
+        "overall_max_price": 2499.0,
+        "total_model_count": 42
       },
       {
         "standardized_name": "verstärkter komfort-haltegriff für beifahrer",
@@ -1298,82 +1787,6 @@
         "total_model_count": 40
       },
       {
-        "standardized_name": "massage_seats",
-        "display_name": "Seats with massage function",
-        "category": "comfort",
-        "category_label": "Comfort",
-        "brands": {
-          "Mercedes-Benz": {
-            "name": "Digitales Extra: Massagefunktion vorn",
-            "avg_price": 799.68,
-            "min_price": 59.5,
-            "max_price": 2499.0,
-            "model_count": 40
-          }
-        },
-        "overall_avg_price": 799.68,
-        "overall_min_price": 59.5,
-        "overall_max_price": 2499.0,
-        "total_model_count": 40
-      },
-      {
-        "standardized_name": "flexibles ladesystem pro",
-        "display_name": "flexibles ladesystem pro",
-        "category": "other",
-        "category_label": "Other",
-        "brands": {
-          "Mercedes-Benz": {
-            "name": "Flexibles Ladesystem Pro",
-            "avg_price": 1012.42,
-            "min_price": 785.4,
-            "max_price": 1071.0,
-            "model_count": 39
-          }
-        },
-        "overall_avg_price": 1012.42,
-        "overall_min_price": 785.4,
-        "overall_max_price": 1071.0,
-        "total_model_count": 39
-      },
-      {
-        "standardized_name": "sitzerhöhung links nach oben",
-        "display_name": "sitzerhöhung links nach oben",
-        "category": "other",
-        "category_label": "Other",
-        "brands": {
-          "Mercedes-Benz": {
-            "name": "Sitzerhöhung links nach oben",
-            "avg_price": 892.5,
-            "min_price": 892.5,
-            "max_price": 892.5,
-            "model_count": 39
-          }
-        },
-        "overall_avg_price": 892.5,
-        "overall_min_price": 892.5,
-        "overall_max_price": 892.5,
-        "total_model_count": 39
-      },
-      {
-        "standardized_name": "sitzerhöhung rechts nach oben",
-        "display_name": "sitzerhöhung rechts nach oben",
-        "category": "other",
-        "category_label": "Other",
-        "brands": {
-          "Mercedes-Benz": {
-            "name": "Sitzerhöhung rechts nach oben",
-            "avg_price": 892.5,
-            "min_price": 892.5,
-            "max_price": 892.5,
-            "model_count": 39
-          }
-        },
-        "overall_avg_price": 892.5,
-        "overall_min_price": 892.5,
-        "overall_max_price": 892.5,
-        "total_model_count": 39
-      },
-      {
         "standardized_name": "zierelemente holz birke grau offenporig",
         "display_name": "zierelemente holz birke grau offenporig",
         "category": "other",
@@ -1391,25 +1804,6 @@
         "overall_min_price": 333.2,
         "overall_max_price": 714.0,
         "total_model_count": 39
-      },
-      {
-        "standardized_name": "graphitgrau metallic",
-        "display_name": "graphitgrau metallic",
-        "category": "other",
-        "category_label": "Other",
-        "brands": {
-          "Mercedes-Benz": {
-            "name": "graphitgrau metallic",
-            "avg_price": 1040.0,
-            "min_price": 963.9,
-            "max_price": 1178.1,
-            "model_count": 38
-          }
-        },
-        "overall_avg_price": 1040.0,
-        "overall_min_price": 963.9,
-        "overall_max_price": 1178.1,
-        "total_model_count": 38
       },
       {
         "standardized_name": "amg line",
@@ -1431,22 +1825,22 @@
         "total_model_count": 37
       },
       {
-        "standardized_name": "ladekabel bis 11 kw für wallbox und öffentliche ladestation, 7m, glatt",
-        "display_name": "ladekabel bis 11 kw für wallbox und öffentliche ladestation, 7m, glatt",
+        "standardized_name": "flexibles ladesystem pro",
+        "display_name": "flexibles ladesystem pro",
         "category": "other",
         "category_label": "Other",
         "brands": {
           "Mercedes-Benz": {
-            "name": "Ladekabel bis 11 kW für Wallbox und öffentliche Ladestation, 7m, glatt",
-            "avg_price": 121.25,
-            "min_price": 35.7,
-            "max_price": 321.3,
+            "name": "Flexibles Ladesystem Pro",
+            "avg_price": 1009.25,
+            "min_price": 785.4,
+            "max_price": 1071.0,
             "model_count": 37
           }
         },
-        "overall_avg_price": 121.25,
-        "overall_min_price": 35.7,
-        "overall_max_price": 321.3,
+        "overall_avg_price": 1009.25,
+        "overall_min_price": 785.4,
+        "overall_max_price": 1071.0,
         "total_model_count": 37
       },
       {
@@ -1488,22 +1882,105 @@
         "total_model_count": 37
       },
       {
-        "standardized_name": "amg zierelemente carbon",
-        "display_name": "amg zierelemente carbon",
+        "standardized_name": "sitzerhöhung links nach oben",
+        "display_name": "sitzerhöhung links nach oben",
         "category": "other",
         "category_label": "Other",
         "brands": {
           "Mercedes-Benz": {
-            "name": "AMG Zierelemente Carbon",
-            "avg_price": 3032.8,
-            "min_price": 1130.5,
-            "max_price": 4165.0,
+            "name": "Sitzerhöhung links nach oben",
+            "avg_price": 892.5,
+            "min_price": 892.5,
+            "max_price": 892.5,
+            "model_count": 37
+          }
+        },
+        "overall_avg_price": 892.5,
+        "overall_min_price": 892.5,
+        "overall_max_price": 892.5,
+        "total_model_count": 37
+      },
+      {
+        "standardized_name": "sitzerhöhung rechts nach oben",
+        "display_name": "sitzerhöhung rechts nach oben",
+        "category": "other",
+        "category_label": "Other",
+        "brands": {
+          "Mercedes-Benz": {
+            "name": "Sitzerhöhung rechts nach oben",
+            "avg_price": 892.5,
+            "min_price": 892.5,
+            "max_price": 892.5,
+            "model_count": 37
+          }
+        },
+        "overall_avg_price": 892.5,
+        "overall_min_price": 892.5,
+        "overall_max_price": 892.5,
+        "total_model_count": 37
+      },
+      {
+        "standardized_name": "graphitgrau metallic",
+        "display_name": "graphitgrau metallic",
+        "category": "other",
+        "category_label": "Other",
+        "brands": {
+          "Mercedes-Benz": {
+            "name": "graphitgrau metallic",
+            "avg_price": 1032.32,
+            "min_price": 963.9,
+            "max_price": 1178.1,
+            "model_count": 36
+          }
+        },
+        "overall_avg_price": 1032.32,
+        "overall_min_price": 963.9,
+        "overall_max_price": 1178.1,
+        "total_model_count": 36
+      },
+      {
+        "standardized_name": "ladekabel bis 11 kw für wallbox und öffentliche ladestation, 7m, glatt",
+        "display_name": "ladekabel bis 11 kw für wallbox und öffentliche ladestation, 7m, glatt",
+        "category": "other",
+        "category_label": "Other",
+        "brands": {
+          "Mercedes-Benz": {
+            "name": "Ladekabel bis 11 kW für Wallbox und öffentliche Ladestation, 7m, glatt",
+            "avg_price": 123.42,
+            "min_price": 35.7,
+            "max_price": 321.3,
             "model_count": 35
           }
         },
-        "overall_avg_price": 3032.8,
-        "overall_min_price": 1130.5,
-        "overall_max_price": 4165.0,
+        "overall_avg_price": 123.42,
+        "overall_min_price": 35.7,
+        "overall_max_price": 321.3,
+        "total_model_count": 35
+      },
+      {
+        "standardized_name": "memory_seats",
+        "display_name": "Seat memory / easy-entry function",
+        "category": "comfort",
+        "category_label": "Comfort",
+        "brands": {
+          "Mercedes-Benz": {
+            "name": "Memory-Paket",
+            "avg_price": 817.0,
+            "min_price": 297.5,
+            "max_price": 1487.5,
+            "model_count": 29
+          },
+          "Lexus": {
+            "name": "Komfort-Einstieg: Fahrersitz fährt zum leichteren Ein- und Aussteigen zurück",
+            "avg_price": null,
+            "min_price": null,
+            "max_price": null,
+            "model_count": 6
+          }
+        },
+        "overall_avg_price": 817.0,
+        "overall_min_price": 297.5,
+        "overall_max_price": 1487.5,
         "total_model_count": 35
       },
       {
@@ -1526,61 +2003,49 @@
         "total_model_count": 33
       },
       {
-        "standardized_name": "manufaktur opalithweiß magno",
-        "display_name": "manufaktur opalithweiß magno",
+        "standardized_name": "amg zierelemente carbon",
+        "display_name": "amg zierelemente carbon",
         "category": "other",
         "category_label": "Other",
         "brands": {
           "Mercedes-Benz": {
-            "name": "MANUFAKTUR opalithweiß magno",
-            "avg_price": 6703.67,
-            "min_price": 6069.0,
-            "max_price": 7021.0,
+            "name": "AMG Zierelemente Carbon",
+            "avg_price": 3126.45,
+            "min_price": 1130.5,
+            "max_price": 4165.0,
             "model_count": 33
           }
         },
-        "overall_avg_price": 6703.67,
-        "overall_min_price": 6069.0,
-        "overall_max_price": 7021.0,
+        "overall_avg_price": 3126.45,
+        "overall_min_price": 1130.5,
+        "overall_max_price": 4165.0,
         "total_model_count": 33
       },
       {
-        "standardized_name": "reifen mit notlaufeigenschaften",
-        "display_name": "reifen mit notlaufeigenschaften",
-        "category": "other",
-        "category_label": "Other",
+        "standardized_name": "ambient_lighting",
+        "display_name": "Configurable ambient interior lighting",
+        "category": "interior",
+        "category_label": "Interior",
         "brands": {
           "Mercedes-Benz": {
-            "name": "Reifen mit Notlaufeigenschaften",
-            "avg_price": 386.57,
-            "min_price": 202.3,
-            "max_price": 476.0,
-            "model_count": 33
+            "name": "Ambientebeleuchtung Plus",
+            "avg_price": 524.45,
+            "min_price": 333.2,
+            "max_price": 1011.5,
+            "model_count": 14
+          },
+          "Lexus": {
+            "name": "Ambiente Beleuchtung in 64 Farben und 14 voreingestellten Themen individualisierbar",
+            "avg_price": null,
+            "min_price": null,
+            "max_price": null,
+            "model_count": 17
           }
         },
-        "overall_avg_price": 386.57,
-        "overall_min_price": 202.3,
-        "overall_max_price": 476.0,
-        "total_model_count": 33
-      },
-      {
-        "standardized_name": "manufaktur graphitgrau magno",
-        "display_name": "manufaktur graphitgrau magno",
-        "category": "other",
-        "category_label": "Other",
-        "brands": {
-          "Mercedes-Benz": {
-            "name": "MANUFAKTUR graphitgrau magno",
-            "avg_price": 5831.0,
-            "min_price": 5117.0,
-            "max_price": 11781.0,
-            "model_count": 32
-          }
-        },
-        "overall_avg_price": 5831.0,
-        "overall_min_price": 5117.0,
-        "overall_max_price": 11781.0,
-        "total_model_count": 32
+        "overall_avg_price": 524.45,
+        "overall_min_price": 333.2,
+        "overall_max_price": 1011.5,
+        "total_model_count": 31
       },
       {
         "standardized_name": "emergency_braking",
@@ -1599,6 +2064,44 @@
         "overall_avg_price": 276.39,
         "overall_min_price": 220.15,
         "overall_max_price": 392.7,
+        "total_model_count": 31
+      },
+      {
+        "standardized_name": "manufaktur opalithweiß magno",
+        "display_name": "manufaktur opalithweiß magno",
+        "category": "other",
+        "category_label": "Other",
+        "brands": {
+          "Mercedes-Benz": {
+            "name": "MANUFAKTUR opalithweiß magno",
+            "avg_price": 6683.19,
+            "min_price": 6069.0,
+            "max_price": 7021.0,
+            "model_count": 31
+          }
+        },
+        "overall_avg_price": 6683.19,
+        "overall_min_price": 6069.0,
+        "overall_max_price": 7021.0,
+        "total_model_count": 31
+      },
+      {
+        "standardized_name": "reifen mit notlaufeigenschaften",
+        "display_name": "reifen mit notlaufeigenschaften",
+        "category": "other",
+        "category_label": "Other",
+        "brands": {
+          "Mercedes-Benz": {
+            "name": "Reifen mit Notlaufeigenschaften",
+            "avg_price": 384.64,
+            "min_price": 202.3,
+            "max_price": 476.0,
+            "model_count": 31
+          }
+        },
+        "overall_avg_price": 384.64,
+        "overall_min_price": 202.3,
+        "overall_max_price": 476.0,
         "total_model_count": 31
       },
       {
@@ -1640,6 +2143,25 @@
         "total_model_count": 31
       },
       {
+        "standardized_name": "manufaktur graphitgrau magno",
+        "display_name": "manufaktur graphitgrau magno",
+        "category": "other",
+        "category_label": "Other",
+        "brands": {
+          "Mercedes-Benz": {
+            "name": "MANUFAKTUR graphitgrau magno",
+            "avg_price": 5751.67,
+            "min_price": 5117.0,
+            "max_price": 11781.0,
+            "model_count": 30
+          }
+        },
+        "overall_avg_price": 5751.67,
+        "overall_min_price": 5117.0,
+        "overall_max_price": 11781.0,
+        "total_model_count": 30
+      },
+      {
         "standardized_name": "energizing paket",
         "display_name": "energizing paket",
         "category": "other",
@@ -1659,22 +2181,55 @@
         "total_model_count": 29
       },
       {
-        "standardized_name": "memory_seats",
-        "display_name": "Seat memory / easy-entry function",
-        "category": "comfort",
-        "category_label": "Comfort",
+        "standardized_name": "liftsystem vorderachse",
+        "display_name": "liftsystem vorderachse",
+        "category": "other",
+        "category_label": "Other",
         "brands": {
           "Mercedes-Benz": {
-            "name": "Memory-Paket",
-            "avg_price": 817.0,
-            "min_price": 297.5,
-            "max_price": 1487.5,
-            "model_count": 29
+            "name": "Liftsystem Vorderachse",
+            "avg_price": 2142.0,
+            "min_price": 2142.0,
+            "max_price": 2142.0,
+            "model_count": 5
+          },
+          "Porsche": {
+            "name": "Liftsystem Vorderachse",
+            "avg_price": 2594.2,
+            "min_price": 2594.2,
+            "max_price": 2594.2,
+            "model_count": 24
           }
         },
-        "overall_avg_price": 817.0,
+        "overall_avg_price": 2516.23,
+        "overall_min_price": 2142.0,
+        "overall_max_price": 2594.2,
+        "total_model_count": 29
+      },
+      {
+        "standardized_name": "theft_protection",
+        "display_name": "Vehicle theft protection / alarm system",
+        "category": "safety",
+        "category_label": "Safety",
+        "brands": {
+          "Mercedes-Benz": {
+            "name": "Einbruch- und Diebstahlwarnanlage mit Vorrüstung für Kollisionserkennung",
+            "avg_price": 366.42,
+            "min_price": 297.5,
+            "max_price": 523.6,
+            "model_count": 12
+          },
+          "Lexus": {
+            "name": "Diebstahlwarnanlage mit Abschleppschutz",
+            "avg_price": null,
+            "min_price": null,
+            "max_price": null,
+            "model_count": 17
+          }
+        },
+        "overall_avg_price": 366.42,
         "overall_min_price": 297.5,
-        "overall_max_price": 1487.5,
+        "overall_max_price": 523.6,
         "total_model_count": 29
       },
       {
@@ -1716,25 +2271,6 @@
         "total_model_count": 28
       },
       {
-        "standardized_name": "manufaktur siliziumgrau uni",
-        "display_name": "manufaktur siliziumgrau uni",
-        "category": "other",
-        "category_label": "Other",
-        "brands": {
-          "Mercedes-Benz": {
-            "name": "MANUFAKTUR siliziumgrau uni",
-            "avg_price": 4647.38,
-            "min_price": 3748.5,
-            "max_price": 11781.0,
-            "model_count": 28
-          }
-        },
-        "overall_avg_price": 4647.38,
-        "overall_min_price": 3748.5,
-        "overall_max_price": 11781.0,
-        "total_model_count": 28
-      },
-      {
         "standardized_name": "digitales extra: guard 360° fahrzeugschutz plus",
         "display_name": "digitales extra: guard 360° fahrzeugschutz plus",
         "category": "other",
@@ -1773,6 +2309,25 @@
         "total_model_count": 27
       },
       {
+        "standardized_name": "usb-paket plus",
+        "display_name": "usb-paket plus",
+        "category": "other",
+        "category_label": "Other",
+        "brands": {
+          "Mercedes-Benz": {
+            "name": "USB-Paket Plus",
+            "avg_price": 352.59,
+            "min_price": 297.5,
+            "max_price": 357.0,
+            "model_count": 27
+          }
+        },
+        "overall_avg_price": 352.59,
+        "overall_min_price": 297.5,
+        "overall_max_price": 357.0,
+        "total_model_count": 27
+      },
+      {
         "standardized_name": "klarblau metallic",
         "display_name": "klarblau metallic",
         "category": "other",
@@ -1792,22 +2347,22 @@
         "total_model_count": 26
       },
       {
-        "standardized_name": "usb-paket plus",
-        "display_name": "usb-paket plus",
+        "standardized_name": "manufaktur siliziumgrau uni",
+        "display_name": "manufaktur siliziumgrau uni",
         "category": "other",
         "category_label": "Other",
         "brands": {
           "Mercedes-Benz": {
-            "name": "USB-Paket Plus",
-            "avg_price": 352.42,
-            "min_price": 297.5,
-            "max_price": 357.0,
+            "name": "MANUFAKTUR siliziumgrau uni",
+            "avg_price": 4643.29,
+            "min_price": 3748.5,
+            "max_price": 11781.0,
             "model_count": 26
           }
         },
-        "overall_avg_price": 352.42,
-        "overall_min_price": 297.5,
-        "overall_max_price": 357.0,
+        "overall_avg_price": 4643.29,
+        "overall_min_price": 3748.5,
+        "overall_max_price": 11781.0,
         "total_model_count": 26
       },
       {
@@ -1830,22 +2385,29 @@
         "total_model_count": 25
       },
       {
-        "standardized_name": "sonnenblende ausziehbar",
-        "display_name": "sonnenblende ausziehbar",
-        "category": "other",
-        "category_label": "Other",
+        "standardized_name": "keyless_entry",
+        "display_name": "Keyless entry and start",
+        "category": "comfort",
+        "category_label": "Comfort",
         "brands": {
           "Mercedes-Benz": {
-            "name": "Sonnenblende ausziehbar",
-            "avg_price": 74.49,
-            "min_price": 59.5,
-            "max_price": 113.05,
-            "model_count": 25
+            "name": "KEYLESS-GO Komfort-Paket mit Digitalem Extra",
+            "avg_price": 1132.66,
+            "min_price": 654.5,
+            "max_price": 2380.0,
+            "model_count": 22
+          },
+          "Lexus": {
+            "name": "Lexus Smart Key: schlüsselloser Fahrzeugzugang und Motorstart",
+            "avg_price": null,
+            "min_price": null,
+            "max_price": null,
+            "model_count": 3
           }
         },
-        "overall_avg_price": 74.49,
-        "overall_min_price": 59.5,
-        "overall_max_price": 113.05,
+        "overall_avg_price": 1132.66,
+        "overall_min_price": 654.5,
+        "overall_max_price": 2380.0,
         "total_model_count": 25
       },
       {
@@ -1887,6 +2449,82 @@
         "total_model_count": 25
       },
       {
+        "standardized_name": "20-zoll 718 cayman gt4 rs winterkomplettradsatz lackiert in schwarz (seidenglanz)",
+        "display_name": "20-zoll 718 cayman gt4 rs winterkomplettradsatz lackiert in schwarz (seidenglanz)",
+        "category": "other",
+        "category_label": "Other",
+        "brands": {
+          "Porsche": {
+            "name": "20-Zoll 718 Cayman GT4 RS Winterkomplettradsatz lackiert in Schwarz (seidenglanz)",
+            "avg_price": 8627.5,
+            "min_price": 8627.5,
+            "max_price": 8627.5,
+            "model_count": 24
+          }
+        },
+        "overall_avg_price": 8627.5,
+        "overall_min_price": 8627.5,
+        "overall_max_price": 8627.5,
+        "total_model_count": 24
+      },
+      {
+        "standardized_name": "3d-druck bodyform vollschalensitz mit härtegrad hart6 farben",
+        "display_name": "3d-druck bodyform vollschalensitz mit härtegrad hart6 farben",
+        "category": "other",
+        "category_label": "Other",
+        "brands": {
+          "Porsche": {
+            "name": "3D-Druck Bodyform Vollschalensitz mit Härtegrad hart6 Farben",
+            "avg_price": 2677.5,
+            "min_price": 2677.5,
+            "max_price": 2677.5,
+            "model_count": 24
+          }
+        },
+        "overall_avg_price": 2677.5,
+        "overall_min_price": 2677.5,
+        "overall_max_price": 2677.5,
+        "total_model_count": 24
+      },
+      {
+        "standardized_name": "3d-druck bodyform vollschalensitz mit härtegrad mittel6 farben",
+        "display_name": "3d-druck bodyform vollschalensitz mit härtegrad mittel6 farben",
+        "category": "other",
+        "category_label": "Other",
+        "brands": {
+          "Porsche": {
+            "name": "3D-Druck Bodyform Vollschalensitz mit Härtegrad mittel6 Farben",
+            "avg_price": 2677.5,
+            "min_price": 2677.5,
+            "max_price": 2677.5,
+            "model_count": 24
+          }
+        },
+        "overall_avg_price": 2677.5,
+        "overall_min_price": 2677.5,
+        "overall_max_price": 2677.5,
+        "total_model_count": 24
+      },
+      {
+        "standardized_name": "3d-druck bodyform vollschalensitz mit härtegrad weich6 farben",
+        "display_name": "3d-druck bodyform vollschalensitz mit härtegrad weich6 farben",
+        "category": "other",
+        "category_label": "Other",
+        "brands": {
+          "Porsche": {
+            "name": "3D-Druck Bodyform Vollschalensitz mit Härtegrad weich6 Farben",
+            "avg_price": 2677.5,
+            "min_price": 2677.5,
+            "max_price": 2677.5,
+            "model_count": 24
+          }
+        },
+        "overall_avg_price": 2677.5,
+        "overall_min_price": 2677.5,
+        "overall_max_price": 2677.5,
+        "total_model_count": 24
+      },
+      {
         "standardized_name": "amg line premium",
         "display_name": "amg line premium",
         "category": "other",
@@ -1925,6 +2563,158 @@
         "total_model_count": 24
       },
       {
+        "standardized_name": "bei einem angenommenen hohen durchschnittlichen co₂-preis von 220,00 €/t",
+        "display_name": "bei einem angenommenen hohen durchschnittlichen co₂-preis von 220,00 €/t",
+        "category": "other",
+        "category_label": "Other",
+        "brands": {
+          "Porsche": {
+            "name": "Bei einem angenommenen hohen durchschnittlichen CO₂-Preis von 220,00 €/t",
+            "avg_price": 9504.0,
+            "min_price": 9504.0,
+            "max_price": 9504.0,
+            "model_count": 24
+          }
+        },
+        "overall_avg_price": 9504.0,
+        "overall_min_price": 9504.0,
+        "overall_max_price": 9504.0,
+        "total_model_count": 24
+      },
+      {
+        "standardized_name": "bei einem angenommenen mittleren durchschnittlichen co₂-preis von 142,50 €/t",
+        "display_name": "bei einem angenommenen mittleren durchschnittlichen co₂-preis von 142,50 €/t",
+        "category": "other",
+        "category_label": "Other",
+        "brands": {
+          "Porsche": {
+            "name": "Bei einem angenommenen mittleren durchschnittlichen CO₂-Preis von 142,50 €/t",
+            "avg_price": 6156.0,
+            "min_price": 6156.0,
+            "max_price": 6156.0,
+            "model_count": 24
+          }
+        },
+        "overall_avg_price": 6156.0,
+        "overall_min_price": 6156.0,
+        "overall_max_price": 6156.0,
+        "total_model_count": 24
+      },
+      {
+        "standardized_name": "bei einem angenommenen niedrigen durchschnittlichen co₂-preis von 60,00 €/t",
+        "display_name": "bei einem angenommenen niedrigen durchschnittlichen co₂-preis von 60,00 €/t",
+        "category": "other",
+        "category_label": "Other",
+        "brands": {
+          "Porsche": {
+            "name": "Bei einem angenommenen niedrigen durchschnittlichen CO₂-Preis von 60,00 €/t",
+            "avg_price": 2592.0,
+            "min_price": 2592.0,
+            "max_price": 2592.0,
+            "model_count": 24
+          }
+        },
+        "overall_avg_price": 2592.0,
+        "overall_min_price": 2592.0,
+        "overall_max_price": 2592.0,
+        "total_model_count": 24
+      },
+      {
+        "standardized_name": "einmalige sonderzahlung",
+        "display_name": "einmalige sonderzahlung",
+        "category": "other",
+        "category_label": "Other",
+        "brands": {
+          "Porsche": {
+            "name": "Einmalige Sonderzahlung",
+            "avg_price": 23805.0,
+            "min_price": 23805.0,
+            "max_price": 23805.0,
+            "model_count": 24
+          }
+        },
+        "overall_avg_price": 23805.0,
+        "overall_min_price": 23805.0,
+        "overall_max_price": 23805.0,
+        "total_model_count": 24
+      },
+      {
+        "standardized_name": "frontdeckel in sichtcarbon mit teillackierung",
+        "display_name": "frontdeckel in sichtcarbon mit teillackierung",
+        "category": "other",
+        "category_label": "Other",
+        "brands": {
+          "Porsche": {
+            "name": "Frontdeckel in Sichtcarbon mit Teillackierung",
+            "avg_price": 1309.0,
+            "min_price": 1309.0,
+            "max_price": 1309.0,
+            "model_count": 24
+          }
+        },
+        "overall_avg_price": 1309.0,
+        "overall_min_price": 1309.0,
+        "overall_max_price": 1309.0,
+        "total_model_count": 24
+      },
+      {
+        "standardized_name": "interieur-paket ziernähte und stickungen in abweichender farbe",
+        "display_name": "interieur-paket ziernähte und stickungen in abweichender farbe",
+        "category": "other",
+        "category_label": "Other",
+        "brands": {
+          "Porsche": {
+            "name": "Interieur-Paket Ziernähte und Stickungen in abweichender Farbe",
+            "avg_price": 2737.0,
+            "min_price": 2737.0,
+            "max_price": 2737.0,
+            "model_count": 24
+          }
+        },
+        "overall_avg_price": 2737.0,
+        "overall_min_price": 2737.0,
+        "overall_max_price": 2737.0,
+        "total_model_count": 24
+      },
+      {
+        "standardized_name": "led-hauptscheinwerfer inkl. porsche dynamic light system (pdls)",
+        "display_name": "led-hauptscheinwerfer inkl. porsche dynamic light system (pdls)",
+        "category": "other",
+        "category_label": "Other",
+        "brands": {
+          "Porsche": {
+            "name": "LED-Hauptscheinwerfer inkl. Porsche Dynamic Light System (PDLS)",
+            "avg_price": 1416.1,
+            "min_price": 1416.1,
+            "max_price": 1416.1,
+            "model_count": 24
+          }
+        },
+        "overall_avg_price": 1416.1,
+        "overall_min_price": 1416.1,
+        "overall_max_price": 1416.1,
+        "total_model_count": 24
+      },
+      {
+        "standardized_name": "metallicfarbe",
+        "display_name": "metallicfarbe",
+        "category": "other",
+        "category_label": "Other",
+        "brands": {
+          "Porsche": {
+            "name": "Metallicfarbe",
+            "avg_price": 3213.0,
+            "min_price": 3213.0,
+            "max_price": 3213.0,
+            "model_count": 24
+          }
+        },
+        "overall_avg_price": 3213.0,
+        "overall_min_price": 3213.0,
+        "overall_max_price": 3213.0,
+        "total_model_count": 24
+      },
+      {
         "standardized_name": "mittelkonsole feinstrukturoptik schwarz",
         "display_name": "mittelkonsole feinstrukturoptik schwarz",
         "category": "other",
@@ -1944,6 +2734,120 @@
         "total_model_count": 24
       },
       {
+        "standardized_name": "monatliche rate",
+        "display_name": "monatliche rate",
+        "category": "other",
+        "category_label": "Other",
+        "brands": {
+          "Porsche": {
+            "name": "Monatliche Rate",
+            "avg_price": 1966.82,
+            "min_price": 1966.82,
+            "max_price": 1966.82,
+            "model_count": 24
+          }
+        },
+        "overall_avg_price": 1966.82,
+        "overall_min_price": 1966.82,
+        "overall_max_price": 1966.82,
+        "total_model_count": 24
+      },
+      {
+        "standardized_name": "monatliche rate*",
+        "display_name": "monatliche rate*",
+        "category": "other",
+        "category_label": "Other",
+        "brands": {
+          "Porsche": {
+            "name": "Monatliche Rate*",
+            "avg_price": 1966.82,
+            "min_price": 1966.82,
+            "max_price": 1966.82,
+            "model_count": 24
+          }
+        },
+        "overall_avg_price": 1966.82,
+        "overall_min_price": 1966.82,
+        "overall_max_price": 1966.82,
+        "total_model_count": 24
+      },
+      {
+        "standardized_name": "personalisierte türeinstiegsblenden carbon, beleuchtet",
+        "display_name": "personalisierte türeinstiegsblenden carbon, beleuchtet",
+        "category": "other",
+        "category_label": "Other",
+        "brands": {
+          "Porsche": {
+            "name": "Personalisierte Türeinstiegsblenden Carbon, beleuchtet",
+            "avg_price": 1309.0,
+            "min_price": 1309.0,
+            "max_price": 1309.0,
+            "model_count": 24
+          }
+        },
+        "overall_avg_price": 1309.0,
+        "overall_min_price": 1309.0,
+        "overall_max_price": 1309.0,
+        "total_model_count": 24
+      },
+      {
+        "standardized_name": "porsche ceramic composite brake (pccb)",
+        "display_name": "porsche ceramic composite brake (pccb)",
+        "category": "other",
+        "category_label": "Other",
+        "brands": {
+          "Porsche": {
+            "name": "Porsche Ceramic Composite Brake (PCCB)",
+            "avg_price": 7913.5,
+            "min_price": 7913.5,
+            "max_price": 7913.5,
+            "model_count": 24
+          }
+        },
+        "overall_avg_price": 7913.5,
+        "overall_min_price": 7913.5,
+        "overall_max_price": 7913.5,
+        "total_model_count": 24
+      },
+      {
+        "standardized_name": "räder lackiert in schwarz (seidenglanz) mit umlaufendem felgenrand lackiert in racinggelb",
+        "display_name": "räder lackiert in schwarz (seidenglanz) mit umlaufendem felgenrand lackiert in racinggelb",
+        "category": "other",
+        "category_label": "Other",
+        "brands": {
+          "Porsche": {
+            "name": "Räder lackiert in Schwarz (seidenglanz) mit umlaufendem Felgenrand lackiert in racinggelb",
+            "avg_price": 1142.4,
+            "min_price": 1142.4,
+            "max_price": 1142.4,
+            "model_count": 24
+          }
+        },
+        "overall_avg_price": 1142.4,
+        "overall_min_price": 1142.4,
+        "overall_max_price": 1142.4,
+        "total_model_count": 24
+      },
+      {
+        "standardized_name": "sonderfarbe",
+        "display_name": "sonderfarbe",
+        "category": "other",
+        "category_label": "Other",
+        "brands": {
+          "Porsche": {
+            "name": "Sonderfarbe",
+            "avg_price": 3213.0,
+            "min_price": 3213.0,
+            "max_price": 3213.0,
+            "model_count": 24
+          }
+        },
+        "overall_avg_price": 3213.0,
+        "overall_min_price": 3213.0,
+        "overall_max_price": 3213.0,
+        "total_model_count": 24
+      },
+      {
         "standardized_name": "umfeldbeleuchtung mit animierter projektion des mercedes-benz pattern, 2-fach",
         "display_name": "umfeldbeleuchtung mit animierter projektion des mercedes-benz pattern, 2-fach",
         "category": "other",
@@ -1960,6 +2864,25 @@
         "overall_avg_price": 156.19,
         "overall_min_price": 142.8,
         "overall_max_price": 178.5,
+        "total_model_count": 24
+      },
+      {
+        "standardized_name": "weissach-paket",
+        "display_name": "weissach-paket",
+        "category": "other",
+        "category_label": "Other",
+        "brands": {
+          "Porsche": {
+            "name": "Weissach-Paket",
+            "avg_price": 11965.45,
+            "min_price": 11965.45,
+            "max_price": 11965.45,
+            "model_count": 24
+          }
+        },
+        "overall_avg_price": 11965.45,
+        "overall_min_price": 11965.45,
+        "overall_max_price": 11965.45,
         "total_model_count": 24
       },
       {
@@ -2039,63 +2962,6 @@
         "total_model_count": 23
       },
       {
-        "standardized_name": "keyless_entry",
-        "display_name": "Keyless entry and start",
-        "category": "comfort",
-        "category_label": "Comfort",
-        "brands": {
-          "Mercedes-Benz": {
-            "name": "KEYLESS-GO Komfort-Paket mit Digitalem Extra",
-            "avg_price": 1179.13,
-            "min_price": 654.5,
-            "max_price": 2380.0,
-            "model_count": 23
-          }
-        },
-        "overall_avg_price": 1179.13,
-        "overall_min_price": 654.5,
-        "overall_max_price": 2380.0,
-        "total_model_count": 23
-      },
-      {
-        "standardized_name": "ladekabel bis 22 kw für wallbox und öffentliche ladestation, 7m, glatt",
-        "display_name": "ladekabel bis 22 kw für wallbox und öffentliche ladestation, 7m, glatt",
-        "category": "other",
-        "category_label": "Other",
-        "brands": {
-          "Mercedes-Benz": {
-            "name": "Ladekabel bis 22 kW für Wallbox und öffentliche Ladestation, 7m, glatt",
-            "avg_price": 82.27,
-            "min_price": 59.5,
-            "max_price": 83.3,
-            "model_count": 23
-          }
-        },
-        "overall_avg_price": 82.27,
-        "overall_min_price": 59.5,
-        "overall_max_price": 83.3,
-        "total_model_count": 23
-      },
-      {
-        "standardized_name": "manufaktur interieur-paket",
-        "display_name": "manufaktur interieur-paket",
-        "category": "other",
-        "category_label": "Other",
-        "brands": {
-          "Mercedes-Benz": {
-            "name": "MANUFAKTUR Interieur-Paket",
-            "avg_price": 11229.98,
-            "min_price": 11007.5,
-            "max_price": 11602.5,
-            "model_count": 23
-          }
-        },
-        "overall_avg_price": 11229.98,
-        "overall_min_price": 11007.5,
-        "overall_max_price": 11602.5,
-        "total_model_count": 23
-      },
-      {
         "standardized_name": "mbux superscreen",
         "display_name": "mbux superscreen",
         "category": "other",
@@ -2131,6 +2997,25 @@
         "overall_avg_price": 582.58,
         "overall_min_price": 178.5,
         "overall_max_price": 1190.0,
+        "total_model_count": 23
+      },
+      {
+        "standardized_name": "sonnenblende ausziehbar",
+        "display_name": "sonnenblende ausziehbar",
+        "category": "other",
+        "category_label": "Other",
+        "brands": {
+          "Mercedes-Benz": {
+            "name": "Sonnenblende ausziehbar",
+            "avg_price": 71.14,
+            "min_price": 59.5,
+            "max_price": 113.05,
+            "model_count": 23
+          }
+        },
+        "overall_avg_price": 71.14,
+        "overall_min_price": 59.5,
+        "overall_max_price": 113.05,
         "total_model_count": 23
       },
       {
@@ -2210,44 +3095,6 @@
         "total_model_count": 22
       },
       {
-        "standardized_name": "manufaktur kalaharigold magno",
-        "display_name": "manufaktur kalaharigold magno",
-        "category": "other",
-        "category_label": "Other",
-        "brands": {
-          "Mercedes-Benz": {
-            "name": "MANUFAKTUR kalaharigold magno",
-            "avg_price": 7237.36,
-            "min_price": 7021.0,
-            "max_price": 11781.0,
-            "model_count": 22
-          }
-        },
-        "overall_avg_price": 7237.36,
-        "overall_min_price": 7021.0,
-        "overall_max_price": 11781.0,
-        "total_model_count": 22
-      },
-      {
-        "standardized_name": "manufaktur nachtschwarz magno",
-        "display_name": "manufaktur nachtschwarz magno",
-        "category": "other",
-        "category_label": "Other",
-        "brands": {
-          "Mercedes-Benz": {
-            "name": "MANUFAKTUR nachtschwarz magno",
-            "avg_price": 7021.0,
-            "min_price": 7021.0,
-            "max_price": 7021.0,
-            "model_count": 22
-          }
-        },
-        "overall_avg_price": 7021.0,
-        "overall_min_price": 7021.0,
-        "overall_max_price": 7021.0,
-        "total_model_count": 22
-      },
-      {
         "standardized_name": "spektralblau metallic",
         "display_name": "spektralblau metallic",
         "category": "other",
@@ -2305,25 +3152,6 @@
         "total_model_count": 22
       },
       {
-        "standardized_name": "amg line exterieur",
-        "display_name": "amg line exterieur",
-        "category": "other",
-        "category_label": "Other",
-        "brands": {
-          "Mercedes-Benz": {
-            "name": "AMG Line Exterieur",
-            "avg_price": 3528.63,
-            "min_price": 2380.0,
-            "max_price": 4760.0,
-            "model_count": 21
-          }
-        },
-        "overall_avg_price": 3528.63,
-        "overall_min_price": 2380.0,
-        "overall_max_price": 4760.0,
-        "total_model_count": 21
-      },
-      {
         "standardized_name": "fahrassistenz-paket plus",
         "display_name": "fahrassistenz-paket plus",
         "category": "other",
@@ -2343,60 +3171,41 @@
         "total_model_count": 21
       },
       {
-        "standardized_name": "garagentoröffner",
-        "display_name": "garagentoröffner",
+        "standardized_name": "ladekabel bis 22 kw für wallbox und öffentliche ladestation, 7m, glatt",
+        "display_name": "ladekabel bis 22 kw für wallbox und öffentliche ladestation, 7m, glatt",
         "category": "other",
         "category_label": "Other",
         "brands": {
           "Mercedes-Benz": {
-            "name": "Garagentoröffner",
-            "avg_price": 267.75,
-            "min_price": 267.75,
-            "max_price": 267.75,
+            "name": "Ladekabel bis 22 kW für Wallbox und öffentliche Ladestation, 7m, glatt",
+            "avg_price": 82.17,
+            "min_price": 59.5,
+            "max_price": 83.3,
             "model_count": 21
           }
         },
-        "overall_avg_price": 267.75,
-        "overall_min_price": 267.75,
-        "overall_max_price": 267.75,
+        "overall_avg_price": 82.17,
+        "overall_min_price": 59.5,
+        "overall_max_price": 83.3,
         "total_model_count": 21
       },
       {
-        "standardized_name": "on-board ac-lader bis 22 kw",
-        "display_name": "on-board ac-lader bis 22 kw",
+        "standardized_name": "manufaktur interieur-paket",
+        "display_name": "manufaktur interieur-paket",
         "category": "other",
         "category_label": "Other",
         "brands": {
           "Mercedes-Benz": {
-            "name": "On-board AC-Lader bis 22 kW",
-            "avg_price": 731.0,
-            "min_price": 654.5,
-            "max_price": 1190.0,
+            "name": "MANUFAKTUR Interieur-Paket",
+            "avg_price": 11242.67,
+            "min_price": 11007.5,
+            "max_price": 11602.5,
             "model_count": 21
           }
         },
-        "overall_avg_price": 731.0,
-        "overall_min_price": 654.5,
-        "overall_max_price": 1190.0,
-        "total_model_count": 21
-      },
-      {
-        "standardized_name": "rear_camera",
-        "display_name": "Rear-view / 360° camera system",
-        "category": "safety",
-        "category_label": "Safety",
-        "brands": {
-          "Mercedes-Benz": {
-            "name": "Park-Paket mit 360°-Kamera",
-            "avg_price": 613.7,
-            "min_price": 487.9,
-            "max_price": 1130.5,
-            "model_count": 21
-          }
-        },
-        "overall_avg_price": 613.7,
-        "overall_min_price": 487.9,
-        "overall_max_price": 1130.5,
+        "overall_avg_price": 11242.67,
+        "overall_min_price": 11007.5,
+        "overall_max_price": 11602.5,
         "total_model_count": 21
       },
       {
@@ -2419,60 +3228,41 @@
         "total_model_count": 21
       },
       {
-        "standardized_name": "amg abrisskante",
-        "display_name": "amg abrisskante",
+        "standardized_name": "manufaktur kalaharigold magno",
+        "display_name": "manufaktur kalaharigold magno",
         "category": "other",
         "category_label": "Other",
         "brands": {
           "Mercedes-Benz": {
-            "name": "AMG Abrisskante",
-            "avg_price": 398.65,
-            "min_price": 297.5,
-            "max_price": 416.5,
+            "name": "MANUFAKTUR kalaharigold magno",
+            "avg_price": 7259.0,
+            "min_price": 7021.0,
+            "max_price": 11781.0,
             "model_count": 20
           }
         },
-        "overall_avg_price": 398.65,
-        "overall_min_price": 297.5,
-        "overall_max_price": 416.5,
+        "overall_avg_price": 7259.0,
+        "overall_min_price": 7021.0,
+        "overall_max_price": 11781.0,
         "total_model_count": 20
       },
       {
-        "standardized_name": "elektronische schnittstelle für fernbedienung fahrhilfe",
-        "display_name": "elektronische schnittstelle für fernbedienung fahrhilfe",
+        "standardized_name": "manufaktur nachtschwarz magno",
+        "display_name": "manufaktur nachtschwarz magno",
         "category": "other",
         "category_label": "Other",
         "brands": {
           "Mercedes-Benz": {
-            "name": "Elektronische Schnittstelle für Fernbedienung Fahrhilfe",
-            "avg_price": 892.5,
-            "min_price": 892.5,
-            "max_price": 892.5,
+            "name": "MANUFAKTUR nachtschwarz magno",
+            "avg_price": 7021.0,
+            "min_price": 7021.0,
+            "max_price": 7021.0,
             "model_count": 20
           }
         },
-        "overall_avg_price": 892.5,
-        "overall_min_price": 892.5,
-        "overall_max_price": 892.5,
-        "total_model_count": 20
-      },
-      {
-        "standardized_name": "handbediengerät classic mit fernbedienung",
-        "display_name": "handbediengerät classic mit fernbedienung",
-        "category": "other",
-        "category_label": "Other",
-        "brands": {
-          "Mercedes-Benz": {
-            "name": "Handbediengerät Classic mit Fernbedienung",
-            "avg_price": 3570.0,
-            "min_price": 3570.0,
-            "max_price": 3570.0,
-            "model_count": 20
-          }
-        },
-        "overall_avg_price": 3570.0,
-        "overall_min_price": 3570.0,
-        "overall_max_price": 3570.0,
+        "overall_avg_price": 7021.0,
+        "overall_min_price": 7021.0,
+        "overall_max_price": 7021.0,
         "total_model_count": 20
       },
       {
@@ -2552,6 +3342,44 @@
         "total_model_count": 19
       },
       {
+        "standardized_name": "amg line exterieur",
+        "display_name": "amg line exterieur",
+        "category": "other",
+        "category_label": "Other",
+        "brands": {
+          "Mercedes-Benz": {
+            "name": "AMG Line Exterieur",
+            "avg_price": 3649.54,
+            "min_price": 2380.0,
+            "max_price": 4760.0,
+            "model_count": 19
+          }
+        },
+        "overall_avg_price": 3649.54,
+        "overall_min_price": 2380.0,
+        "overall_max_price": 4760.0,
+        "total_model_count": 19
+      },
+      {
+        "standardized_name": "garagentoröffner",
+        "display_name": "garagentoröffner",
+        "category": "other",
+        "category_label": "Other",
+        "brands": {
+          "Mercedes-Benz": {
+            "name": "Garagentoröffner",
+            "avg_price": 267.75,
+            "min_price": 267.75,
+            "max_price": 267.75,
+            "model_count": 19
+          }
+        },
+        "overall_avg_price": 267.75,
+        "overall_min_price": 267.75,
+        "overall_max_price": 267.75,
+        "total_model_count": 19
+      },
+      {
         "standardized_name": "innenhimmel stoff schwarz",
         "display_name": "innenhimmel stoff schwarz",
         "category": "other",
@@ -2590,42 +3418,42 @@
         "total_model_count": 19
       },
       {
-        "standardized_name": "mbux high-end fond-entertainment",
-        "display_name": "mbux high-end fond-entertainment",
+        "standardized_name": "on-board ac-lader bis 22 kw",
+        "display_name": "on-board ac-lader bis 22 kw",
         "category": "other",
         "category_label": "Other",
         "brands": {
           "Mercedes-Benz": {
-            "name": "MBUX High-End Fond-Entertainment",
-            "avg_price": 4250.18,
-            "min_price": 3736.6,
-            "max_price": 4510.1,
+            "name": "On-board AC-Lader bis 22 kW",
+            "avg_price": 739.05,
+            "min_price": 654.5,
+            "max_price": 1190.0,
             "model_count": 19
           }
         },
-        "overall_avg_price": 4250.18,
-        "overall_min_price": 3736.6,
-        "overall_max_price": 4510.1,
+        "overall_avg_price": 739.05,
+        "overall_min_price": 654.5,
+        "overall_max_price": 1190.0,
         "total_model_count": 19
       },
       {
-        "standardized_name": "samtbraun metallic",
-        "display_name": "samtbraun metallic",
+        "standardized_name": "amg abrisskante",
+        "display_name": "amg abrisskante",
         "category": "other",
         "category_label": "Other",
         "brands": {
           "Mercedes-Benz": {
-            "name": "samtbraun metallic",
-            "avg_price": 1127.37,
-            "min_price": 1071.0,
-            "max_price": 1178.1,
-            "model_count": 19
+            "name": "AMG Abrisskante",
+            "avg_price": 396.67,
+            "min_price": 297.5,
+            "max_price": 416.5,
+            "model_count": 18
           }
         },
-        "overall_avg_price": 1127.37,
-        "overall_min_price": 1071.0,
-        "overall_max_price": 1178.1,
-        "total_model_count": 19
+        "overall_avg_price": 396.67,
+        "overall_min_price": 297.5,
+        "overall_max_price": 416.5,
+        "total_model_count": 18
       },
       {
         "standardized_name": "aschenbechereinsatz für cupholder",
@@ -2666,6 +3494,44 @@
         "total_model_count": 18
       },
       {
+        "standardized_name": "elektronische schnittstelle für fernbedienung fahrhilfe",
+        "display_name": "elektronische schnittstelle für fernbedienung fahrhilfe",
+        "category": "other",
+        "category_label": "Other",
+        "brands": {
+          "Mercedes-Benz": {
+            "name": "Elektronische Schnittstelle für Fernbedienung Fahrhilfe",
+            "avg_price": 892.5,
+            "min_price": 892.5,
+            "max_price": 892.5,
+            "model_count": 18
+          }
+        },
+        "overall_avg_price": 892.5,
+        "overall_min_price": 892.5,
+        "overall_max_price": 892.5,
+        "total_model_count": 18
+      },
+      {
+        "standardized_name": "handbediengerät classic mit fernbedienung",
+        "display_name": "handbediengerät classic mit fernbedienung",
+        "category": "other",
+        "category_label": "Other",
+        "brands": {
+          "Mercedes-Benz": {
+            "name": "Handbediengerät Classic mit Fernbedienung",
+            "avg_price": 3570.0,
+            "min_price": 3570.0,
+            "max_price": 3570.0,
+            "model_count": 18
+          }
+        },
+        "overall_avg_price": 3570.0,
+        "overall_min_price": 3570.0,
+        "overall_max_price": 3570.0,
+        "total_model_count": 18
+      },
+      {
         "standardized_name": "mittelkonsole rautenoptik silbergrau",
         "display_name": "mittelkonsole rautenoptik silbergrau",
         "category": "other",
@@ -2701,44 +3567,6 @@
         "overall_avg_price": 74.38,
         "overall_min_price": 65.45,
         "overall_max_price": 83.3,
-        "total_model_count": 18
-      },
-      {
-        "standardized_name": "sodalithblau metallic",
-        "display_name": "sodalithblau metallic",
-        "category": "other",
-        "category_label": "Other",
-        "brands": {
-          "Mercedes-Benz": {
-            "name": "sodalithblau metallic",
-            "avg_price": 1076.95,
-            "min_price": 963.9,
-            "max_price": 1178.1,
-            "model_count": 18
-          }
-        },
-        "overall_avg_price": 1076.95,
-        "overall_min_price": 963.9,
-        "overall_max_price": 1178.1,
-        "total_model_count": 18
-      },
-      {
-        "standardized_name": "steering_wheel_heating",
-        "display_name": "Heated steering wheel",
-        "category": "comfort",
-        "category_label": "Comfort",
-        "brands": {
-          "Mercedes-Benz": {
-            "name": "Lenkradheizung",
-            "avg_price": 187.09,
-            "min_price": 119.0,
-            "max_price": 583.1,
-            "model_count": 18
-          }
-        },
-        "overall_avg_price": 187.09,
-        "overall_min_price": 119.0,
-        "overall_max_price": 583.1,
         "total_model_count": 18
       },
       {
@@ -2799,20 +3627,39 @@
         "total_model_count": 17
       },
       {
-        "standardized_name": "nautikblau metallic",
-        "display_name": "nautikblau metallic",
+        "standardized_name": "mbux high-end fond-entertainment",
+        "display_name": "mbux high-end fond-entertainment",
         "category": "other",
         "category_label": "Other",
         "brands": {
           "Mercedes-Benz": {
-            "name": "nautikblau metallic",
-            "avg_price": 1127.7,
+            "name": "MBUX High-End Fond-Entertainment",
+            "avg_price": 4219.6,
+            "min_price": 3736.6,
+            "max_price": 4510.1,
+            "model_count": 17
+          }
+        },
+        "overall_avg_price": 4219.6,
+        "overall_min_price": 3736.6,
+        "overall_max_price": 4510.1,
+        "total_model_count": 17
+      },
+      {
+        "standardized_name": "samtbraun metallic",
+        "display_name": "samtbraun metallic",
+        "category": "other",
+        "category_label": "Other",
+        "brands": {
+          "Mercedes-Benz": {
+            "name": "samtbraun metallic",
+            "avg_price": 1121.4,
             "min_price": 1071.0,
             "max_price": 1178.1,
             "model_count": 17
           }
         },
-        "overall_avg_price": 1127.7,
+        "overall_avg_price": 1121.4,
         "overall_min_price": 1071.0,
         "overall_max_price": 1178.1,
         "total_model_count": 17
@@ -2837,25 +3684,6 @@
         "total_model_count": 17
       },
       {
-        "standardized_name": "zierelemente holz walnuss braun offenporig",
-        "display_name": "zierelemente holz walnuss braun offenporig",
-        "category": "other",
-        "category_label": "Other",
-        "brands": {
-          "Mercedes-Benz": {
-            "name": "Zierelemente Holz Walnuss braun offenporig",
-            "avg_price": 394.1,
-            "min_price": 345.1,
-            "max_price": 404.6,
-            "model_count": 17
-          }
-        },
-        "overall_avg_price": 394.1,
-        "overall_min_price": 345.1,
-        "overall_max_price": 404.6,
-        "total_model_count": 17
-      },
-      {
         "standardized_name": "avantgarde advanced plus",
         "display_name": "avantgarde advanced plus",
         "category": "other",
@@ -2875,22 +3703,22 @@
         "total_model_count": 16
       },
       {
-        "standardized_name": "fondkomfort-paket plus",
-        "display_name": "fondkomfort-paket plus",
+        "standardized_name": "elektromechanische türöffnung, e-latch",
+        "display_name": "elektromechanische türöffnung, e-latch",
         "category": "other",
         "category_label": "Other",
         "brands": {
-          "Mercedes-Benz": {
-            "name": "Fondkomfort-Paket Plus",
-            "avg_price": 4937.76,
-            "min_price": 2618.0,
-            "max_price": 6842.5,
+          "Lexus": {
+            "name": "Elektromechanische Türöffnung, E-Latch",
+            "avg_price": null,
+            "min_price": null,
+            "max_price": null,
             "model_count": 16
           }
         },
-        "overall_avg_price": 4937.76,
-        "overall_min_price": 2618.0,
-        "overall_max_price": 6842.5,
+        "overall_avg_price": null,
+        "overall_min_price": null,
+        "overall_max_price": null,
         "total_model_count": 16
       },
       {
@@ -3711,6 +4539,44 @@
         "total_model_count": 16
       },
       {
+        "standardized_name": "sodalithblau metallic",
+        "display_name": "sodalithblau metallic",
+        "category": "other",
+        "category_label": "Other",
+        "brands": {
+          "Mercedes-Benz": {
+            "name": "sodalithblau metallic",
+            "avg_price": 1064.31,
+            "min_price": 963.9,
+            "max_price": 1178.1,
+            "model_count": 16
+          }
+        },
+        "overall_avg_price": 1064.31,
+        "overall_min_price": 963.9,
+        "overall_max_price": 1178.1,
+        "total_model_count": 16
+      },
+      {
+        "standardized_name": "steering_wheel_heating",
+        "display_name": "Heated steering wheel",
+        "category": "comfort",
+        "category_label": "Comfort",
+        "brands": {
+          "Mercedes-Benz": {
+            "name": "Lenkradheizung",
+            "avg_price": 195.61,
+            "min_price": 119.0,
+            "max_price": 583.1,
+            "model_count": 16
+          }
+        },
+        "overall_avg_price": 195.61,
+        "overall_min_price": 119.0,
+        "overall_max_price": 583.1,
+        "total_model_count": 16
+      },
+      {
         "standardized_name": "technik-paket",
         "display_name": "technik-paket",
         "category": "other",
@@ -3806,25 +4672,6 @@
         "total_model_count": 15
       },
       {
-        "standardized_name": "frontscheibe, beheizt",
-        "display_name": "frontscheibe, beheizt",
-        "category": "other",
-        "category_label": "Other",
-        "brands": {
-          "Mercedes-Benz": {
-            "name": "Frontscheibe, beheizt",
-            "avg_price": 652.12,
-            "min_price": 499.8,
-            "max_price": 690.2,
-            "model_count": 15
-          }
-        },
-        "overall_avg_price": 652.12,
-        "overall_min_price": 499.8,
-        "overall_max_price": 690.2,
-        "total_model_count": 15
-      },
-      {
         "standardized_name": "gleichstrom-ladesystem (dc-laden zusätzlich mit 400 v)",
         "display_name": "gleichstrom-ladesystem (dc-laden zusätzlich mit 400 v)",
         "category": "other",
@@ -3882,22 +4729,22 @@
         "total_model_count": 15
       },
       {
-        "standardized_name": "trennnetz",
-        "display_name": "trennnetz",
+        "standardized_name": "nautikblau metallic",
+        "display_name": "nautikblau metallic",
         "category": "other",
         "category_label": "Other",
         "brands": {
           "Mercedes-Benz": {
-            "name": "Trennnetz",
-            "avg_price": 168.19,
-            "min_price": 130.9,
-            "max_price": 178.5,
+            "name": "nautikblau metallic",
+            "avg_price": 1120.98,
+            "min_price": 1071.0,
+            "max_price": 1178.1,
             "model_count": 15
           }
         },
-        "overall_avg_price": 168.19,
-        "overall_min_price": 130.9,
-        "overall_max_price": 178.5,
+        "overall_avg_price": 1120.98,
+        "overall_min_price": 1071.0,
+        "overall_max_price": 1178.1,
         "total_model_count": 15
       },
       {
@@ -3920,23 +4767,23 @@
         "total_model_count": 15
       },
       {
-        "standardized_name": "ambient_lighting",
-        "display_name": "Configurable ambient interior lighting",
-        "category": "interior",
-        "category_label": "Interior",
+        "standardized_name": "zierelemente holz walnuss braun offenporig",
+        "display_name": "zierelemente holz walnuss braun offenporig",
+        "category": "other",
+        "category_label": "Other",
         "brands": {
           "Mercedes-Benz": {
-            "name": "Ambientebeleuchtung Plus",
-            "avg_price": 524.45,
-            "min_price": 333.2,
-            "max_price": 1011.5,
-            "model_count": 14
+            "name": "Zierelemente Holz Walnuss braun offenporig",
+            "avg_price": 400.63,
+            "min_price": 345.1,
+            "max_price": 404.6,
+            "model_count": 15
           }
         },
-        "overall_avg_price": 524.45,
-        "overall_min_price": 333.2,
-        "overall_max_price": 1011.5,
-        "total_model_count": 14
+        "overall_avg_price": 400.63,
+        "overall_min_price": 345.1,
+        "overall_max_price": 404.6,
+        "total_model_count": 15
       },
       {
         "standardized_name": "amg tankdeckel",
@@ -3955,6 +4802,25 @@
         "overall_avg_price": 116.79,
         "overall_min_price": 116.62,
         "overall_max_price": 119.0,
+        "total_model_count": 14
+      },
+      {
+        "standardized_name": "fondkomfort-paket plus",
+        "display_name": "fondkomfort-paket plus",
+        "category": "other",
+        "category_label": "Other",
+        "brands": {
+          "Mercedes-Benz": {
+            "name": "Fondkomfort-Paket Plus",
+            "avg_price": 5090.65,
+            "min_price": 2618.0,
+            "max_price": 6842.5,
+            "model_count": 14
+          }
+        },
+        "overall_avg_price": 5090.65,
+        "overall_min_price": 2618.0,
+        "overall_max_price": 6842.5,
         "total_model_count": 14
       },
       {
@@ -4053,25 +4919,6 @@
         "total_model_count": 13
       },
       {
-        "standardized_name": "digitales extra: hinterachslenkung",
-        "display_name": "digitales extra: hinterachslenkung",
-        "category": "other",
-        "category_label": "Other",
-        "brands": {
-          "Mercedes-Benz": {
-            "name": "Digitales Extra: Hinterachslenkung",
-            "avg_price": 970.31,
-            "min_price": 714.0,
-            "max_price": 1547.0,
-            "model_count": 13
-          }
-        },
-        "overall_avg_price": 970.31,
-        "overall_min_price": 714.0,
-        "overall_max_price": 1547.0,
-        "total_model_count": 13
-      },
-      {
         "standardized_name": "e-active body control mit intelligenter dämpferregelung und digitalen extras",
         "display_name": "e-active body control mit intelligenter dämpferregelung und digitalen extras",
         "category": "other",
@@ -4110,41 +4957,22 @@
         "total_model_count": 13
       },
       {
-        "standardized_name": "innenhimmel mikrofaser microcut schwarz",
-        "display_name": "innenhimmel mikrofaser microcut schwarz",
+        "standardized_name": "frontscheibe, beheizt",
+        "display_name": "frontscheibe, beheizt",
         "category": "other",
         "category_label": "Other",
         "brands": {
           "Mercedes-Benz": {
-            "name": "Innenhimmel Mikrofaser MICROCUT schwarz",
-            "avg_price": 1921.39,
-            "min_price": 1904.0,
-            "max_price": 2017.05,
+            "name": "Frontscheibe, beheizt",
+            "avg_price": 646.26,
+            "min_price": 499.8,
+            "max_price": 690.2,
             "model_count": 13
           }
         },
-        "overall_avg_price": 1921.39,
-        "overall_min_price": 1904.0,
-        "overall_max_price": 2017.05,
-        "total_model_count": 13
-      },
-      {
-        "standardized_name": "manufaktur rubellitrot metallic",
-        "display_name": "manufaktur rubellitrot metallic",
-        "category": "other",
-        "category_label": "Other",
-        "brands": {
-          "Mercedes-Benz": {
-            "name": "MANUFAKTUR rubellitrot metallic",
-            "avg_price": 5245.15,
-            "min_price": 4700.5,
-            "max_price": 11781.0,
-            "model_count": 13
-          }
-        },
-        "overall_avg_price": 5245.15,
-        "overall_min_price": 4700.5,
-        "overall_max_price": 11781.0,
+        "overall_avg_price": 646.26,
+        "overall_min_price": 499.8,
+        "overall_max_price": 690.2,
         "total_model_count": 13
       },
       {
@@ -4164,6 +4992,25 @@
         "overall_avg_price": 595.0,
         "overall_min_price": 595.0,
         "overall_max_price": 595.0,
+        "total_model_count": 13
+      },
+      {
+        "standardized_name": "trennnetz",
+        "display_name": "trennnetz",
+        "category": "other",
+        "category_label": "Other",
+        "brands": {
+          "Mercedes-Benz": {
+            "name": "Trennnetz",
+            "avg_price": 166.6,
+            "min_price": 130.9,
+            "max_price": 178.5,
+            "model_count": 13
+          }
+        },
+        "overall_avg_price": 166.6,
+        "overall_min_price": 130.9,
+        "overall_max_price": 178.5,
         "total_model_count": 13
       },
       {
@@ -4281,25 +5128,6 @@
         "total_model_count": 12
       },
       {
-        "standardized_name": "theft_protection",
-        "display_name": "Vehicle theft protection / alarm system",
-        "category": "safety",
-        "category_label": "Safety",
-        "brands": {
-          "Mercedes-Benz": {
-            "name": "Einbruch- und Diebstahlwarnanlage mit Vorrüstung für Kollisionserkennung",
-            "avg_price": 366.42,
-            "min_price": 297.5,
-            "max_price": 523.6,
-            "model_count": 12
-          }
-        },
-        "overall_avg_price": 366.42,
-        "overall_min_price": 297.5,
-        "overall_max_price": 523.6,
-        "total_model_count": 12
-      },
-      {
         "standardized_name": "advanced soundsystem",
         "display_name": "advanced soundsystem",
         "category": "other",
@@ -4354,6 +5182,44 @@
         "overall_avg_price": 757.27,
         "overall_min_price": 476.0,
         "overall_max_price": 975.8,
+        "total_model_count": 11
+      },
+      {
+        "standardized_name": "digitales extra: hinterachslenkung",
+        "display_name": "digitales extra: hinterachslenkung",
+        "category": "other",
+        "category_label": "Other",
+        "brands": {
+          "Mercedes-Benz": {
+            "name": "Digitales Extra: Hinterachslenkung",
+            "avg_price": 865.45,
+            "min_price": 714.0,
+            "max_price": 1547.0,
+            "model_count": 11
+          }
+        },
+        "overall_avg_price": 865.45,
+        "overall_min_price": 714.0,
+        "overall_max_price": 1547.0,
+        "total_model_count": 11
+      },
+      {
+        "standardized_name": "innenhimmel mikrofaser microcut schwarz",
+        "display_name": "innenhimmel mikrofaser microcut schwarz",
+        "category": "other",
+        "category_label": "Other",
+        "brands": {
+          "Mercedes-Benz": {
+            "name": "Innenhimmel Mikrofaser MICROCUT schwarz",
+            "avg_price": 1924.55,
+            "min_price": 1904.0,
+            "max_price": 2017.05,
+            "model_count": 11
+          }
+        },
+        "overall_avg_price": 1924.55,
+        "overall_min_price": 1904.0,
+        "overall_max_price": 2017.05,
         "total_model_count": 11
       },
       {
@@ -4430,6 +5296,25 @@
         "overall_avg_price": 4700.5,
         "overall_min_price": 4700.5,
         "overall_max_price": 4700.5,
+        "total_model_count": 11
+      },
+      {
+        "standardized_name": "manufaktur rubellitrot metallic",
+        "display_name": "manufaktur rubellitrot metallic",
+        "category": "other",
+        "category_label": "Other",
+        "brands": {
+          "Mercedes-Benz": {
+            "name": "MANUFAKTUR rubellitrot metallic",
+            "avg_price": 5344.18,
+            "min_price": 4700.5,
+            "max_price": 11781.0,
+            "model_count": 11
+          }
+        },
+        "overall_avg_price": 5344.18,
+        "overall_min_price": 4700.5,
+        "overall_max_price": 11781.0,
         "total_model_count": 11
       },
       {
@@ -4718,25 +5603,6 @@
         "total_model_count": 10
       },
       {
-        "standardized_name": "winter-paket plus mit 21\" winter-kompletträdern",
-        "display_name": "winter-paket plus mit 21\" winter-kompletträdern",
-        "category": "other",
-        "category_label": "Other",
-        "brands": {
-          "Mercedes-Benz": {
-            "name": "Winter-Paket Plus mit 21\" Winter-Kompletträdern",
-            "avg_price": 4877.81,
-            "min_price": 4123.35,
-            "max_price": 5283.6,
-            "model_count": 10
-          }
-        },
-        "overall_avg_price": 4877.81,
-        "overall_min_price": 4123.35,
-        "overall_max_price": 5283.6,
-        "total_model_count": 10
-      },
-      {
         "standardized_name": "dark petrol uni",
         "display_name": "dark petrol uni",
         "category": "other",
@@ -4867,63 +5733,6 @@
         "overall_avg_price": 747.72,
         "overall_min_price": 493.85,
         "overall_max_price": 874.65,
-        "total_model_count": 9
-      },
-      {
-        "standardized_name": "manufaktur schwarz sparkling",
-        "display_name": "manufaktur schwarz sparkling",
-        "category": "other",
-        "category_label": "Other",
-        "brands": {
-          "Mercedes-Benz": {
-            "name": "MANUFAKTUR schwarz sparkling",
-            "avg_price": 8687.0,
-            "min_price": 8687.0,
-            "max_price": 8687.0,
-            "model_count": 9
-          }
-        },
-        "overall_avg_price": 8687.0,
-        "overall_min_price": 8687.0,
-        "overall_max_price": 8687.0,
-        "total_model_count": 9
-      },
-      {
-        "standardized_name": "manufaktur verdesilber magno",
-        "display_name": "manufaktur verdesilber magno",
-        "category": "other",
-        "category_label": "Other",
-        "brands": {
-          "Mercedes-Benz": {
-            "name": "MANUFAKTUR verdesilber magno",
-            "avg_price": 7021.0,
-            "min_price": 7021.0,
-            "max_price": 7021.0,
-            "model_count": 9
-          }
-        },
-        "overall_avg_price": 7021.0,
-        "overall_min_price": 7021.0,
-        "overall_max_price": 7021.0,
-        "total_model_count": 9
-      },
-      {
-        "standardized_name": "scheibenwaschanlage beheizt",
-        "display_name": "scheibenwaschanlage beheizt",
-        "category": "other",
-        "category_label": "Other",
-        "brands": {
-          "Mercedes-Benz": {
-            "name": "Scheibenwaschanlage beheizt",
-            "avg_price": 180.48,
-            "min_price": 136.85,
-            "max_price": 202.3,
-            "model_count": 9
-          }
-        },
-        "overall_avg_price": 180.48,
-        "overall_min_price": 136.85,
-        "overall_max_price": 202.3,
         "total_model_count": 9
       },
       {
@@ -5535,6 +6344,25 @@
         "total_model_count": 8
       },
       {
+        "standardized_name": "winter-paket plus mit 21\" winter-kompletträdern",
+        "display_name": "winter-paket plus mit 21\" winter-kompletträdern",
+        "category": "other",
+        "category_label": "Other",
+        "brands": {
+          "Mercedes-Benz": {
+            "name": "Winter-Paket Plus mit 21\" Winter-Kompletträdern",
+            "avg_price": 5066.43,
+            "min_price": 4123.35,
+            "max_price": 5283.6,
+            "model_count": 8
+          }
+        },
+        "overall_avg_price": 5066.43,
+        "overall_min_price": 4123.35,
+        "overall_max_price": 5283.6,
+        "total_model_count": 8
+      },
+      {
         "standardized_name": "zierelemente holz birke anthrazit offenporig",
         "display_name": "zierelemente holz birke anthrazit offenporig",
         "category": "other",
@@ -5668,6 +6496,32 @@
         "total_model_count": 7
       },
       {
+        "standardized_name": "blind_spot_monitor",
+        "display_name": "Blind spot monitoring / exit warning",
+        "category": "safety",
+        "category_label": "Safety",
+        "brands": {
+          "Mercedes-Benz": {
+            "name": "Totwinkel-Assistent",
+            "avg_price": 535.5,
+            "min_price": 535.5,
+            "max_price": 535.5,
+            "model_count": 5
+          },
+          "Lexus": {
+            "name": "Ausstiegswarnung Safe Exit Assist",
+            "avg_price": null,
+            "min_price": null,
+            "max_price": null,
+            "model_count": 2
+          }
+        },
+        "overall_avg_price": 535.5,
+        "overall_min_price": 535.5,
+        "overall_max_price": 535.5,
+        "total_model_count": 7
+      },
+      {
         "standardized_name": "bremssättel schwarz lackiert für amg hochleistungs-verbundbremsanlage",
         "display_name": "bremssättel schwarz lackiert für amg hochleistungs-verbundbremsanlage",
         "category": "other",
@@ -5725,6 +6579,44 @@
         "total_model_count": 7
       },
       {
+        "standardized_name": "manufaktur schwarz sparkling",
+        "display_name": "manufaktur schwarz sparkling",
+        "category": "other",
+        "category_label": "Other",
+        "brands": {
+          "Mercedes-Benz": {
+            "name": "MANUFAKTUR schwarz sparkling",
+            "avg_price": 8687.0,
+            "min_price": 8687.0,
+            "max_price": 8687.0,
+            "model_count": 7
+          }
+        },
+        "overall_avg_price": 8687.0,
+        "overall_min_price": 8687.0,
+        "overall_max_price": 8687.0,
+        "total_model_count": 7
+      },
+      {
+        "standardized_name": "manufaktur verdesilber magno",
+        "display_name": "manufaktur verdesilber magno",
+        "category": "other",
+        "category_label": "Other",
+        "brands": {
+          "Mercedes-Benz": {
+            "name": "MANUFAKTUR verdesilber magno",
+            "avg_price": 7021.0,
+            "min_price": 7021.0,
+            "max_price": 7021.0,
+            "model_count": 7
+          }
+        },
+        "overall_avg_price": 7021.0,
+        "overall_min_price": 7021.0,
+        "overall_max_price": 7021.0,
+        "total_model_count": 7
+      },
+      {
         "standardized_name": "mbux interieur-assistent",
         "display_name": "mbux interieur-assistent",
         "category": "other",
@@ -5741,6 +6633,25 @@
         "overall_avg_price": 489.6,
         "overall_min_price": 464.1,
         "overall_max_price": 642.6,
+        "total_model_count": 7
+      },
+      {
+        "standardized_name": "scheibenwaschanlage beheizt",
+        "display_name": "scheibenwaschanlage beheizt",
+        "category": "other",
+        "category_label": "Other",
+        "brands": {
+          "Mercedes-Benz": {
+            "name": "Scheibenwaschanlage beheizt",
+            "avg_price": 192.95,
+            "min_price": 136.85,
+            "max_price": 202.3,
+            "model_count": 7
+          }
+        },
+        "overall_avg_price": 192.95,
+        "overall_min_price": 136.85,
+        "overall_max_price": 202.3,
         "total_model_count": 7
       },
       {
@@ -6523,6 +7434,25 @@
         "total_model_count": 5
       },
       {
+        "standardized_name": "ac_charging",
+        "display_name": "AC charging capability",
+        "category": "technology",
+        "category_label": "Technology",
+        "brands": {
+          "Lexus": {
+            "name": "22 kW AC Ladeanschluss (3-phasig) Typ 2/Mennekes",
+            "avg_price": null,
+            "min_price": null,
+            "max_price": null,
+            "model_count": 5
+          }
+        },
+        "overall_avg_price": null,
+        "overall_min_price": null,
+        "overall_max_price": null,
+        "total_model_count": 5
+      },
+      {
         "standardized_name": "amg driver's package",
         "display_name": "amg driver's package",
         "category": "other",
@@ -6558,25 +7488,6 @@
         "overall_avg_price": 2558.5,
         "overall_min_price": 2558.5,
         "overall_max_price": 2558.5,
-        "total_model_count": 5
-      },
-      {
-        "standardized_name": "blind_spot_monitor",
-        "display_name": "Blind spot monitoring / exit warning",
-        "category": "safety",
-        "category_label": "Safety",
-        "brands": {
-          "Mercedes-Benz": {
-            "name": "Totwinkel-Assistent",
-            "avg_price": 535.5,
-            "min_price": 535.5,
-            "max_price": 535.5,
-            "model_count": 5
-          }
-        },
-        "overall_avg_price": 535.5,
-        "overall_min_price": 535.5,
-        "overall_max_price": 535.5,
         "total_model_count": 5
       },
       {
@@ -6653,25 +7564,6 @@
         "overall_avg_price": 297.5,
         "overall_min_price": 297.5,
         "overall_max_price": 297.5,
-        "total_model_count": 5
-      },
-      {
-        "standardized_name": "liftsystem vorderachse",
-        "display_name": "liftsystem vorderachse",
-        "category": "other",
-        "category_label": "Other",
-        "brands": {
-          "Mercedes-Benz": {
-            "name": "Liftsystem Vorderachse",
-            "avg_price": 2142.0,
-            "min_price": 2142.0,
-            "max_price": 2142.0,
-            "model_count": 5
-          }
-        },
-        "overall_avg_price": 2142.0,
-        "overall_min_price": 2142.0,
-        "overall_max_price": 2142.0,
         "total_model_count": 5
       },
       {
@@ -6903,25 +7795,6 @@
         "total_model_count": 5
       },
       {
-        "standardized_name": "zierelemente holz nussbaum schiffsdeck offenporig",
-        "display_name": "zierelemente holz nussbaum schiffsdeck offenporig",
-        "category": "other",
-        "category_label": "Other",
-        "brands": {
-          "Mercedes-Benz": {
-            "name": "Zierelemente Holz Nussbaum Schiffsdeck offenporig",
-            "avg_price": 2256.24,
-            "min_price": 821.1,
-            "max_price": 3213.0,
-            "model_count": 5
-          }
-        },
-        "overall_avg_price": 2256.24,
-        "overall_min_price": 821.1,
-        "overall_max_price": 3213.0,
-        "total_model_count": 5
-      },
-      {
         "standardized_name": "advanced-paket mit digitalen extras",
         "display_name": "advanced-paket mit digitalen extras",
         "category": "other",
@@ -6960,25 +7833,6 @@
         "total_model_count": 4
       },
       {
-        "standardized_name": "amg line interieur",
-        "display_name": "amg line interieur",
-        "category": "other",
-        "category_label": "Other",
-        "brands": {
-          "Mercedes-Benz": {
-            "name": "AMG Line Interieur",
-            "avg_price": 1975.4,
-            "min_price": 1785.0,
-            "max_price": 2368.1,
-            "model_count": 4
-          }
-        },
-        "overall_avg_price": 1975.4,
-        "overall_min_price": 1785.0,
-        "overall_max_price": 2368.1,
-        "total_model_count": 4
-      },
-      {
         "standardized_name": "amg monza grau magno",
         "display_name": "amg monza grau magno",
         "category": "other",
@@ -7014,6 +7868,25 @@
         "overall_avg_price": 1719.55,
         "overall_min_price": 1719.55,
         "overall_max_price": 1719.55,
+        "total_model_count": 4
+      },
+      {
+        "standardized_name": "auto_high_beam",
+        "display_name": "Automatic high beam control",
+        "category": "lighting",
+        "category_label": "Lighting",
+        "brands": {
+          "Lexus": {
+            "name": "Leuchtweitenregulierung dynamisch",
+            "avg_price": null,
+            "min_price": null,
+            "max_price": null,
+            "model_count": 4
+          }
+        },
+        "overall_avg_price": null,
+        "overall_min_price": null,
+        "overall_max_price": null,
         "total_model_count": 4
       },
       {
@@ -7147,25 +8020,6 @@
         "overall_avg_price": 2121.18,
         "overall_min_price": 1648.15,
         "overall_max_price": 2278.85,
-        "total_model_count": 4
-      },
-      {
-        "standardized_name": "fondsitz-paket plus",
-        "display_name": "fondsitz-paket plus",
-        "category": "other",
-        "category_label": "Other",
-        "brands": {
-          "Mercedes-Benz": {
-            "name": "Fondsitz-Paket Plus",
-            "avg_price": 2662.62,
-            "min_price": 2261.0,
-            "max_price": 2796.5,
-            "model_count": 4
-          }
-        },
-        "overall_avg_price": 2662.62,
-        "overall_min_price": 2261.0,
-        "overall_max_price": 2796.5,
         "total_model_count": 4
       },
       {
@@ -8613,6 +9467,25 @@
         "total_model_count": 4
       },
       {
+        "standardized_name": "tow_hitch",
+        "display_name": "Trailer hitch / towing capability",
+        "category": "exterior",
+        "category_label": "Exterior",
+        "brands": {
+          "Lexus": {
+            "name": "Anhängelast 1.500kg",
+            "avg_price": null,
+            "min_price": null,
+            "max_price": null,
+            "model_count": 4
+          }
+        },
+        "overall_avg_price": null,
+        "overall_min_price": null,
+        "overall_max_price": null,
+        "total_model_count": 4
+      },
+      {
         "standardized_name": "umfeldbeleuchtung mit projektion des markenlogos",
         "display_name": "umfeldbeleuchtung mit projektion des markenlogos",
         "category": "other",
@@ -8765,6 +9638,25 @@
         "total_model_count": 4
       },
       {
+        "standardized_name": "zierelemente holz nussbaum schiffsdeck offenporig",
+        "display_name": "zierelemente holz nussbaum schiffsdeck offenporig",
+        "category": "other",
+        "category_label": "Other",
+        "brands": {
+          "Mercedes-Benz": {
+            "name": "Zierelemente Holz Nussbaum Schiffsdeck offenporig",
+            "avg_price": 2017.05,
+            "min_price": 821.1,
+            "max_price": 3213.0,
+            "model_count": 4
+          }
+        },
+        "overall_avg_price": 2017.05,
+        "overall_min_price": 821.1,
+        "overall_max_price": 3213.0,
+        "total_model_count": 4
+      },
+      {
         "standardized_name": "zierelemente holz sen hellbraun glänzend",
         "display_name": "zierelemente holz sen hellbraun glänzend",
         "category": "other",
@@ -8860,6 +9752,25 @@
         "total_model_count": 3
       },
       {
+        "standardized_name": "active_noise_cancellation",
+        "display_name": "Active noise cancellation",
+        "category": "comfort",
+        "category_label": "Comfort",
+        "brands": {
+          "Lexus": {
+            "name": "Geräuschdämpfung ANC (Active Noise Cancellation)",
+            "avg_price": null,
+            "min_price": null,
+            "max_price": null,
+            "model_count": 3
+          }
+        },
+        "overall_avg_price": null,
+        "overall_min_price": null,
+        "overall_max_price": null,
+        "total_model_count": 3
+      },
+      {
         "standardized_name": "aktiv-multikontursitz-paket plus",
         "display_name": "aktiv-multikontursitz-paket plus",
         "category": "other",
@@ -8936,6 +9847,25 @@
         "total_model_count": 3
       },
       {
+        "standardized_name": "digital_cockpit",
+        "display_name": "Digital instrument cluster / cockpit",
+        "category": "technology",
+        "category_label": "Technology",
+        "brands": {
+          "Lexus": {
+            "name": "Digitaler Rückspiegel",
+            "avg_price": null,
+            "min_price": null,
+            "max_price": null,
+            "model_count": 3
+          }
+        },
+        "overall_avg_price": null,
+        "overall_min_price": null,
+        "overall_max_price": null,
+        "total_model_count": 3
+      },
+      {
         "standardized_name": "digitales extra: anhängerrangier-assistent",
         "display_name": "digitales extra: anhängerrangier-assistent",
         "category": "other",
@@ -8971,6 +9901,25 @@
         "overall_avg_price": 1071.0,
         "overall_min_price": 1071.0,
         "overall_max_price": 1071.0,
+        "total_model_count": 3
+      },
+      {
+        "standardized_name": "electric_tailgate",
+        "display_name": "Electrically operated tailgate",
+        "category": "comfort",
+        "category_label": "Comfort",
+        "brands": {
+          "Lexus": {
+            "name": "Heckklappe elektrisch öffnend und schließend",
+            "avg_price": null,
+            "min_price": null,
+            "max_price": null,
+            "model_count": 3
+          }
+        },
+        "overall_avg_price": null,
+        "overall_min_price": null,
+        "overall_max_price": null,
         "total_model_count": 3
       },
       {
@@ -9031,6 +9980,51 @@
         "total_model_count": 3
       },
       {
+        "standardized_name": "fog_lights",
+        "display_name": "Front fog lights / cornering lights",
+        "category": "lighting",
+        "category_label": "Lighting",
+        "brands": {
+          "Mercedes-Benz": {
+            "name": "Nebelscheinwerfer",
+            "avg_price": 220.15,
+            "min_price": 220.15,
+            "max_price": 220.15,
+            "model_count": 1
+          },
+          "Lexus": {
+            "name": "Abbiegelicht",
+            "avg_price": null,
+            "min_price": null,
+            "max_price": null,
+            "model_count": 2
+          }
+        },
+        "overall_avg_price": 220.15,
+        "overall_min_price": 220.15,
+        "overall_max_price": 220.15,
+        "total_model_count": 3
+      },
+      {
+        "standardized_name": "heated_rear_seats",
+        "display_name": "Rear seat / knee heating",
+        "category": "comfort",
+        "category_label": "Comfort",
+        "brands": {
+          "Lexus": {
+            "name": "Knieheizung (Infrarot)",
+            "avg_price": null,
+            "min_price": null,
+            "max_price": null,
+            "model_count": 3
+          }
+        },
+        "overall_avg_price": null,
+        "overall_min_price": null,
+        "overall_max_price": null,
+        "total_model_count": 3
+      },
+      {
         "standardized_name": "hightechsilber metallic / selenitgrau metallic",
         "display_name": "hightechsilber metallic / selenitgrau metallic",
         "category": "other",
@@ -9047,25 +10041,6 @@
         "overall_avg_price": 18445.0,
         "overall_min_price": 18445.0,
         "overall_max_price": 18445.0,
-        "total_model_count": 3
-      },
-      {
-        "standardized_name": "innenhimmel mikrofaser microcut macchiatobeige",
-        "display_name": "innenhimmel mikrofaser microcut macchiatobeige",
-        "category": "other",
-        "category_label": "Other",
-        "brands": {
-          "Mercedes-Benz": {
-            "name": "Innenhimmel Mikrofaser MICROCUT macchiatobeige",
-            "avg_price": 1904.0,
-            "min_price": 1904.0,
-            "max_price": 1904.0,
-            "model_count": 3
-          }
-        },
-        "overall_avg_price": 1904.0,
-        "overall_min_price": 1904.0,
-        "overall_max_price": 1904.0,
         "total_model_count": 3
       },
       {
@@ -9142,25 +10117,6 @@
         "overall_avg_price": 51.57,
         "overall_min_price": 35.7,
         "overall_max_price": 83.3,
-        "total_model_count": 3
-      },
-      {
-        "standardized_name": "manufaktur emblem-paket",
-        "display_name": "manufaktur emblem-paket",
-        "category": "other",
-        "category_label": "Other",
-        "brands": {
-          "Mercedes-Benz": {
-            "name": "MANUFAKTUR Emblem-Paket",
-            "avg_price": 1844.5,
-            "min_price": 1844.5,
-            "max_price": 1844.5,
-            "model_count": 3
-          }
-        },
-        "overall_avg_price": 1844.5,
-        "overall_min_price": 1844.5,
-        "overall_max_price": 1844.5,
         "total_model_count": 3
       },
       {
@@ -9430,25 +10386,6 @@
         "total_model_count": 3
       },
       {
-        "standardized_name": "sicherheitsgurte vorn beheizt",
-        "display_name": "sicherheitsgurte vorn beheizt",
-        "category": "other",
-        "category_label": "Other",
-        "brands": {
-          "Mercedes-Benz": {
-            "name": "Sicherheitsgurte vorn beheizt",
-            "avg_price": 416.5,
-            "min_price": 416.5,
-            "max_price": 416.5,
-            "model_count": 3
-          }
-        },
-        "overall_avg_price": 416.5,
-        "overall_min_price": 416.5,
-        "overall_max_price": 416.5,
-        "total_model_count": 3
-      },
-      {
         "standardized_name": "smaragdgrün metallic / mojavesilber metallic",
         "display_name": "smaragdgrün metallic / mojavesilber metallic",
         "category": "other",
@@ -9563,44 +10500,6 @@
         "total_model_count": 3
       },
       {
-        "standardized_name": "umfeldbeleuchtung mit animierter projektion des mercedes-benz pattern, 4-fach",
-        "display_name": "umfeldbeleuchtung mit animierter projektion des mercedes-benz pattern, 4-fach",
-        "category": "other",
-        "category_label": "Other",
-        "brands": {
-          "Mercedes-Benz": {
-            "name": "Umfeldbeleuchtung mit animierter Projektion des Mercedes-Benz Pattern, 4-fach",
-            "avg_price": 261.8,
-            "min_price": 214.2,
-            "max_price": 357.0,
-            "model_count": 3
-          }
-        },
-        "overall_avg_price": 261.8,
-        "overall_min_price": 214.2,
-        "overall_max_price": 357.0,
-        "total_model_count": 3
-      },
-      {
-        "standardized_name": "warmgrey uni",
-        "display_name": "warmgrey uni",
-        "category": "other",
-        "category_label": "Other",
-        "brands": {
-          "Mercedes-Benz": {
-            "name": "warmgrey uni",
-            "avg_price": 357.0,
-            "min_price": 357.0,
-            "max_price": 357.0,
-            "model_count": 3
-          }
-        },
-        "overall_avg_price": 357.0,
-        "overall_min_price": 357.0,
-        "overall_max_price": 357.0,
-        "total_model_count": 3
-      },
-      {
         "standardized_name": "winter-paket plus mit 22\" winter-kompletträdern",
         "display_name": "winter-paket plus mit 22\" winter-kompletträdern",
         "category": "other",
@@ -9693,25 +10592,6 @@
         "overall_avg_price": 404.6,
         "overall_min_price": 404.6,
         "overall_max_price": 404.6,
-        "total_model_count": 3
-      },
-      {
-        "standardized_name": "zierelemente holz pappel anthrazit offenporig fine lines",
-        "display_name": "zierelemente holz pappel anthrazit offenporig fine lines",
-        "category": "other",
-        "category_label": "Other",
-        "brands": {
-          "Mercedes-Benz": {
-            "name": "Zierelemente Holz Pappel anthrazit offenporig fine lines",
-            "avg_price": 880.6,
-            "min_price": 880.6,
-            "max_price": 880.6,
-            "model_count": 3
-          }
-        },
-        "overall_avg_price": 880.6,
-        "overall_min_price": 880.6,
-        "overall_max_price": 880.6,
         "total_model_count": 3
       },
       {
@@ -9886,6 +10766,25 @@
         "total_model_count": 2
       },
       {
+        "standardized_name": "amg line interieur",
+        "display_name": "amg line interieur",
+        "category": "other",
+        "category_label": "Other",
+        "brands": {
+          "Mercedes-Benz": {
+            "name": "AMG Line Interieur",
+            "avg_price": 2165.8,
+            "min_price": 1963.5,
+            "max_price": 2368.1,
+            "model_count": 2
+          }
+        },
+        "overall_avg_price": 2165.8,
+        "overall_min_price": 1963.5,
+        "overall_max_price": 2368.1,
+        "total_model_count": 2
+      },
+      {
         "standardized_name": "amg night-paket exterieur",
         "display_name": "amg night-paket exterieur",
         "category": "other",
@@ -9940,6 +10839,25 @@
         "overall_avg_price": 714.0,
         "overall_min_price": 714.0,
         "overall_max_price": 714.0,
+        "total_model_count": 2
+      },
+      {
+        "standardized_name": "diabolo-kühlergrill im f sport design",
+        "display_name": "diabolo-kühlergrill im f sport design",
+        "category": "other",
+        "category_label": "Other",
+        "brands": {
+          "Lexus": {
+            "name": "Diabolo-Kühlergrill im F SPORT Design",
+            "avg_price": null,
+            "min_price": null,
+            "max_price": null,
+            "model_count": 2
+          }
+        },
+        "overall_avg_price": null,
+        "overall_min_price": null,
+        "overall_max_price": null,
         "total_model_count": 2
       },
       {
@@ -10016,6 +10934,44 @@
         "overall_avg_price": 4706.45,
         "overall_min_price": 4706.45,
         "overall_max_price": 4706.45,
+        "total_model_count": 2
+      },
+      {
+        "standardized_name": "first-class sitz im fond, beifahrerseitig",
+        "display_name": "first-class sitz im fond, beifahrerseitig",
+        "category": "other",
+        "category_label": "Other",
+        "brands": {
+          "Lexus": {
+            "name": "First-Class Sitz im Fond, beifahrerseitig",
+            "avg_price": null,
+            "min_price": null,
+            "max_price": null,
+            "model_count": 2
+          }
+        },
+        "overall_avg_price": null,
+        "overall_min_price": null,
+        "overall_max_price": null,
+        "total_model_count": 2
+      },
+      {
+        "standardized_name": "fondsitz-paket plus",
+        "display_name": "fondsitz-paket plus",
+        "category": "other",
+        "category_label": "Other",
+        "brands": {
+          "Mercedes-Benz": {
+            "name": "Fondsitz-Paket Plus",
+            "avg_price": 2528.75,
+            "min_price": 2261.0,
+            "max_price": 2796.5,
+            "model_count": 2
+          }
+        },
+        "overall_avg_price": 2528.75,
+        "overall_min_price": 2261.0,
+        "overall_max_price": 2796.5,
         "total_model_count": 2
       },
       {
@@ -10950,6 +11906,44 @@
         "total_model_count": 1
       },
       {
+        "standardized_name": "außenspiegel automatisch einklappend",
+        "display_name": "außenspiegel automatisch einklappend",
+        "category": "other",
+        "category_label": "Other",
+        "brands": {
+          "Lexus": {
+            "name": "Außenspiegel automatisch einklappend",
+            "avg_price": null,
+            "min_price": null,
+            "max_price": null,
+            "model_count": 1
+          }
+        },
+        "overall_avg_price": null,
+        "overall_min_price": null,
+        "overall_max_price": null,
+        "total_model_count": 1
+      },
+      {
+        "standardized_name": "außenspiegel beheizbar",
+        "display_name": "außenspiegel beheizbar",
+        "category": "other",
+        "category_label": "Other",
+        "brands": {
+          "Lexus": {
+            "name": "Außenspiegel beheizbar",
+            "avg_price": null,
+            "min_price": null,
+            "max_price": null,
+            "model_count": 1
+          }
+        },
+        "overall_avg_price": null,
+        "overall_min_price": null,
+        "overall_max_price": null,
+        "total_model_count": 1
+      },
+      {
         "standardized_name": "beleuchtungs-paket exterieur",
         "display_name": "beleuchtungs-paket exterieur",
         "category": "other",
@@ -11102,6 +12096,25 @@
         "total_model_count": 1
       },
       {
+        "standardized_name": "driver_monitor",
+        "display_name": "Driver attention / fatigue monitoring",
+        "category": "safety",
+        "category_label": "Safety",
+        "brands": {
+          "Lexus": {
+            "name": "Fahrer-Monitor",
+            "avg_price": null,
+            "min_price": null,
+            "max_price": null,
+            "model_count": 1
+          }
+        },
+        "overall_avg_price": null,
+        "overall_min_price": null,
+        "overall_max_price": null,
+        "total_model_count": 1
+      },
+      {
         "standardized_name": "einstiegsleisten mit „mercedes-benz“ schriftzug beleuchtet",
         "display_name": "einstiegsleisten mit „mercedes-benz“ schriftzug beleuchtet",
         "category": "other",
@@ -11251,25 +12264,6 @@
         "overall_avg_price": 6074.95,
         "overall_min_price": 6074.95,
         "overall_max_price": 6074.95,
-        "total_model_count": 1
-      },
-      {
-        "standardized_name": "fog_lights",
-        "display_name": "Front fog lights / cornering lights",
-        "category": "lighting",
-        "category_label": "Lighting",
-        "brands": {
-          "Mercedes-Benz": {
-            "name": "Nebelscheinwerfer",
-            "avg_price": 220.15,
-            "min_price": 220.15,
-            "max_price": 220.15,
-            "model_count": 1
-          }
-        },
-        "overall_avg_price": 220.15,
-        "overall_min_price": 220.15,
-        "overall_max_price": 220.15,
         "total_model_count": 1
       },
       {
@@ -11451,6 +12445,25 @@
         "brands": {
           "Mercedes-Benz": {
             "name": "Innenhimmel Mikrofaser MICROCUT ivory beige",
+            "avg_price": 1904.0,
+            "min_price": 1904.0,
+            "max_price": 1904.0,
+            "model_count": 1
+          }
+        },
+        "overall_avg_price": 1904.0,
+        "overall_min_price": 1904.0,
+        "overall_max_price": 1904.0,
+        "total_model_count": 1
+      },
+      {
+        "standardized_name": "innenhimmel mikrofaser microcut macchiatobeige",
+        "display_name": "innenhimmel mikrofaser microcut macchiatobeige",
+        "category": "other",
+        "category_label": "Other",
+        "brands": {
+          "Mercedes-Benz": {
+            "name": "Innenhimmel Mikrofaser MICROCUT macchiatobeige",
             "avg_price": 1904.0,
             "min_price": 1904.0,
             "max_price": 1904.0,
@@ -11650,6 +12663,25 @@
         "overall_avg_price": 7021.0,
         "overall_min_price": 7021.0,
         "overall_max_price": 7021.0,
+        "total_model_count": 1
+      },
+      {
+        "standardized_name": "manufaktur emblem-paket",
+        "display_name": "manufaktur emblem-paket",
+        "category": "other",
+        "category_label": "Other",
+        "brands": {
+          "Mercedes-Benz": {
+            "name": "MANUFAKTUR Emblem-Paket",
+            "avg_price": 1844.5,
+            "min_price": 1844.5,
+            "max_price": 1844.5,
+            "model_count": 1
+          }
+        },
+        "overall_avg_price": 1844.5,
+        "overall_min_price": 1844.5,
+        "overall_max_price": 1844.5,
         "total_model_count": 1
       },
       {
@@ -12071,6 +13103,44 @@
         "total_model_count": 1
       },
       {
+        "standardized_name": "sicherheitsgurte vorn beheizt",
+        "display_name": "sicherheitsgurte vorn beheizt",
+        "category": "other",
+        "category_label": "Other",
+        "brands": {
+          "Mercedes-Benz": {
+            "name": "Sicherheitsgurte vorn beheizt",
+            "avg_price": 416.5,
+            "min_price": 416.5,
+            "max_price": 416.5,
+            "model_count": 1
+          }
+        },
+        "overall_avg_price": 416.5,
+        "overall_min_price": 416.5,
+        "overall_max_price": 416.5,
+        "total_model_count": 1
+      },
+      {
+        "standardized_name": "sitzbezüge vorne aus velours",
+        "display_name": "sitzbezüge vorne aus velours",
+        "category": "other",
+        "category_label": "Other",
+        "brands": {
+          "Lexus": {
+            "name": "Sitzbezüge vorne aus Velours",
+            "avg_price": null,
+            "min_price": null,
+            "max_price": null,
+            "model_count": 1
+          }
+        },
+        "overall_avg_price": null,
+        "overall_min_price": null,
+        "overall_max_price": null,
+        "total_model_count": 1
+      },
+      {
         "standardized_name": "sportlicher motorsound",
         "display_name": "sportlicher motorsound",
         "category": "other",
@@ -12090,6 +13160,25 @@
         "total_model_count": 1
       },
       {
+        "standardized_name": "umfeldbeleuchtung mit animierter projektion des mercedes-benz pattern, 4-fach",
+        "display_name": "umfeldbeleuchtung mit animierter projektion des mercedes-benz pattern, 4-fach",
+        "category": "other",
+        "category_label": "Other",
+        "brands": {
+          "Mercedes-Benz": {
+            "name": "Umfeldbeleuchtung mit animierter Projektion des Mercedes-Benz Pattern, 4-fach",
+            "avg_price": 357.0,
+            "min_price": 357.0,
+            "max_price": 357.0,
+            "model_count": 1
+          }
+        },
+        "overall_avg_price": 357.0,
+        "overall_min_price": 357.0,
+        "overall_max_price": 357.0,
+        "total_model_count": 1
+      },
+      {
         "standardized_name": "v8-styling-paket exterieur",
         "display_name": "v8-styling-paket exterieur",
         "category": "other",
@@ -12106,6 +13195,25 @@
         "overall_avg_price": 3451.0,
         "overall_min_price": 3451.0,
         "overall_max_price": 3451.0,
+        "total_model_count": 1
+      },
+      {
+        "standardized_name": "warmgrey uni",
+        "display_name": "warmgrey uni",
+        "category": "other",
+        "category_label": "Other",
+        "brands": {
+          "Mercedes-Benz": {
+            "name": "warmgrey uni",
+            "avg_price": 357.0,
+            "min_price": 357.0,
+            "max_price": 357.0,
+            "model_count": 1
+          }
+        },
+        "overall_avg_price": 357.0,
+        "overall_min_price": 357.0,
+        "overall_max_price": 357.0,
         "total_model_count": 1
       },
       {
@@ -12261,6 +13369,25 @@
         "total_model_count": 1
       },
       {
+        "standardized_name": "zierelemente holz pappel anthrazit offenporig fine lines",
+        "display_name": "zierelemente holz pappel anthrazit offenporig fine lines",
+        "category": "other",
+        "category_label": "Other",
+        "brands": {
+          "Mercedes-Benz": {
+            "name": "Zierelemente Holz Pappel anthrazit offenporig fine lines",
+            "avg_price": 880.6,
+            "min_price": 880.6,
+            "max_price": 880.6,
+            "model_count": 1
+          }
+        },
+        "overall_avg_price": 880.6,
+        "overall_min_price": 880.6,
+        "overall_max_price": 880.6,
+        "total_model_count": 1
+      },
+      {
         "standardized_name": "zierelemente manufaktur holz nussbaum braun offenporig",
         "display_name": "zierelemente manufaktur holz nussbaum braun offenporig",
         "category": "other",
@@ -12398,6 +13525,22 @@
       "total_options": 8256,
       "brands_crawled": [
         "Mercedes-Benz"
+      ]
+    },
+    {
+      "date": "2026-09-15",
+      "timestamp": "2026-09-15T06:58:09.257261",
+      "total_vehicles": 257,
+      "total_options": 10283,
+      "brands_crawled": [
+        "Mercedes-Benz",
+        "Audi",
+        "Porsche",
+        "Lexus",
+        "BYD",
+        "XPeng",
+        "Zeekr",
+        "Polestar"
       ]
     }
   ]
