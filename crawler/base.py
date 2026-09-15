@@ -38,6 +38,62 @@ class OptionData:
 VehicleOption = OptionData
 
 
+# ISO 3166-1 alpha-2 codes of every market the crawlers can target, with the
+# currency their configurators quote.  Prices are always stored in the market's
+# own currency — no FX conversion is applied anywhere in this project.
+MARKET_CURRENCY: dict[str, str] = {
+    "DE": "EUR",
+    "AT": "EUR",
+    "CH": "CHF",
+    "FR": "EUR",
+    "IT": "EUR",
+    "ES": "EUR",
+    "PT": "EUR",
+    "NL": "EUR",
+    "BE": "EUR",
+    "LU": "EUR",
+    "PL": "PLN",
+    "CZ": "CZK",
+    "SK": "EUR",
+    "HU": "HUF",
+    "RO": "EUR",
+    "GB": "GBP",
+    "SE": "SEK",
+    "NO": "NOK",
+    "DK": "DKK",
+}
+
+# English names — the dashboard UI is in English.
+MARKET_NAMES: dict[str, str] = {
+    "DE": "Germany",
+    "AT": "Austria",
+    "CH": "Switzerland",
+    "FR": "France",
+    "IT": "Italy",
+    "ES": "Spain",
+    "PT": "Portugal",
+    "NL": "Netherlands",
+    "BE": "Belgium",
+    "LU": "Luxembourg",
+    "PL": "Poland",
+    "CZ": "Czechia",
+    "SK": "Slovakia",
+    "HU": "Hungary",
+    "RO": "Romania",
+    "GB": "United Kingdom",
+    "SE": "Sweden",
+    "NO": "Norway",
+    "DK": "Denmark",
+}
+
+DEFAULT_MARKET = "DE"
+
+
+def currency_for_market(market: str) -> str:
+    """Currency quoted by configurators in `market` (default EUR)."""
+    return MARKET_CURRENCY.get(market.upper(), "EUR")
+
+
 @dataclass
 class VehicleData:
     """Extracted vehicle configuration data."""
@@ -46,6 +102,7 @@ class VehicleData:
     variant: str = ""
     base_price: float | None = None
     currency: str = "EUR"
+    market: str = DEFAULT_MARKET   # ISO 3166-1 alpha-2
     fuel_type: str = ""         # "electric", "hybrid", "petrol", "diesel"
     available_options: list[OptionData] = field(default_factory=list)
     url: str = ""
@@ -79,8 +136,9 @@ class CrawlConfig:
 
 @dataclass
 class CrawlResult:
-    """Result of a brand crawl."""
+    """Result of a brand crawl in one market."""
     brand: str
+    market: str = DEFAULT_MARKET
     timestamp: str = field(default_factory=lambda: datetime.now(timezone.utc).isoformat())
     vehicles: list[VehicleData] = field(default_factory=list)
     errors: list[str] = field(default_factory=list)
@@ -131,6 +189,8 @@ class CrawlResult:
     def to_dict(self) -> dict[str, Any]:
         return {
             "brand": self.brand,
+            "market": self.market,
+            "currency": currency_for_market(self.market),
             "timestamp": self.timestamp,
             "vehicle_count": len(self.vehicles),
             "vehicles": [v.to_dict() for v in self.vehicles],
@@ -141,12 +201,17 @@ class CrawlResult:
         }
 
     def save(self, data_dir: Path) -> Path:
-        """Save crawl result as timestamped JSON."""
+        """Save crawl result as timestamped JSON.
+
+        The German snapshot keeps the historical ``{brand}_{date}.json`` name so
+        the existing archive and dashboard history stay valid; every other
+        market is written as ``{brand}_{market}_{date}.json``.
+        """
         data_dir.mkdir(parents=True, exist_ok=True)
         date_str = datetime.now().strftime("%Y-%m-%d")
         # Consistent brand key: lowercase, spaces → hyphens
         brand_key = self.brand.lower().replace(" ", "-")
-        filename = f"{brand_key}_{date_str}.json"
+        filename = f"{snapshot_key(brand_key, self.market)}_{date_str}.json"
         filepath = data_dir / filename
 
         # Merge with existing file if present (append to daily results)
@@ -167,12 +232,37 @@ class CrawlResult:
         return filepath
 
 
+def snapshot_key(brand_key: str, market: str) -> str:
+    """File/index key for a brand-market pair (``DE`` stays unsuffixed)."""
+    market = (market or DEFAULT_MARKET).upper()
+    return brand_key if market == DEFAULT_MARKET else f"{brand_key}_{market.lower()}"
+
+
 class BrandCrawler(ABC):
-    """Base class for brand-specific crawlers."""
+    """Base class for brand-specific crawlers.
+
+    A crawler instance is bound to exactly one market.  Subclasses that support
+    more than Germany declare the ISO codes they can serve in
+    ``SUPPORTED_MARKETS`` and read ``self.market`` when building URLs.
+    """
 
     brand: str = ""
     base_url: str = ""
     configurator_url: str = ""
+    SUPPORTED_MARKETS: tuple[str, ...] = (DEFAULT_MARKET,)
+
+    def __init__(self, market: str = DEFAULT_MARKET) -> None:
+        market = (market or DEFAULT_MARKET).upper()
+        if market not in self.SUPPORTED_MARKETS:
+            raise ValueError(
+                f"{self.brand} does not support market '{market}'. "
+                f"Supported: {', '.join(self.SUPPORTED_MARKETS)}"
+            )
+        self.market = market
+
+    @property
+    def currency(self) -> str:
+        return currency_for_market(self.market)
 
     @abstractmethod
     async def crawl(self, config: CrawlConfig | None = None) -> CrawlResult:
@@ -185,4 +275,4 @@ class BrandCrawler(ABC):
         ...
 
     def __repr__(self) -> str:
-        return f"<{self.__class__.__name__} brand={self.brand}>"
+        return f"<{self.__class__.__name__} brand={self.brand} market={self.market}>"

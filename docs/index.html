@@ -10,11 +10,17 @@
 <body>
   <header>
     <h1>Vehicle Option Price Tracker</h1>
-    <p class="subtitle">Cross-brand option pricing from German vehicle configurators</p>
+    <p class="subtitle" id="market-subtitle">Cross-brand option pricing from German vehicle configurators</p>
   </header>
 
   <main>
     <section id="controls">
+      <div class="filter-group">
+        <label for="market-filter">Country:</label>
+        <select id="market-filter" class="market-select" aria-label="Country">
+          <option value="DE">Germany</option>
+        </select>
+      </div>
       <div class="filter-group">
         <label for="brand-filter">Brand:</label>
         <div class="checkbox-dropdown" id="brand-filter">
@@ -93,7 +99,7 @@
   </main>
 
   <footer>
-    <p>Data collected daily at 06:00 CET. Prices in EUR, sourced from official configurators.</p>
+    <p>Data collected daily at 06:00 CET. Prices in the selected country's currency, sourced from official configurators.</p>
     <p>Mercedes-Benz · Lexus · Polestar · Porsche · BYD · XPeng · Zeekr</p>
   </footer>
 

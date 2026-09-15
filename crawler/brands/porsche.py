@@ -15,6 +15,7 @@ import json
 import logging
 import re
 import time
+from dataclasses import dataclass
 from typing import Any
 
 from bs4 import BeautifulSoup
@@ -23,7 +24,6 @@ from crawler.base import (
     BrandCrawler, CrawlConfig, CrawlResult, EngineType,
     OptionData, VehicleData,
 )
-from crawler.engines.base_engine import BaseEngine
 from crawler.option_mappings import normalize_option_name, get_category
 from crawler.brands.registry import BrandRegistry
 from crawler.brands.mercedes import (
@@ -32,11 +32,59 @@ from crawler.brands.mercedes import (
     _extract_options_from_text,
     _dedupe_options,
 )
-from crawler.network import retry_with_backoff, BrowserPool
+from crawler.network import retry_with_backoff, BrowserPool, get_random_user_agent
 
 logger = logging.getLogger(__name__)
 
-MODELS_URL = "https://www.porsche.com/germany/models/"
+@dataclass(frozen=True)
+class PorscheMarket:
+    """One Porsche market whose public site and configurator were verified."""
+
+    code: str
+    country_path: str
+    locale: str
+    accept_language: str
+
+    @property
+    def models_url(self) -> str:
+        return f"https://www.porsche.com/{self.country_path}/models/"
+
+
+# Verified on 2026-09-15 with the live Porsche public model page and
+# configurator. Every locale below returned model links and priced
+# configurator options in its market's native currency. Denmark is excluded:
+# Porsche's own alternate-locale list did not publish a da-DK model page, so
+# no configurator route was assumed.
+PORSCHE_MARKETS: dict[str, PorscheMarket] = {
+    m.code: m for m in (
+        PorscheMarket("DE", "germany", "de-DE", "de-DE,de;q=0.9,en;q=0.8"),
+        PorscheMarket("AT", "de-AT", "de-AT", "de-AT,de;q=0.9,en;q=0.8"),
+        PorscheMarket("CH", "swiss/de", "de-CH", "de-CH,de;q=0.9,en;q=0.8"),
+        PorscheMarket("FR", "france", "fr-FR", "fr-FR,fr;q=0.9,en;q=0.8"),
+        PorscheMarket("IT", "italy", "it-IT", "it-IT,it;q=0.9,en;q=0.8"),
+        PorscheMarket("ES", "spain", "es-ES", "es-ES,es;q=0.9,en;q=0.8"),
+        PorscheMarket("NL", "netherlands/nl", "nl-NL", "nl-NL,nl;q=0.9,en;q=0.8"),
+        PorscheMarket("BE", "belgium/nl", "nl-BE", "nl-BE,nl;q=0.9,en;q=0.8"),
+        PorscheMarket("PL", "poland", "pl-PL", "pl-PL,pl;q=0.9,en;q=0.8"),
+        PorscheMarket("GB", "uk", "en-GB", "en-GB,en;q=0.9"),
+        PorscheMarket("SE", "sweden", "sv-SE", "sv-SE,sv;q=0.9,en;q=0.8"),
+        PorscheMarket("NO", "norway/no", "no-NO", "no-NO,no;q=0.9,en;q=0.8"),
+    )
+}
+
+PORSCHE_SUPPORTED_MARKETS: tuple[str, ...] = tuple(PORSCHE_MARKETS)
+
+
+def get_market(market: str) -> PorscheMarket:
+    """Look up a verified Porsche market by ISO code (case-insensitive)."""
+    key = (market or "DE").upper()
+    if key not in PORSCHE_MARKETS:
+        raise ValueError(
+            f"Porsche market '{market}' not supported. "
+            f"Available: {', '.join(PORSCHE_SUPPORTED_MARKETS)}"
+        )
+    return PORSCHE_MARKETS[key]
+
 
 # Top-level model family names to detect in headings
 MODEL_FAMILIES = {"718", "911", "Taycan", "Panamera", "Macan", "Cayenne"}
@@ -59,14 +107,31 @@ _PORSCHE_FAMILY_SLUGS: dict[str, str] = {
 class PorscheCrawler(BrandCrawler):
     brand = "Porsche"
     base_url = "https://www.porsche.com"
-    configurator_url = MODELS_URL
+    SUPPORTED_MARKETS = PORSCHE_SUPPORTED_MARKETS
+
+    @property
+    def market_config(self) -> PorscheMarket:
+        return get_market(self.market)
+
+    @property
+    def models_url(self) -> str:
+        return self.market_config.models_url
+
+    @property
+    def configurator_url(self) -> str:
+        """Market-specific Porsche models entry point used by this crawler."""
+        return self.models_url
 
     def get_default_config(self) -> CrawlConfig:
         return CrawlConfig(
             engine=EngineType.PLAYWRIGHT,
             rate_limit_seconds=3.0,
             confidence=0.7,
-            notes="Porsche SPA models page (networkidle); no prices on overview.",
+            notes=(
+                "Porsche SPA models page (networkidle) plus configurator DOM "
+                f"prices. Market: {self.market} "
+                f"(locale {self.market_config.locale})."
+            ),
         )
 
     async def crawl(self, config: CrawlConfig | None = None) -> CrawlResult:
@@ -75,9 +140,12 @@ class PorscheCrawler(BrandCrawler):
                 self._crawl_inner, config, max_retries=1, base_delay=1.0,
             )
         except Exception as e:
-            logger.warning(f"Porsche: all retry attempts exhausted: {e}")
+            logger.warning(
+                f"Porsche [{self.market}]: all retry attempts exhausted: {e}"
+            )
             return CrawlResult(
                 brand=self.brand,
+                market=self.market,
                 errors=[f"All attempts failed: {e}"],
             )
 
@@ -88,10 +156,13 @@ class PorscheCrawler(BrandCrawler):
         vehicles: list[VehicleData] = []
 
         try:
-            logger.info(f"Porsche: fetching {MODELS_URL} (networkidle)")
+            logger.info(
+                f"Porsche [{self.market}]: fetching {self.models_url} "
+                "(networkidle)"
+            )
             pool = await BrowserPool.acquire()
             html = await pool.fetch_html(
-                MODELS_URL,
+                self.models_url,
                 wait_until="networkidle",
                 timeout_ms=45_000,
             )
@@ -99,20 +170,26 @@ class PorscheCrawler(BrandCrawler):
 
             vehicles = self._extract_from_page(soup)
             if vehicles:
-                logger.info(f"Porsche: extracted {len(vehicles)} vehicles")
+                logger.info(
+                    f"Porsche [{self.market}]: extracted {len(vehicles)} vehicles"
+                )
             else:
-                errors.append("No vehicles found on Porsche models page")
+                errors.append(
+                    f"No vehicles found on Porsche models page ({self.market})"
+                )
 
             # --- Option extraction phase ---
             if vehicles:
                 try:
                     await self._enrich_options(vehicles, pool, cfg)
                 except Exception as e:
-                    logger.warning(f"Porsche: option extraction failed: {e}")
+                    logger.warning(
+                        f"Porsche [{self.market}]: option extraction failed: {e}"
+                    )
                     errors.append(f"Option extraction partial/failed: {e}")
 
         except Exception as e:
-            logger.error(f"Porsche crawl error: {e}")
+            logger.error(f"Porsche [{self.market}] crawl error: {e}")
             errors.append(str(e))
         finally:
             try:
@@ -122,6 +199,7 @@ class PorscheCrawler(BrandCrawler):
 
         return CrawlResult(
             brand=self.brand,
+            market=self.market,
             vehicles=vehicles,
             errors=errors,
             strategy_used=cfg,
@@ -173,9 +251,10 @@ class PorscheCrawler(BrandCrawler):
                 model=text,
                 variant=family,
                 base_price=None,  # Porsche doesn't show prices on overview
-                currency="EUR",
+                currency=self.currency,
+                market=self.market,
                 fuel_type=fuel_type,
-                url=MODELS_URL,
+                url=self.models_url,
             ))
 
         return vehicles
@@ -228,8 +307,11 @@ class PorscheCrawler(BrandCrawler):
             try:
                 await asyncio.sleep(config.rate_limit_seconds)
 
-                probe_url = f"https://www.porsche.com/germany/models/{slug}/"
-                logger.info(f"Porsche options: probing family {family} → {probe_url}")
+                probe_url = f"{self.models_url}{slug}/"
+                logger.info(
+                    f"Porsche [{self.market}] options: probing family "
+                    f"{family} → {probe_url}"
+                )
 
                 html, api_responses = await pool.fetch_with_api_capture(
                     probe_url,
@@ -259,7 +341,7 @@ class PorscheCrawler(BrandCrawler):
                                 for item in info.get("summary", {}).get("items", []):
                                     label = item.get("label", "")
                                     if "Listenpreis" in label or "Grundpreis" in label:
-                                        p = BaseEngine.parse_price(
+                                        p = _parse_porsche_price(
                                             item.get("value", "")
                                         )
                                         if p:
@@ -287,17 +369,22 @@ class PorscheCrawler(BrandCrawler):
                     )
 
                 # Discover configurator model codes from page links
-                model_codes = _extract_porsche_configurator_codes(html)
+                model_codes = _extract_porsche_configurator_codes(
+                    html, self.market_config.locale,
+                )
                 if model_codes:
                     family_model_codes[family] = model_codes
                     logger.info(
-                        f"Porsche options: {family} configurator codes: "
+                        f"Porsche [{self.market}] options: {family} "
+                        "configurator codes: "
                         f"{model_codes[:3]}{'...' if len(model_codes) > 3 else ''}"
                     )
 
                 # Apply collected options to all vehicles in this family
                 if family_options:
                     deduped = _dedupe_options(family_options)
+                    for option in deduped:
+                        option.currency = self.currency
                     family_vehicles = [
                         v for v in vehicles
                         if (v.variant or "").lower() == family
@@ -306,13 +393,15 @@ class PorscheCrawler(BrandCrawler):
                         v.available_options = list(deduped)
 
                     logger.info(
-                        f"Porsche options: family {family} → "
+                        f"Porsche [{self.market}] options: family {family} → "
                         f"{len(deduped)} options applied to "
                         f"{len(family_vehicles)} vehicles"
                     )
 
             except Exception as e:
-                logger.debug(f"Porsche options: family {family} failed: {e}")
+                logger.debug(
+                    f"Porsche [{self.market}] options: family {family} failed: {e}"
+                )
 
         # Phase 2: fetch real prices from the configurator DOM
         if family_model_codes:
@@ -321,7 +410,9 @@ class PorscheCrawler(BrandCrawler):
                     vehicles, pool, family_model_codes,
                 )
             except Exception as e:
-                logger.warning(f"Porsche configurator pricing failed: {e}")
+                logger.warning(
+                    f"Porsche [{self.market}] configurator pricing failed: {e}"
+                )
 
     async def _apply_configurator_prices(
         self,
@@ -347,22 +438,24 @@ class PorscheCrawler(BrandCrawler):
             # Use first model code as representative
             model_code = codes[0]
             config_url = (
-                f"https://configurator.porsche.com/de-DE/mode/model/{model_code}"
+                "https://configurator.porsche.com/"
+                f"{self.market_config.locale}/mode/model/{model_code}"
             )
             logger.info(
-                f"Porsche prices: loading configurator for {family} "
+                f"Porsche [{self.market}] prices: loading configurator for {family} "
                 f"({model_code}) → {config_url}"
             )
 
             try:
-                raw_pairs = await pool.extract_dom_prices(
-                    config_url,
-                    timeout_ms=120_000,
-                    extra_wait_ms=20_000,
+                raw_pairs = await self._extract_configurator_prices(
+                    pool, config_url,
                 )
 
                 if not raw_pairs:
-                    logger.debug(f"Porsche prices: no DOM prices for {family}")
+                    logger.debug(
+                        f"Porsche [{self.market}] prices: no DOM prices for "
+                        f"{family}"
+                    )
                     continue
 
                 # Parse extracted name-price pairs
@@ -372,7 +465,7 @@ class PorscheCrawler(BrandCrawler):
                     price_text = pair.get("price", "")
                     if not name or not price_text:
                         continue
-                    price = BaseEngine.parse_price(price_text)
+                    price = _parse_porsche_price(price_text)
                     if price and 50 <= price <= 100_000:
                         price_map[name.lower()] = price
                         # Also store by first significant word for fuzzy match
@@ -381,7 +474,8 @@ class PorscheCrawler(BrandCrawler):
                             price_map[name] = price  # Keep original case too
 
                 logger.info(
-                    f"Porsche prices: {family} → {len(price_map)} price entries"
+                    f"Porsche [{self.market}] prices: {family} → "
+                    f"{len(price_map)} price entries"
                 )
 
                 # Apply prices to vehicles in this family
@@ -400,6 +494,7 @@ class PorscheCrawler(BrandCrawler):
                         )
                         if matched_price is not None:
                             opt.price = matched_price
+                            opt.currency = self.currency
                             applied_count += 1
 
                     # Also add priced options from the configurator
@@ -416,7 +511,7 @@ class PorscheCrawler(BrandCrawler):
                         # Skip total-price attributes, not vehicle options.
                         if re.search(r"Gesamtpreis|Gesamtbetrag", name, re.IGNORECASE):
                             continue
-                        price = BaseEngine.parse_price(price_text)
+                        price = _parse_porsche_price(price_text)
                         if not price or price < 50 or price > 100_000:
                             continue
                         std = normalize_option_name(name, self.brand)
@@ -434,6 +529,7 @@ class PorscheCrawler(BrandCrawler):
                             brand_specific_name=name,
                             price=price,
                             category=cat,
+                            currency=self.currency,
                         ))
                         applied_count += 1
 
@@ -443,30 +539,144 @@ class PorscheCrawler(BrandCrawler):
 
             except Exception as e:
                 logger.debug(
-                    f"Porsche prices: {family} ({model_code}) failed: {e}"
+                    f"Porsche [{self.market}] prices: {family} "
+                    f"({model_code}) failed: {e}"
                 )
 
             # Rate-limit between configurator loads
             await asyncio.sleep(5.0)
 
-        logger.info(f"Porsche prices: applied {applied_count} prices total")
+        logger.info(
+            f"Porsche [{self.market}] prices: applied {applied_count} prices total"
+        )
+
+    async def _extract_configurator_prices(
+        self, pool: BrowserPool, url: str,
+    ) -> list[dict[str, str]]:
+        """Read priced options from the locale-specific configurator DOM.
+
+        ``BrowserPool.extract_dom_prices`` is intentionally German/EUR-specific.
+        Porsche's French UI uses a space as the thousands separator, so retain the
+        existing careful browser lifecycle here while accepting the market's own
+        money formatting.
+        """
+        context = await pool._browser.new_context(
+            user_agent=get_random_user_agent(),
+            locale=self.market_config.locale,
+            timezone_id="Europe/Berlin",
+            extra_http_headers={
+                "Accept-Language": self.market_config.accept_language,
+            },
+        )
+        try:
+            page = await context.new_page()
+            await page.goto(url, wait_until="commit", timeout=120_000)
+            await page.wait_for_timeout(20_000)
+
+            try:
+                cookie_btn = page.locator("button").filter(
+                    has_text=re.compile(
+                        r"Alle akzeptieren|Accept All|Akzeptieren|"
+                        r"Tout accepter|Accepter",
+                        re.IGNORECASE,
+                    ),
+                )
+                if await cookie_btn.count() > 0:
+                    await cookie_btn.first.click()
+                    await page.wait_for_timeout(3_000)
+            except Exception:
+                pass
+
+            await page.evaluate("window.scrollTo(0, document.body.scrollHeight)")
+            await page.wait_for_timeout(3_000)
+            return await page.evaluate(
+                r"""
+                () => {
+                    const pairs = [];
+                    const seen = new Set();
+                    const money = /(?=.*\d)(?=.*(?:€|£|\bCHF\b|\bPLN\b|\bSEK\b|\bNOK\b|\bDKK\b|\bkr\b))/;
+                    document.querySelectorAll('*').forEach(el => {
+                        const text = el.textContent.trim();
+                        if (
+                            !text || text.length > 100 ||
+                            el.children.length !== 0 || !money.test(text)
+                        ) {
+                            return;
+                        }
+                        let parent = el.parentElement;
+                        for (let i = 0; i < 6 && parent; i++, parent = parent.parentElement) {
+                            const parts = parent.textContent.trim().split(text);
+                            if (!parts[0]) continue;
+                            const name = parts[0].trim().replace(/\s+/g, ' ');
+                            if (name.length >= 3 && name.length <= 300) {
+                                const key = `${name}|${text}`;
+                                if (!seen.has(key)) {
+                                    seen.add(key);
+                                    pairs.push({name, price: text});
+                                }
+                                break;
+                            }
+                        }
+                    });
+                    return pairs;
+                }
+                """
+            )
+        finally:
+            await context.close()
 
 
 # ------------------------------------------------------------------
 # Porsche configurator code extraction & price matching
 # ------------------------------------------------------------------
 
-def _extract_porsche_configurator_codes(html: str) -> list[str]:
+def _parse_porsche_price(text: str) -> float | None:
+    """Parse Porsche's locale-specific money strings without FX conversion.
+
+    Porsche uses ``158.700,00 €`` in Germany, ``CHF 195'200.00`` in
+    Switzerland and ``£110,105.00`` in the UK.  The last separator is a
+    decimal mark only when it is followed by exactly two digits; all other
+    separators are grouping marks.
+    """
+    if not text:
+        return None
+    numeric = re.sub(r"[^0-9.,']", "", text)
+    if not numeric or not re.search(r"\d", numeric):
+        return None
+
+    numeric = numeric.replace("'", "")
+    comma = numeric.rfind(",")
+    dot = numeric.rfind(".")
+    last_sep = max(comma, dot)
+    has_decimal = (
+        last_sep >= 0
+        and len(numeric) - last_sep - 1 == 2
+        and numeric[last_sep + 1:].isdigit()
+    )
+    if has_decimal:
+        integer = re.sub(r"[.,]", "", numeric[:last_sep])
+        normalized = f"{integer}.{numeric[last_sep + 1:]}"
+    else:
+        normalized = re.sub(r"[.,]", "", numeric)
+    try:
+        return float(normalized)
+    except ValueError:
+        return None
+
+
+def _extract_porsche_configurator_codes(
+    html: str, locale: str = "de-DE",
+) -> list[str]:
     """Extract Porsche configurator model codes from page links.
 
     Configurator links on model family pages follow the pattern::
 
-        https://configurator.porsche.com/de-DE/mode/model/{code}
+        https://configurator.porsche.com/{locale}/mode/model/{code}
 
     Returns a deduplicated list of model codes.
     """
     codes = re.findall(
-        r'configurator\.porsche\.com/de-DE/mode/model/([A-Za-z0-9]+)',
+        rf'configurator\.porsche\.com/{re.escape(locale)}/mode/model/([A-Za-z0-9]+)',
         html,
     )
     # Deduplicate while preserving order

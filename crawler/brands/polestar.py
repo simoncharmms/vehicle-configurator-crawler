@@ -1,217 +1,207 @@
-"""Polestar configurator crawler.
+"""Polestar configurator crawler using Polestar's public configuration API.
 
-robots.txt:  No specific block on model pages.
-Strategy:    Curl fetch → individual model page scraping.
-             Polestar DE has model pages at /de/{model}/ with
-             pricing in the page text ("ab XX.XXX €" or direct price).
-             Models: Polestar 2, 3, 4 (Coupé + SUV), 5.
+The website page is server rendered and contains the initial configuration's
+``state``, ``change`` and ``partner`` values.  Those values are used in a POST to
+``pc-api.polestar.com/.../configuration``.  The response contains the exact
+customer-facing choices in ``configuration.features[*].data.featureGroups``;
+priced choices have ``unformattedPrice`` in the market currency.
+
+This intentionally does not use the graphical configurator at crawl time.  The
+API has been verified to return HTTP 200 from a datacentre IP with requests.
 """
 
 from __future__ import annotations
 
 import asyncio
-import json
 import logging
 import re
 import time
+from typing import Any
 
-from bs4 import BeautifulSoup
+import requests
 
-from crawler.base import BrandCrawler, CrawlConfig, CrawlResult, EngineType, VehicleData
-from crawler.engines.base_engine import BaseEngine
+from crawler.base import BrandCrawler, CrawlConfig, CrawlResult, EngineType, OptionData, VehicleData
 from crawler.brands.registry import BrandRegistry
-from crawler.network import BrowserPool, retry_with_backoff, fetch_html_curl
+from crawler.network import retry_with_backoff
 
 logger = logging.getLogger(__name__)
 
-HOMEPAGE_URL = "https://www.polestar.com/de/"
+API_BASE = "https://pc-api.polestar.com/eu-north-1/car-configurator-back"
+# The Swedish API route and prices were independently verified alongside DE.
+MARKET_ROUTES = {"DE": "de", "SE": "se"}
+POLESTAR_SUPPORTED_MARKETS: tuple[str, ...] = tuple(MARKET_ROUTES)
 
-# Known model pages
-MODEL_PAGES = {
-    "Polestar 2": "/de/polestar-2/",
-    "Polestar 3": "/de/polestar-3/",
-    "Polestar 4 Coupé": "/de/polestar-4/",
-    "Polestar 4 SUV": "/de/polestar-4-suv/",
-    "Polestar 5": "/de/polestar-5/",
+# Current public configurator inventory.  Polestar 4 is a single Coupé model;
+# the old /polestar-4-suv/ marketing URL is no longer a configurator vehicle.
+MODELS: tuple[tuple[str, str], ...] = (
+    ("Polestar 2", "polestar-2"),
+    ("Polestar 3", "polestar-3"),
+    ("Polestar 4 Coupé", "polestar-4-coupe"),
+    ("Polestar 5", "polestar-5"),
+)
+
+HEADERS = {
+    "User-Agent": "Mozilla/5.0 (compatible; vehicle-configurator-crawler/1.0)",
+    "Accept": "application/json, text/plain, */*",
+    "Content-Type": "application/json",
+    "Origin": "https://www.polestar.com",
+    "Referer": "https://www.polestar.com/",
+    "X-Consumer-Name": "configurator-front",
+    "X-Consumer-Version": "192",
 }
+
+
+def _page_value(html: str, key: str) -> str | None:
+    """Read one quoted metadata value from Polestar's RSC page payload."""
+    match = re.search(rf"(?<![A-Za-z]){re.escape(key)}:\\?\"([^\"\\]+)", html)
+    return match.group(1) if match else None
+
+
+def _option_data(configuration: dict[str, Any], currency: str) -> list[OptionData]:
+    """Extract available, non-zero-priced choices from the configuration JSON."""
+    options: list[OptionData] = []
+    seen: set[tuple[str, str]] = set()
+    for section in configuration.get("features", []):
+        if not isinstance(section, dict):
+            continue
+        data = section.get("data") or {}
+        category = str(data.get("id") or "options")
+        for group in data.get("featureGroups", []):
+            if not isinstance(group, dict):
+                continue
+            for feature in group.get("features", []):
+                if not isinstance(feature, dict):
+                    continue
+                # "Excluded" choices conflict with the currently selected
+                # drivetrain/configuration and are not orderable from it.
+                if feature.get("selectedState") not in {"Available", "Selected"}:
+                    continue
+                price = feature.get("unformattedPrice")
+                if not isinstance(price, (int, float)) or price <= 0:
+                    continue
+                name = str(feature.get("name") or "").strip()
+                code = str(feature.get("code") or "").strip()
+                if not name or not code or (category, code) in seen:
+                    continue
+                seen.add((category, code))
+                options.append(OptionData(
+                    brand_specific_name=name,
+                    price=float(price),
+                    currency=currency,
+                    category=category,
+                    code=code,
+                ))
+    return options
+
+
+def _base_price(configuration: dict[str, Any]) -> float | None:
+    """Return the public incl.-VAT 'starting from' price, not delivery total."""
+    prices = configuration.get("prices") or {}
+    value = ((prices.get("carStartingFrom") or {}).get("priceInclVAT"))
+    if isinstance(value, (int, float)) and value > 0:
+        return float(value)
+    # The same value is also exposed in the detailed CPS breakdown.
+    value = (((configuration.get("cpsPriceBreakdown") or {}).get("carStartingFrom") or {})
+             .get("basicPriceInclVAT") or {}).get("value")
+    return float(value) if isinstance(value, (int, float)) and value > 0 else None
 
 
 @BrandRegistry.register
 class PolestarCrawler(BrandCrawler):
     brand = "Polestar"
     base_url = "https://www.polestar.com"
-    configurator_url = HOMEPAGE_URL
+    configurator_url = "https://www.polestar.com/de/configure/polestar-2"
+    SUPPORTED_MARKETS = POLESTAR_SUPPORTED_MARKETS
 
     def get_default_config(self) -> CrawlConfig:
         return CrawlConfig(
-            engine=EngineType.PLAYWRIGHT,
+            engine=EngineType.BEAUTIFULSOUP,
             rate_limit_seconds=3.0,
-            confidence=0.85,
-            notes="Playwright fetch + model page text extraction (curl blocked by CDN).",
+            confidence=0.95,
+            notes=(
+                "Direct public Polestar configuration API: RSC page metadata → "
+                "POST /car-configurator-back/{market}/{model}/configurator/api/v2/configuration. "
+                f"Market: {self.market}."
+            ),
         )
 
+    def _configuration_url(self, slug: str) -> str:
+        return f"{self.base_url}/{MARKET_ROUTES[self.market]}/configure/{slug}"
+
+    def _fetch_configuration(self, slug: str) -> dict[str, Any]:
+        """Fetch page metadata then reproduce the public configuration request."""
+        page_url = self._configuration_url(slug)
+        page = requests.get(page_url, headers=HEADERS, timeout=30)
+        page.raise_for_status()
+        state = _page_value(page.text, "state")
+        change = _page_value(page.text, "change")
+        partner = _page_value(page.text, "partner")
+        if not all((state, change, partner)):
+            raise ValueError("configuration metadata (state/change/partner) missing")
+
+        api_url = (
+            f"{API_BASE}/{MARKET_ROUTES[self.market]}/{slug}/configurator/api/v2/configuration"
+        )
+        response = requests.post(
+            api_url,
+            params={
+                "change": change,
+                "state": state,
+                "markdown": "true",
+                "partner": partner,
+                "excludePrice": "false",
+            },
+            headers=HEADERS,
+            timeout=30,
+        )
+        response.raise_for_status()
+        payload = response.json()
+        configuration = payload.get("configuration")
+        if not isinstance(configuration, dict):
+            raise ValueError("configuration missing from API response")
+        return configuration
+
     async def crawl(self, config: CrawlConfig | None = None) -> CrawlResult:
+        try:
+            return await retry_with_backoff(self._crawl_inner, config, max_retries=1, base_delay=2.0)
+        except Exception as exc:
+            return CrawlResult(brand=self.brand, market=self.market, errors=[f"All attempts failed: {exc}"])
+
+    async def _crawl_inner(self, config: CrawlConfig | None = None) -> CrawlResult:
         cfg = config or self.get_default_config()
         start_time = time.time()
-        errors: list[str] = []
         vehicles: list[VehicleData] = []
+        errors: list[str] = []
+        for model, slug in MODELS:
+            try:
+                configuration = await asyncio.to_thread(self._fetch_configuration, slug)
+                vehicle = VehicleData(
+                    brand=self.brand,
+                    model=model,
+                    base_price=_base_price(configuration),
+                    currency=self.currency,
+                    market=self.market,
+                    fuel_type="electric",
+                    available_options=_option_data(configuration, self.currency),
+                    url=self._configuration_url(slug),
+                )
+                vehicles.append(vehicle)
+            except Exception as exc:
+                logger.warning("Polestar [%s] %s failed: %s", self.market, model, exc)
+                errors.append(f"{model}: {exc}")
+            await asyncio.sleep(cfg.rate_limit_seconds)
 
-        try:
-            # Discover models from homepage + scrape each
-            model_pages = await self._discover_models()
-            logger.info(f"Polestar: found {len(model_pages)} models")
-
-            for model_name, path in model_pages.items():
-                url = path if path.startswith("http") else f"{self.base_url}{path}"
-                try:
-                    vehicle = await self._scrape_model_page_async(model_name, url)
-                    if vehicle:
-                        vehicles.append(vehicle)
-                    await asyncio.sleep(cfg.rate_limit_seconds)
-                except Exception as e:
-                    logger.warning(f"Polestar: failed to scrape {model_name}: {e}")
-                    errors.append(f"{model_name}: {e}")
-
-            if vehicles:
-                logger.info(f"Polestar: extracted {len(vehicles)} vehicles")
-            else:
-                errors.append("No vehicles found on Polestar model pages")
-
-        except Exception as e:
-            logger.error(f"Polestar crawl error: {e}")
-            errors.append(str(e))
-
+        priced = sum(len(v.available_options) for v in vehicles)
+        if not vehicles:
+            errors.append(f"No Polestar vehicles returned for market {self.market}")
+        elif not priced:
+            errors.append(f"No priced Polestar options returned for market {self.market}")
+        logger.info("Polestar [%s]: %d vehicles, %d priced options", self.market, len(vehicles), priced)
         return CrawlResult(
             brand=self.brand,
+            market=self.market,
             vehicles=vehicles,
             errors=errors,
             strategy_used=cfg,
             duration_seconds=time.time() - start_time,
-        )
-
-    async def _fetch_html(self, url: str) -> str:
-        """Fetch a URL using Playwright (curl fails on Polestar's CDN)."""
-        async def _pw_fetch() -> str:
-            pool = await BrowserPool.acquire()
-            return await pool.fetch_html(url, timeout_ms=30_000)
-
-        return await retry_with_backoff(
-            _pw_fetch, max_retries=2, base_delay=2.0, multiplier=2.0,
-        )
-
-    async def _discover_models(self) -> dict[str, str]:
-        """Discover model pages from homepage navigation.
-
-        The homepage has links like:
-            /de/polestar-2/
-            /de/polestar-3/
-            /de/polestar-4/
-            /de/polestar-5/
-        """
-        try:
-            html = await self._fetch_html(HOMEPAGE_URL)
-            soup = BeautifulSoup(html, "lxml")
-
-            models: dict[str, str] = {}
-            for a in soup.find_all("a", href=re.compile(r"/de/polestar-\d")):
-                href = a.get("href", "")
-                text = a.get_text(strip=True)
-
-                # Skip preconfigured, pre-owned links
-                if "preconfigured" in href or "pre-owned" in href:
-                    continue
-
-                # Match: /de/polestar-N/ or /de/polestar-4-models/polestar-4-X/
-                slug_match = re.search(r"/(polestar-\d[^/]*)/$", href)
-                if not slug_match:
-                    continue
-
-                slug = slug_match.group(1)
-                # Skip discontinued models and the 'models' overview
-                if slug == "polestar-1" or slug.endswith("-models"):
-                    continue
-                # Build display name
-                name = slug.replace("-", " ").title()
-                # Fix: "Polestar 4 Suv" → "Polestar 4 SUV"
-                name = name.replace(" Suv", " SUV")
-
-                # Keep absolute URLs as-is; make relative paths absolute
-                if href.startswith("http"):
-                    path = href
-                elif href.startswith("/"):
-                    path = href
-                else:
-                    path = f"/{href}"
-                if name not in models:
-                    models[name] = path
-
-            if models:
-                return models
-        except Exception as e:
-            logger.warning(f"Polestar: homepage discovery failed: {e}")
-
-        return MODEL_PAGES.copy()
-
-    async def _scrape_model_page_async(self, model_name: str, url: str) -> VehicleData | None:
-        """Scrape a single Polestar model page for pricing.
-
-        Prices appear as:
-            "ab 57.690 €"
-            "78.900 €"
-            "Ab 63.200 €"
-        in the page text (Playwright-rendered).
-        """
-        try:
-            html = await self._fetch_html(url)
-        except Exception as e:
-            logger.warning(f"Polestar: failed to fetch {url}: {e}")
-            return None
-
-        if len(html) < 1000:
-            logger.warning(f"Polestar: minimal response for {url}")
-            return None
-
-        soup = BeautifulSoup(html, "lxml")
-        text = soup.get_text()
-
-        # Extract price
-        price: float | None = None
-
-        # "ab XX.XXX €"
-        ab_match = re.search(r"[Aa]b\s+([\d.]+(?:,\d+)?)\s*€", text)
-        if ab_match:
-            candidate = BaseEngine.parse_price(ab_match.group(1))
-            if candidate and candidate >= 30000:
-                price = candidate
-
-        # Direct price: "XX.XXX €" (first significant one)
-        if not price:
-            for m in re.finditer(r"([\d.]+(?:,\d+)?)\s*€", text[:15000]):
-                candidate = BaseEngine.parse_price(m.group(1))
-                if candidate and candidate >= 30000:
-                    price = candidate
-                    break
-
-        # JSON-LD check
-        if not price:
-            for script in soup.find_all("script", type="application/ld+json"):
-                try:
-                    data = json.loads(script.string or "")
-                    if isinstance(data, dict):
-                        offers = data.get("offers", {})
-                        if isinstance(offers, dict) and "price" in offers:
-                            price = BaseEngine.parse_price(str(offers["price"]))
-                except (json.JSONDecodeError, TypeError):
-                    continue
-
-        if not price:
-            logger.info(f"Polestar {model_name}: no price found on {url}")
-
-        return VehicleData(
-            brand=self.brand,
-            model=model_name,
-            base_price=price,
-            currency="EUR",
-            fuel_type="electric",
-            url=url,
         )

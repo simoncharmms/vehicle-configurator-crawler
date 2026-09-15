@@ -1232,3 +1232,154 @@ class TestLexusLive:
 
 def pytest_configure(config):
     config.addinivalue_line("markers", "live: mark test as live integration test")
+
+
+# ---------------------------------------------------------------------
+# Multi-market support
+# ---------------------------------------------------------------------
+
+class TestMarketModel:
+    """Market-awareness of the shared data model."""
+
+    def test_snapshot_key_keeps_german_filenames(self):
+        from crawler.base import snapshot_key
+        assert snapshot_key("mercedes-benz", "DE") == "mercedes-benz"
+        assert snapshot_key("mercedes-benz", "FR") == "mercedes-benz_fr"
+        assert snapshot_key("porsche", "pl") == "porsche_pl"
+
+    def test_currency_per_market(self):
+        from crawler.base import currency_for_market
+        assert currency_for_market("DE") == "EUR"
+        assert currency_for_market("PL") == "PLN"
+        assert currency_for_market("GB") == "GBP"
+        assert currency_for_market("CH") == "CHF"
+        assert currency_for_market("XX") == "EUR"   # unknown → EUR fallback
+
+    def test_result_serialises_market_and_currency(self):
+        result = CrawlResult(brand="Mercedes-Benz", market="PL")
+        payload = result.to_dict()
+        assert payload["market"] == "PL"
+        assert payload["currency"] == "PLN"
+
+    def test_vehicle_carries_market(self):
+        vehicle = VehicleData(brand="X", model="Y", market="FR")
+        assert vehicle.to_dict()["market"] == "FR"
+
+    def test_save_writes_market_specific_file(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            path = CrawlResult(brand="Mercedes-Benz", market="FR").save(Path(tmp))
+            assert path.name.startswith("mercedes-benz_fr_")
+            path_de = CrawlResult(brand="Mercedes-Benz", market="DE").save(Path(tmp))
+            assert path_de.name.startswith("mercedes-benz_2")
+
+    def test_unsupported_market_rejected(self):
+        with pytest.raises(ValueError):
+            BrandRegistry.get("mercedes-benz", market="JP")
+
+    def test_registry_reports_supported_markets(self):
+        markets = BrandRegistry.markets_for("mercedes-benz")
+        assert "DE" in markets and "FR" in markets
+        assert BrandRegistry.get("mercedes-benz", market="fr").market == "FR"
+
+
+class TestMarketOrchestration:
+    """Brand-market fan-out and index writing."""
+
+    def test_build_crawlers_skips_unsupported_markets(self):
+        from crawler.orchestrator import build_crawlers
+        crawlers = build_crawlers(["mercedes-benz", "byd"], ["DE", "FR"])
+        pairs = {(c.brand, c.market) for c in crawlers}
+        assert ("Mercedes-Benz", "DE") in pairs
+        assert ("Mercedes-Benz", "FR") in pairs
+        # BYD is German-only, so it must not appear with FR
+        assert ("BYD", "FR") not in pairs
+
+    def test_build_crawlers_all_expands_every_market(self):
+        from crawler.orchestrator import build_crawlers
+        crawlers = build_crawlers(["mercedes-benz"], ["all"])
+        markets = {c.market for c in crawlers}
+        assert markets == set(BrandRegistry.markets_for("mercedes-benz"))
+
+    def test_index_separates_markets(self):
+        from crawler.orchestrator import _write_index
+        with tempfile.TemporaryDirectory() as tmp:
+            data_dir = Path(tmp)
+            option = OptionData(
+                standardized_name="allrad", brand_specific_name="4MATIC",
+                price=2500.0, category="drivetrain", currency="EUR",
+            )
+            results = [
+                CrawlResult(
+                    brand="Mercedes-Benz", market="DE",
+                    vehicles=[VehicleData(
+                        brand="Mercedes-Benz", model="C-Klasse", market="DE",
+                        base_price=50000.0, available_options=[option],
+                    )],
+                ),
+                CrawlResult(
+                    brand="Mercedes-Benz", market="PL",
+                    vehicles=[VehicleData(
+                        brand="Mercedes-Benz", model="Klasa C", market="PL",
+                        base_price=200000.0, currency="PLN",
+                        available_options=[OptionData(
+                            standardized_name="allrad", brand_specific_name="4MATIC",
+                            price=11000.0, category="drivetrain", currency="PLN",
+                        )],
+                    )],
+                ),
+            ]
+            _write_index(results, data_dir)
+            index = json.loads((data_dir / "index.json").read_text())
+
+            assert set(index["markets"]) == {"DE", "PL"}
+            assert index["markets"]["PL"]["currency"] == "PLN"
+            assert index["markets"]["PL"]["brands"]["mercedes-benz"]["snapshots"][0]["file"].startswith(
+                "mercedes-benz_pl_"
+            )
+            # Legacy keys keep serving the German view
+            assert "mercedes-benz" in index["brands"]
+            assert index["option_summary"] == index["option_summary_by_market"]["DE"]
+            # Prices of the two markets are never mixed
+            de_avg = index["option_summary_by_market"]["DE"]["options"][0]["overall_avg_price"]
+            pl_avg = index["option_summary_by_market"]["PL"]["options"][0]["overall_avg_price"]
+            assert de_avg == 2500.0
+            assert pl_avg == 11000.0
+            assert {m["code"] for m in index["available_markets"]} == {"DE", "PL"}
+
+
+class TestMercedesMarkets:
+    """Mercedes-specific market plumbing."""
+
+    def test_every_market_has_locale_and_host(self):
+        from crawler.brands.mercedes import MERCEDES_MARKETS
+        for code, market in MERCEDES_MARKETS.items():
+            assert market.code == code
+            assert "_" in market.locale
+            assert market.host.startswith("www.mercedes-benz.")
+
+    def test_api_url_uses_market_locale(self):
+        api = MercedesConfiguratorAPI(session_id="abc", market="FR")
+        assert "/fr_FR/CCci/abc/entry" in api._url("entry")
+        assert api.session.headers["Origin"] == "https://www.mercedes-benz.fr"
+
+    def test_pre_configs_tagged_with_market(self):
+        payload = {
+            "startPage": {
+                "preConfigs": [{
+                    "vehicleId": "V1",
+                    "motorizationName": "C 200",
+                    "priceInformation": {
+                        "basePrice": {"price": 55299.99, "netPrice": 46000.0},
+                        "currencyISO": "EUR",
+                    },
+                }]
+            }
+        }
+        vehicles = parse_pre_configs(payload, "W206", "C-Klasse", "Mercedes-Benz", "FR")
+        assert vehicles[0].market == "FR"
+        assert vehicles[0].url.startswith("https://www.mercedes-benz.fr")
+
+    def test_unknown_market_raises(self):
+        from crawler.brands.mercedes import get_market
+        with pytest.raises(ValueError):
+            get_market("JP")

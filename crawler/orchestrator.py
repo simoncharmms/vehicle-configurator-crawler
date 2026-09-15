@@ -11,7 +11,15 @@ from datetime import datetime
 from pathlib import Path
 from typing import Any, Sequence
 
-from crawler.base import BrandCrawler, CrawlResult, OptionData
+from crawler.base import (
+    DEFAULT_MARKET,
+    MARKET_NAMES,
+    BrandCrawler,
+    CrawlResult,
+    OptionData,
+    currency_for_market,
+    snapshot_key,
+)
 from crawler.option_mappings import (
     OPTION_DEFINITIONS,
     get_category,
@@ -37,49 +45,81 @@ DEFAULT_DATA_DIR = Path(__file__).parent.parent / "data" / "prices"
 
 async def crawl_brand(crawler: BrandCrawler) -> CrawlResult:
     """Run a single brand crawler with error handling."""
-    logger.info(f"Starting crawl for {crawler.brand}...")
+    label = f"{crawler.brand} [{crawler.market}]"
+    logger.info(f"Starting crawl for {label}...")
     try:
         result = await crawler.crawl()
+        result.market = crawler.market
         vehicle_count = len(result.vehicles)
         option_count = sum(len(v.available_options) for v in result.vehicles)
         if result.vehicles:
             logger.info(
-                f"✓ {crawler.brand}: {vehicle_count} vehicles, "
+                f"✓ {label}: {vehicle_count} vehicles, "
                 f"{option_count} options ({result.duration_seconds:.1f}s)"
             )
         else:
             logger.warning(
-                f"✗ {crawler.brand}: no vehicles extracted "
+                f"✗ {label}: no vehicles extracted "
                 f"({result.duration_seconds:.1f}s) — errors: {result.errors}"
             )
         return result
     except Exception as e:
-        logger.error(f"✗ {crawler.brand} failed: {e}")
-        return CrawlResult(brand=crawler.brand, errors=[str(e)])
+        logger.error(f"✗ {label} failed: {e}")
+        return CrawlResult(brand=crawler.brand, market=crawler.market, errors=[str(e)])
+
+
+def build_crawlers(
+    brands: Sequence[str] | None = None,
+    markets: Sequence[str] | None = None,
+) -> list[BrandCrawler]:
+    """Instantiate one crawler per requested brand-market combination.
+
+    Markets a brand does not support are skipped silently; ``markets=None``
+    means the default market only, ``markets=["all"]`` every supported market.
+    """
+    brand_keys = list(brands) if brands else BrandRegistry.list_brands()
+    requested = [m.upper() for m in (markets or [DEFAULT_MARKET])]
+    want_all = "ALL" in requested
+
+    crawlers: list[BrandCrawler] = []
+    for brand in brand_keys:
+        supported = BrandRegistry.markets_for(brand)
+        targets = list(supported) if want_all else [m for m in requested if m in supported]
+        skipped = [] if want_all else [m for m in requested if m not in supported]
+        if skipped:
+            logger.info(
+                f"{brand}: market(s) {', '.join(skipped)} not supported — skipped"
+            )
+        for market in targets:
+            crawlers.append(BrandRegistry.get(brand, market=market))
+    return crawlers
 
 
 async def crawl_all(
     brands: Sequence[str] | None = None,
     data_dir: Path = DEFAULT_DATA_DIR,
     sequential: bool = True,
+    markets: Sequence[str] | None = None,
 ) -> list[CrawlResult]:
-    """Run crawlers for all (or selected) brands and save results.
+    """Run crawlers for all (or selected) brands and markets and save results.
 
     Args:
         brands: Brand names to crawl (None = all registered).
         data_dir: Directory to save JSON snapshots.
         sequential: If True, run brands one at a time (respects rate limits).
+        markets: ISO country codes (None = default market, ["all"] = every
+            market each brand supports).
     """
-    if brands:
-        crawlers = [BrandRegistry.get(b) for b in brands]
-    else:
-        crawlers = BrandRegistry.all()
+    crawlers = build_crawlers(brands, markets)
 
     if not crawlers:
-        logger.error("No brand crawlers registered!")
+        logger.error("No brand crawlers registered for the requested markets!")
         return []
 
-    logger.info(f"Crawling {len(crawlers)} brand(s): {[c.brand for c in crawlers]}")
+    logger.info(
+        f"Crawling {len(crawlers)} brand-market combination(s): "
+        f"{[f'{c.brand}/{c.market}' for c in crawlers]}"
+    )
 
     results: list[CrawlResult] = []
     if sequential:
@@ -110,7 +150,7 @@ async def crawl_all(
         status = "✓" if r.vehicles else "✗"
         opts = sum(len(v.available_options) for v in r.vehicles)
         logger.info(
-            f"  {status} {r.brand}: {len(r.vehicles)} vehicles, "
+            f"  {status} {r.brand} [{r.market}]: {len(r.vehicles)} vehicles, "
             f"{opts} options, {len(r.errors)} errors"
         )
     logger.info(f"{'='*60}")
@@ -141,23 +181,51 @@ def _write_index(results: list[CrawlResult], data_dir: Path) -> None:
     if "crawl_history" not in index:
         index["crawl_history"] = []
 
+    if "markets" not in index:
+        index["markets"] = {}
+
     for result in results:
         # Consistent brand key: lowercase, spaces → hyphens
         brand_key = result.brand.lower().replace(" ", "-")
-        if brand_key not in index["brands"]:
-            index["brands"][brand_key] = {"name": result.brand, "snapshots": []}
+        market = (result.market or DEFAULT_MARKET).upper()
+        file_key = snapshot_key(brand_key, market)
 
         option_count = sum(len(v.available_options) for v in result.vehicles)
         snapshot = {
             "date": date_str,
-            "file": f"{brand_key}_{date_str}.json",
+            "file": f"{file_key}_{date_str}.json",
+            "market": market,
+            "currency": currency_for_market(market),
             "vehicle_count": len(result.vehicles),
             "option_count": option_count,
             "error_count": len(result.errors),
         }
-        existing_dates = [s["date"] for s in index["brands"][brand_key]["snapshots"]]
-        if date_str not in existing_dates:
-            index["brands"][brand_key]["snapshots"].append(snapshot)
+
+        # Market-scoped tree (all markets, including DE)
+        market_entry = index["markets"].setdefault(
+            market,
+            {
+                "code": market,
+                "name": MARKET_NAMES.get(market, market),
+                "currency": currency_for_market(market),
+                "brands": {},
+            },
+        )
+        brand_entry = market_entry["brands"].setdefault(
+            brand_key, {"name": result.brand, "snapshots": []}
+        )
+        if date_str not in [s["date"] for s in brand_entry["snapshots"]]:
+            brand_entry["snapshots"].append(snapshot)
+
+        # Legacy flat tree stays the German view so older consumers keep working
+        if market == DEFAULT_MARKET:
+            if brand_key not in index["brands"]:
+                index["brands"][brand_key] = {"name": result.brand, "snapshots": []}
+            existing_dates = [
+                s["date"] for s in index["brands"][brand_key]["snapshots"]
+            ]
+            if date_str not in existing_dates:
+                index["brands"][brand_key]["snapshots"].append(snapshot)
 
     index["crawl_history"].append({
         "date": date_str,
@@ -166,12 +234,34 @@ def _write_index(results: list[CrawlResult], data_dir: Path) -> None:
         "total_options": sum(
             len(v.available_options) for r in results for v in r.vehicles
         ),
-        "brands_crawled": [r.brand for r in results],
+        "brands_crawled": sorted({r.brand for r in results}),
+        "markets_crawled": sorted({(r.market or DEFAULT_MARKET) for r in results}),
     })
 
-    # Compute cross-brand option summary from live data only — no fallback
-    summary = _compute_option_summary(results)
-    index["option_summary"] = summary
+    # Compute cross-brand option summary from live data only — no fallback.
+    # Summaries are per market: prices from different currencies are never mixed.
+    by_market: dict[str, list[CrawlResult]] = defaultdict(list)
+    for result in results:
+        by_market[(result.market or DEFAULT_MARKET).upper()].append(result)
+
+    summaries = index.get("option_summary_by_market") or {}
+    for market, market_results in by_market.items():
+        summaries[market] = _compute_option_summary(market_results)
+    index["option_summary_by_market"] = summaries
+
+    # Legacy key = German summary (dashboard default view)
+    if DEFAULT_MARKET in summaries:
+        index["option_summary"] = summaries[DEFAULT_MARKET]
+
+    index["available_markets"] = [
+        {
+            "code": code,
+            "name": MARKET_NAMES.get(code, code),
+            "currency": currency_for_market(code),
+            "brands": sorted(index["markets"][code]["brands"].keys()),
+        }
+        for code in sorted(index["markets"].keys())
+    ]
 
     index["last_updated"] = datetime.now().isoformat()
 
@@ -305,6 +395,19 @@ def main():
         help="Enable debug logging",
     )
     parser.add_argument(
+        "--markets", "-m",
+        nargs="*",
+        help=(
+            "Markets (ISO country codes) to crawl, e.g. DE FR IT. "
+            "Use 'all' for every market a brand supports (default: DE)."
+        ),
+    )
+    parser.add_argument(
+        "--list-markets",
+        action="store_true",
+        help="List supported markets per brand and exit",
+    )
+    parser.add_argument(
         "--list-brands",
         action="store_true",
         help="List registered brands and exit",
@@ -324,11 +427,19 @@ def main():
             print(f"  - {brand}")
         return
 
+    if args.list_markets:
+        print("Supported markets per brand:")
+        for brand in BrandRegistry.list_brands():
+            markets = ", ".join(BrandRegistry.markets_for(brand))
+            print(f"  - {brand}: {markets}")
+        return
+
     results = asyncio.run(
         crawl_all(
             brands=args.brands,
             data_dir=args.data_dir,
             sequential=not args.parallel,
+            markets=args.markets,
         )
     )
 

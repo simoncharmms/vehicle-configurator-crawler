@@ -116,6 +116,16 @@ main { max-width: 1400px; margin: 0 auto; padding: 1.5rem; }
 .dropdown-options label:hover {
   background: var(--border);
 }
+.market-select {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 0.5rem 0.75rem;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  min-width: 12rem;
+}
 select:focus { outline: none; border-color: var(--accent); }
 
 /* --- Stats --- */
