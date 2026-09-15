@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from typing import Type
 
-from crawler.base import BrandCrawler
+from crawler.base import BrandCrawler, DEFAULT_MARKET
 
 
 class BrandRegistry:
@@ -22,13 +22,31 @@ class BrandRegistry:
         return brand_cls
 
     @classmethod
-    def get(cls, brand: str) -> BrandCrawler:
-        """Instantiate a registered brand crawler."""
+    def get(cls, brand: str, market: str = DEFAULT_MARKET) -> BrandCrawler:
+        """Instantiate a registered brand crawler for one market."""
+        return cls.get_class(brand)(market=market)
+
+    @classmethod
+    def get_class(cls, brand: str) -> Type[BrandCrawler]:
+        """Look up the crawler class without instantiating it."""
         key = brand.lower()
         if key not in cls._brands:
             available = ", ".join(sorted(cls._brands.keys()))
             raise KeyError(f"Unknown brand '{brand}'. Available: {available}")
-        return cls._brands[key]()
+        return cls._brands[key]
+
+    @classmethod
+    def markets_for(cls, brand: str) -> tuple[str, ...]:
+        """Markets this brand crawler can serve."""
+        return cls.get_class(brand).SUPPORTED_MARKETS
+
+    @classmethod
+    def all_markets(cls) -> list[str]:
+        """Every market covered by at least one registered brand."""
+        markets: set[str] = set()
+        for brand_cls in cls._brands.values():
+            markets.update(brand_cls.SUPPORTED_MARKETS)
+        return sorted(markets)
 
     @classmethod
     def list_brands(cls) -> list[str]:
@@ -36,6 +54,10 @@ class BrandRegistry:
         return sorted(cls._brands.keys())
 
     @classmethod
-    def all(cls) -> list[BrandCrawler]:
-        """Instantiate all registered brand crawlers."""
-        return [brand_cls() for brand_cls in cls._brands.values()]
+    def all(cls, market: str = DEFAULT_MARKET) -> list[BrandCrawler]:
+        """Instantiate every brand crawler that serves `market`."""
+        return [
+            brand_cls(market=market)
+            for brand_cls in cls._brands.values()
+            if market.upper() in brand_cls.SUPPORTED_MARKETS
+        ]

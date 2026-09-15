@@ -32,6 +32,7 @@ import os
 import random
 import re
 import time
+from dataclasses import dataclass
 from pathlib import Path
 from typing import Any, Iterable
 
@@ -52,8 +53,66 @@ logger = logging.getLogger(__name__)
 # --- Public endpoints -------------------------------------------------
 
 OWCC_API_BASE = "https://api.oneweb.mercedes-benz.com/owcc-backend/api/v3"
-OWCC_MARKET = "de_DE"
+OWCC_MARKET = "de_DE"          # legacy default (German market)
 OWCC_PRODUCT = "CCci"
+
+
+@dataclass(frozen=True)
+class MercedesMarket:
+    """One Mercedes market served by the OWCC configurator API.
+
+    ``locale`` is the API path segment, ``host`` the public site used for the
+    ``Origin``/``Referer`` headers and the vehicle URLs.
+    """
+    code: str        # ISO 3166-1 alpha-2
+    locale: str      # OWCC locale, e.g. "fr_FR"
+    host: str        # e.g. "www.mercedes-benz.fr"
+    accept_language: str
+
+    @property
+    def origin(self) -> str:
+        return f"https://{self.host}"
+
+
+# Verified on 2026-09-15: every locale below returns HTTP 200 for
+# ``entry?typeClass=W206`` *and* priced ``selectableComponents`` in the
+# market's own currency.  Locales that answered but carry no option prices
+# (en_AU, en_IN, pt_BR, th_TH, en_MY, es_AR) or only a handful (ko_KR, en_SG,
+# es_MX) are deliberately excluded — they would add rows without prices.
+MERCEDES_MARKETS: dict[str, MercedesMarket] = {
+    m.code: m for m in (
+        MercedesMarket("DE", "de_DE", "www.mercedes-benz.de", "de-DE,de;q=0.9,en;q=0.8"),
+        MercedesMarket("AT", "de_AT", "www.mercedes-benz.at", "de-AT,de;q=0.9,en;q=0.8"),
+        MercedesMarket("CH", "de_CH", "www.mercedes-benz.ch", "de-CH,de;q=0.9,en;q=0.8"),
+        MercedesMarket("FR", "fr_FR", "www.mercedes-benz.fr", "fr-FR,fr;q=0.9,en;q=0.8"),
+        MercedesMarket("IT", "it_IT", "www.mercedes-benz.it", "it-IT,it;q=0.9,en;q=0.8"),
+        MercedesMarket("ES", "es_ES", "www.mercedes-benz.es", "es-ES,es;q=0.9,en;q=0.8"),
+        MercedesMarket("PT", "pt_PT", "www.mercedes-benz.pt", "pt-PT,pt;q=0.9,en;q=0.8"),
+        MercedesMarket("NL", "nl_NL", "www.mercedes-benz.nl", "nl-NL,nl;q=0.9,en;q=0.8"),
+        MercedesMarket("BE", "nl_BE", "www.mercedes-benz.be", "nl-BE,nl;q=0.9,en;q=0.8"),
+        MercedesMarket("LU", "fr_LU", "www.mercedes-benz.lu", "fr-LU,fr;q=0.9,en;q=0.8"),
+        MercedesMarket("PL", "pl_PL", "www.mercedes-benz.pl", "pl-PL,pl;q=0.9,en;q=0.8"),
+        MercedesMarket("CZ", "cs_CZ", "www.mercedes-benz.cz", "cs-CZ,cs;q=0.9,en;q=0.8"),
+        MercedesMarket("SK", "sk_SK", "www.mercedes-benz.sk", "sk-SK,sk;q=0.9,en;q=0.8"),
+        MercedesMarket("HU", "hu_HU", "www.mercedes-benz.hu", "hu-HU,hu;q=0.9,en;q=0.8"),
+        MercedesMarket("RO", "ro_RO", "www.mercedes-benz.ro", "ro-RO,ro;q=0.9,en;q=0.8"),
+        MercedesMarket("DK", "da_DK", "www.mercedes-benz.dk", "da-DK,da;q=0.9,en;q=0.8"),
+        MercedesMarket("GB", "en_GB", "www.mercedes-benz.co.uk", "en-GB,en;q=0.9"),
+    )
+}
+
+MERCEDES_SUPPORTED_MARKETS: tuple[str, ...] = tuple(MERCEDES_MARKETS)
+
+
+def get_market(market: str) -> MercedesMarket:
+    """Look up a supported market by ISO code (case-insensitive)."""
+    key = (market or "DE").upper()
+    if key not in MERCEDES_MARKETS:
+        raise ValueError(
+            f"Mercedes market '{market}' not supported. "
+            f"Available: {', '.join(MERCEDES_SUPPORTED_MARKETS)}"
+        )
+    return MERCEDES_MARKETS[key]
 
 CONFIGURATOR_OVERVIEW_URL = (
     "https://www.mercedes-benz.de/passengercars/configurator.html"
@@ -178,24 +237,26 @@ class MercedesConfiguratorAPI:
         session_id: str | None = None,
         timeout: float = 45.0,
         max_retries: int = 3,
+        market: str = "DE",
     ) -> None:
         self.session_id = session_id or f"{random.getrandbits(32):08x}"
         self.timeout = timeout
         self.max_retries = max_retries
+        self.market = get_market(market)
         self.session = requests.Session()
         self.session.headers.update({
             "User-Agent": get_random_user_agent(),
             "Accept": "application/json, text/plain, */*",
-            "Accept-Language": "de-DE,de;q=0.9,en;q=0.8",
-            "Origin": "https://www.mercedes-benz.de",
-            "Referer": "https://www.mercedes-benz.de/",
+            "Accept-Language": self.market.accept_language,
+            "Origin": self.market.origin,
+            "Referer": f"{self.market.origin}/",
         })
 
     # --- low level ---
 
     def _url(self, path: str) -> str:
         return (
-            f"{OWCC_API_BASE}/{OWCC_MARKET}/{OWCC_PRODUCT}/"
+            f"{OWCC_API_BASE}/{self.market.locale}/{OWCC_PRODUCT}/"
             f"{self.session_id}/{path.lstrip('/')}"
         )
 
@@ -318,6 +379,7 @@ def parse_pre_configs(
     type_class: str,
     model_name: str,
     brand: str = "Mercedes-Benz",
+    market: str = "DE",
 ) -> list[VehicleData]:
     """Turn ``startPage.preConfigs`` into :class:`VehicleData` records."""
     vehicles: list[VehicleData] = []
@@ -350,8 +412,9 @@ def parse_pre_configs(
             variant=motorization,
             base_price=base_price,
             currency=price_info.get("currencyISO", "EUR") or "EUR",
+            market=(market or "DE").upper(),
             fuel_type=_fuel_type_from_preconfig(pc),
-            url=CONFIGURATOR_DEEPLINK.format(type_class=type_class),
+            url=_vehicle_url(type_class, market),
             image_url=preview.get("url", "") if isinstance(preview, dict) else "",
             raw_data={
                 "type_class": type_class,
@@ -362,6 +425,21 @@ def parse_pre_configs(
         ))
 
     return vehicles
+
+
+def _vehicle_url(type_class: str, market: str = "DE") -> str:
+    """Public configurator link for a type class.
+
+    Only the German deep link path is verified, so other markets link to
+    their own configurator host root rather than to a guessed path.
+    """
+    code = (market or "DE").upper()
+    if code == "DE":
+        return CONFIGURATOR_DEEPLINK.format(type_class=type_class)
+    try:
+        return f"{get_market(code).origin}/"
+    except ValueError:
+        return CONFIGURATOR_DEEPLINK.format(type_class=type_class)
 
 
 def _category_for_component(component_id: str, name: str) -> str:
@@ -432,6 +510,11 @@ class MercedesCrawler(BrandCrawler):
     brand = "Mercedes-Benz"
     base_url = "https://www.mercedes-benz.de"
     configurator_url = CONFIGURATOR_OVERVIEW_URL
+    SUPPORTED_MARKETS = MERCEDES_SUPPORTED_MARKETS
+
+    @property
+    def market_config(self) -> MercedesMarket:
+        return get_market(self.market)
 
     def get_default_config(self) -> CrawlConfig:
         return CrawlConfig(
@@ -442,7 +525,8 @@ class MercedesCrawler(BrandCrawler):
                 "Direct OWCC configurator API (api.oneweb.mercedes-benz.com): "
                 "type-class catalogue → entry preConfigs (base prices) → "
                 "entry selectableComponents (real option prices). "
-                "No www host, no browser — immune to the HTTP 403 bot wall."
+                "No www host, no browser — immune to the HTTP 403 bot wall. "
+                f"Market: {self.market} (locale {self.market_config.locale})."
             ),
         )
 
@@ -452,9 +536,12 @@ class MercedesCrawler(BrandCrawler):
                 self._crawl_inner, config, max_retries=1, base_delay=2.0,
             )
         except Exception as e:
-            logger.warning(f"Mercedes: all retry attempts exhausted: {e}")
+            logger.warning(
+                f"Mercedes [{self.market}]: all retry attempts exhausted: {e}"
+            )
             return CrawlResult(
                 brand=self.brand,
+                market=self.market,
                 errors=[f"All attempts failed: {e}"],
             )
 
@@ -463,22 +550,29 @@ class MercedesCrawler(BrandCrawler):
         start_time = time.time()
         errors: list[str] = []
 
-        api = MercedesConfiguratorAPI()
+        api = MercedesConfiguratorAPI(market=self.market)
         catalogue = load_type_classes()
         if not catalogue:
             return CrawlResult(
                 brand=self.brand,
+                market=self.market,
                 errors=["Type-class catalogue missing or empty"],
                 strategy_used=cfg,
                 duration_seconds=time.time() - start_time,
             )
 
-        # Best-effort catalogue refresh (works only outside blocked networks)
-        discovered = await asyncio.to_thread(api.discover_type_classes)
-        new_classes = {tc: name for tc, name in discovered.items() if tc not in catalogue}
-        if new_classes:
-            logger.info(f"Mercedes: discovered new type classes {sorted(new_classes)}")
-            catalogue = {**catalogue, **{k: v for k, v in new_classes.items() if v}}
+        # Best-effort catalogue refresh (works only outside blocked networks).
+        # Only the German overview URL is verified, so discovery runs for DE.
+        if self.market == "DE":
+            discovered = await asyncio.to_thread(api.discover_type_classes)
+            new_classes = {
+                tc: name for tc, name in discovered.items() if tc not in catalogue
+            }
+            if new_classes:
+                logger.info(
+                    f"Mercedes: discovered new type classes {sorted(new_classes)}"
+                )
+                catalogue = {**catalogue, **{k: v for k, v in new_classes.items() if v}}
 
         semaphore = asyncio.Semaphore(MAX_CONCURRENCY)
 
@@ -490,13 +584,16 @@ class MercedesCrawler(BrandCrawler):
                     payload = await asyncio.to_thread(api.entry, type_class)
                 except LookupError:
                     logger.info(
-                        f"Mercedes: type class {type_class} no longer offered — skipped"
+                        f"Mercedes [{self.market}]: type class {type_class} "
+                        "not offered in this market — skipped"
                     )
                     return []
                 except Exception as e:
                     errors.append(f"{type_class}: {e}")
                     return []
-            return parse_pre_configs(payload, type_class, model_name, self.brand)
+            return parse_pre_configs(
+                payload, type_class, model_name, self.brand, self.market
+            )
 
         model_results = await asyncio.gather(*[
             fetch_models(tc, name) for tc, name in catalogue.items()
@@ -504,9 +601,12 @@ class MercedesCrawler(BrandCrawler):
         vehicles: list[VehicleData] = [v for group in model_results for v in group]
 
         if not vehicles:
-            errors.append("No vehicles returned by the configurator API")
+            errors.append(
+                f"No vehicles returned by the configurator API for market {self.market}"
+            )
             return CrawlResult(
                 brand=self.brand,
+                market=self.market,
                 vehicles=[],
                 errors=errors,
                 strategy_used=cfg,
@@ -514,7 +614,7 @@ class MercedesCrawler(BrandCrawler):
             )
 
         logger.info(
-            f"Mercedes: {len(vehicles)} motorizations across "
+            f"Mercedes [{self.market}]: {len(vehicles)} motorizations across "
             f"{len(catalogue)} type classes"
         )
 
@@ -525,12 +625,16 @@ class MercedesCrawler(BrandCrawler):
             1 for v in vehicles for o in v.available_options
             if o.price is not None and o.price > 0
         )
-        logger.info(f"Mercedes: {priced} priced options extracted")
+        logger.info(f"Mercedes [{self.market}]: {priced} priced options extracted")
         if not priced:
-            errors.append("No priced options extracted from selectableComponents")
+            errors.append(
+                "No priced options extracted from selectableComponents "
+                f"(market {self.market})"
+            )
 
         return CrawlResult(
             brand=self.brand,
+            market=self.market,
             vehicles=vehicles,
             errors=errors,
             strategy_used=cfg,
