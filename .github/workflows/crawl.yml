@@ -11,6 +11,10 @@ on:
         description: 'Brands to crawl (comma-separated, empty = all)'
         required: false
         default: ''
+      markets:
+        description: 'Markets to crawl (comma-separated ISO codes, e.g. DE,FR; empty = all supported)'
+        required: false
+        default: ''
 
 concurrency:
   group: vehicle-configurator-crawl-${{ github.ref }}
@@ -21,7 +25,7 @@ permissions: read-all
 jobs:
   crawl:
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 90
     permissions:
       contents: write
 
@@ -45,7 +49,10 @@ jobs:
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           BRANDS_INPUT: ${{ github.event.inputs.brands || '' }}
+          MARKETS_INPUT: ${{ github.event.inputs.markets || '' }}
         run: |
+          ARGS=(--verbose)
+
           if [ -n "$BRANDS_INPUT" ]; then
             IFS=',' read -ra RAW_BRANDS <<< "$BRANDS_INPUT"
             BRANDS=()
@@ -57,10 +64,26 @@ jobs:
               fi
               BRANDS+=("$brand")
             done
-            python -m crawler.orchestrator --brands "${BRANDS[@]}" --verbose
-          else
-            python -m crawler.orchestrator --verbose
+            ARGS+=(--brands "${BRANDS[@]}")
           fi
+
+          # Default: every market each brand supports
+          MARKETS=(all)
+          if [ -n "$MARKETS_INPUT" ]; then
+            IFS=',' read -ra RAW_MARKETS <<< "$MARKETS_INPUT"
+            MARKETS=()
+            for market in "${RAW_MARKETS[@]}"; do
+              market="$(printf '%s' "$market" | xargs | tr '[:lower:]' '[:upper:]')"
+              if ! [[ "$market" =~ ^([A-Z]{2}|ALL)$ ]]; then
+                echo "Invalid market input: $market" >&2
+                exit 1
+              fi
+              MARKETS+=("$market")
+            done
+          fi
+          ARGS+=(--markets "${MARKETS[@]}")
+
+          python -m crawler.orchestrator "${ARGS[@]}"
 
       - name: Check for changes
         id: changes

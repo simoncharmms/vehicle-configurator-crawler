@@ -10,10 +10,14 @@ const DATA_BASE = document.location.pathname.includes('/docs/')
   : 'data/prices';
 
 let allData = {};           // { brandKey: { name, snapshots: { date: [CrawlResult] } } }
-let optionSummary = null;   // from index.json → option_summary
+let optionSummary = null;   // from index.json → option_summary(_by_market)
 let chartInstance = null;
 let barChartInstance = null;
 let comparisonRows = [];
+let indexData = null;       // raw index.json
+let availableMarkets = [];  // [{ code, name, currency }]
+let currentMarket = 'DE';
+let currentCurrency = 'EUR';
 
 const BRAND_COLORS = {
   'mercedes-benz': '#00adef',
@@ -30,10 +34,15 @@ const BRAND_ORDER = ['Mercedes-Benz', 'Audi', 'Porsche', 'BMW'];
 // ---------- Initialization ----------
 
 document.addEventListener('DOMContentLoaded', async () => {
-  await loadData();
+  const ok = await loadIndex();
+  if (ok) {
+    populateMarketSelect();
+    await loadMarketData(currentMarket);
+  }
   populateFilters();
   setupCheckboxDropdown('brand-filter', 'All Brands');
   setupCheckboxDropdown('category-filter', 'All Categories');
+  setupMarketSelect();
   updateStats();
   renderOptionTable();
   renderChart();
@@ -44,21 +53,55 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 // ---------- Data Loading ----------
 
-async function loadData() {
+async function loadIndex() {
   try {
     const indexResp = await fetch(`${DATA_BASE}/index.json`);
     if (!indexResp.ok) {
       showNoData('No data available yet. Run the crawler first.');
-      return;
+      return false;
     }
-    const index = await indexResp.json();
+    indexData = await indexResp.json();
+    availableMarkets = (indexData.available_markets || []).length
+      ? indexData.available_markets
+      : [{ code: 'DE', name: 'Germany', currency: 'EUR' }];
+    if (!availableMarkets.some(m => m.code === currentMarket)) {
+      currentMarket = availableMarkets[0].code;
+    }
+    return true;
+  } catch (e) {
+    console.error('Failed to load index:', e);
+    showNoData('Failed to load data. Make sure the crawler has run at least once.');
+    return false;
+  }
+}
 
-    optionSummary = index.option_summary || null;
+/** Brand → snapshot list for one market (falls back to the legacy flat tree). */
+function brandsForMarket(market) {
+  const scoped = indexData?.markets?.[market]?.brands;
+  if (scoped && Object.keys(scoped).length) return scoped;
+  return market === 'DE' ? (indexData?.brands || {}) : {};
+}
+
+async function loadMarketData(market) {
+  try {
+    currentMarket = market;
+    currentCurrency =
+      availableMarkets.find(m => m.code === market)?.currency || 'EUR';
+    allData = {};
+    comparisonRows = [];
+
+    optionSummary =
+      indexData?.option_summary_by_market?.[market]
+      || (market === 'DE' ? indexData?.option_summary : null)
+      || null;
     if (optionSummary?.options) {
-      optionSummary.options = optionSummary.options.filter(row => !isExcludedOption(row));
+      optionSummary = {
+        ...optionSummary,
+        options: optionSummary.options.filter(row => !isExcludedOption(row)),
+      };
     }
 
-    for (const [brandKey, brandInfo] of Object.entries(index.brands || {})) {
+    for (const [brandKey, brandInfo] of Object.entries(brandsForMarket(market))) {
       allData[brandKey] = { name: brandInfo.name, snapshots: {} };
 
       for (const snap of brandInfo.snapshots || []) {
@@ -82,10 +125,40 @@ async function loadData() {
       }
     }
     buildComparisonRows();
+    updateMarketSubtitle();
   } catch (e) {
     console.error('Failed to load data:', e);
     showNoData('Failed to load data. Make sure the crawler has run at least once.');
   }
+}
+
+// ---------- Country selector ----------
+
+function populateMarketSelect() {
+  const select = document.getElementById('market-filter');
+  if (!select) return;
+  select.innerHTML = availableMarkets
+    .map(m => `<option value="${escapeHtml(m.code)}">${escapeHtml(m.name || m.code)} (${escapeHtml(m.currency || 'EUR')})</option>`)
+    .join('');
+  select.value = currentMarket;
+}
+
+function setupMarketSelect() {
+  const select = document.getElementById('market-filter');
+  if (!select) return;
+  select.addEventListener('change', async event => {
+    await loadMarketData(event.target.value);
+    populateFilters();
+    onFilterChange();
+  });
+}
+
+function updateMarketSubtitle() {
+  const subtitle = document.getElementById('market-subtitle');
+  if (!subtitle) return;
+  const market = availableMarkets.find(m => m.code === currentMarket);
+  const name = market?.name || currentMarket;
+  subtitle.textContent = `Cross-brand option pricing from vehicle configurators — ${name} (${currentCurrency})`;
 }
 
 // ---------- Filters ----------
@@ -189,7 +262,7 @@ function updateStats() {
   document.getElementById('total-brands').textContent = brands.size || Object.keys(allData).length;
   document.getElementById('total-options').textContent = optionNames.size || '-';
   document.getElementById('avg-option-price').textContent = avgOptPrice
-    ? `€${Math.round(avgOptPrice).toLocaleString('de-DE')}`
+    ? formatMoney(avgOptPrice)
     : '-';
 
   const dates = vehicles.map(v => v.date).sort();
@@ -288,7 +361,9 @@ function renderOptionTable() {
   if (sourceLabel) {
     if (false) { // Reference data removed — live data only
     } else {
-      sourceLabel.textContent = 'Live-extracted pricing from German vehicle configurators';
+      const marketName =
+        availableMarkets.find(m => m.code === currentMarket)?.name || currentMarket;
+      sourceLabel.textContent = `Live-extracted pricing from vehicle configurators in ${marketName}`;
     }
   }
 
@@ -332,7 +407,7 @@ function renderOptionTable() {
     const brandCells = brands.map(b => {
       const info = (row.brands || {})[b];
       if (!info || info.avg_price == null) return '<td class="col-brand brand-cell">—</td>';
-      const priceStr = `<span class="brand-price">€${Math.round(info.avg_price).toLocaleString('de-DE')}</span>`;
+      const priceStr = `<span class="brand-price">${formatMoney(info.avg_price)}</span>`;
       return `<td class="col-brand brand-cell">
         <span class="brand-option-name">${escapeHtml(info.name)}</span>
         ${priceStr}
@@ -340,10 +415,10 @@ function renderOptionTable() {
     }).join('');
 
     const avgPrice = row.overall_avg_price != null
-      ? `€${Math.round(row.overall_avg_price).toLocaleString('de-DE')}`
+      ? formatMoney(row.overall_avg_price)
       : '—';
     const range = (row.overall_min_price != null && row.overall_max_price != null)
-      ? `€${Math.round(row.overall_min_price).toLocaleString('de-DE')} – €${Math.round(row.overall_max_price).toLocaleString('de-DE')}`
+      ? `${formatMoney(row.overall_min_price)} – ${formatMoney(row.overall_max_price)}`
       : '—';
 
     return `<tr>
@@ -423,7 +498,7 @@ function renderChart() {
             label: ctx => {
               const val = ctx.parsed.y;
               return val != null
-                ? `${ctx.dataset.label}: ${formatEuro(val)}`
+                ? `${ctx.dataset.label}: ${formatMoney(val)}`
                 : `${ctx.dataset.label}: —`;
             },
           },
@@ -438,10 +513,10 @@ function renderChart() {
         y: {
           ticks: {
             color: '#8b8fa3',
-            callback: v => formatEuro(v),
+            callback: v => formatMoney(v),
           },
           grid: { color: '#2a2d3a' },
-          title: { display: true, text: 'Average Option Price (EUR)', color: '#8b8fa3' },
+          title: { display: true, text: `Average Option Price (${currentCurrency})`, color: '#8b8fa3' },
         },
       },
     },
@@ -492,15 +567,15 @@ function renderBarChart() {
         },
         tooltip: {
           callbacks: {
-            label: ctx => `${ctx.dataset.label}: ${formatEuro(ctx.parsed.x)}`,
+            label: ctx => `${ctx.dataset.label}: ${formatMoney(ctx.parsed.x)}`,
           },
         },
       },
       scales: {
         x: {
-          ticks: { color: '#8b8fa3', callback: value => formatEuro(value) },
+          ticks: { color: '#8b8fa3', callback: value => formatMoney(value) },
           grid: { color: '#2a2d3a' },
-          title: { display: true, text: 'Average Price (EUR)', color: '#8b8fa3' },
+          title: { display: true, text: `Average Price (${currentCurrency})`, color: '#8b8fa3' },
         },
         y: {
           ticks: { color: '#8b8fa3', font: { size: 11 } },
@@ -579,10 +654,11 @@ function formatDate(date) {
   });
 }
 
-function formatEuro(value) {
+/** Format a price in the currency of the currently selected country. */
+function formatMoney(value) {
   return new Intl.NumberFormat('de-DE', {
     style: 'currency',
-    currency: 'EUR',
+    currency: currentCurrency || 'EUR',
     maximumFractionDigits: 0,
   }).format(value);
 }
@@ -619,7 +695,7 @@ function renderVehicles() {
       <span class="brand">${escapeHtml(v.brandName || v.brand)}</span>
       <div class="model">${escapeHtml(v.model)}</div>
       ${v.variant ? `<div class="variant">${escapeHtml(v.variant)}</div>` : ''}
-      <div class="price">${v.base_price ? `€${v.base_price.toLocaleString('de-DE')}` : 'Price on request'}</div>
+      <div class="price">${v.base_price ? formatMoney(v.base_price) : 'Price on request'}</div>
       ${v.fuel_type ? `<div class="fuel">${escapeHtml(v.fuel_type)}</div>` : ''}
       ${optBadge}
     </div>`;

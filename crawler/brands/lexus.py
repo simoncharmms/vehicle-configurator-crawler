@@ -2,25 +2,29 @@
 
 robots.txt:  No specific block on /modelle.
 Strategy:    Playwright rendering of ``/modelle`` → embedded JSON state
-             extraction (modelResults with prices, grades, features).
-             Option extraction from ``grade.features`` and ``grade.featuresText``
-             embedded in the state blob.  Falls back to curl fetch when Playwright
-             is unavailable.
+             extraction (modelResults with prices, grades, features) and rotating
+             Texus model tokens.  Public Texus JSON endpoints then return the
+             published positive prices of paint, wheels, upholstery, packages,
+             optional equipment, and accessories for every configuration.
 
-The Lexus DE models page embeds a rich JSON state blob in a ``<script>``
-element whose ``id`` ends with ``-data``.  Each model group contains
+The Lexus models page embeds a rich JSON state blob in a hidden element whose
+``id`` ends with ``-data``.  Each model group contains
 cars with grade objects that include feature lists (standard equipment)
-which serve as the option/equipment data source.
+and a ``modelMap`` with Texus product tokens.
 """
 
 from __future__ import annotations
 
+import asyncio
 import json
 import logging
+import os
 import re
 import time
+from dataclasses import dataclass
 from typing import Any
 
+import requests
 from bs4 import BeautifulSoup
 
 from crawler.base import (
@@ -30,11 +34,51 @@ from crawler.base import (
 from crawler.engines.base_engine import BaseEngine
 from crawler.option_mappings import normalize_option_name, get_category
 from crawler.brands.registry import BrandRegistry
-from crawler.network import retry_with_backoff, BrowserPool
+from crawler.network import retry_with_backoff, BrowserPool, get_random_user_agent
 
 logger = logging.getLogger(__name__)
 
 MODELS_URL = "https://www.lexus.de/modelle"
+TEXUS_API_BASE = "https://texus.lexus-europe.com/v2/car"
+PROMOTION_TIMEFRAME = "00000000-0000-0000-0000-000000000000"
+
+
+@dataclass(frozen=True)
+class LexusMarket:
+    """Public Lexus site/API settings for a market verified with prices."""
+
+    code: str
+    host: str
+    api_country: str
+    language: str
+    currency: str
+
+    @property
+    def base_url(self) -> str:
+        return f"https://{self.host}"
+
+    @property
+    def models_url(self) -> str:
+        return f"{self.base_url}/modelle"
+
+
+# Verified 2026-09-15 against the public Texus endpoints:
+# DE/UX returned EUR 850 paint, EUR 2,150 Technology Pack and EUR 870
+# detachable towbar; AT/UX returned EUR 930 paint.  Do not add a country
+# until its public API has been observed returning a positive option price.
+LEXUS_MARKETS: dict[str, LexusMarket] = {
+    market.code: market for market in (
+        LexusMarket("DE", "www.lexus.de", "de", "de", "EUR"),
+        LexusMarket("AT", "www.lexus.at", "at", "de", "EUR"),
+    )
+}
+LEXUS_SUPPORTED_MARKETS: tuple[str, ...] = tuple(LEXUS_MARKETS)
+
+# The model overview currently exposes 49 individual cars.  Keep the default
+# at that complete set, while allowing a small bounded live probe in CI/manual
+# diagnostics.  Requests are made sequentially and each vehicle bundle is
+# separated by the crawler's configured rate limit.
+MAX_OPTION_PROBES = int(os.getenv("LEXUS_MAX_OPTION_PROBES", "49"))
 
 FUEL_TYPE_MAP = {
     "HEV": "hybrid",
@@ -44,19 +88,210 @@ FUEL_TYPE_MAP = {
 }
 
 
+def get_market(market: str) -> LexusMarket:
+    """Return verified public-site settings for an ISO market code."""
+    code = (market or "DE").upper()
+    try:
+        return LEXUS_MARKETS[code]
+    except KeyError:
+        raise ValueError(
+            f"Lexus market '{market}' not supported. "
+            f"Available: {', '.join(LEXUS_SUPPORTED_MARKETS)}"
+        ) from None
+
+
+def _extract_model_tokens(soup: BeautifulSoup) -> dict[str, str]:
+    """Extract ``{model internal code: Texus product token}`` from page state.
+
+    Lexus injects ``window.dxp.settings.modelMap`` as JSON inside an inline
+    script.  The opaque per-model token is required by the public Texus API;
+    it changes with the sales catalogue, so it must never be hard-coded.
+    """
+    decoder = json.JSONDecoder()
+    # The current page puts the JSON in a hidden ``*-data`` div (rather than
+    # a script), but some Lexus/AEM versions used an inline script.
+    elements = [
+        *soup.find_all(id=re.compile(r".*-data$")),
+        *soup.find_all("script"),
+    ]
+    for element in elements:
+        text = element.string or element.get_text() or ""
+        marker = '"modelMap":'
+        pos = text.find(marker)
+        if pos < 0:
+            continue
+        start = text.find("{", pos + len(marker))
+        if start < 0:
+            continue
+        try:
+            model_map, _ = decoder.raw_decode(text[start:])
+        except json.JSONDecodeError:
+            continue
+        if not isinstance(model_map, dict):
+            continue
+        tokens: dict[str, str] = {}
+        for key, item in model_map.items():
+            if not isinstance(item, dict):
+                continue
+            token = item.get("token")
+            code = item.get("internalCode") or key
+            if isinstance(code, str) and isinstance(token, str) and token:
+                tokens[code.upper()] = token
+        if tokens:
+            return tokens
+    logger.warning("Lexus: no Texus model tokens in page state")
+    return {}
+
+
+def _texus_option_data(
+    payloads: list[tuple[str, Any]],
+    *,
+    brand: str,
+    currency: str,
+) -> list[OptionData]:
+    """Convert positive-price records from Texus response payloads.
+
+    The public API deliberately returns separate payloads for paint, wheels,
+    upholstery, packs, equipment, and accessories.  These response fields use
+    PascalCase (``Name``, ``Price``, ``PriceIncl``, ``PriceInfo.Currency``).
+    Only a positive published cash/list price is included: zero-price
+    equipment is standard/included and must not become a made-up price.
+    """
+    options: list[OptionData] = []
+    seen: set[tuple[str, str]] = set()
+
+    def price_of(item: dict[str, Any]) -> float | None:
+        for key in ("Price", "PriceIncl", "PriceInVat"):
+            value = item.get(key)
+            if isinstance(value, (int, float)) and value > 0:
+                return float(value)
+        price_info = item.get("PriceInfo")
+        if isinstance(price_info, dict):
+            for key in ("ListPriceWithDiscount", "ListPrice", "NetPrice"):
+                value = price_info.get(key)
+                if isinstance(value, (int, float)) and value > 0:
+                    return float(value)
+        return None
+
+    def emit(item: Any, source: str) -> None:
+        if not isinstance(item, dict):
+            return
+        name = item.get("Name")
+        price = price_of(item)
+        if not isinstance(name, str) or not name.strip() or price is None:
+            return
+        code = item.get("InternalCode") or item.get("Code") or item.get("ID") or ""
+        code = str(code)
+        key = (code, name.strip().lower())
+        if key in seen:
+            return
+        seen.add(key)
+        standardized = normalize_option_name(name, brand)
+        category = get_category(standardized) if standardized else {
+            "colours": "exterior",
+            "wheels": "wheels",
+            "upholsteries": "interior",
+            "packs": "packages",
+            "equipment": "other",
+            "accessories": "accessories",
+        }.get(source, "other")
+        price_info = item.get("PriceInfo")
+        item_currency = (
+            price_info.get("Currency") if isinstance(price_info, dict) else ""
+        )
+        if not isinstance(item_currency, str):
+            item_currency = ""
+        item_currency = item_currency.strip()
+        options.append(OptionData(
+            standardized_name=standardized,
+            brand_specific_name=name.strip(),
+            price=price,
+            category=category,
+            code=code,
+            currency=item_currency or currency,
+        ))
+
+    for source, payload in payloads:
+        if source == "colours" and isinstance(payload, dict):
+            # The API currently returns ExteriorColours and may additionally
+            # return roof/body colours for two-tone configurations.
+            for key, values in payload.items():
+                if "colour" in key.lower() and isinstance(values, list):
+                    for item in values:
+                        emit(item, source)
+        elif source == "wheels" and isinstance(payload, dict):
+            for item in payload.get("Wheels", []):
+                emit(item, source)
+        elif isinstance(payload, list):
+            for item in payload:
+                emit(item, source)
+
+    return options
+
+
+class LexusConfiguratorAPI:
+    """Small, polite client for Lexus's public Texus pricing endpoints."""
+
+    _METHODS: tuple[tuple[str, str, str], ...] = (
+        ("getColourInfo", "", "colours"),
+        ("getCarWheels", "", "wheels"),
+        ("getUpholsteries", "", "upholsteries"),
+        ("getPacks", "", "packs"),
+        ("getOptionalEquipment", "/unfiltered", "equipment"),
+        ("getOptionalAccessories", "/unfiltered", "accessories"),
+    )
+
+    def __init__(self, market: LexusMarket) -> None:
+        self.market = market
+        self.session = requests.Session()
+        self.session.headers.update({
+            "Accept": "application/json",
+            "Origin": market.base_url,
+            "Referer": f"{market.models_url}/",
+            "User-Agent": get_random_user_agent(),
+        })
+
+    def _url(self, method: str, token: str, car_id: str, tail: str) -> str:
+        return (
+            f"{TEXUS_API_BASE}/{method}/lexus/{self.market.api_country}/"
+            f"{self.market.language}/{token}/promotiontimeframe/"
+            f"{PROMOTION_TIMEFRAME}/car/{car_id}{tail}"
+        )
+
+    def fetch_options(self, token: str, car_id: str) -> list[OptionData]:
+        """Fetch all published paid choices for one Lexus configuration."""
+        payloads: list[tuple[str, Any]] = []
+        for method, tail, source in self._METHODS:
+            url = self._url(method, token, car_id, tail)
+            try:
+                response = self.session.get(url, timeout=25)
+                response.raise_for_status()
+                payloads.append((source, response.json()))
+            except (requests.RequestException, ValueError) as exc:
+                # A single dead option category must not discard the other
+                # real prices returned for this car.
+                logger.warning(
+                    "Lexus [%s]: %s for car %s failed: %s",
+                    self.market.code, method, car_id, exc,
+                )
+        return _texus_option_data(
+            payloads, brand="Lexus", currency=self.market.currency,
+        )
+
+
 @BrandRegistry.register
 class LexusCrawler(BrandCrawler):
     brand = "Lexus"
     base_url = "https://www.lexus.de"
     configurator_url = MODELS_URL
+    SUPPORTED_MARKETS = LEXUS_SUPPORTED_MARKETS
 
     def get_default_config(self) -> CrawlConfig:
         return CrawlConfig(
             engine=EngineType.PLAYWRIGHT,
             rate_limit_seconds=3.0,
             confidence=0.95,
-            notes="Playwright rendering + embedded JSON state (modelResults "
-                  "with prices, grades, and feature lists).",
+            notes="Playwright model state + public Texus JSON option-price API.",
         )
 
     async def crawl(self, config: CrawlConfig | None = None) -> CrawlResult:
@@ -68,6 +303,7 @@ class LexusCrawler(BrandCrawler):
             logger.warning(f"Lexus: all retry attempts exhausted: {e}")
             return CrawlResult(
                 brand=self.brand,
+                market=self.market,
                 errors=[f"All attempts failed: {e}"],
             )
 
@@ -76,24 +312,37 @@ class LexusCrawler(BrandCrawler):
         start_time = time.time()
         errors: list[str] = []
         vehicles: list[VehicleData] = []
+        market = get_market(self.market)
 
         try:
-            logger.info(f"Lexus: fetching {MODELS_URL} (Playwright)")
+            logger.info(
+                "Lexus [%s]: fetching %s (Playwright)", self.market, market.models_url,
+            )
             pool = await BrowserPool.acquire()
             html = await pool.fetch_html(
-                MODELS_URL,
+                market.models_url,
                 wait_until="networkidle",
                 timeout_ms=35_000,
             )
             soup = BeautifulSoup(html, "lxml")
-            vehicles = self._extract_from_state(soup)
+            tokens = _extract_model_tokens(soup)
+            vehicles = self._extract_from_state(soup, tokens)
 
             if vehicles:
                 logger.info(
-                    f"Lexus: extracted {len(vehicles)} vehicles from JSON state"
+                    "Lexus [%s]: extracted %d vehicles from JSON state",
+                    self.market, len(vehicles),
                 )
+                await self._attach_priced_options(vehicles, cfg, errors)
                 option_count = sum(len(v.available_options) for v in vehicles)
-                logger.info(f"Lexus: {option_count} total option instances extracted")
+                priced_count = sum(
+                    1 for vehicle in vehicles for option in vehicle.available_options
+                    if option.price is not None and option.price > 0
+                )
+                logger.info(
+                    "Lexus [%s]: %d option instances, %d with published prices",
+                    self.market, option_count, priced_count,
+                )
             else:
                 errors.append("No vehicles found in Lexus JSON state data")
 
@@ -108,28 +357,86 @@ class LexusCrawler(BrandCrawler):
 
         return CrawlResult(
             brand=self.brand,
+            market=self.market,
             vehicles=vehicles,
             errors=errors,
             strategy_used=cfg,
             duration_seconds=time.time() - start_time,
         )
 
-    def _extract_from_state(self, soup: BeautifulSoup) -> list[VehicleData]:
+    async def _attach_priced_options(
+        self,
+        vehicles: list[VehicleData],
+        cfg: CrawlConfig,
+        errors: list[str],
+    ) -> None:
+        """Append positive prices returned by the public Texus API.
+
+        The configured delay is between *vehicle bundles* (each bundle is the
+        six documented endpoint categories), rather than launching a fan-out
+        of requests.  This keeps a complete 49-car daily run bounded while
+        retaining the existing 3-second Lexus rate limit.
+        """
+        api = LexusConfiguratorAPI(get_market(self.market))
+        targets = [
+            vehicle for vehicle in vehicles
+            if vehicle.raw_data.get("_lexus_car_id")
+            and vehicle.raw_data.get("_lexus_token")
+        ][:MAX_OPTION_PROBES]
+        if len(targets) < len(vehicles):
+            errors.append(
+                f"Option price probe capped at {len(targets)}/{len(vehicles)} vehicles"
+            )
+
+        try:
+            for index, vehicle in enumerate(targets):
+                car_id = vehicle.raw_data["_lexus_car_id"]
+                token = vehicle.raw_data["_lexus_token"]
+                priced = await asyncio.to_thread(api.fetch_options, token, car_id)
+                # The prices describe selectable items and deliberately remain
+                # separate from the grade's included/zero-price feature list.
+                existing = {
+                    (option.code, option.brand_specific_name.casefold())
+                    for option in vehicle.available_options
+                }
+                for option in priced:
+                    key = (option.code, option.brand_specific_name.casefold())
+                    if key not in existing:
+                        vehicle.available_options.append(option)
+                        existing.add(key)
+                if index + 1 < len(targets) and cfg.rate_limit_seconds:
+                    await asyncio.sleep(cfg.rate_limit_seconds)
+        finally:
+            api.session.close()
+            # These values are only routing metadata for the live price call,
+            # not useful data for the published vehicle snapshot.
+            for vehicle in vehicles:
+                vehicle.raw_data.pop("_lexus_car_id", None)
+                vehicle.raw_data.pop("_lexus_token", None)
+
+    def _extract_from_state(
+        self,
+        soup: BeautifulSoup,
+        model_tokens: dict[str, str] | None = None,
+    ) -> list[VehicleData]:
         """Extract vehicles and options from the embedded JSON state element.
 
-        The Lexus DE models page embeds a JSON blob in a ``<script>`` element
-        whose ``id`` ends with ``-data``. The structure includes:
+        The Lexus models page embeds a JSON blob in a hidden element whose
+        ``id`` ends with ``-data``. The structure includes:
 
         - ``modelResults.results[]`` – model groups (LBX, UX, NX, RX, …)
             - ``name`` – model name
             - ``cars[]`` – individual variants
                 - ``price.cash`` – base price in EUR
                 - ``grade.name`` – trim level
-                - ``grade.features[]`` – equipment feature strings
+                - ``grade.features[]`` – standard-equipment feature strings
                 - ``grade.featuresText`` – optional prose features
                 - ``engine.name`` – engine description
                 - ``engine.transmission.name`` – transmission type
                 - ``filterValues.fuelType[]`` – HEV/BEV/PHEV
+
+        Texus product tokens are parsed separately from the same page and
+        retained temporarily in ``raw_data`` for the price-API phase.
         """
         vehicles: list[VehicleData] = []
         seen: set[str] = set()
@@ -205,7 +512,11 @@ class LexusCrawler(BrandCrawler):
 
                 # URL
                 model_code = car.get("model", {}).get("code", "")
-                url = f"{self.base_url}/modelle/{model_code}" if model_code else MODELS_URL
+                market = get_market(self.market)
+                url = (
+                    f"{market.base_url}/modelle/{model_code}"
+                    if model_code else market.models_url
+                )
 
                 # --- Option extraction from grade features ---
                 options = _extract_options_from_grade(grade, engine, car, self.brand)
@@ -215,10 +526,17 @@ class LexusCrawler(BrandCrawler):
                     model=display_model,
                     variant=engine_name,
                     base_price=base_price,
-                    currency="EUR",
+                    currency=self.currency,
+                    market=self.market,
                     fuel_type=fuel_type,
                     url=url,
                     available_options=options,
+                    raw_data={
+                        "_lexus_car_id": car.get("id", ""),
+                        "_lexus_token": (model_tokens or {}).get(
+                            str(model_code).upper(), ""
+                        ),
+                    },
                 ))
 
         return vehicles

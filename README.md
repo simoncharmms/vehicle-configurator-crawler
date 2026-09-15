@@ -6,17 +6,21 @@ Automated vehicle price tracker with multi-brand support, network-hardened Playw
 
 ## Current Status
 
-| Brand | Status | Vehicles | Notes |
-|-------|--------|----------|-------|
-| **Mercedes-Benz** | ✅ Active | 100 | Configurator JSON API (real option prices) |
-| **Lexus** | ✅ Active | 49 | JSON state blob extraction |
-| **Porsche** | ✅ Active | 85 | SPA rendering (networkidle) |
-| **BYD** | ✅ Active | 11 | Playwright rendering |
-| **Polestar** | ✅ Active | 5 | Model page price probes |
-| **XPeng** | ✅ Active | 5 | Model page scraping |
-| **Zeekr** | ✅ Active | 4 | Homepage text extraction |
-| **Audi** | ⛔ Blocked | 0 | HTTP 403 (was working 2026-09-05) |
-| **Volvo** | ⛔ Blocked | 0 | HTTP 403 on all endpoints |
+| Brand | Status | Markets | Notes |
+|-------|--------|---------|-------|
+| **Mercedes-Benz** | ✅ Active | 17 — DE, AT, CH, FR, IT, ES, PT, NL, BE, LU, PL, CZ, SK, HU, RO, DK, GB | Configurator JSON API (real option prices) |
+| **Porsche** | ✅ Active | 12 — DE, AT, CH, FR, IT, ES, NL, BE, PL, GB, SE, NO | Playwright configurator rendering, locale-aware price parsing |
+| **XPeng** | ✅ Active | 8 — DE, AT, BE, DK, FR, NL, NO, SE | Configurator API (`carSpecificationGroup/list`) |
+| **Zeekr** | ✅ Active | 3 — DE, NL, SE | Shop API (`queryCarModels` / `queryOptions`) |
+| **Polestar** | ✅ Active | 2 — DE, SE | Configurator API (`car-configurator-back`) |
+| **BYD** | ✅ Active | 2 — DE, NL | Public CMS configurator catalogue |
+| **Lexus** | ✅ Active | 2 — DE, AT | Texus API (colours, wheels, upholstery, packs, options, accessories) |
+| **Audi** | ⛔ Blocked | DE | HTTP 403 (was working 2026-09-05) |
+| **Volvo** | ⛔ Blocked | – | HTTP 403 on all endpoints |
+
+Every crawl is stored per brand **and** market, prices are never converted between
+currencies, and the dashboard has a country selector that switches the whole view
+(stats, option table, charts, vehicles) to the selected market's currency.
 
 - **Dashboard:** https://simoncharmms.github.io/vehicle-configurator-crawler
 - **Update Frequency:** Daily at 6:00 AM CET
@@ -96,12 +100,12 @@ vehicle-configurator-crawler/
 |-------|--------|-------------|
 | **Mercedes-Benz** | Requests + JSON API | Configurator API `entry` endpoint: base prices + `selectableComponents` prices |
 | **Audi** | Curl + Apollo | GraphQL cache with prices (Sec-Fetch headers) |
-| **Porsche** | Playwright + JSON-LD | Structured data + model links |
-| **Lexus** | Curl + JSON state | Embedded JSON state blob with full model data |
-| **BYD** | Playwright + DOM | JS-rendered model cards with prices |
-| **XPeng** | Curl + model pages | "ab" prices from individual model pages |
-| **Zeekr** | Curl + homepage | "Ab XX EUR" prices from Nuxt-rendered homepage |
-| **Polestar** | Playwright + pages | Model page prices (CDN blocks curl) |
+| **Porsche** | Playwright + configurator DOM | Model links per market + configurator option prices (locale number formats) |
+| **Lexus** | Requests + Texus API | `getColourInfo`, `getCarWheels`, `getUpholsteries`, `getPacks`, `getOptionalEquipment`, `getOptionalAccessories` |
+| **BYD** | Requests + CMS API | `cms-api.byd.com/car/byd/{market}/{model}.json` — trims, colours, interior, wheels |
+| **XPeng** | Requests + configurator API | `store.xpeng.com/api/carSpecificationGroup/list` per car version |
+| **Zeekr** | Requests + shop API | `gateway-pub-azure.zeekr.eu` `queryCarModels` / `queryOptions` |
+| **Polestar** | Requests + configurator API | `pc-api.polestar.com/.../configurator/api/v2/configuration` feature groups |
 
 ## Setup
 
@@ -131,12 +135,24 @@ python -m crawler.orchestrator
 # Specific brands
 python -m crawler.orchestrator --brands mercedes-benz lexus byd
 
+# Specific markets (default: DE)
+python -m crawler.orchestrator --brands mercedes-benz --markets DE FR PL
+
+# Every market each brand supports
+python -m crawler.orchestrator --markets all
+
 # Debug output
 python -m crawler.orchestrator --verbose
 
-# List registered brands
+# List registered brands / supported markets per brand
 python -m crawler.orchestrator --list-brands
+python -m crawler.orchestrator --list-markets
 ```
+
+Snapshots are written as `data/prices/{brand}_{date}.json` for Germany and
+`data/prices/{brand}_{market}_{date}.json` for every other market. `index.json`
+carries `markets`, `option_summary_by_market` and `available_markets` next to the
+legacy German keys, so older dashboard builds keep working.
 
 ## robots.txt Compliance
 
