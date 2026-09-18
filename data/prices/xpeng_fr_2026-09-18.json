@@ -1,0 +1,620 @@
+{
+  "brand": "XPeng",
+  "market": "FR",
+  "currency": "EUR",
+  "timestamp": "2026-09-18T09:37:03.049963+00:00",
+  "vehicle_count": 13,
+  "vehicles": [
+    {
+      "brand": "XPeng",
+      "model": "XPENG L03",
+      "variant": "RWD Standard Range",
+      "base_price": 34990.0,
+      "currency": "EUR",
+      "market": "FR",
+      "fuel_type": "electric",
+      "available_options": [
+        {
+          "brand_specific_name": "Barre d'attelage à rotule démontable sans outil",
+          "price": 990.0,
+          "category": "accessories",
+          "code": "D03ESV_DSAA_Manual Towbar",
+          "currency": "EUR"
+        },
+        {
+          "brand_specific_name": "Rock Gray",
+          "price": 950.0,
+          "category": "exterior",
+          "code": "D03ESV_DSAA_ZQ",
+          "currency": "EUR"
+        },
+        {
+          "brand_specific_name": "Midnight Black",
+          "price": 950.0,
+          "category": "exterior",
+          "code": "D03ESV_DSAA_WN",
+          "currency": "EUR"
+        }
+      ],
+      "url": "https://store.xpeng.com/fr/configurator/L03",
+      "image_url": ""
+    },
+    {
+      "brand": "XPeng",
+      "model": "XPENG L03",
+      "variant": "RWD Long Range",
+      "base_price": 37990.0,
+      "currency": "EUR",
+      "market": "FR",
+      "fuel_type": "electric",
+      "available_options": [
+        {
+          "brand_specific_name": "Barre d'attelage à rotule démontable sans outil",
+          "price": 990.0,
+          "category": "accessories",
+          "code": "D03ESV_DSBA_Manual Towbar",
+          "currency": "EUR"
+        },
+        {
+          "brand_specific_name": "Phantom Purple",
+          "price": 950.0,
+          "category": "exterior",
+          "code": "D03ESV_DSBA_ZP",
+          "currency": "EUR"
+        },
+        {
+          "brand_specific_name": "Silver Frost",
+          "price": 950.0,
+          "category": "exterior",
+          "code": "D03ESV_DSBA_WG",
+          "currency": "EUR"
+        },
+        {
+          "brand_specific_name": "Rock Gray",
+          "price": 950.0,
+          "category": "exterior",
+          "code": "D03ESV_DSBA_ZQ",
+          "currency": "EUR"
+        },
+        {
+          "brand_specific_name": "Midnight Black",
+          "price": 950.0,
+          "category": "exterior",
+          "code": "D03ESV_DSBA_WN",
+          "currency": "EUR"
+        }
+      ],
+      "url": "https://store.xpeng.com/fr/configurator/L03",
+      "image_url": ""
+    },
+    {
+      "brand": "XPeng",
+      "model": "XPENG L03",
+      "variant": "RWD Long Range Ultra",
+      "base_price": 42990.0,
+      "currency": "EUR",
+      "market": "FR",
+      "fuel_type": "electric",
+      "available_options": [
+        {
+          "brand_specific_name": "Barre d'attelage à rotule démontable sans outil",
+          "price": 990.0,
+          "category": "accessories",
+          "code": "D03ESV_DSPA_Manual Towbar",
+          "currency": "EUR"
+        },
+        {
+          "brand_specific_name": "Phantom Purple",
+          "price": 950.0,
+          "category": "exterior",
+          "code": "D03ESV_DSPA_ZP",
+          "currency": "EUR"
+        },
+        {
+          "brand_specific_name": "Silver Frost",
+          "price": 950.0,
+          "category": "exterior",
+          "code": "D03ESV_DSPA_WG",
+          "currency": "EUR"
+        },
+        {
+          "brand_specific_name": "Rock Gray",
+          "price": 950.0,
+          "category": "exterior",
+          "code": "D03ESV_DSPA_ZQ",
+          "currency": "EUR"
+        },
+        {
+          "brand_specific_name": "Midnight Black",
+          "price": 950.0,
+          "category": "exterior",
+          "code": "D03ESV_DSPA_WN",
+          "currency": "EUR"
+        }
+      ],
+      "url": "https://store.xpeng.com/fr/configurator/L03",
+      "image_url": ""
+    },
+    {
+      "brand": "XPeng",
+      "model": "XPENG L03",
+      "variant": "AWD Performance Ultra",
+      "base_price": 46990.0,
+      "currency": "EUR",
+      "market": "FR",
+      "fuel_type": "electric",
+      "available_options": [
+        {
+          "brand_specific_name": "Barre d'attelage à rotule démontable sans outil",
+          "price": 990.0,
+          "category": "accessories",
+          "code": "D03ESV_DSUA_Manual Towbar",
+          "currency": "EUR"
+        }
+      ],
+      "url": "https://store.xpeng.com/fr/configurator/L03",
+      "image_url": ""
+    },
+    {
+      "brand": "XPeng",
+      "model": "XPENG NOUVEAU G6",
+      "variant": "RWD Standard Range",
+      "base_price": 42990.0,
+      "currency": "EUR",
+      "market": "FR",
+      "fuel_type": "electric",
+      "available_options": [
+        {
+          "brand_specific_name": "Barre d'attelage électrique",
+          "price": 1190.0,
+          "category": "accessories",
+          "code": "G6 F30bV_FFCB_Electronically deployable tow bar",
+          "currency": "EUR"
+        },
+        {
+          "brand_specific_name": "Silver Frost",
+          "price": 800.0,
+          "category": "exterior",
+          "code": "G6 F30bV_FFCB_Silver Frost",
+          "currency": "EUR"
+        },
+        {
+          "brand_specific_name": "Graphite Gray",
+          "price": 800.0,
+          "category": "exterior",
+          "code": "G6 F30bV_FFCB_Graphite Gray",
+          "currency": "EUR"
+        },
+        {
+          "brand_specific_name": "Stellar Purple",
+          "price": 800.0,
+          "category": "exterior",
+          "code": "G6 F30bV_FFCB_Stellar Purple",
+          "currency": "EUR"
+        },
+        {
+          "brand_specific_name": "Midnight Black",
+          "price": 800.0,
+          "category": "exterior",
+          "code": "G6 F30bV_FFCB_Midnight Black",
+          "currency": "EUR"
+        }
+      ],
+      "url": "https://store.xpeng.com/fr/configurator/NEW_G6",
+      "image_url": ""
+    },
+    {
+      "brand": "XPeng",
+      "model": "XPENG NOUVEAU G6",
+      "variant": "RWD Long Range",
+      "base_price": 46990.0,
+      "currency": "EUR",
+      "market": "FR",
+      "fuel_type": "electric",
+      "available_options": [
+        {
+          "brand_specific_name": "Barre d'attelage électrique",
+          "price": 1190.0,
+          "category": "accessories",
+          "code": "G6 F30bV_FFAB_Electronically deployable tow bar",
+          "currency": "EUR"
+        },
+        {
+          "brand_specific_name": "Silver Frost",
+          "price": 800.0,
+          "category": "exterior",
+          "code": "G6 F30bV_FFAB_Silver Frost",
+          "currency": "EUR"
+        },
+        {
+          "brand_specific_name": "Graphite Gray",
+          "price": 800.0,
+          "category": "exterior",
+          "code": "G6 F30bV_FFAB_Graphite Gray",
+          "currency": "EUR"
+        },
+        {
+          "brand_specific_name": "Stellar Purple",
+          "price": 800.0,
+          "category": "exterior",
+          "code": "G6 F30bV_FFAB_Stellar Purple",
+          "currency": "EUR"
+        },
+        {
+          "brand_specific_name": "Midnight Black",
+          "price": 800.0,
+          "category": "exterior",
+          "code": "G6 F30bV_FFAB_Midnight Black",
+          "currency": "EUR"
+        }
+      ],
+      "url": "https://store.xpeng.com/fr/configurator/NEW_G6",
+      "image_url": ""
+    },
+    {
+      "brand": "XPeng",
+      "model": "XPENG NOUVEAU G6",
+      "variant": "AWD Performance",
+      "base_price": 50990.0,
+      "currency": "EUR",
+      "market": "FR",
+      "fuel_type": "electric",
+      "available_options": [
+        {
+          "brand_specific_name": "Black Edition",
+          "price": 1000.0,
+          "category": "accessories",
+          "code": "G6 F30bV_FFBB_Black Edition",
+          "currency": "EUR"
+        },
+        {
+          "brand_specific_name": "Barre d'attelage électrique",
+          "price": 1190.0,
+          "category": "accessories",
+          "code": "G6 F30bV_FFBB_Electronically deployable tow bar",
+          "currency": "EUR"
+        },
+        {
+          "brand_specific_name": "Silver Frost",
+          "price": 800.0,
+          "category": "exterior",
+          "code": "G6 F30bV_FFBB_Silver Frost",
+          "currency": "EUR"
+        },
+        {
+          "brand_specific_name": "Graphite Gray",
+          "price": 800.0,
+          "category": "exterior",
+          "code": "G6 F30bV_FFBB_Graphite Gray",
+          "currency": "EUR"
+        },
+        {
+          "brand_specific_name": "Stellar Purple",
+          "price": 800.0,
+          "category": "exterior",
+          "code": "G6 F30bV_FFBB_Stellar Purple",
+          "currency": "EUR"
+        },
+        {
+          "brand_specific_name": "Midnight Black",
+          "price": 800.0,
+          "category": "exterior",
+          "code": "G6 F30bV_FFBB_Midnight Black",
+          "currency": "EUR"
+        }
+      ],
+      "url": "https://store.xpeng.com/fr/configurator/NEW_G6",
+      "image_url": ""
+    },
+    {
+      "brand": "XPeng",
+      "model": "XPENG NOUVEAU G9",
+      "variant": "RWD Standard Range",
+      "base_price": 59990.0,
+      "currency": "EUR",
+      "market": "FR",
+      "fuel_type": "electric",
+      "available_options": [
+        {
+          "brand_specific_name": "Sièges Premium et audio Dynaudio",
+          "price": 3990.0,
+          "category": "accessories",
+          "code": "G9 E38bV_EEAY_Premium Seat & Audio Pack",
+          "currency": "EUR"
+        },
+        {
+          "brand_specific_name": "Barre d'attelage électrique",
+          "price": 1290.0,
+          "category": "accessories",
+          "code": "G9 E38bV_EEAY_Electronically deployable tow bar",
+          "currency": "EUR"
+        },
+        {
+          "brand_specific_name": "Silver Frost",
+          "price": 1000.0,
+          "category": "exterior",
+          "code": "G9 E38bV_EEAY_Silver Frost",
+          "currency": "EUR"
+        },
+        {
+          "brand_specific_name": "Graphite Gray",
+          "price": 1000.0,
+          "category": "exterior",
+          "code": "G9 E38bV_EEAY_Graphite Gray",
+          "currency": "EUR"
+        },
+        {
+          "brand_specific_name": "Midnight Black",
+          "price": 1000.0,
+          "category": "exterior",
+          "code": "G9 E38bV_EEAY_Midnight Black",
+          "currency": "EUR"
+        },
+        {
+          "brand_specific_name": "Jantes alliage 21''",
+          "price": 1290.0,
+          "category": "wheels",
+          "code": "G9 E38bV_EEAY_21\" Sport Wheel (255/45R21)",
+          "currency": "EUR"
+        }
+      ],
+      "url": "https://store.xpeng.com/fr/configurator/NEW_G9",
+      "image_url": ""
+    },
+    {
+      "brand": "XPeng",
+      "model": "XPENG NOUVEAU G9",
+      "variant": "RWD Long Range",
+      "base_price": 63990.0,
+      "currency": "EUR",
+      "market": "FR",
+      "fuel_type": "electric",
+      "available_options": [
+        {
+          "brand_specific_name": "Sièges Premium et audio Dynaudio",
+          "price": 3990.0,
+          "category": "accessories",
+          "code": "G9 E38bV_EEBY_Premium Seat & Audio Pack",
+          "currency": "EUR"
+        },
+        {
+          "brand_specific_name": "Barre d'attelage électrique",
+          "price": 1290.0,
+          "category": "accessories",
+          "code": "G9 E38bV_EEBY_Electronically deployable tow bar",
+          "currency": "EUR"
+        },
+        {
+          "brand_specific_name": "Silver Frost",
+          "price": 1000.0,
+          "category": "exterior",
+          "code": "G9 E38bV_EEBY_Silver Frost",
+          "currency": "EUR"
+        },
+        {
+          "brand_specific_name": "Graphite Gray",
+          "price": 1000.0,
+          "category": "exterior",
+          "code": "G9 E38bV_EEBY_Graphite Gray",
+          "currency": "EUR"
+        },
+        {
+          "brand_specific_name": "Midnight Black",
+          "price": 1000.0,
+          "category": "exterior",
+          "code": "G9 E38bV_EEBY_Midnight Black",
+          "currency": "EUR"
+        },
+        {
+          "brand_specific_name": "Jantes alliage 21''",
+          "price": 1290.0,
+          "category": "wheels",
+          "code": "G9 E38bV_EEBY_21\" Sport Wheel (255/45R21)",
+          "currency": "EUR"
+        }
+      ],
+      "url": "https://store.xpeng.com/fr/configurator/NEW_G9",
+      "image_url": ""
+    },
+    {
+      "brand": "XPeng",
+      "model": "XPENG NOUVEAU G9",
+      "variant": "AWD Performance",
+      "base_price": 73990.0,
+      "currency": "EUR",
+      "market": "FR",
+      "fuel_type": "electric",
+      "available_options": [
+        {
+          "brand_specific_name": "Black Edition",
+          "price": 1290.0,
+          "category": "accessories",
+          "code": "G9 E38bV_EECY_Black Edition",
+          "currency": "EUR"
+        },
+        {
+          "brand_specific_name": "Sièges Premium et audio Dynaudio",
+          "price": 3990.0,
+          "category": "accessories",
+          "code": "G9 E38bV_EECY_Premium Seat & Audio Pack",
+          "currency": "EUR"
+        },
+        {
+          "brand_specific_name": "Barre d'attelage électrique",
+          "price": 1290.0,
+          "category": "accessories",
+          "code": "G9 E38bV_EECY_Electronically deployable tow bar",
+          "currency": "EUR"
+        },
+        {
+          "brand_specific_name": "Silver Frost",
+          "price": 1000.0,
+          "category": "exterior",
+          "code": "G9 E38bV_EECY_Silver Frost",
+          "currency": "EUR"
+        },
+        {
+          "brand_specific_name": "Graphite Gray",
+          "price": 1000.0,
+          "category": "exterior",
+          "code": "G9 E38bV_EECY_Graphite Gray",
+          "currency": "EUR"
+        },
+        {
+          "brand_specific_name": "Midnight Black",
+          "price": 1000.0,
+          "category": "exterior",
+          "code": "G9 E38bV_EECY_Midnight Black",
+          "currency": "EUR"
+        },
+        {
+          "brand_specific_name": "Kaitoke Green Matte",
+          "price": 1500.0,
+          "category": "exterior",
+          "code": "G9 E38bV_EECY_Kaitoke Green Matte",
+          "currency": "EUR"
+        }
+      ],
+      "url": "https://store.xpeng.com/fr/configurator/NEW_G9",
+      "image_url": ""
+    },
+    {
+      "brand": "XPeng",
+      "model": "XPENG P7+",
+      "variant": "RWD Standard Range",
+      "base_price": 45990.0,
+      "currency": "EUR",
+      "market": "FR",
+      "fuel_type": "electric",
+      "available_options": [
+        {
+          "brand_specific_name": "Silver Frost",
+          "price": 800.0,
+          "category": "exterior",
+          "code": "F57aV_FJCB_DP",
+          "currency": "EUR"
+        },
+        {
+          "brand_specific_name": "Graphite Grey",
+          "price": 800.0,
+          "category": "exterior",
+          "code": "F57aV_FJCB_ZB",
+          "currency": "EUR"
+        },
+        {
+          "brand_specific_name": "Midnight Black",
+          "price": 800.0,
+          "category": "exterior",
+          "code": "F57aV_FJCB_WN",
+          "currency": "EUR"
+        },
+        {
+          "brand_specific_name": "Barre d'attelage électrique",
+          "price": 1190.0,
+          "category": "accessories",
+          "code": "F57aV_FJCB_Electric tow bar",
+          "currency": "EUR"
+        }
+      ],
+      "url": "https://store.xpeng.com/fr/configurator/P7+",
+      "image_url": ""
+    },
+    {
+      "brand": "XPeng",
+      "model": "XPENG P7+",
+      "variant": "RWD Long Range",
+      "base_price": 49990.0,
+      "currency": "EUR",
+      "market": "FR",
+      "fuel_type": "electric",
+      "available_options": [
+        {
+          "brand_specific_name": "Silver Frost",
+          "price": 800.0,
+          "category": "exterior",
+          "code": "F57aV_FJAB_DP",
+          "currency": "EUR"
+        },
+        {
+          "brand_specific_name": "Graphite Grey",
+          "price": 800.0,
+          "category": "exterior",
+          "code": "F57aV_FJAB_ZB",
+          "currency": "EUR"
+        },
+        {
+          "brand_specific_name": "Midnight Black",
+          "price": 800.0,
+          "category": "exterior",
+          "code": "F57aV_FJAB_WN",
+          "currency": "EUR"
+        },
+        {
+          "brand_specific_name": "Barre d'attelage électrique",
+          "price": 1190.0,
+          "category": "accessories",
+          "code": "F57aV_FJAB_Electric tow bar",
+          "currency": "EUR"
+        }
+      ],
+      "url": "https://store.xpeng.com/fr/configurator/P7+",
+      "image_url": ""
+    },
+    {
+      "brand": "XPeng",
+      "model": "XPENG P7+",
+      "variant": "AWD Performance",
+      "base_price": 53990.0,
+      "currency": "EUR",
+      "market": "FR",
+      "fuel_type": "electric",
+      "available_options": [
+        {
+          "brand_specific_name": "Silver Frost",
+          "price": 800.0,
+          "category": "exterior",
+          "code": "F57aV_FJBB_DP",
+          "currency": "EUR"
+        },
+        {
+          "brand_specific_name": "Graphite Grey",
+          "price": 800.0,
+          "category": "exterior",
+          "code": "F57aV_FJBB_ZB",
+          "currency": "EUR"
+        },
+        {
+          "brand_specific_name": "Midnight Black",
+          "price": 800.0,
+          "category": "exterior",
+          "code": "F57aV_FJBB_WN",
+          "currency": "EUR"
+        },
+        {
+          "brand_specific_name": "Barre d'attelage électrique",
+          "price": 1190.0,
+          "category": "accessories",
+          "code": "F57aV_FJBB_Electric tow bar",
+          "currency": "EUR"
+        }
+      ],
+      "url": "https://store.xpeng.com/fr/configurator/P7+",
+      "image_url": ""
+    }
+  ],
+  "errors": [
+    "X9: 500 Server Error: Internal Server Error for url: https://store.xpeng.com/fr/configurator/X9"
+  ],
+  "strategy": {
+    "engine": "beautifulsoup",
+    "selectors": {},
+    "js_triggers": [],
+    "wait_selector": "",
+    "wait_timeout_ms": 30000,
+    "rate_limit_seconds": 3.0,
+    "confidence": 0.95,
+    "notes": "Direct XPeng store API: Next.js configurator state (versions/base prices) → /api/carSpecificationGroup/list (priced options). Market: FR."
+  },
+  "duration_seconds": 18.88,
+  "option_summary": []
+}

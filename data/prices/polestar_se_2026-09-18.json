@@ -1,0 +1,1005 @@
+{
+  "brand": "Polestar",
+  "market": "SE",
+  "currency": "SEK",
+  "timestamp": "2026-09-18T09:11:03.179962+00:00",
+  "vehicle_count": 4,
+  "vehicles": [
+    {
+      "brand": "Polestar",
+      "model": "Polestar 2",
+      "variant": "",
+      "base_price": 599000.0,
+      "currency": "SEK",
+      "market": "SE",
+      "fuel_type": "electric",
+      "available_options": [
+        {
+          "brand_specific_name": "Storm",
+          "price": 10000.0,
+          "category": "exterior",
+          "code": "74700",
+          "currency": "SEK"
+        },
+        {
+          "brand_specific_name": "Midnight",
+          "price": 10000.0,
+          "category": "exterior",
+          "code": "72300",
+          "currency": "SEK"
+        },
+        {
+          "brand_specific_name": "Space",
+          "price": 10000.0,
+          "category": "exterior",
+          "code": "71700",
+          "currency": "SEK"
+        },
+        {
+          "brand_specific_name": "Snow",
+          "price": 12000.0,
+          "category": "exterior",
+          "code": "70700",
+          "currency": "SEK"
+        },
+        {
+          "brand_specific_name": "Bridge of Weir-läder i Charcoal med Light Ash deco",
+          "price": 35000.0,
+          "category": "interior",
+          "code": "RC8300",
+          "currency": "SEK"
+        },
+        {
+          "brand_specific_name": "Bridge of Weir-läder i Zinc med Light Ash deco",
+          "price": 37000.0,
+          "category": "interior",
+          "code": "RCZ300",
+          "currency": "SEK"
+        },
+        {
+          "brand_specific_name": "Performance",
+          "price": 60000.0,
+          "category": "packages",
+          "code": "001150",
+          "currency": "SEK"
+        },
+        {
+          "brand_specific_name": "Pixel LED-strålkastare",
+          "price": 10000.0,
+          "category": "packages",
+          "code": "001170",
+          "currency": "SEK"
+        },
+        {
+          "brand_specific_name": "19” dubbfria vinterhjul",
+          "price": 30000.0,
+          "category": "extras",
+          "code": "137",
+          "currency": "SEK"
+        },
+        {
+          "brand_specific_name": "19\" vinterhjul, dubbade",
+          "price": 30000.0,
+          "category": "extras",
+          "code": "794",
+          "currency": "SEK"
+        },
+        {
+          "brand_specific_name": "20\" Pro Graphite vinterhjul, dubbfria",
+          "price": 37500.0,
+          "category": "extras",
+          "code": "521",
+          "currency": "SEK"
+        },
+        {
+          "brand_specific_name": "Semi-elektrisk dragkrok",
+          "price": 16700.0,
+          "category": "extras",
+          "code": "205",
+          "currency": "SEK"
+        },
+        {
+          "brand_specific_name": "Skyddslock för laddningsport",
+          "price": 300.0,
+          "category": "extras",
+          "code": "397",
+          "currency": "SEK"
+        },
+        {
+          "brand_specific_name": "Kabel för hemmaladdning, stickkontakt",
+          "price": 4380.0,
+          "category": "extras",
+          "code": "67",
+          "currency": "SEK"
+        },
+        {
+          "brand_specific_name": "Kabel för hemmaladdning, industriuttag 3-fas",
+          "price": 6250.0,
+          "category": "extras",
+          "code": "106",
+          "currency": "SEK"
+        },
+        {
+          "brand_specific_name": "Kabel för AC-laddstation",
+          "price": 2500.0,
+          "category": "extras",
+          "code": "498",
+          "currency": "SEK"
+        },
+        {
+          "brand_specific_name": "Takräcken",
+          "price": 3500.0,
+          "category": "extras",
+          "code": "156",
+          "currency": "SEK"
+        },
+        {
+          "brand_specific_name": "Snökedjor 19\"-20\"",
+          "price": 5230.0,
+          "category": "extras",
+          "code": "129",
+          "currency": "SEK"
+        },
+        {
+          "brand_specific_name": "Snöstrumpa 19\"-20\"",
+          "price": 1630.0,
+          "category": "extras",
+          "code": "130",
+          "currency": "SEK"
+        },
+        {
+          "brand_specific_name": "Stänkskydd, fram och bak",
+          "price": 2200.0,
+          "category": "extras",
+          "code": "212",
+          "currency": "SEK"
+        },
+        {
+          "brand_specific_name": "Gummimattor (kupégolv fram + bak)",
+          "price": 1000.0,
+          "category": "extras",
+          "code": "158",
+          "currency": "SEK"
+        },
+        {
+          "brand_specific_name": "Fästöglor, bakåtvänd barnstol",
+          "price": 1500.0,
+          "category": "extras",
+          "code": "76",
+          "currency": "SEK"
+        },
+        {
+          "brand_specific_name": "Matta (lastutrymme)",
+          "price": 1650.0,
+          "category": "extras",
+          "code": "157",
+          "currency": "SEK"
+        },
+        {
+          "brand_specific_name": "Solskydd för panoramatak",
+          "price": 1600.0,
+          "category": "extras",
+          "code": "461",
+          "currency": "SEK"
+        },
+        {
+          "brand_specific_name": "Lastsäkringsnät – lastutrymme",
+          "price": 1000.0,
+          "category": "extras",
+          "code": "691",
+          "currency": "SEK"
+        },
+        {
+          "brand_specific_name": "Komfortkuddar till nackstöd med perforerat nappaläder i Zinc",
+          "price": 1600.0,
+          "category": "extras",
+          "code": "504",
+          "currency": "SEK"
+        },
+        {
+          "brand_specific_name": "Komfortkuddar för ryggstöd med perforerat nappaläder i Zinc",
+          "price": 2260.0,
+          "category": "extras",
+          "code": "510",
+          "currency": "SEK"
+        },
+        {
+          "brand_specific_name": "Komfortkuddar till nackstöd med perforerat nappaläder i Jupiter",
+          "price": 1600.0,
+          "category": "extras",
+          "code": "670",
+          "currency": "SEK"
+        },
+        {
+          "brand_specific_name": "Komfortkuddar för ryggstöd med perforerat nappaläder i Jupiter",
+          "price": 2260.0,
+          "category": "extras",
+          "code": "671",
+          "currency": "SEK"
+        },
+        {
+          "brand_specific_name": "Komfortkuddar till nackstöd med perforerat nappaläder i Charcoal",
+          "price": 1600.0,
+          "category": "extras",
+          "code": "513",
+          "currency": "SEK"
+        },
+        {
+          "brand_specific_name": "Komfortkuddar för ryggstöd med perforerat nappaläder i Charcoal",
+          "price": 2260.0,
+          "category": "extras",
+          "code": "514",
+          "currency": "SEK"
+        },
+        {
+          "brand_specific_name": "Komfortkuddar till nackstöd med bio-attribuerad MicroTech i Charcoal",
+          "price": 700.0,
+          "category": "extras",
+          "code": "515",
+          "currency": "SEK"
+        },
+        {
+          "brand_specific_name": "Komfortkuddar för ryggstöd med bio-attribuerad MicroTech i Charcoal",
+          "price": 800.0,
+          "category": "extras",
+          "code": "516",
+          "currency": "SEK"
+        },
+        {
+          "brand_specific_name": "Uppkopplade tjänster plus (24 månaders förlängning)",
+          "price": 2100.0,
+          "category": "extras",
+          "code": "705",
+          "currency": "SEK"
+        }
+      ],
+      "url": "https://www.polestar.com/se/configure/polestar-2",
+      "image_url": ""
+    },
+    {
+      "brand": "Polestar",
+      "model": "Polestar 3",
+      "variant": "",
+      "base_price": 924000.0,
+      "currency": "SEK",
+      "market": "SE",
+      "fuel_type": "electric",
+      "available_options": [
+        {
+          "brand_specific_name": "Storm",
+          "price": 12000.0,
+          "category": "exterior",
+          "code": "74700",
+          "currency": "SEK"
+        },
+        {
+          "brand_specific_name": "Midnight",
+          "price": 12000.0,
+          "category": "exterior",
+          "code": "72300",
+          "currency": "SEK"
+        },
+        {
+          "brand_specific_name": "Space",
+          "price": 12000.0,
+          "category": "exterior",
+          "code": "71700",
+          "currency": "SEK"
+        },
+        {
+          "brand_specific_name": "Krypton",
+          "price": 16000.0,
+          "category": "exterior",
+          "code": "74900",
+          "currency": "SEK"
+        },
+        {
+          "brand_specific_name": "Snow",
+          "price": 16000.0,
+          "category": "exterior",
+          "code": "70700",
+          "currency": "SEK"
+        },
+        {
+          "brand_specific_name": "21\" Plus",
+          "price": 15000.0,
+          "category": "wheels",
+          "code": "001215",
+          "currency": "SEK"
+        },
+        {
+          "brand_specific_name": "22\" Sport",
+          "price": 29000.0,
+          "category": "wheels",
+          "code": "001249",
+          "currency": "SEK"
+        },
+        {
+          "brand_specific_name": "Bio-attributed MicroTech quiltad i Nebula med aluminium deco",
+          "price": 7000.0,
+          "category": "interior",
+          "code": "RNL000",
+          "currency": "SEK"
+        },
+        {
+          "brand_specific_name": "Animal welfare-certifierad ull i Charcoal med aluminium deco",
+          "price": 9000.0,
+          "category": "interior",
+          "code": "R80000",
+          "currency": "SEK"
+        },
+        {
+          "brand_specific_name": "Bridge of Weir-läder i Charcoal med Black ash deco",
+          "price": 49000.0,
+          "category": "interior",
+          "code": "RC0000",
+          "currency": "SEK"
+        },
+        {
+          "brand_specific_name": "Bridge of Weir-läder i Dune med Black ash deco",
+          "price": 52000.0,
+          "category": "interior",
+          "code": "RCM000",
+          "currency": "SEK"
+        },
+        {
+          "brand_specific_name": "Bridge of Weir-läder i Zinc med Black ash deco",
+          "price": 52000.0,
+          "category": "interior",
+          "code": "RCG000",
+          "currency": "SEK"
+        },
+        {
+          "brand_specific_name": "AC-laddningskabel för laddbox",
+          "price": 2500.0,
+          "category": "packages",
+          "code": "001248",
+          "currency": "SEK"
+        },
+        {
+          "brand_specific_name": "Elektrokromatiskt glastak med dubbel infraröd beläggning",
+          "price": 19000.0,
+          "category": "packages",
+          "code": "001291",
+          "currency": "SEK"
+        },
+        {
+          "brand_specific_name": "1,3-megapixel HD LED-strålkastare",
+          "price": 20000.0,
+          "category": "packages",
+          "code": "001190",
+          "currency": "SEK"
+        },
+        {
+          "brand_specific_name": "Aktiv luftfjädring",
+          "price": 25000.0,
+          "category": "packages",
+          "code": "XAIRSP",
+          "currency": "SEK"
+        },
+        {
+          "brand_specific_name": "20\" Aero vinterhjul, dubbfria",
+          "price": 38000.0,
+          "category": "extras",
+          "code": "170",
+          "currency": "SEK"
+        },
+        {
+          "brand_specific_name": "20” Aero vinterhjul, dubbade",
+          "price": 38000.0,
+          "category": "extras",
+          "code": "171",
+          "currency": "SEK"
+        },
+        {
+          "brand_specific_name": "Helelektrisk dragkrok",
+          "price": 19600.0,
+          "category": "extras",
+          "code": "681",
+          "currency": "SEK"
+        },
+        {
+          "brand_specific_name": "Skyddslock för laddningsport",
+          "price": 300.0,
+          "category": "extras",
+          "code": "401",
+          "currency": "SEK"
+        },
+        {
+          "brand_specific_name": "Kabel för hemmaladdning, industriuttag 3-fas",
+          "price": 6250.0,
+          "category": "extras",
+          "code": "187",
+          "currency": "SEK"
+        },
+        {
+          "brand_specific_name": "Kabel för hemmaladdning, stickkontakt",
+          "price": 4380.0,
+          "category": "extras",
+          "code": "186",
+          "currency": "SEK"
+        },
+        {
+          "brand_specific_name": "Takräcken",
+          "price": 3900.0,
+          "category": "extras",
+          "code": "177",
+          "currency": "SEK"
+        },
+        {
+          "brand_specific_name": "Snökedjor 20\"-21\"",
+          "price": 5250.0,
+          "category": "extras",
+          "code": "173",
+          "currency": "SEK"
+        },
+        {
+          "brand_specific_name": "Snöstrumpa 20\"",
+          "price": 1200.0,
+          "category": "extras",
+          "code": "174",
+          "currency": "SEK"
+        },
+        {
+          "brand_specific_name": "Snöstrumpa 21\"-22\"",
+          "price": 1200.0,
+          "category": "extras",
+          "code": "175",
+          "currency": "SEK"
+        },
+        {
+          "brand_specific_name": "Stänkskydd, fram och bak",
+          "price": 2100.0,
+          "category": "extras",
+          "code": "181",
+          "currency": "SEK"
+        },
+        {
+          "brand_specific_name": "Matta (lastutrymme)",
+          "price": 2000.0,
+          "category": "extras",
+          "code": "178",
+          "currency": "SEK"
+        },
+        {
+          "brand_specific_name": "Gummimattor (kupégolv fram + bak)",
+          "price": 1500.0,
+          "category": "extras",
+          "code": "179",
+          "currency": "SEK"
+        },
+        {
+          "brand_specific_name": "ISOFIX-fäste, framsäte",
+          "price": 2500.0,
+          "category": "extras",
+          "code": "176",
+          "currency": "SEK"
+        },
+        {
+          "brand_specific_name": "Solskydd för panoramatak av glas",
+          "price": 1800.0,
+          "category": "extras",
+          "code": "436",
+          "currency": "SEK"
+        },
+        {
+          "brand_specific_name": "Avancerad trådlös nyckel",
+          "price": 3100.0,
+          "category": "extras",
+          "code": "448",
+          "currency": "SEK"
+        },
+        {
+          "brand_specific_name": "Lastsäkringsnät – lastutrymme",
+          "price": 1000.0,
+          "category": "extras",
+          "code": "674",
+          "currency": "SEK"
+        },
+        {
+          "brand_specific_name": "Komfortkuddar till nackstöd med perforerat nappaläder i Zinc",
+          "price": 1600.0,
+          "category": "extras",
+          "code": "437",
+          "currency": "SEK"
+        },
+        {
+          "brand_specific_name": "Komfortkuddar för ryggstöd med perforerat nappaläder i Zinc",
+          "price": 2260.0,
+          "category": "extras",
+          "code": "438",
+          "currency": "SEK"
+        },
+        {
+          "brand_specific_name": "Komfortkuddar till nackstöd med perforerat nappaläder i Jupiter",
+          "price": 1600.0,
+          "category": "extras",
+          "code": "439",
+          "currency": "SEK"
+        },
+        {
+          "brand_specific_name": "Komfortkuddar för ryggstöd med perforerat nappaläder i Jupiter",
+          "price": 2260.0,
+          "category": "extras",
+          "code": "440",
+          "currency": "SEK"
+        },
+        {
+          "brand_specific_name": "Komfortkuddar till nackstöd med perforerat nappaläder i Charcoal",
+          "price": 1600.0,
+          "category": "extras",
+          "code": "441",
+          "currency": "SEK"
+        },
+        {
+          "brand_specific_name": "Komfortkuddar för ryggstöd med perforerat nappaläder i Charcoal",
+          "price": 2260.0,
+          "category": "extras",
+          "code": "446",
+          "currency": "SEK"
+        },
+        {
+          "brand_specific_name": "Komfortkuddar till nackstöd med bio-attribuerad MicroTech i Charcoal",
+          "price": 700.0,
+          "category": "extras",
+          "code": "451",
+          "currency": "SEK"
+        },
+        {
+          "brand_specific_name": "Komfortkuddar för ryggstöd med bio-attribuerad MicroTech i Charcoal",
+          "price": 800.0,
+          "category": "extras",
+          "code": "443",
+          "currency": "SEK"
+        },
+        {
+          "brand_specific_name": "Uppkopplade tjänster plus (24 månaders förlängning)",
+          "price": 2100.0,
+          "category": "extras",
+          "code": "641",
+          "currency": "SEK"
+        }
+      ],
+      "url": "https://www.polestar.com/se/configure/polestar-3",
+      "image_url": ""
+    },
+    {
+      "brand": "Polestar",
+      "model": "Polestar 4 Coupé",
+      "variant": "",
+      "base_price": 619000.0,
+      "currency": "SEK",
+      "market": "SE",
+      "fuel_type": "electric",
+      "available_options": [
+        {
+          "brand_specific_name": "Electron",
+          "price": 12000.0,
+          "category": "exterior",
+          "code": "36900",
+          "currency": "SEK"
+        },
+        {
+          "brand_specific_name": "Storm",
+          "price": 12000.0,
+          "category": "exterior",
+          "code": "36800",
+          "currency": "SEK"
+        },
+        {
+          "brand_specific_name": "Space",
+          "price": 12000.0,
+          "category": "exterior",
+          "code": "71700",
+          "currency": "SEK"
+        },
+        {
+          "brand_specific_name": "Snow",
+          "price": 16000.0,
+          "category": "exterior",
+          "code": "70700",
+          "currency": "SEK"
+        },
+        {
+          "brand_specific_name": "21\" Sport",
+          "price": 20000.0,
+          "category": "wheels",
+          "code": "221001",
+          "currency": "SEK"
+        },
+        {
+          "brand_specific_name": "20\" Aero vinterhjul, dubbfria",
+          "price": 36300.0,
+          "category": "extras",
+          "code": "790",
+          "currency": "SEK"
+        },
+        {
+          "brand_specific_name": "20” Aero vinterhjul, dubbade",
+          "price": 36300.0,
+          "category": "extras",
+          "code": "791",
+          "currency": "SEK"
+        },
+        {
+          "brand_specific_name": "Helelektrisk dragkrok",
+          "price": 20800.0,
+          "category": "extras",
+          "code": "383",
+          "currency": "SEK"
+        },
+        {
+          "brand_specific_name": "Skyddslock för laddningsport",
+          "price": 300.0,
+          "category": "extras",
+          "code": "414",
+          "currency": "SEK"
+        },
+        {
+          "brand_specific_name": "Kabel för hemmaladdning, industriuttag 3-fas",
+          "price": 6250.0,
+          "category": "extras",
+          "code": "424",
+          "currency": "SEK"
+        },
+        {
+          "brand_specific_name": "Kabel för hemmaladdning, stickkontakt",
+          "price": 4380.0,
+          "category": "extras",
+          "code": "427",
+          "currency": "SEK"
+        },
+        {
+          "brand_specific_name": "Takräcken",
+          "price": 3600.0,
+          "category": "extras",
+          "code": "409",
+          "currency": "SEK"
+        },
+        {
+          "brand_specific_name": "Snökedjor 20\"-21\"",
+          "price": 5250.0,
+          "category": "extras",
+          "code": "410",
+          "currency": "SEK"
+        },
+        {
+          "brand_specific_name": "Snökedjor 22\"",
+          "price": 5250.0,
+          "category": "extras",
+          "code": "411",
+          "currency": "SEK"
+        },
+        {
+          "brand_specific_name": "Snöstrumpa 20\"-22\"",
+          "price": 1200.0,
+          "category": "extras",
+          "code": "412",
+          "currency": "SEK"
+        },
+        {
+          "brand_specific_name": "Stänkskydd, fram och bak",
+          "price": 2200.0,
+          "category": "extras",
+          "code": "413",
+          "currency": "SEK"
+        },
+        {
+          "brand_specific_name": "Matta (lastutrymme)",
+          "price": 1900.0,
+          "category": "extras",
+          "code": "402",
+          "currency": "SEK"
+        },
+        {
+          "brand_specific_name": "Gummimattor (kupégolv fram + bak)",
+          "price": 1320.0,
+          "category": "extras",
+          "code": "403",
+          "currency": "SEK"
+        },
+        {
+          "brand_specific_name": "Solskydd för panoramatak av glas",
+          "price": 1800.0,
+          "category": "extras",
+          "code": "405",
+          "currency": "SEK"
+        },
+        {
+          "brand_specific_name": "Papperskorg",
+          "price": 700.0,
+          "category": "extras",
+          "code": "406",
+          "currency": "SEK"
+        },
+        {
+          "brand_specific_name": "Näsdukshållare",
+          "price": 630.0,
+          "category": "extras",
+          "code": "407",
+          "currency": "SEK"
+        },
+        {
+          "brand_specific_name": "Flaskhållare",
+          "price": 500.0,
+          "category": "extras",
+          "code": "408",
+          "currency": "SEK"
+        },
+        {
+          "brand_specific_name": "Lastsäkringsnät – lastutrymme",
+          "price": 1000.0,
+          "category": "extras",
+          "code": "692",
+          "currency": "SEK"
+        },
+        {
+          "brand_specific_name": "Bakre komfortnackstöd",
+          "price": 2500.0,
+          "category": "extras",
+          "code": "417",
+          "currency": "SEK"
+        },
+        {
+          "brand_specific_name": "Bakre komfortnackstöd",
+          "price": 2500.0,
+          "category": "extras",
+          "code": "416",
+          "currency": "SEK"
+        },
+        {
+          "brand_specific_name": "Komfortkuddar för ryggstöd med perforerat nappaläder i Zinc",
+          "price": 2260.0,
+          "category": "extras",
+          "code": "672",
+          "currency": "SEK"
+        },
+        {
+          "brand_specific_name": "Komfortkuddar för ryggstöd med perforerat nappaläder i Charcoal",
+          "price": 2260.0,
+          "category": "extras",
+          "code": "442",
+          "currency": "SEK"
+        },
+        {
+          "brand_specific_name": "Komfortkuddar för ryggstöd med bio-attribuerad MicroTech i Charcoal",
+          "price": 800.0,
+          "category": "extras",
+          "code": "444",
+          "currency": "SEK"
+        },
+        {
+          "brand_specific_name": "Uppkopplade tjänster plus (24 månaders förlängning)",
+          "price": 2100.0,
+          "category": "extras",
+          "code": "715",
+          "currency": "SEK"
+        }
+      ],
+      "url": "https://www.polestar.com/se/configure/polestar-4-coupe",
+      "image_url": ""
+    },
+    {
+      "brand": "Polestar",
+      "model": "Polestar 5",
+      "variant": "",
+      "base_price": 1345000.0,
+      "currency": "SEK",
+      "market": "SE",
+      "fuel_type": "electric",
+      "available_options": [
+        {
+          "brand_specific_name": "Storm",
+          "price": 18000.0,
+          "category": "exterior",
+          "code": "74700",
+          "currency": "SEK"
+        },
+        {
+          "brand_specific_name": "Space",
+          "price": 18000.0,
+          "category": "exterior",
+          "code": "71700",
+          "currency": "SEK"
+        },
+        {
+          "brand_specific_name": "Snow",
+          "price": 24000.0,
+          "category": "exterior",
+          "code": "70700",
+          "currency": "SEK"
+        },
+        {
+          "brand_specific_name": "Magnesium matt",
+          "price": 61000.0,
+          "category": "exterior",
+          "code": "82900",
+          "currency": "SEK"
+        },
+        {
+          "brand_specific_name": "Storm matt",
+          "price": 61000.0,
+          "category": "exterior",
+          "code": "86800",
+          "currency": "SEK"
+        },
+        {
+          "brand_specific_name": "21\" Pro",
+          "price": 18000.0,
+          "category": "wheels",
+          "code": "223007",
+          "currency": "SEK"
+        },
+        {
+          "brand_specific_name": "21″ Blade graphite",
+          "price": 31000.0,
+          "category": "wheels",
+          "code": "223006",
+          "currency": "SEK"
+        },
+        {
+          "brand_specific_name": "Bridge of Weir-läder i Zinc med Zinc-detaljer och Black Ash deco",
+          "price": 79000.0,
+          "category": "interior",
+          "code": "P02100",
+          "currency": "SEK"
+        },
+        {
+          "brand_specific_name": "Bridge of Weir-läder i Charcoal med Charcoal-detaljer och Black Ash deco",
+          "price": 72000.0,
+          "category": "interior",
+          "code": "P01100",
+          "currency": "SEK"
+        },
+        {
+          "brand_specific_name": "Semi-elektrisk dragkrok",
+          "price": 20000.0,
+          "category": "packages",
+          "code": "221005",
+          "currency": "SEK"
+        },
+        {
+          "brand_specific_name": "Bowers & Wilkins for Polestar",
+          "price": 54000.0,
+          "category": "packages",
+          "code": "221020",
+          "currency": "SEK"
+        },
+        {
+          "brand_specific_name": "MicroSuede innertak",
+          "price": 12000.0,
+          "category": "packages",
+          "code": "221021",
+          "currency": "SEK"
+        },
+        {
+          "brand_specific_name": "20\" Aero vinterhjul, dubbfria",
+          "price": 45000.0,
+          "category": "extras",
+          "code": "645",
+          "currency": "SEK"
+        },
+        {
+          "brand_specific_name": "20” Aero vinterhjul, dubbade",
+          "price": 45000.0,
+          "category": "extras",
+          "code": "646",
+          "currency": "SEK"
+        },
+        {
+          "brand_specific_name": "Kabel för hemmaladdning, industriuttag 1-fas",
+          "price": 4250.0,
+          "category": "extras",
+          "code": "659",
+          "currency": "SEK"
+        },
+        {
+          "brand_specific_name": "Kabel för hemmaladdning, industriuttag 3-fas",
+          "price": 5000.0,
+          "category": "extras",
+          "code": "660",
+          "currency": "SEK"
+        },
+        {
+          "brand_specific_name": "Kabel för hemmaladdning, stickkontakt",
+          "price": 3750.0,
+          "category": "extras",
+          "code": "668",
+          "currency": "SEK"
+        },
+        {
+          "brand_specific_name": "Lastbärare",
+          "price": 5630.0,
+          "category": "extras",
+          "code": "647",
+          "currency": "SEK"
+        },
+        {
+          "brand_specific_name": "Snökedjor 20\"",
+          "price": 4800.0,
+          "category": "extras",
+          "code": "648",
+          "currency": "SEK"
+        },
+        {
+          "brand_specific_name": "Snöstrumpa 20\"-22\"",
+          "price": 1200.0,
+          "category": "extras",
+          "code": "649",
+          "currency": "SEK"
+        },
+        {
+          "brand_specific_name": "Bilöverdrag för inomhusgarage med tygpåse",
+          "price": 5000.0,
+          "category": "extras",
+          "code": "650",
+          "currency": "SEK"
+        },
+        {
+          "brand_specific_name": "Matta (lastutrymme)",
+          "price": 2250.0,
+          "category": "extras",
+          "code": "652",
+          "currency": "SEK"
+        },
+        {
+          "brand_specific_name": "Solskydd för panoramatak av glas",
+          "price": 2250.0,
+          "category": "extras",
+          "code": "653",
+          "currency": "SEK"
+        },
+        {
+          "brand_specific_name": "Lastsäkringsnät – lastutrymme",
+          "price": 1130.0,
+          "category": "extras",
+          "code": "654",
+          "currency": "SEK"
+        },
+        {
+          "brand_specific_name": "Komfortkuddar för ryggstöd med perforerat nappaläder i Zinc",
+          "price": 2000.0,
+          "category": "extras",
+          "code": "655",
+          "currency": "SEK"
+        },
+        {
+          "brand_specific_name": "Komfortkuddar för ryggstöd med perforerat nappaläder i Charcoal",
+          "price": 2000.0,
+          "category": "extras",
+          "code": "656",
+          "currency": "SEK"
+        },
+        {
+          "brand_specific_name": "Komfortkuddar för ryggstöd med bio-attribuerad MicroTech i Charcoal",
+          "price": 800.0,
+          "category": "extras",
+          "code": "657",
+          "currency": "SEK"
+        },
+        {
+          "brand_specific_name": "Uppkopplade tjänster plus (24 månaders förlängning)",
+          "price": 2100.0,
+          "category": "extras",
+          "code": "642",
+          "currency": "SEK"
+        }
+      ],
+      "url": "https://www.polestar.com/se/configure/polestar-5",
+      "image_url": ""
+    }
+  ],
+  "errors": [],
+  "strategy": {
+    "engine": "beautifulsoup",
+    "selectors": {},
+    "js_triggers": [],
+    "wait_selector": "",
+    "wait_timeout_ms": 30000,
+    "rate_limit_seconds": 3.0,
+    "confidence": 0.95,
+    "notes": "Direct public Polestar configuration API: RSC page metadata → POST /car-configurator-back/{market}/{model}/configurator/api/v2/configuration. Market: SE."
+  },
+  "duration_seconds": 33.66,
+  "option_summary": []
+}

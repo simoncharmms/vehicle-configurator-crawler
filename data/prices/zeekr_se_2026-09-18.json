@@ -1,0 +1,485 @@
+{
+  "brand": "Zeekr",
+  "market": "SE",
+  "currency": "SEK",
+  "timestamp": "2026-09-18T09:39:02.200696+00:00",
+  "vehicle_count": 13,
+  "vehicles": [
+    {
+      "brand": "Zeekr",
+      "model": "Zeekr 001",
+      "variant": "Long Range RWD",
+      "base_price": 679000.0,
+      "currency": "SEK",
+      "market": "SE",
+      "fuel_type": "electric",
+      "available_options": [
+        {
+          "brand_specific_name": "Tech Grey",
+          "price": 16000.0,
+          "category": "accessories",
+          "code": "Z001C003",
+          "currency": "EUR"
+        },
+        {
+          "brand_specific_name": "Phantom Black",
+          "price": 16000.0,
+          "category": "accessories",
+          "code": "Z009PC001",
+          "currency": "EUR"
+        }
+      ],
+      "url": "https://shop.zeekr.eu/sv-SE/configuration/?linkCode=1",
+      "image_url": ""
+    },
+    {
+      "brand": "Zeekr",
+      "model": "Zeekr 001",
+      "variant": "Performance",
+      "base_price": 735000.0,
+      "currency": "SEK",
+      "market": "SE",
+      "fuel_type": "electric",
+      "available_options": [
+        {
+          "brand_specific_name": "Kontrasttak",
+          "price": 10000.0,
+          "category": "accessories",
+          "code": "Z001S003",
+          "currency": "EUR"
+        },
+        {
+          "brand_specific_name": "Tech Grey",
+          "price": 16000.0,
+          "category": "accessories",
+          "code": "Z001C003",
+          "currency": "EUR"
+        },
+        {
+          "brand_specific_name": "Phantom Black",
+          "price": 16000.0,
+          "category": "accessories",
+          "code": "Z001C007",
+          "currency": "EUR"
+        }
+      ],
+      "url": "https://shop.zeekr.eu/sv-SE/configuration/?linkCode=1",
+      "image_url": ""
+    },
+    {
+      "brand": "Zeekr",
+      "model": "Zeekr 001",
+      "variant": "Privilege AWD",
+      "base_price": 785000.0,
+      "currency": "SEK",
+      "market": "SE",
+      "fuel_type": "electric",
+      "available_options": [
+        {
+          "brand_specific_name": "Midnight Blue & Polar White",
+          "price": 17000.0,
+          "category": "interior",
+          "code": "Z003PC019",
+          "currency": "EUR"
+        },
+        {
+          "brand_specific_name": "Tech Grey",
+          "price": 16000.0,
+          "category": "accessories",
+          "code": "Z001C003",
+          "currency": "EUR"
+        },
+        {
+          "brand_specific_name": "Phantom Black",
+          "price": 16000.0,
+          "category": "accessories",
+          "code": "Z001C007",
+          "currency": "EUR"
+        }
+      ],
+      "url": "https://shop.zeekr.eu/sv-SE/configuration/?linkCode=1",
+      "image_url": ""
+    },
+    {
+      "brand": "Zeekr",
+      "model": "Zeekr 001",
+      "variant": "Sport Edition AWD",
+      "base_price": 807000.0,
+      "currency": "SEK",
+      "market": "SE",
+      "fuel_type": "electric",
+      "available_options": [
+        {
+          "brand_specific_name": "Tech Grey",
+          "price": 16000.0,
+          "category": "accessories",
+          "code": "Z001C003",
+          "currency": "EUR"
+        }
+      ],
+      "url": "https://shop.zeekr.eu/sv-SE/configuration/?linkCode=1",
+      "image_url": ""
+    },
+    {
+      "brand": "Zeekr",
+      "model": "Zeekr X",
+      "variant": "Core RWD",
+      "base_price": 469000.0,
+      "currency": "SEK",
+      "market": "SE",
+      "fuel_type": "electric",
+      "available_options": [
+        {
+          "brand_specific_name": "Grid Grey",
+          "price": 15000.0,
+          "category": "exterior",
+          "code": "PBAGU018_1628",
+          "currency": "EUR"
+        },
+        {
+          "brand_specific_name": "Onyx Black",
+          "price": 15000.0,
+          "category": "exterior",
+          "code": "PBAGU036_1628",
+          "currency": "EUR"
+        },
+        {
+          "brand_specific_name": "Steering wheel heating",
+          "price": 3000.0,
+          "category": "packages",
+          "code": "PBAGL008_1628",
+          "currency": "EUR"
+        }
+      ],
+      "url": "https://shop.zeekr.eu/sv-SE/configuration/?linkCode=1628",
+      "image_url": ""
+    },
+    {
+      "brand": "Zeekr",
+      "model": "Zeekr X",
+      "variant": "Long Range RWD",
+      "base_price": 533000.0,
+      "currency": "SEK",
+      "market": "SE",
+      "fuel_type": "electric",
+      "available_options": [
+        {
+          "brand_specific_name": "Pine Green",
+          "price": 15000.0,
+          "category": "exterior",
+          "code": "PBAGU016_1628",
+          "currency": "EUR"
+        },
+        {
+          "brand_specific_name": "Grid Grey",
+          "price": 15000.0,
+          "category": "exterior",
+          "code": "PBAGU018_1628",
+          "currency": "EUR"
+        },
+        {
+          "brand_specific_name": "Onyx Black",
+          "price": 15000.0,
+          "category": "exterior",
+          "code": "PBAGU036_1628",
+          "currency": "EUR"
+        }
+      ],
+      "url": "https://shop.zeekr.eu/sv-SE/configuration/?linkCode=1628",
+      "image_url": ""
+    },
+    {
+      "brand": "Zeekr",
+      "model": "Zeekr X",
+      "variant": "Privilege AWD",
+      "base_price": 583000.0,
+      "currency": "SEK",
+      "market": "SE",
+      "fuel_type": "electric",
+      "available_options": [
+        {
+          "brand_specific_name": "Midnight Blue & Polar White",
+          "price": 17000.0,
+          "category": "interior",
+          "code": "PBAEK003_1628",
+          "currency": "EUR"
+        },
+        {
+          "brand_specific_name": "Pine Green",
+          "price": 15000.0,
+          "category": "exterior",
+          "code": "PBAGU016_1628",
+          "currency": "EUR"
+        },
+        {
+          "brand_specific_name": "Grid Grey",
+          "price": 15000.0,
+          "category": "exterior",
+          "code": "PBAGU018_1628",
+          "currency": "EUR"
+        },
+        {
+          "brand_specific_name": "Onyx Black",
+          "price": 15000.0,
+          "category": "exterior",
+          "code": "PBAGU036_1628",
+          "currency": "EUR"
+        },
+        {
+          "brand_specific_name": "Palace Beige",
+          "price": 20000.0,
+          "category": "exterior",
+          "code": "PBAGU051_1628",
+          "currency": "EUR"
+        }
+      ],
+      "url": "https://shop.zeekr.eu/sv-SE/configuration/?linkCode=1628",
+      "image_url": ""
+    },
+    {
+      "brand": "Zeekr",
+      "model": "Zeekr 7X",
+      "variant": "Core RWD",
+      "base_price": 579000.0,
+      "currency": "SEK",
+      "market": "SE",
+      "fuel_type": "electric",
+      "available_options": [
+        {
+          "brand_specific_name": "Tech Grey",
+          "price": 16000.0,
+          "category": "exterior",
+          "code": "PBAGU012_1075",
+          "currency": "EUR"
+        },
+        {
+          "brand_specific_name": "Onyx Black",
+          "price": 16000.0,
+          "category": "exterior",
+          "code": "PBAGU036_1075",
+          "currency": "EUR"
+        }
+      ],
+      "url": "https://shop.zeekr.eu/sv-SE/configuration/?linkCode=1075",
+      "image_url": ""
+    },
+    {
+      "brand": "Zeekr",
+      "model": "Zeekr 7X",
+      "variant": "Long Range RWD",
+      "base_price": 629000.0,
+      "currency": "SEK",
+      "market": "SE",
+      "fuel_type": "electric",
+      "available_options": [
+        {
+          "brand_specific_name": "20\" aluminiumfälg",
+          "price": 10000.0,
+          "category": "wheels",
+          "code": "PBAGL007_1075",
+          "currency": "EUR"
+        },
+        {
+          "brand_specific_name": "Tech Grey",
+          "price": 16000.0,
+          "category": "accessories",
+          "code": "PBAGU012_1075",
+          "currency": "EUR"
+        },
+        {
+          "brand_specific_name": "Onyx Black",
+          "price": 16000.0,
+          "category": "accessories",
+          "code": "PBAGU036_1075",
+          "currency": "EUR"
+        },
+        {
+          "brand_specific_name": "Forest Green",
+          "price": 16000.0,
+          "category": "accessories",
+          "code": "PBAGU047_1075",
+          "currency": "EUR"
+        },
+        {
+          "brand_specific_name": "Nappa & PU Charcoal Black",
+          "price": 7000.0,
+          "category": "packages",
+          "code": "PBAGL023_1075",
+          "currency": "EUR"
+        },
+        {
+          "brand_specific_name": "Advanced Cockpit Package",
+          "price": 15000.0,
+          "category": "packages",
+          "code": "PBAGL025_1075",
+          "currency": "EUR"
+        }
+      ],
+      "url": "https://shop.zeekr.eu/sv-SE/configuration/?linkCode=1075",
+      "image_url": ""
+    },
+    {
+      "brand": "Zeekr",
+      "model": "Zeekr 7X",
+      "variant": "Privilege AWD",
+      "base_price": 689000.0,
+      "currency": "SEK",
+      "market": "SE",
+      "fuel_type": "electric",
+      "available_options": [
+        {
+          "brand_specific_name": "Tech Grey",
+          "price": 16000.0,
+          "category": "accessories",
+          "code": "PBAGU012_1075",
+          "currency": "EUR"
+        },
+        {
+          "brand_specific_name": "Onyx Black",
+          "price": 16000.0,
+          "category": "accessories",
+          "code": "PBAGU036_1075",
+          "currency": "EUR"
+        },
+        {
+          "brand_specific_name": "Forest Green",
+          "price": 16000.0,
+          "category": "accessories",
+          "code": "PBAGU047_1075",
+          "currency": "EUR"
+        },
+        {
+          "brand_specific_name": "Advanced Cockpit Package",
+          "price": 15000.0,
+          "category": "packages",
+          "code": "PBAGL025_1075",
+          "currency": "EUR"
+        },
+        {
+          "brand_specific_name": "Comfort Package",
+          "price": 20000.0,
+          "category": "packages",
+          "code": "PBAGL024_1075",
+          "currency": "EUR"
+        }
+      ],
+      "url": "https://shop.zeekr.eu/sv-SE/configuration/?linkCode=1075",
+      "image_url": ""
+    },
+    {
+      "brand": "Zeekr",
+      "model": "Zeekr 7GT",
+      "variant": "Core RWD",
+      "base_price": 494000.0,
+      "currency": "SEK",
+      "market": "SE",
+      "fuel_type": "electric",
+      "available_options": [
+        {
+          "brand_specific_name": "19-inch muti-spoke Alloy",
+          "price": 4000.0,
+          "category": "wheels",
+          "code": "PBAGL007_1611",
+          "currency": "EUR"
+        },
+        {
+          "brand_specific_name": "Tech Grey",
+          "price": 16000.0,
+          "category": "exterior",
+          "code": "PBAGU012_1611",
+          "currency": "EUR"
+        },
+        {
+          "brand_specific_name": "Onyx Black",
+          "price": 16000.0,
+          "category": "exterior",
+          "code": "PBAGU036_1611",
+          "currency": "EUR"
+        }
+      ],
+      "url": "https://shop.zeekr.eu/sv-SE/configuration/?linkCode=1611",
+      "image_url": ""
+    },
+    {
+      "brand": "Zeekr",
+      "model": "Zeekr 7GT",
+      "variant": "Long Range RWD",
+      "base_price": 565000.0,
+      "currency": "SEK",
+      "market": "SE",
+      "fuel_type": "electric",
+      "available_options": [
+        {
+          "brand_specific_name": "Läderklädsel (Nappa & PU) Charcoal Black",
+          "price": 7000.0,
+          "category": "packages",
+          "code": "PBAGL022_1611",
+          "currency": "EUR"
+        },
+        {
+          "brand_specific_name": "Sensory-paket",
+          "price": 8000.0,
+          "category": "packages",
+          "code": "PBAGL024_1611",
+          "currency": "EUR"
+        }
+      ],
+      "url": "https://shop.zeekr.eu/sv-SE/configuration/?linkCode=1611",
+      "image_url": ""
+    },
+    {
+      "brand": "Zeekr",
+      "model": "Zeekr 7GT",
+      "variant": "Privilege AWD",
+      "base_price": 635000.0,
+      "currency": "SEK",
+      "market": "SE",
+      "fuel_type": "electric",
+      "available_options": [
+        {
+          "brand_specific_name": "Sensory-paket",
+          "price": 8000.0,
+          "category": "packages",
+          "code": "PBAGL024_1611",
+          "currency": "EUR"
+        },
+        {
+          "brand_specific_name": "Sätespaket",
+          "price": 10500.0,
+          "category": "packages",
+          "code": "PBAGL023_1611",
+          "currency": "EUR"
+        },
+        {
+          "brand_specific_name": "Elektriskt manövrerade fram- och bakdörrar",
+          "price": 9000.0,
+          "category": "packages",
+          "code": "PBAGL019_1611",
+          "currency": "EUR"
+        },
+        {
+          "brand_specific_name": "Elektrokromt tak",
+          "price": 15000.0,
+          "category": "packages",
+          "code": "PBAGL026_1611",
+          "currency": "EUR"
+        }
+      ],
+      "url": "https://shop.zeekr.eu/sv-SE/configuration/?linkCode=1611",
+      "image_url": ""
+    }
+  ],
+  "errors": [],
+  "strategy": {
+    "engine": "beautifulsoup",
+    "selectors": {},
+    "js_triggers": [],
+    "wait_selector": "",
+    "wait_timeout_ms": 30000,
+    "rate_limit_seconds": 3.0,
+    "confidence": 0.95,
+    "notes": "Direct Zeekr signed public storefront API: queryCarModels → queryOptions. Current signing configuration is read from the public frontend bundle. Market: SE."
+  },
+  "duration_seconds": 18.12,
+  "option_summary": []
+}
