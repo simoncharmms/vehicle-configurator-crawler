@@ -1,0 +1,23 @@
+{
+  "brand": "Audi",
+  "market": "DE",
+  "currency": "EUR",
+  "timestamp": "2026-09-20T09:10:17.092735+00:00",
+  "vehicle_count": 0,
+  "vehicles": [],
+  "errors": [
+    "HTTP 403 — Audi is blocking automated access. Vehicle data unavailable this run."
+  ],
+  "strategy": {
+    "engine": "beautifulsoup",
+    "selectors": {},
+    "js_triggers": [],
+    "wait_selector": "",
+    "wait_timeout_ms": 30000,
+    "rate_limit_seconds": 2.0,
+    "confidence": 0.85,
+    "notes": "Static HTML from Apollo GraphQL cache. Option extraction from model pages."
+  },
+  "duration_seconds": 15.74,
+  "option_summary": []
+}
