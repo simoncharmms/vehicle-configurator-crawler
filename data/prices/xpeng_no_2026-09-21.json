@@ -1,0 +1,577 @@
+{
+  "brand": "XPeng",
+  "market": "NO",
+  "currency": "NOK",
+  "timestamp": "2026-09-21T10:28:55.275067+00:00",
+  "vehicle_count": 12,
+  "vehicles": [
+    {
+      "brand": "XPeng",
+      "model": "XPENG L03",
+      "variant": "RWD Standard Range",
+      "base_price": 265933.0,
+      "currency": "NOK",
+      "market": "NO",
+      "fuel_type": "electric",
+      "available_options": [
+        {
+          "brand_specific_name": "Manuelt tilhengerfeste",
+          "price": 9900.0,
+          "category": "accessories",
+          "code": "D03ESV_DSAB_Manual Towbar",
+          "currency": "NOK"
+        },
+        {
+          "brand_specific_name": "Rock Gray",
+          "price": 10000.0,
+          "category": "exterior",
+          "code": "D03ESV_DSAB_ZQ",
+          "currency": "NOK"
+        },
+        {
+          "brand_specific_name": "Midnight Black",
+          "price": 10000.0,
+          "category": "exterior",
+          "code": "D03ESV_DSAB_WN",
+          "currency": "NOK"
+        }
+      ],
+      "url": "https://store.xpeng.com/no/configurator/L03",
+      "image_url": ""
+    },
+    {
+      "brand": "XPeng",
+      "model": "XPENG L03",
+      "variant": "AWD Performance",
+      "base_price": 332237.6,
+      "currency": "NOK",
+      "market": "NO",
+      "fuel_type": "electric",
+      "available_options": [
+        {
+          "brand_specific_name": "Manuelt tilhengerfeste",
+          "price": 9900.0,
+          "category": "accessories",
+          "code": "D03ESV_DSHB_Manual Towbar",
+          "currency": "NOK"
+        },
+        {
+          "brand_specific_name": "Phantom Purple",
+          "price": 10000.0,
+          "category": "exterior",
+          "code": "D03ESV_DSHB_ZP",
+          "currency": "NOK"
+        },
+        {
+          "brand_specific_name": "Silver Frost",
+          "price": 10000.0,
+          "category": "exterior",
+          "code": "D03ESV_DSHB_WG",
+          "currency": "NOK"
+        },
+        {
+          "brand_specific_name": "Rock Gray",
+          "price": 10000.0,
+          "category": "exterior",
+          "code": "D03ESV_DSHB_ZQ",
+          "currency": "NOK"
+        },
+        {
+          "brand_specific_name": "Midnight Black",
+          "price": 10000.0,
+          "category": "exterior",
+          "code": "D03ESV_DSHB_WN",
+          "currency": "NOK"
+        }
+      ],
+      "url": "https://store.xpeng.com/no/configurator/L03",
+      "image_url": ""
+    },
+    {
+      "brand": "XPeng",
+      "model": "XPENG L03",
+      "variant": "AWD Performance Ultra",
+      "base_price": 372237.6,
+      "currency": "NOK",
+      "market": "NO",
+      "fuel_type": "electric",
+      "available_options": [
+        {
+          "brand_specific_name": "Black Edition",
+          "price": 12000.0,
+          "category": "accessories",
+          "code": "D03ESV_DSUB_Black Edition",
+          "currency": "NOK"
+        },
+        {
+          "brand_specific_name": "Manuelt tilhengerfeste",
+          "price": 9900.0,
+          "category": "accessories",
+          "code": "D03ESV_DSUB_Manual Towbar",
+          "currency": "NOK"
+        },
+        {
+          "brand_specific_name": "Phantom Purple",
+          "price": 10000.0,
+          "category": "exterior",
+          "code": "D03ESV_DSUB_ZP",
+          "currency": "NOK"
+        },
+        {
+          "brand_specific_name": "Silver Frost",
+          "price": 10000.0,
+          "category": "exterior",
+          "code": "D03ESV_DSUB_WG",
+          "currency": "NOK"
+        },
+        {
+          "brand_specific_name": "Rock Gray",
+          "price": 10000.0,
+          "category": "exterior",
+          "code": "D03ESV_DSUB_ZQ",
+          "currency": "NOK"
+        },
+        {
+          "brand_specific_name": "Midnight Black",
+          "price": 10000.0,
+          "category": "exterior",
+          "code": "D03ESV_DSUB_WN",
+          "currency": "NOK"
+        }
+      ],
+      "url": "https://store.xpeng.com/no/configurator/L03",
+      "image_url": ""
+    },
+    {
+      "brand": "XPeng",
+      "model": "XPENG G6",
+      "variant": "RWD Standard Range",
+      "base_price": 331326.4,
+      "currency": "NOK",
+      "market": "NO",
+      "fuel_type": "electric",
+      "available_options": [
+        {
+          "brand_specific_name": "Helelektrisk innfellbart tilhengerfeste",
+          "price": 11900.0,
+          "category": "accessories",
+          "code": "G6 F30bV_FFCB_Electronically deployable tow bar",
+          "currency": "NOK"
+        },
+        {
+          "brand_specific_name": "Silver Frost",
+          "price": 8000.0,
+          "category": "exterior",
+          "code": "G6 F30bV_FFCB_Silver Frost",
+          "currency": "NOK"
+        },
+        {
+          "brand_specific_name": "Stellar Purple",
+          "price": 8000.0,
+          "category": "exterior",
+          "code": "G6 F30bV_FFCB_Stellar Purple",
+          "currency": "NOK"
+        },
+        {
+          "brand_specific_name": "Graphite Gray",
+          "price": 8000.0,
+          "category": "exterior",
+          "code": "G6 F30bV_FFCB_Graphite Gray",
+          "currency": "NOK"
+        },
+        {
+          "brand_specific_name": "Midnight Black",
+          "price": 8000.0,
+          "category": "exterior",
+          "code": "G6 F30bV_FFCB_Midnight Black",
+          "currency": "NOK"
+        }
+      ],
+      "url": "https://store.xpeng.com/no/configurator/NEW_G6",
+      "image_url": ""
+    },
+    {
+      "brand": "XPeng",
+      "model": "XPENG G6",
+      "variant": "AWD Performance",
+      "base_price": 390883.2,
+      "currency": "NOK",
+      "market": "NO",
+      "fuel_type": "electric",
+      "available_options": [
+        {
+          "brand_specific_name": "Black Edition",
+          "price": 10000.0,
+          "category": "accessories",
+          "code": "G6 F30bV_FFBB_Black Edition",
+          "currency": "NOK"
+        },
+        {
+          "brand_specific_name": "Helelektrisk innfellbart tilhengerfeste",
+          "price": 11900.0,
+          "category": "accessories",
+          "code": "G6 F30bV_FFBB_Electronically deployable tow bar",
+          "currency": "NOK"
+        },
+        {
+          "brand_specific_name": "Silver Frost",
+          "price": 8000.0,
+          "category": "exterior",
+          "code": "G6 F30bV_FFBB_Silver Frost",
+          "currency": "NOK"
+        },
+        {
+          "brand_specific_name": "Stellar Purple",
+          "price": 8000.0,
+          "category": "exterior",
+          "code": "G6 F30bV_FFBB_Stellar Purple",
+          "currency": "NOK"
+        },
+        {
+          "brand_specific_name": "Graphite Gray",
+          "price": 8000.0,
+          "category": "exterior",
+          "code": "G6 F30bV_FFBB_Graphite Gray",
+          "currency": "NOK"
+        },
+        {
+          "brand_specific_name": "Midnight Black",
+          "price": 8000.0,
+          "category": "exterior",
+          "code": "G6 F30bV_FFBB_Midnight Black",
+          "currency": "NOK"
+        }
+      ],
+      "url": "https://store.xpeng.com/no/configurator/NEW_G6",
+      "image_url": ""
+    },
+    {
+      "brand": "XPeng",
+      "model": "XPENG G9",
+      "variant": "RWD Standard Range",
+      "base_price": 413943.0,
+      "currency": "NOK",
+      "market": "NO",
+      "fuel_type": "electric",
+      "available_options": [
+        {
+          "brand_specific_name": "Premium komfort-, og audiopakke",
+          "price": 39990.0,
+          "category": "accessories",
+          "code": "G9 E38bV_EEAB_Premium Seat & Audio Pack",
+          "currency": "NOK"
+        },
+        {
+          "brand_specific_name": "Helelektrisk innfellbart tilhengerfeste",
+          "price": 12900.0,
+          "category": "accessories",
+          "code": "G9 E38bV_EEAB_Electronically deployable tow bar",
+          "currency": "NOK"
+        },
+        {
+          "brand_specific_name": "Silver Frost",
+          "price": 10000.0,
+          "category": "exterior",
+          "code": "G9 E38bV_EEAB_Silver Frost",
+          "currency": "NOK"
+        },
+        {
+          "brand_specific_name": "Graphite Gray",
+          "price": 10000.0,
+          "category": "exterior",
+          "code": "G9 E38bV_EEAB_Graphite Gray",
+          "currency": "NOK"
+        },
+        {
+          "brand_specific_name": "Midnight Black",
+          "price": 10000.0,
+          "category": "exterior",
+          "code": "G9 E38bV_EEAB_Midnight Black",
+          "currency": "NOK"
+        }
+      ],
+      "url": "https://store.xpeng.com/no/configurator/NEW_G9",
+      "image_url": ""
+    },
+    {
+      "brand": "XPeng",
+      "model": "XPENG G9",
+      "variant": "AWD Performance",
+      "base_price": 492102.0,
+      "currency": "NOK",
+      "market": "NO",
+      "fuel_type": "electric",
+      "available_options": [
+        {
+          "brand_specific_name": "Black Edition",
+          "price": 14900.0,
+          "category": "accessories",
+          "code": "G9 E38bV_EECB_Black Edition",
+          "currency": "NOK"
+        },
+        {
+          "brand_specific_name": "Premium komfort-, og audiopakke",
+          "price": 39990.0,
+          "category": "accessories",
+          "code": "G9 E38bV_EECB_Premium Seat & Audio Pack",
+          "currency": "NOK"
+        },
+        {
+          "brand_specific_name": "Helelektrisk innfellbart tilhengerfeste",
+          "price": 12900.0,
+          "category": "accessories",
+          "code": "G9 E38bV_EECB_Electronically deployable tow bar",
+          "currency": "NOK"
+        },
+        {
+          "brand_specific_name": "Silver Frost",
+          "price": 10000.0,
+          "category": "exterior",
+          "code": "G9 E38bV_EECB_Silver Frost",
+          "currency": "NOK"
+        },
+        {
+          "brand_specific_name": "Graphite Gray",
+          "price": 10000.0,
+          "category": "exterior",
+          "code": "G9 E38bV_EECB_Graphite Gray",
+          "currency": "NOK"
+        },
+        {
+          "brand_specific_name": "Midnight Black",
+          "price": 10000.0,
+          "category": "exterior",
+          "code": "G9 E38bV_EECB_Midnight Black",
+          "currency": "NOK"
+        },
+        {
+          "brand_specific_name": "Kaitoke Green Matte",
+          "price": 15000.0,
+          "category": "exterior",
+          "code": "G9 E38bV_EECB_Kaitoke Green Matte",
+          "currency": "NOK"
+        }
+      ],
+      "url": "https://store.xpeng.com/no/configurator/NEW_G9",
+      "image_url": ""
+    },
+    {
+      "brand": "XPeng",
+      "model": "XPENG P7+",
+      "variant": "RWD Long Range",
+      "base_price": 360028.0,
+      "currency": "NOK",
+      "market": "NO",
+      "fuel_type": "electric",
+      "available_options": [
+        {
+          "brand_specific_name": "Silver Frost",
+          "price": 8000.0,
+          "category": "exterior",
+          "code": "F57aV_FJAB_DP",
+          "currency": "NOK"
+        },
+        {
+          "brand_specific_name": "Graphite Gray",
+          "price": 8000.0,
+          "category": "exterior",
+          "code": "F57aV_FJAB_ZB",
+          "currency": "NOK"
+        },
+        {
+          "brand_specific_name": "Midnight Black",
+          "price": 8000.0,
+          "category": "exterior",
+          "code": "F57aV_FJAB_WN",
+          "currency": "NOK"
+        },
+        {
+          "brand_specific_name": "Elektrisk innfellbart tilhengerfeste",
+          "price": 11900.0,
+          "category": "accessories",
+          "code": "F57aV_FJAB_Electric tow bar",
+          "currency": "NOK"
+        }
+      ],
+      "url": "https://store.xpeng.com/no/configurator/P7+",
+      "image_url": ""
+    },
+    {
+      "brand": "XPeng",
+      "model": "XPENG P7+",
+      "variant": "AWD Performance",
+      "base_price": 406932.8,
+      "currency": "NOK",
+      "market": "NO",
+      "fuel_type": "electric",
+      "available_options": [
+        {
+          "brand_specific_name": "Silver Frost",
+          "price": 8000.0,
+          "category": "exterior",
+          "code": "F57aV_FJBB_DP",
+          "currency": "NOK"
+        },
+        {
+          "brand_specific_name": "Graphite Gray",
+          "price": 8000.0,
+          "category": "exterior",
+          "code": "F57aV_FJBB_ZB",
+          "currency": "NOK"
+        },
+        {
+          "brand_specific_name": "Midnight Black",
+          "price": 8000.0,
+          "category": "exterior",
+          "code": "F57aV_FJBB_WN",
+          "currency": "NOK"
+        },
+        {
+          "brand_specific_name": "Elektrisk innfellbart tilhengerfeste",
+          "price": 11900.0,
+          "category": "accessories",
+          "code": "F57aV_FJBB_Electric tow bar",
+          "currency": "NOK"
+        }
+      ],
+      "url": "https://store.xpeng.com/no/configurator/P7+",
+      "image_url": ""
+    },
+    {
+      "brand": "XPeng",
+      "model": "XPENG X9",
+      "variant": "FWD Standard Range",
+      "base_price": 581688.0,
+      "currency": "NOK",
+      "market": "NO",
+      "fuel_type": "electric",
+      "available_options": [
+        {
+          "brand_specific_name": "Silver Frost",
+          "price": 10000.0,
+          "category": "exterior",
+          "code": "H93aEV_HEAA_WG",
+          "currency": "NOK"
+        },
+        {
+          "brand_specific_name": "Matte Gray",
+          "price": 15000.0,
+          "category": "exterior",
+          "code": "H93aEV_HEAA_ZA",
+          "currency": "NOK"
+        },
+        {
+          "brand_specific_name": "Midnight Black",
+          "price": 10000.0,
+          "category": "exterior",
+          "code": "H93aEV_HEAA_WN",
+          "currency": "NOK"
+        },
+        {
+          "brand_specific_name": "Electric Tow Bar",
+          "price": 12900.0,
+          "category": "accessories",
+          "code": "H93aEV_HEAA_Electric Tow Bar",
+          "currency": "NOK"
+        }
+      ],
+      "url": "https://store.xpeng.com/no/configurator/X9",
+      "image_url": ""
+    },
+    {
+      "brand": "XPeng",
+      "model": "XPENG X9",
+      "variant": "FWD Long Range",
+      "base_price": 622304.8,
+      "currency": "NOK",
+      "market": "NO",
+      "fuel_type": "electric",
+      "available_options": [
+        {
+          "brand_specific_name": "Silver Frost",
+          "price": 10000.0,
+          "category": "exterior",
+          "code": "H93aEV_HEBA_WG",
+          "currency": "NOK"
+        },
+        {
+          "brand_specific_name": "Matte Gray",
+          "price": 15000.0,
+          "category": "exterior",
+          "code": "H93aEV_HEBA_ZA",
+          "currency": "NOK"
+        },
+        {
+          "brand_specific_name": "Midnight Black",
+          "price": 10000.0,
+          "category": "exterior",
+          "code": "H93aEV_HEBA_WN",
+          "currency": "NOK"
+        },
+        {
+          "brand_specific_name": "Electric Tow Bar",
+          "price": 12900.0,
+          "category": "accessories",
+          "code": "H93aEV_HEBA_Electric Tow Bar",
+          "currency": "NOK"
+        }
+      ],
+      "url": "https://store.xpeng.com/no/configurator/X9",
+      "image_url": ""
+    },
+    {
+      "brand": "XPeng",
+      "model": "XPENG X9",
+      "variant": "AWD Performance",
+      "base_price": 661648.0,
+      "currency": "NOK",
+      "market": "NO",
+      "fuel_type": "electric",
+      "available_options": [
+        {
+          "brand_specific_name": "Silver Frost",
+          "price": 10000.0,
+          "category": "exterior",
+          "code": "H93aEV_HECA_WG",
+          "currency": "NOK"
+        },
+        {
+          "brand_specific_name": "Matte Gray",
+          "price": 15000.0,
+          "category": "exterior",
+          "code": "H93aEV_HECA_ZA",
+          "currency": "NOK"
+        },
+        {
+          "brand_specific_name": "Midnight Black",
+          "price": 10000.0,
+          "category": "exterior",
+          "code": "H93aEV_HECA_WN",
+          "currency": "NOK"
+        },
+        {
+          "brand_specific_name": "Electric Tow Bar",
+          "price": 12900.0,
+          "category": "accessories",
+          "code": "H93aEV_HECA_Electric Tow Bar",
+          "currency": "NOK"
+        }
+      ],
+      "url": "https://store.xpeng.com/no/configurator/X9",
+      "image_url": ""
+    }
+  ],
+  "errors": [],
+  "strategy": {
+    "engine": "beautifulsoup",
+    "selectors": {},
+    "js_triggers": [],
+    "wait_selector": "",
+    "wait_timeout_ms": 30000,
+    "rate_limit_seconds": 3.0,
+    "confidence": 0.95,
+    "notes": "Direct XPeng store API: Next.js configurator state (versions/base prices) → /api/carSpecificationGroup/list (priced options). Market: NO."
+  },
+  "duration_seconds": 19.54,
+  "option_summary": []
+}
