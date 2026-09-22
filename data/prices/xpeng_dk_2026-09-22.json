@@ -1,0 +1,558 @@
+{
+  "brand": "XPeng",
+  "market": "DK",
+  "currency": "DKK",
+  "timestamp": "2026-09-22T09:31:06.657935+00:00",
+  "vehicle_count": 12,
+  "vehicles": [
+    {
+      "brand": "XPeng",
+      "model": "XPENG L03",
+      "variant": "RWD Standard Range",
+      "base_price": 239995.0,
+      "currency": "DKK",
+      "market": "DK",
+      "fuel_type": "electric",
+      "available_options": [
+        {
+          "brand_specific_name": "Manuelt anhængertræk",
+          "price": 7900.0,
+          "category": "accessories",
+          "code": "D03ESV_DSAB_Manual Towbar",
+          "currency": "DKK"
+        },
+        {
+          "brand_specific_name": "Rock Gray",
+          "price": 8000.0,
+          "category": "exterior",
+          "code": "D03ESV_DSAB_ZQ",
+          "currency": "DKK"
+        },
+        {
+          "brand_specific_name": "Midnight Black",
+          "price": 8000.0,
+          "category": "exterior",
+          "code": "D03ESV_DSAB_WN",
+          "currency": "DKK"
+        }
+      ],
+      "url": "https://store.xpeng.com/dk/configurator/L03",
+      "image_url": ""
+    },
+    {
+      "brand": "XPeng",
+      "model": "XPENG L03",
+      "variant": "RWD Long Range",
+      "base_price": 269995.0,
+      "currency": "DKK",
+      "market": "DK",
+      "fuel_type": "electric",
+      "available_options": [
+        {
+          "brand_specific_name": "Manuelt anhængertræk",
+          "price": 7900.0,
+          "category": "accessories",
+          "code": "D03ESV_DSBB_Manual Towbar",
+          "currency": "DKK"
+        },
+        {
+          "brand_specific_name": "Phantom Purple",
+          "price": 8000.0,
+          "category": "exterior",
+          "code": "D03ESV_DSBB_ZP",
+          "currency": "DKK"
+        },
+        {
+          "brand_specific_name": "Silver Frost",
+          "price": 8000.0,
+          "category": "exterior",
+          "code": "D03ESV_DSBB_WG",
+          "currency": "DKK"
+        },
+        {
+          "brand_specific_name": "Rock Gray",
+          "price": 8000.0,
+          "category": "exterior",
+          "code": "D03ESV_DSBB_ZQ",
+          "currency": "DKK"
+        },
+        {
+          "brand_specific_name": "Midnight Black",
+          "price": 8000.0,
+          "category": "exterior",
+          "code": "D03ESV_DSBB_WN",
+          "currency": "DKK"
+        }
+      ],
+      "url": "https://store.xpeng.com/dk/configurator/L03",
+      "image_url": ""
+    },
+    {
+      "brand": "XPeng",
+      "model": "XPENG L03",
+      "variant": "AWD Performance",
+      "base_price": 299995.0,
+      "currency": "DKK",
+      "market": "DK",
+      "fuel_type": "electric",
+      "available_options": [
+        {
+          "brand_specific_name": "Manuelt anhængertræk",
+          "price": 7900.0,
+          "category": "accessories",
+          "code": "D03ESV_DSHB_Manual Towbar",
+          "currency": "DKK"
+        },
+        {
+          "brand_specific_name": "Phantom Purple",
+          "price": 8000.0,
+          "category": "exterior",
+          "code": "D03ESV_DSHB_ZP",
+          "currency": "DKK"
+        },
+        {
+          "brand_specific_name": "Silver Frost",
+          "price": 8000.0,
+          "category": "exterior",
+          "code": "D03ESV_DSHB_WG",
+          "currency": "DKK"
+        },
+        {
+          "brand_specific_name": "Rock Gray",
+          "price": 8000.0,
+          "category": "exterior",
+          "code": "D03ESV_DSHB_ZQ",
+          "currency": "DKK"
+        },
+        {
+          "brand_specific_name": "Midnight Black",
+          "price": 8000.0,
+          "category": "exterior",
+          "code": "D03ESV_DSHB_WN",
+          "currency": "DKK"
+        }
+      ],
+      "url": "https://store.xpeng.com/dk/configurator/L03",
+      "image_url": ""
+    },
+    {
+      "brand": "XPeng",
+      "model": "XPENG L03",
+      "variant": "AWD Performance Ultra",
+      "base_price": 329995.0,
+      "currency": "DKK",
+      "market": "DK",
+      "fuel_type": "electric",
+      "available_options": [
+        {
+          "brand_specific_name": "Black Edition",
+          "price": 10000.0,
+          "category": "accessories",
+          "code": "D03ESV_DSUB_Black Edition",
+          "currency": "DKK"
+        },
+        {
+          "brand_specific_name": "Manuelt anhængertræk",
+          "price": 7900.0,
+          "category": "accessories",
+          "code": "D03ESV_DSUB_Manual Towbar",
+          "currency": "DKK"
+        },
+        {
+          "brand_specific_name": "Phantom Purple",
+          "price": 8000.0,
+          "category": "exterior",
+          "code": "D03ESV_DSUB_ZP",
+          "currency": "DKK"
+        },
+        {
+          "brand_specific_name": "Silver Frost",
+          "price": 8000.0,
+          "category": "exterior",
+          "code": "D03ESV_DSUB_WG",
+          "currency": "DKK"
+        },
+        {
+          "brand_specific_name": "Rock Gray",
+          "price": 8000.0,
+          "category": "exterior",
+          "code": "D03ESV_DSUB_ZQ",
+          "currency": "DKK"
+        },
+        {
+          "brand_specific_name": "Midnight Black",
+          "price": 8000.0,
+          "category": "exterior",
+          "code": "D03ESV_DSUB_WN",
+          "currency": "DKK"
+        }
+      ],
+      "url": "https://store.xpeng.com/dk/configurator/L03",
+      "image_url": ""
+    },
+    {
+      "brand": "XPeng",
+      "model": "XPENG New G6",
+      "variant": "RWD Standard Range",
+      "base_price": 299995.0,
+      "currency": "DKK",
+      "market": "DK",
+      "fuel_type": "electric",
+      "available_options": [
+        {
+          "brand_specific_name": "Elektronisk svingbart anhængertræk",
+          "price": 8900.0,
+          "category": "accessories",
+          "code": "G6 F30bV_FFCB_Electronically deployable tow bar",
+          "currency": "DKK"
+        },
+        {
+          "brand_specific_name": "Silver Frost",
+          "price": 6000.0,
+          "category": "exterior",
+          "code": "G6 F30bV_FFCB_Silver Frost",
+          "currency": "DKK"
+        },
+        {
+          "brand_specific_name": "Stellar Purple",
+          "price": 6000.0,
+          "category": "exterior",
+          "code": "G6 F30bV_FFCB_Stellar Purple",
+          "currency": "DKK"
+        },
+        {
+          "brand_specific_name": "Graphite Gray",
+          "price": 6000.0,
+          "category": "exterior",
+          "code": "G6 F30bV_FFCB_Graphite Gray",
+          "currency": "DKK"
+        },
+        {
+          "brand_specific_name": "Midnight Black",
+          "price": 6000.0,
+          "category": "exterior",
+          "code": "G6 F30bV_FFCB_Midnight Black",
+          "currency": "DKK"
+        }
+      ],
+      "url": "https://store.xpeng.com/dk/configurator/NEW_G6",
+      "image_url": ""
+    },
+    {
+      "brand": "XPeng",
+      "model": "XPENG New G6",
+      "variant": "RWD Long Range",
+      "base_price": 349995.0,
+      "currency": "DKK",
+      "market": "DK",
+      "fuel_type": "electric",
+      "available_options": [
+        {
+          "brand_specific_name": "Elektronisk svingbart anhængertræk",
+          "price": 8900.0,
+          "category": "accessories",
+          "code": "G6 F30bV_FFAB_Electronically deployable tow bar",
+          "currency": "DKK"
+        },
+        {
+          "brand_specific_name": "Silver Frost",
+          "price": 6000.0,
+          "category": "exterior",
+          "code": "G6 F30bV_FFAB_Silver Frost",
+          "currency": "DKK"
+        },
+        {
+          "brand_specific_name": "Stellar Purple",
+          "price": 6000.0,
+          "category": "exterior",
+          "code": "G6 F30bV_FFAB_Stellar Purple",
+          "currency": "DKK"
+        },
+        {
+          "brand_specific_name": "Graphite Gray",
+          "price": 6000.0,
+          "category": "exterior",
+          "code": "G6 F30bV_FFAB_Graphite Gray",
+          "currency": "DKK"
+        },
+        {
+          "brand_specific_name": "Midnight Black",
+          "price": 6000.0,
+          "category": "exterior",
+          "code": "G6 F30bV_FFAB_Midnight Black",
+          "currency": "DKK"
+        }
+      ],
+      "url": "https://store.xpeng.com/dk/configurator/NEW_G6",
+      "image_url": ""
+    },
+    {
+      "brand": "XPeng",
+      "model": "XPENG New G6",
+      "variant": "AWD Performance",
+      "base_price": 379995.0,
+      "currency": "DKK",
+      "market": "DK",
+      "fuel_type": "electric",
+      "available_options": [
+        {
+          "brand_specific_name": "Black Edition",
+          "price": 7500.0,
+          "category": "accessories",
+          "code": "G6 F30bV_FFBB_Black Edition",
+          "currency": "DKK"
+        },
+        {
+          "brand_specific_name": "Elektronisk svingbart anhængertræk",
+          "price": 8900.0,
+          "category": "accessories",
+          "code": "G6 F30bV_FFBB_Electronically deployable tow bar",
+          "currency": "DKK"
+        },
+        {
+          "brand_specific_name": "Silver Frost",
+          "price": 6000.0,
+          "category": "exterior",
+          "code": "G6 F30bV_FFBB_Silver Frost",
+          "currency": "DKK"
+        },
+        {
+          "brand_specific_name": "Stellar Purple",
+          "price": 6000.0,
+          "category": "exterior",
+          "code": "G6 F30bV_FFBB_Stellar Purple",
+          "currency": "DKK"
+        },
+        {
+          "brand_specific_name": "Graphite Gray",
+          "price": 6000.0,
+          "category": "exterior",
+          "code": "G6 F30bV_FFBB_Graphite Gray",
+          "currency": "DKK"
+        },
+        {
+          "brand_specific_name": "Midnight Black",
+          "price": 6000.0,
+          "category": "exterior",
+          "code": "G6 F30bV_FFBB_Midnight Black",
+          "currency": "DKK"
+        }
+      ],
+      "url": "https://store.xpeng.com/dk/configurator/NEW_G6",
+      "image_url": ""
+    },
+    {
+      "brand": "XPeng",
+      "model": "XPENG New G9",
+      "variant": "RWD Standard Range",
+      "base_price": 499995.0,
+      "currency": "DKK",
+      "market": "DK",
+      "fuel_type": "electric",
+      "available_options": [
+        {
+          "brand_specific_name": "Silver Frost",
+          "price": 16000.0,
+          "category": "exterior",
+          "code": "G9 E38bV_EEAB_Silver Frost",
+          "currency": "DKK"
+        },
+        {
+          "brand_specific_name": "Graphite Gray",
+          "price": 16000.0,
+          "category": "exterior",
+          "code": "G9 E38bV_EEAB_Graphite Gray",
+          "currency": "DKK"
+        },
+        {
+          "brand_specific_name": "Midnight Black",
+          "price": 16000.0,
+          "category": "exterior",
+          "code": "G9 E38bV_EEAB_Midnight Black",
+          "currency": "DKK"
+        }
+      ],
+      "url": "https://store.xpeng.com/dk/configurator/NEW_G9",
+      "image_url": ""
+    },
+    {
+      "brand": "XPeng",
+      "model": "XPENG New G9",
+      "variant": "RWD Long Range",
+      "base_price": 579995.0,
+      "currency": "DKK",
+      "market": "DK",
+      "fuel_type": "electric",
+      "available_options": [
+        {
+          "brand_specific_name": "Silver Frost",
+          "price": 16000.0,
+          "category": "exterior",
+          "code": "G9 E38bV_EEBB_Silver Frost",
+          "currency": "DKK"
+        },
+        {
+          "brand_specific_name": "Graphite Gray",
+          "price": 16000.0,
+          "category": "exterior",
+          "code": "G9 E38bV_EEBB_Graphite Gray",
+          "currency": "DKK"
+        },
+        {
+          "brand_specific_name": "Midnight Black",
+          "price": 16000.0,
+          "category": "exterior",
+          "code": "G9 E38bV_EEBB_Midnight Black",
+          "currency": "DKK"
+        }
+      ],
+      "url": "https://store.xpeng.com/dk/configurator/NEW_G9",
+      "image_url": ""
+    },
+    {
+      "brand": "XPeng",
+      "model": "XPENG New G9",
+      "variant": "AWD Performance",
+      "base_price": 629995.0,
+      "currency": "DKK",
+      "market": "DK",
+      "fuel_type": "electric",
+      "available_options": [
+        {
+          "brand_specific_name": "Black Edition",
+          "price": 15840.0,
+          "category": "accessories",
+          "code": "G9 E38bV_EECB_Black Edition",
+          "currency": "DKK"
+        },
+        {
+          "brand_specific_name": "Silver Frost",
+          "price": 16000.0,
+          "category": "exterior",
+          "code": "G9 E38bV_EECB_Silver Frost",
+          "currency": "DKK"
+        },
+        {
+          "brand_specific_name": "Graphite Gray",
+          "price": 16000.0,
+          "category": "exterior",
+          "code": "G9 E38bV_EECB_Graphite Gray",
+          "currency": "DKK"
+        },
+        {
+          "brand_specific_name": "Midnight Black",
+          "price": 16000.0,
+          "category": "exterior",
+          "code": "G9 E38bV_EECB_Midnight Black",
+          "currency": "DKK"
+        },
+        {
+          "brand_specific_name": "Kaitoke Green Matte",
+          "price": 24000.0,
+          "category": "exterior",
+          "code": "G9 E38bV_EECB_Kaitoke Green Matte",
+          "currency": "DKK"
+        }
+      ],
+      "url": "https://store.xpeng.com/dk/configurator/NEW_G9",
+      "image_url": ""
+    },
+    {
+      "brand": "XPeng",
+      "model": "XPENG P7+",
+      "variant": "RWD Long Range",
+      "base_price": 359995.0,
+      "currency": "DKK",
+      "market": "DK",
+      "fuel_type": "electric",
+      "available_options": [
+        {
+          "brand_specific_name": "Silver Frost",
+          "price": 6000.0,
+          "category": "exterior",
+          "code": "F57aV_FJAB_DP",
+          "currency": "DKK"
+        },
+        {
+          "brand_specific_name": "Graphite Gray",
+          "price": 6000.0,
+          "category": "exterior",
+          "code": "F57aV_FJAB_ZB",
+          "currency": "DKK"
+        },
+        {
+          "brand_specific_name": "Midnight Black",
+          "price": 6000.0,
+          "category": "exterior",
+          "code": "F57aV_FJAB_WN",
+          "currency": "DKK"
+        },
+        {
+          "brand_specific_name": "Elektronisk svingbart anhængertræk",
+          "price": 8900.0,
+          "category": "accessories",
+          "code": "F57aV_FJAB_Electric tow bar",
+          "currency": "DKK"
+        }
+      ],
+      "url": "https://store.xpeng.com/dk/configurator/P7+",
+      "image_url": ""
+    },
+    {
+      "brand": "XPeng",
+      "model": "XPENG P7+",
+      "variant": "AWD Performance",
+      "base_price": 389995.0,
+      "currency": "DKK",
+      "market": "DK",
+      "fuel_type": "electric",
+      "available_options": [
+        {
+          "brand_specific_name": "Silver Frost",
+          "price": 6000.0,
+          "category": "exterior",
+          "code": "F57aV_FJBB_DP",
+          "currency": "DKK"
+        },
+        {
+          "brand_specific_name": "Graphite Gray",
+          "price": 6000.0,
+          "category": "exterior",
+          "code": "F57aV_FJBB_ZB",
+          "currency": "DKK"
+        },
+        {
+          "brand_specific_name": "Midnight Black",
+          "price": 6000.0,
+          "category": "exterior",
+          "code": "F57aV_FJBB_WN",
+          "currency": "DKK"
+        },
+        {
+          "brand_specific_name": "Elektronisk svingbart anhængertræk",
+          "price": 8900.0,
+          "category": "accessories",
+          "code": "F57aV_FJBB_Electric tow bar",
+          "currency": "DKK"
+        }
+      ],
+      "url": "https://store.xpeng.com/dk/configurator/P7+",
+      "image_url": ""
+    }
+  ],
+  "errors": [
+    "X9: 500 Server Error: Internal Server Error for url: https://store.xpeng.com/dk/configurator/X9"
+  ],
+  "strategy": {
+    "engine": "beautifulsoup",
+    "selectors": {},
+    "js_triggers": [],
+    "wait_selector": "",
+    "wait_timeout_ms": 30000,
+    "rate_limit_seconds": 3.0,
+    "confidence": 0.95,
+    "notes": "Direct XPeng store API: Next.js configurator state (versions/base prices) → /api/carSpecificationGroup/list (priced options). Market: DK."
+  },
+  "duration_seconds": 16.41,
+  "option_summary": []
+}

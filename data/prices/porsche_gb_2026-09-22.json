@@ -1,0 +1,23 @@
+{
+  "brand": "Porsche",
+  "market": "GB",
+  "currency": "GBP",
+  "timestamp": "2026-09-22T09:27:51.281771+00:00",
+  "vehicle_count": 0,
+  "vehicles": [],
+  "errors": [
+    "No vehicles found on Porsche models page (GB)"
+  ],
+  "strategy": {
+    "engine": "playwright",
+    "selectors": {},
+    "js_triggers": [],
+    "wait_selector": "",
+    "wait_timeout_ms": 30000,
+    "rate_limit_seconds": 3.0,
+    "confidence": 0.7,
+    "notes": "Porsche SPA models page (networkidle) plus configurator DOM prices. Market: GB (locale en-GB)."
+  },
+  "duration_seconds": 3.91,
+  "option_summary": []
+}
