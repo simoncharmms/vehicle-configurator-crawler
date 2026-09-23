@@ -1,0 +1,858 @@
+{
+  "brand": "XPeng",
+  "market": "AT",
+  "currency": "EUR",
+  "timestamp": "2026-09-23T09:54:05.869981+00:00",
+  "vehicle_count": 17,
+  "vehicles": [
+    {
+      "brand": "XPeng",
+      "model": "XPENG L03",
+      "variant": "RWD Standard Range",
+      "base_price": 36600.0,
+      "currency": "EUR",
+      "market": "AT",
+      "fuel_type": "electric",
+      "available_options": [
+        {
+          "standardized_name": "tow_hitch",
+          "brand_specific_name": "Manuelle Anhängerkupplung",
+          "price": 990.0,
+          "category": "exterior",
+          "code": "D03ESV_DSAB_Manual Towbar",
+          "currency": "EUR"
+        },
+        {
+          "brand_specific_name": "Rock Gray",
+          "price": 950.0,
+          "category": "exterior",
+          "code": "D03ESV_DSAB_ZQ",
+          "currency": "EUR"
+        },
+        {
+          "brand_specific_name": "Midnight Black",
+          "price": 950.0,
+          "category": "exterior",
+          "code": "D03ESV_DSAB_WN",
+          "currency": "EUR"
+        }
+      ],
+      "url": "https://store.xpeng.com/at/configurator/L03",
+      "image_url": ""
+    },
+    {
+      "brand": "XPeng",
+      "model": "XPENG L03",
+      "variant": "PowerX Long Range",
+      "base_price": 39600.0,
+      "currency": "EUR",
+      "market": "AT",
+      "fuel_type": "electric",
+      "available_options": [
+        {
+          "standardized_name": "tow_hitch",
+          "brand_specific_name": "Manuelle Anhängerkupplung",
+          "price": 990.0,
+          "category": "exterior",
+          "code": "D03ESV_DSFB_Manual Towbar",
+          "currency": "EUR"
+        },
+        {
+          "brand_specific_name": "Phantom Purple",
+          "price": 950.0,
+          "category": "exterior",
+          "code": "D03ESV_DSFB_ZP",
+          "currency": "EUR"
+        },
+        {
+          "brand_specific_name": "Silver Frost",
+          "price": 950.0,
+          "category": "exterior",
+          "code": "D03ESV_DSFB_WG",
+          "currency": "EUR"
+        },
+        {
+          "brand_specific_name": "Rock Gray",
+          "price": 950.0,
+          "category": "exterior",
+          "code": "D03ESV_DSFB_ZQ",
+          "currency": "EUR"
+        },
+        {
+          "brand_specific_name": "Midnight Black",
+          "price": 950.0,
+          "category": "exterior",
+          "code": "D03ESV_DSFB_WN",
+          "currency": "EUR"
+        }
+      ],
+      "url": "https://store.xpeng.com/at/configurator/L03",
+      "image_url": ""
+    },
+    {
+      "brand": "XPeng",
+      "model": "XPENG L03",
+      "variant": "RWD Long Range",
+      "base_price": 39600.0,
+      "currency": "EUR",
+      "market": "AT",
+      "fuel_type": "electric",
+      "available_options": [
+        {
+          "standardized_name": "tow_hitch",
+          "brand_specific_name": "Manuelle Anhängerkupplung",
+          "price": 990.0,
+          "category": "exterior",
+          "code": "D03ESV_DSBB_Manual Towbar",
+          "currency": "EUR"
+        },
+        {
+          "brand_specific_name": "Phantom Purple",
+          "price": 950.0,
+          "category": "exterior",
+          "code": "D03ESV_DSBB_ZP",
+          "currency": "EUR"
+        },
+        {
+          "brand_specific_name": "Silver Frost",
+          "price": 950.0,
+          "category": "exterior",
+          "code": "D03ESV_DSBB_WG",
+          "currency": "EUR"
+        },
+        {
+          "brand_specific_name": "Rock Gray",
+          "price": 950.0,
+          "category": "exterior",
+          "code": "D03ESV_DSBB_ZQ",
+          "currency": "EUR"
+        },
+        {
+          "brand_specific_name": "Midnight Black",
+          "price": 950.0,
+          "category": "exterior",
+          "code": "D03ESV_DSBB_WN",
+          "currency": "EUR"
+        }
+      ],
+      "url": "https://store.xpeng.com/at/configurator/L03",
+      "image_url": ""
+    },
+    {
+      "brand": "XPeng",
+      "model": "XPENG L03",
+      "variant": "AWD Performance",
+      "base_price": 42600.0,
+      "currency": "EUR",
+      "market": "AT",
+      "fuel_type": "electric",
+      "available_options": [
+        {
+          "standardized_name": "tow_hitch",
+          "brand_specific_name": "Manuelle Anhängerkupplung",
+          "price": 990.0,
+          "category": "exterior",
+          "code": "D03ESV_DSHB_Manual Towbar",
+          "currency": "EUR"
+        },
+        {
+          "brand_specific_name": "Phantom Purple",
+          "price": 950.0,
+          "category": "exterior",
+          "code": "D03ESV_DSHB_ZP",
+          "currency": "EUR"
+        },
+        {
+          "brand_specific_name": "Silver Frost",
+          "price": 950.0,
+          "category": "exterior",
+          "code": "D03ESV_DSHB_WG",
+          "currency": "EUR"
+        },
+        {
+          "brand_specific_name": "Rock Gray",
+          "price": 950.0,
+          "category": "exterior",
+          "code": "D03ESV_DSHB_ZQ",
+          "currency": "EUR"
+        },
+        {
+          "brand_specific_name": "Midnight Black",
+          "price": 950.0,
+          "category": "exterior",
+          "code": "D03ESV_DSHB_WN",
+          "currency": "EUR"
+        }
+      ],
+      "url": "https://store.xpeng.com/at/configurator/L03",
+      "image_url": ""
+    },
+    {
+      "brand": "XPeng",
+      "model": "XPENG L03",
+      "variant": "AWD Performance Ultra",
+      "base_price": 47600.0,
+      "currency": "EUR",
+      "market": "AT",
+      "fuel_type": "electric",
+      "available_options": [
+        {
+          "brand_specific_name": "Black Edition",
+          "price": 1200.0,
+          "category": "accessories",
+          "code": "D03ESV_DSUB_Black Edition",
+          "currency": "EUR"
+        },
+        {
+          "standardized_name": "tow_hitch",
+          "brand_specific_name": "Manuelle Anhängerkupplung",
+          "price": 990.0,
+          "category": "exterior",
+          "code": "D03ESV_DSUB_Manual Towbar",
+          "currency": "EUR"
+        },
+        {
+          "brand_specific_name": "Phantom Purple",
+          "price": 950.0,
+          "category": "exterior",
+          "code": "D03ESV_DSUB_ZP",
+          "currency": "EUR"
+        },
+        {
+          "brand_specific_name": "Silver Frost",
+          "price": 950.0,
+          "category": "exterior",
+          "code": "D03ESV_DSUB_WG",
+          "currency": "EUR"
+        },
+        {
+          "brand_specific_name": "Rock Gray",
+          "price": 950.0,
+          "category": "exterior",
+          "code": "D03ESV_DSUB_ZQ",
+          "currency": "EUR"
+        },
+        {
+          "brand_specific_name": "Midnight Black",
+          "price": 950.0,
+          "category": "exterior",
+          "code": "D03ESV_DSUB_WN",
+          "currency": "EUR"
+        }
+      ],
+      "url": "https://store.xpeng.com/at/configurator/L03",
+      "image_url": ""
+    },
+    {
+      "brand": "XPeng",
+      "model": "XPENG New G6",
+      "variant": "RWD Standard Range",
+      "base_price": 43600.0,
+      "currency": "EUR",
+      "market": "AT",
+      "fuel_type": "electric",
+      "available_options": [
+        {
+          "standardized_name": "tow_hitch",
+          "brand_specific_name": "Elektrisch schwenkbare Anhängerkupplung",
+          "price": 1190.0,
+          "category": "exterior",
+          "code": "G6 F30bV_FFCB_Electronically deployable tow bar",
+          "currency": "EUR"
+        },
+        {
+          "brand_specific_name": "Stellar Purple",
+          "price": 800.0,
+          "category": "exterior",
+          "code": "G6 F30bV_FFCB_Stellar Purple",
+          "currency": "EUR"
+        },
+        {
+          "brand_specific_name": "Silver Frost",
+          "price": 800.0,
+          "category": "exterior",
+          "code": "G6 F30bV_FFCB_Silver Frost",
+          "currency": "EUR"
+        },
+        {
+          "brand_specific_name": "Graphite Gray",
+          "price": 800.0,
+          "category": "exterior",
+          "code": "G6 F30bV_FFCB_Graphite Gray",
+          "currency": "EUR"
+        },
+        {
+          "brand_specific_name": "Midnight Black",
+          "price": 800.0,
+          "category": "exterior",
+          "code": "G6 F30bV_FFCB_Midnight Black",
+          "currency": "EUR"
+        },
+        {
+          "brand_specific_name": "20 Zoll Räder",
+          "price": 1000.0,
+          "category": "wheels",
+          "code": "G6 F30bV_FFCB_20\" Wheel Michelin tire",
+          "currency": "EUR"
+        }
+      ],
+      "url": "https://store.xpeng.com/at/configurator/NEW_G6",
+      "image_url": ""
+    },
+    {
+      "brand": "XPeng",
+      "model": "XPENG New G6",
+      "variant": "RWD Long Range",
+      "base_price": 47600.0,
+      "currency": "EUR",
+      "market": "AT",
+      "fuel_type": "electric",
+      "available_options": [
+        {
+          "standardized_name": "tow_hitch",
+          "brand_specific_name": "Elektrisch schwenkbare Anhängerkupplung",
+          "price": 1190.0,
+          "category": "exterior",
+          "code": "G6 F30bV_FFAB_Electronically deployable tow bar",
+          "currency": "EUR"
+        },
+        {
+          "brand_specific_name": "Stellar Purple",
+          "price": 800.0,
+          "category": "exterior",
+          "code": "G6 F30bV_FFAB_Stellar Purple",
+          "currency": "EUR"
+        },
+        {
+          "brand_specific_name": "Silver Frost",
+          "price": 800.0,
+          "category": "exterior",
+          "code": "G6 F30bV_FFAB_Silver Frost",
+          "currency": "EUR"
+        },
+        {
+          "brand_specific_name": "Graphite Gray",
+          "price": 800.0,
+          "category": "exterior",
+          "code": "G6 F30bV_FFAB_Graphite Gray",
+          "currency": "EUR"
+        },
+        {
+          "brand_specific_name": "Midnight Black",
+          "price": 800.0,
+          "category": "exterior",
+          "code": "G6 F30bV_FFAB_Midnight Black",
+          "currency": "EUR"
+        }
+      ],
+      "url": "https://store.xpeng.com/at/configurator/NEW_G6",
+      "image_url": ""
+    },
+    {
+      "brand": "XPeng",
+      "model": "XPENG New G6",
+      "variant": "AWD Performance",
+      "base_price": 51600.0,
+      "currency": "EUR",
+      "market": "AT",
+      "fuel_type": "electric",
+      "available_options": [
+        {
+          "brand_specific_name": "Black Edition",
+          "price": 1000.0,
+          "category": "accessories",
+          "code": "G6 F30bV_FFBB_Black Edition",
+          "currency": "EUR"
+        },
+        {
+          "standardized_name": "tow_hitch",
+          "brand_specific_name": "Elektrisch schwenkbare Anhängerkupplung",
+          "price": 1190.0,
+          "category": "exterior",
+          "code": "G6 F30bV_FFBB_Electronically deployable tow bar",
+          "currency": "EUR"
+        },
+        {
+          "brand_specific_name": "Stellar Purple",
+          "price": 800.0,
+          "category": "exterior",
+          "code": "G6 F30bV_FFBB_Stellar Purple",
+          "currency": "EUR"
+        },
+        {
+          "brand_specific_name": "Silver Frost",
+          "price": 800.0,
+          "category": "exterior",
+          "code": "G6 F30bV_FFBB_Silver Frost",
+          "currency": "EUR"
+        },
+        {
+          "brand_specific_name": "Graphite Gray",
+          "price": 800.0,
+          "category": "exterior",
+          "code": "G6 F30bV_FFBB_Graphite Gray",
+          "currency": "EUR"
+        },
+        {
+          "brand_specific_name": "Midnight Black",
+          "price": 800.0,
+          "category": "exterior",
+          "code": "G6 F30bV_FFBB_Midnight Black",
+          "currency": "EUR"
+        }
+      ],
+      "url": "https://store.xpeng.com/at/configurator/NEW_G6",
+      "image_url": ""
+    },
+    {
+      "brand": "XPeng",
+      "model": "XPENG New G9",
+      "variant": "RWD Standard Range",
+      "base_price": 59600.0,
+      "currency": "EUR",
+      "market": "AT",
+      "fuel_type": "electric",
+      "available_options": [
+        {
+          "standardized_name": "tow_hitch",
+          "brand_specific_name": "Elektrisch schwenkbare Anhängerkupplung",
+          "price": 1260.0,
+          "category": "exterior",
+          "code": "G9 E38bV_EEAB_Electronically deployable tow bar",
+          "currency": "EUR"
+        },
+        {
+          "brand_specific_name": "Premium Paket",
+          "price": 3960.0,
+          "category": "accessories",
+          "code": "G9 E38bV_EEAB_Premium Seat & Audio Pack",
+          "currency": "EUR"
+        },
+        {
+          "brand_specific_name": "Silver Frost",
+          "price": 1000.0,
+          "category": "exterior",
+          "code": "G9 E38bV_EEAB_Silver Frost",
+          "currency": "EUR"
+        },
+        {
+          "brand_specific_name": "Graphite Gray",
+          "price": 1000.0,
+          "category": "exterior",
+          "code": "G9 E38bV_EEAB_Graphite Gray",
+          "currency": "EUR"
+        },
+        {
+          "brand_specific_name": "Midnight Black",
+          "price": 1000.0,
+          "category": "exterior",
+          "code": "G9 E38bV_EEAB_Midnight Black",
+          "currency": "EUR"
+        },
+        {
+          "brand_specific_name": "21 Zoll Räder Sport (255/45 R21)",
+          "price": 1260.0,
+          "category": "wheels",
+          "code": "G9 E38bV_EEAB_21\" Sport Wheel (255/45R21)",
+          "currency": "EUR"
+        }
+      ],
+      "url": "https://store.xpeng.com/at/configurator/NEW_G9",
+      "image_url": ""
+    },
+    {
+      "brand": "XPeng",
+      "model": "XPENG New G9",
+      "variant": "RWD Long Range",
+      "base_price": 63600.0,
+      "currency": "EUR",
+      "market": "AT",
+      "fuel_type": "electric",
+      "available_options": [
+        {
+          "brand_specific_name": "Premium Paket",
+          "price": 3960.0,
+          "category": "accessories",
+          "code": "G9 E38bV_EEBB_Premium Seat & Audio Pack",
+          "currency": "EUR"
+        },
+        {
+          "standardized_name": "tow_hitch",
+          "brand_specific_name": "Elektrisch schwenkbare Anhängerkupplung",
+          "price": 1260.0,
+          "category": "exterior",
+          "code": "G9 E38bV_EEBB_Electronically deployable tow bar",
+          "currency": "EUR"
+        },
+        {
+          "brand_specific_name": "Silver Frost",
+          "price": 1000.0,
+          "category": "exterior",
+          "code": "G9 E38bV_EEBB_Silver Frost",
+          "currency": "EUR"
+        },
+        {
+          "brand_specific_name": "Graphite Gray",
+          "price": 1000.0,
+          "category": "exterior",
+          "code": "G9 E38bV_EEBB_Graphite Gray",
+          "currency": "EUR"
+        },
+        {
+          "brand_specific_name": "Midnight Black",
+          "price": 1000.0,
+          "category": "exterior",
+          "code": "G9 E38bV_EEBB_Midnight Black",
+          "currency": "EUR"
+        },
+        {
+          "brand_specific_name": "21 Zoll Räder Sport (255/45 R21)",
+          "price": 1260.0,
+          "category": "wheels",
+          "code": "G9 E38bV_EEBB_21\" Sport Wheel (255/45R21)",
+          "currency": "EUR"
+        }
+      ],
+      "url": "https://store.xpeng.com/at/configurator/NEW_G9",
+      "image_url": ""
+    },
+    {
+      "brand": "XPeng",
+      "model": "XPENG New G9",
+      "variant": "AWD Performance",
+      "base_price": 72600.0,
+      "currency": "EUR",
+      "market": "AT",
+      "fuel_type": "electric",
+      "available_options": [
+        {
+          "brand_specific_name": "Black Edition",
+          "price": 1500.0,
+          "category": "accessories",
+          "code": "G9 E38bV_EECB_Black Edition",
+          "currency": "EUR"
+        },
+        {
+          "brand_specific_name": "Premium Paket",
+          "price": 3960.0,
+          "category": "accessories",
+          "code": "G9 E38bV_EECB_Premium Seat & Audio Pack",
+          "currency": "EUR"
+        },
+        {
+          "standardized_name": "tow_hitch",
+          "brand_specific_name": "Elektrisch schwenkbare Anhängerkupplung",
+          "price": 1260.0,
+          "category": "exterior",
+          "code": "G9 E38bV_EECB_Electronically deployable tow bar",
+          "currency": "EUR"
+        },
+        {
+          "brand_specific_name": "Silver Frost",
+          "price": 1000.0,
+          "category": "exterior",
+          "code": "G9 E38bV_EECB_Silver Frost",
+          "currency": "EUR"
+        },
+        {
+          "brand_specific_name": "Graphite Gray",
+          "price": 1000.0,
+          "category": "exterior",
+          "code": "G9 E38bV_EECB_Graphite Gray",
+          "currency": "EUR"
+        },
+        {
+          "brand_specific_name": "Midnight Black",
+          "price": 1000.0,
+          "category": "exterior",
+          "code": "G9 E38bV_EECB_Midnight Black",
+          "currency": "EUR"
+        },
+        {
+          "brand_specific_name": "Kaitoke Green Matte",
+          "price": 1500.0,
+          "category": "exterior",
+          "code": "G9 E38bV_EECB_Kaitoke Green Matte",
+          "currency": "EUR"
+        }
+      ],
+      "url": "https://store.xpeng.com/at/configurator/NEW_G9",
+      "image_url": ""
+    },
+    {
+      "brand": "XPeng",
+      "model": "XPENG P7+",
+      "variant": "RWD Standard Range",
+      "base_price": 47600.0,
+      "currency": "EUR",
+      "market": "AT",
+      "fuel_type": "electric",
+      "available_options": [
+        {
+          "brand_specific_name": "Silver Frost",
+          "price": 800.0,
+          "category": "exterior",
+          "code": "F57aV_FJCB_DP",
+          "currency": "EUR"
+        },
+        {
+          "brand_specific_name": "Graphite Grey",
+          "price": 800.0,
+          "category": "exterior",
+          "code": "F57aV_FJCB_ZB",
+          "currency": "EUR"
+        },
+        {
+          "brand_specific_name": "Midnight Black",
+          "price": 800.0,
+          "category": "exterior",
+          "code": "F57aV_FJCB_WN",
+          "currency": "EUR"
+        },
+        {
+          "standardized_name": "tow_hitch",
+          "brand_specific_name": "Elektrisch schwenkbare Anhängerkupplung",
+          "price": 1190.0,
+          "category": "exterior",
+          "code": "F57aV_FJCB_Electric tow bar",
+          "currency": "EUR"
+        }
+      ],
+      "url": "https://store.xpeng.com/at/configurator/P7+",
+      "image_url": ""
+    },
+    {
+      "brand": "XPeng",
+      "model": "XPENG P7+",
+      "variant": "RWD Long Range",
+      "base_price": 50600.0,
+      "currency": "EUR",
+      "market": "AT",
+      "fuel_type": "electric",
+      "available_options": [
+        {
+          "brand_specific_name": "Silver Frost",
+          "price": 800.0,
+          "category": "exterior",
+          "code": "F57aV_FJAB_DP",
+          "currency": "EUR"
+        },
+        {
+          "brand_specific_name": "Graphite Grey",
+          "price": 800.0,
+          "category": "exterior",
+          "code": "F57aV_FJAB_ZB",
+          "currency": "EUR"
+        },
+        {
+          "brand_specific_name": "Midnight Black",
+          "price": 800.0,
+          "category": "exterior",
+          "code": "F57aV_FJAB_WN",
+          "currency": "EUR"
+        },
+        {
+          "standardized_name": "tow_hitch",
+          "brand_specific_name": "Elektrisch schwenkbare Anhängerkupplung",
+          "price": 1190.0,
+          "category": "exterior",
+          "code": "F57aV_FJAB_Electric tow bar",
+          "currency": "EUR"
+        }
+      ],
+      "url": "https://store.xpeng.com/at/configurator/P7+",
+      "image_url": ""
+    },
+    {
+      "brand": "XPeng",
+      "model": "XPENG P7+",
+      "variant": "AWD Performance",
+      "base_price": 54600.0,
+      "currency": "EUR",
+      "market": "AT",
+      "fuel_type": "electric",
+      "available_options": [
+        {
+          "brand_specific_name": "Silver Frost",
+          "price": 800.0,
+          "category": "exterior",
+          "code": "F57aV_FJBB_DP",
+          "currency": "EUR"
+        },
+        {
+          "brand_specific_name": "Graphite Grey",
+          "price": 800.0,
+          "category": "exterior",
+          "code": "F57aV_FJBB_ZB",
+          "currency": "EUR"
+        },
+        {
+          "brand_specific_name": "Midnight Black",
+          "price": 800.0,
+          "category": "exterior",
+          "code": "F57aV_FJBB_WN",
+          "currency": "EUR"
+        },
+        {
+          "standardized_name": "tow_hitch",
+          "brand_specific_name": "Elektrisch schwenkbare Anhängerkupplung",
+          "price": 1190.0,
+          "category": "exterior",
+          "code": "F57aV_FJBB_Electric tow bar",
+          "currency": "EUR"
+        }
+      ],
+      "url": "https://store.xpeng.com/at/configurator/P7+",
+      "image_url": ""
+    },
+    {
+      "brand": "XPeng",
+      "model": "XPENG X9",
+      "variant": "FWD Standard Range",
+      "base_price": 78600.0,
+      "currency": "EUR",
+      "market": "AT",
+      "fuel_type": "electric",
+      "available_options": [
+        {
+          "brand_specific_name": "Silver Frost",
+          "price": 1000.0,
+          "category": "exterior",
+          "code": "H93aEV_HEAA_WG",
+          "currency": "EUR"
+        },
+        {
+          "brand_specific_name": "Midnight Black",
+          "price": 1000.0,
+          "category": "exterior",
+          "code": "H93aEV_HEAA_WN",
+          "currency": "EUR"
+        },
+        {
+          "brand_specific_name": "Matte Gray",
+          "price": 1500.0,
+          "category": "exterior",
+          "code": "H93aEV_HEAA_ZA",
+          "currency": "EUR"
+        },
+        {
+          "standardized_name": "tow_hitch",
+          "brand_specific_name": "Elektrisch schwenkbare Anhängerkupplung",
+          "price": 1260.0,
+          "category": "exterior",
+          "code": "H93aEV_HEAA_Electric Tow Bar",
+          "currency": "EUR"
+        }
+      ],
+      "url": "https://store.xpeng.com/at/configurator/X9",
+      "image_url": ""
+    },
+    {
+      "brand": "XPeng",
+      "model": "XPENG X9",
+      "variant": "FWD Long Range",
+      "base_price": 82600.0,
+      "currency": "EUR",
+      "market": "AT",
+      "fuel_type": "electric",
+      "available_options": [
+        {
+          "brand_specific_name": "Silver Frost",
+          "price": 1000.0,
+          "category": "exterior",
+          "code": "H93aEV_HEBA_WG",
+          "currency": "EUR"
+        },
+        {
+          "brand_specific_name": "Midnight Black",
+          "price": 1000.0,
+          "category": "exterior",
+          "code": "H93aEV_HEBA_WN",
+          "currency": "EUR"
+        },
+        {
+          "brand_specific_name": "Matte Gray",
+          "price": 1500.0,
+          "category": "exterior",
+          "code": "H93aEV_HEBA_ZA",
+          "currency": "EUR"
+        },
+        {
+          "standardized_name": "tow_hitch",
+          "brand_specific_name": "Elektrisch schwenkbare Anhängerkupplung",
+          "price": 1260.0,
+          "category": "exterior",
+          "code": "H93aEV_HEBA_Electric Tow Bar",
+          "currency": "EUR"
+        }
+      ],
+      "url": "https://store.xpeng.com/at/configurator/X9",
+      "image_url": ""
+    },
+    {
+      "brand": "XPeng",
+      "model": "XPENG X9",
+      "variant": "AWD Performance",
+      "base_price": 87600.0,
+      "currency": "EUR",
+      "market": "AT",
+      "fuel_type": "electric",
+      "available_options": [
+        {
+          "brand_specific_name": "Silver Frost",
+          "price": 1000.0,
+          "category": "exterior",
+          "code": "H93aEV_HECA_WG",
+          "currency": "EUR"
+        },
+        {
+          "brand_specific_name": "Midnight Black",
+          "price": 1000.0,
+          "category": "exterior",
+          "code": "H93aEV_HECA_WN",
+          "currency": "EUR"
+        },
+        {
+          "brand_specific_name": "Matte Gray",
+          "price": 1500.0,
+          "category": "exterior",
+          "code": "H93aEV_HECA_ZA",
+          "currency": "EUR"
+        },
+        {
+          "standardized_name": "tow_hitch",
+          "brand_specific_name": "Elektrisch schwenkbare Anhängerkupplung",
+          "price": 1260.0,
+          "category": "exterior",
+          "code": "H93aEV_HECA_Electric Tow Bar",
+          "currency": "EUR"
+        }
+      ],
+      "url": "https://store.xpeng.com/at/configurator/X9",
+      "image_url": ""
+    }
+  ],
+  "errors": [],
+  "strategy": {
+    "engine": "beautifulsoup",
+    "selectors": {},
+    "js_triggers": [],
+    "wait_selector": "",
+    "wait_timeout_ms": 30000,
+    "rate_limit_seconds": 3.0,
+    "confidence": 0.95,
+    "notes": "Direct XPeng store API: Next.js configurator state (versions/base prices) → /api/carSpecificationGroup/list (priced options). Market: AT."
+  },
+  "duration_seconds": 20.36,
+  "option_summary": [
+    {
+      "standardized_name": "tow_hitch",
+      "brand_specific_name": "Elektrisch schwenkbare Anhängerkupplung",
+      "avg_price": 1155.88,
+      "min_price": 990.0,
+      "max_price": 1260.0,
+      "model_count": 17,
+      "category": "exterior"
+    }
+  ]
+}

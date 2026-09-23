@@ -1,0 +1,515 @@
+{
+  "brand": "Zeekr",
+  "market": "DE",
+  "currency": "EUR",
+  "timestamp": "2026-09-23T09:56:08.741426+00:00",
+  "vehicle_count": 13,
+  "vehicles": [
+    {
+      "brand": "Zeekr",
+      "model": "Zeekr 001",
+      "variant": "Business Edition RWD",
+      "base_price": 59990.0,
+      "currency": "EUR",
+      "market": "DE",
+      "fuel_type": "electric",
+      "available_options": [
+        {
+          "brand_specific_name": "Tech Grey",
+          "price": 1300.0,
+          "category": "exterior",
+          "code": "Z001C003",
+          "currency": "EUR"
+        },
+        {
+          "brand_specific_name": "Phantom Black",
+          "price": 1300.0,
+          "category": "exterior",
+          "code": "Z009PC001",
+          "currency": "EUR"
+        }
+      ],
+      "url": "https://shop.zeekr.eu/de-DE/configuration/?linkCode=1",
+      "image_url": ""
+    },
+    {
+      "brand": "Zeekr",
+      "model": "Zeekr 001",
+      "variant": "Performance AWD",
+      "base_price": 65990.0,
+      "currency": "EUR",
+      "market": "DE",
+      "fuel_type": "electric",
+      "available_options": [
+        {
+          "brand_specific_name": "Dach in Kontrastfarbe",
+          "price": 1000.0,
+          "category": "accessories",
+          "code": "Z001S003",
+          "currency": "EUR"
+        },
+        {
+          "brand_specific_name": "Tech Grey",
+          "price": 1300.0,
+          "category": "exterior",
+          "code": "Z001C003",
+          "currency": "EUR"
+        },
+        {
+          "brand_specific_name": "Phantom Black",
+          "price": 1300.0,
+          "category": "exterior",
+          "code": "Z001C007",
+          "currency": "EUR"
+        }
+      ],
+      "url": "https://shop.zeekr.eu/de-DE/configuration/?linkCode=1",
+      "image_url": ""
+    },
+    {
+      "brand": "Zeekr",
+      "model": "Zeekr 001",
+      "variant": "Privilege AWD",
+      "base_price": 70990.0,
+      "currency": "EUR",
+      "market": "DE",
+      "fuel_type": "electric",
+      "available_options": [
+        {
+          "brand_specific_name": "Midnight Blue & Polar White",
+          "price": 1500.0,
+          "category": "interior",
+          "code": "Z003PC019",
+          "currency": "EUR"
+        },
+        {
+          "brand_specific_name": "Tech Grey",
+          "price": 1300.0,
+          "category": "exterior",
+          "code": "Z001C003",
+          "currency": "EUR"
+        },
+        {
+          "brand_specific_name": "Phantom Black",
+          "price": 1300.0,
+          "category": "exterior",
+          "code": "Z001C007",
+          "currency": "EUR"
+        }
+      ],
+      "url": "https://shop.zeekr.eu/de-DE/configuration/?linkCode=1",
+      "image_url": ""
+    },
+    {
+      "brand": "Zeekr",
+      "model": "Zeekr 001",
+      "variant": "Sport Edition AWD",
+      "base_price": 72990.0,
+      "currency": "EUR",
+      "market": "DE",
+      "fuel_type": "electric",
+      "available_options": [
+        {
+          "brand_specific_name": "Tech Grey",
+          "price": 1300.0,
+          "category": "exterior",
+          "code": "Z001C003",
+          "currency": "EUR"
+        }
+      ],
+      "url": "https://shop.zeekr.eu/de-DE/configuration/?linkCode=1",
+      "image_url": ""
+    },
+    {
+      "brand": "Zeekr",
+      "model": "Zeekr X",
+      "variant": "Core RWD",
+      "base_price": 37990.0,
+      "currency": "EUR",
+      "market": "DE",
+      "fuel_type": "electric",
+      "available_options": [
+        {
+          "brand_specific_name": "Grid Grey",
+          "price": 1200.0,
+          "category": "exterior",
+          "code": "PBAGU018_1628",
+          "currency": "EUR"
+        },
+        {
+          "brand_specific_name": "Onyx Black",
+          "price": 1200.0,
+          "category": "exterior",
+          "code": "PBAGU036_1628",
+          "currency": "EUR"
+        },
+        {
+          "brand_specific_name": "Steering wheel heating",
+          "price": 250.0,
+          "category": "packages",
+          "code": "PBAGL008_1628",
+          "currency": "EUR"
+        }
+      ],
+      "url": "https://shop.zeekr.eu/de-DE/configuration/?linkCode=1628",
+      "image_url": ""
+    },
+    {
+      "brand": "Zeekr",
+      "model": "Zeekr X",
+      "variant": "Long Range RWD",
+      "base_price": 42990.0,
+      "currency": "EUR",
+      "market": "DE",
+      "fuel_type": "electric",
+      "available_options": [
+        {
+          "brand_specific_name": "Pine Green",
+          "price": 1200.0,
+          "category": "exterior",
+          "code": "PBAGU016_1628",
+          "currency": "EUR"
+        },
+        {
+          "brand_specific_name": "Grid Grey",
+          "price": 1200.0,
+          "category": "exterior",
+          "code": "PBAGU018_1628",
+          "currency": "EUR"
+        },
+        {
+          "brand_specific_name": "Onyx Black",
+          "price": 1200.0,
+          "category": "exterior",
+          "code": "PBAGU036_1628",
+          "currency": "EUR"
+        }
+      ],
+      "url": "https://shop.zeekr.eu/de-DE/configuration/?linkCode=1628",
+      "image_url": ""
+    },
+    {
+      "brand": "Zeekr",
+      "model": "Zeekr X",
+      "variant": "Privilege AWD",
+      "base_price": 47990.0,
+      "currency": "EUR",
+      "market": "DE",
+      "fuel_type": "electric",
+      "available_options": [
+        {
+          "brand_specific_name": "Midnight Blue & Polar White",
+          "price": 1500.0,
+          "category": "interior",
+          "code": "PBAEK003_1628",
+          "currency": "EUR"
+        },
+        {
+          "brand_specific_name": "Pine Green",
+          "price": 1200.0,
+          "category": "exterior",
+          "code": "PBAGU016_1628",
+          "currency": "EUR"
+        },
+        {
+          "brand_specific_name": "Grid Grey",
+          "price": 1200.0,
+          "category": "exterior",
+          "code": "PBAGU018_1628",
+          "currency": "EUR"
+        },
+        {
+          "brand_specific_name": "Onyx Black",
+          "price": 1200.0,
+          "category": "exterior",
+          "code": "PBAGU036_1628",
+          "currency": "EUR"
+        },
+        {
+          "brand_specific_name": "Palace Beige",
+          "price": 1600.0,
+          "category": "exterior",
+          "code": "PBAGU051_1628",
+          "currency": "EUR"
+        }
+      ],
+      "url": "https://shop.zeekr.eu/de-DE/configuration/?linkCode=1628",
+      "image_url": ""
+    },
+    {
+      "brand": "Zeekr",
+      "model": "Zeekr 7X",
+      "variant": "Business Edition RWD",
+      "base_price": 54990.0,
+      "currency": "EUR",
+      "market": "DE",
+      "fuel_type": "electric",
+      "available_options": [
+        {
+          "standardized_name": "alloy_wheels",
+          "brand_specific_name": "20-Zoll-Leichtmetallfelgen",
+          "price": 900.0,
+          "category": "wheels",
+          "code": "PBAGL007_1075",
+          "currency": "EUR"
+        },
+        {
+          "brand_specific_name": "Tech Grey",
+          "price": 1300.0,
+          "category": "exterior",
+          "code": "PBAGU012_1075",
+          "currency": "EUR"
+        },
+        {
+          "brand_specific_name": "Onyx Black",
+          "price": 1300.0,
+          "category": "exterior",
+          "code": "PBAGU036_1075",
+          "currency": "EUR"
+        }
+      ],
+      "url": "https://shop.zeekr.eu/de-DE/configuration/?linkCode=1075",
+      "image_url": ""
+    },
+    {
+      "brand": "Zeekr",
+      "model": "Zeekr 7X",
+      "variant": "Long Range RWD",
+      "base_price": 57990.0,
+      "currency": "EUR",
+      "market": "DE",
+      "fuel_type": "electric",
+      "available_options": [
+        {
+          "standardized_name": "alloy_wheels",
+          "brand_specific_name": "20-Zoll-Leichtmetallfelgen",
+          "price": 900.0,
+          "category": "wheels",
+          "code": "PBAGL007_1075",
+          "currency": "EUR"
+        },
+        {
+          "brand_specific_name": "Tech Grey",
+          "price": 1300.0,
+          "category": "exterior",
+          "code": "PBAGU012_1075",
+          "currency": "EUR"
+        },
+        {
+          "brand_specific_name": "Onyx Black",
+          "price": 1300.0,
+          "category": "exterior",
+          "code": "PBAGU036_1075",
+          "currency": "EUR"
+        },
+        {
+          "brand_specific_name": "Forest Green",
+          "price": 1300.0,
+          "category": "exterior",
+          "code": "PBAGU047_1075",
+          "currency": "EUR"
+        },
+        {
+          "brand_specific_name": "Advanced Cockpit Paket (nur i.V.m. Nappa- und PU-Sitzen)",
+          "price": 1400.0,
+          "category": "packages",
+          "code": "PBAGL025_1075",
+          "currency": "EUR"
+        },
+        {
+          "brand_specific_name": "Nappa- und PU-Sitze (nur i.V.m. Advanced Cockpit Paket)",
+          "price": 600.0,
+          "category": "packages",
+          "code": "PBAGL023_1075",
+          "currency": "EUR"
+        }
+      ],
+      "url": "https://shop.zeekr.eu/de-DE/configuration/?linkCode=1075",
+      "image_url": ""
+    },
+    {
+      "brand": "Zeekr",
+      "model": "Zeekr 7X",
+      "variant": "Privilege AWD",
+      "base_price": 64990.0,
+      "currency": "EUR",
+      "market": "DE",
+      "fuel_type": "electric",
+      "available_options": [
+        {
+          "brand_specific_name": "Tech Grey",
+          "price": 1300.0,
+          "category": "exterior",
+          "code": "PBAGU012_1075",
+          "currency": "EUR"
+        },
+        {
+          "brand_specific_name": "Onyx Black",
+          "price": 1300.0,
+          "category": "exterior",
+          "code": "PBAGU036_1075",
+          "currency": "EUR"
+        },
+        {
+          "brand_specific_name": "Forest Green",
+          "price": 1300.0,
+          "category": "exterior",
+          "code": "PBAGU047_1075",
+          "currency": "EUR"
+        },
+        {
+          "brand_specific_name": "Comfort Paket (nur i.V.m. Advanced Cockpit Paket)",
+          "price": 1900.0,
+          "category": "packages",
+          "code": "PBAGL024_1075",
+          "currency": "EUR"
+        },
+        {
+          "brand_specific_name": "Advanced Cockpit Paket (nur i.V.m. Comfort Paket)",
+          "price": 1400.0,
+          "category": "packages",
+          "code": "PBAGL025_1075",
+          "currency": "EUR"
+        }
+      ],
+      "url": "https://shop.zeekr.eu/de-DE/configuration/?linkCode=1075",
+      "image_url": ""
+    },
+    {
+      "brand": "Zeekr",
+      "model": "Zeekr 7GT",
+      "variant": "Business Edition RWD",
+      "base_price": 47990.0,
+      "currency": "EUR",
+      "market": "DE",
+      "fuel_type": "electric",
+      "available_options": [
+        {
+          "standardized_name": "alloy_wheels",
+          "brand_specific_name": "19-Zoll Mehrspeichen-Leichtmetallfelgen",
+          "price": 400.0,
+          "category": "wheels",
+          "code": "PBAGL007_1611",
+          "currency": "EUR"
+        },
+        {
+          "brand_specific_name": "Tech Grey",
+          "price": 1300.0,
+          "category": "exterior",
+          "code": "PBAGU012_1611",
+          "currency": "EUR"
+        },
+        {
+          "brand_specific_name": "Onyx Black",
+          "price": 1300.0,
+          "category": "exterior",
+          "code": "PBAGU036_1611",
+          "currency": "EUR"
+        }
+      ],
+      "url": "https://shop.zeekr.eu/de-DE/configuration/?linkCode=1611",
+      "image_url": ""
+    },
+    {
+      "brand": "Zeekr",
+      "model": "Zeekr 7GT",
+      "variant": "Long Range RWD",
+      "base_price": 53490.0,
+      "currency": "EUR",
+      "market": "DE",
+      "fuel_type": "electric",
+      "available_options": [
+        {
+          "standardized_name": "leather_seats",
+          "brand_specific_name": "Leder (Nappa & PU) Charcoal Black",
+          "price": 600.0,
+          "category": "interior",
+          "code": "PBAGL022_1611",
+          "currency": "EUR"
+        },
+        {
+          "brand_specific_name": "Sensory Package",
+          "price": 700.0,
+          "category": "packages",
+          "code": "PBAGL024_1611",
+          "currency": "EUR"
+        }
+      ],
+      "url": "https://shop.zeekr.eu/de-DE/configuration/?linkCode=1611",
+      "image_url": ""
+    },
+    {
+      "brand": "Zeekr",
+      "model": "Zeekr 7GT",
+      "variant": "Privilege AWD",
+      "base_price": 59490.0,
+      "currency": "EUR",
+      "market": "DE",
+      "fuel_type": "electric",
+      "available_options": [
+        {
+          "brand_specific_name": "Sensory Package",
+          "price": 700.0,
+          "category": "packages",
+          "code": "PBAGL024_1611",
+          "currency": "EUR"
+        },
+        {
+          "brand_specific_name": "Seat Package",
+          "price": 1000.0,
+          "category": "packages",
+          "code": "PBAGL023_1611",
+          "currency": "EUR"
+        },
+        {
+          "brand_specific_name": "Elektrisch betätigte Vorder- und Hintertüren",
+          "price": 800.0,
+          "category": "packages",
+          "code": "PBAGL019_1611",
+          "currency": "EUR"
+        },
+        {
+          "brand_specific_name": "Elektrochromatisches Dach",
+          "price": 1400.0,
+          "category": "packages",
+          "code": "PBAGL026_1611",
+          "currency": "EUR"
+        }
+      ],
+      "url": "https://shop.zeekr.eu/de-DE/configuration/?linkCode=1611",
+      "image_url": ""
+    }
+  ],
+  "errors": [],
+  "strategy": {
+    "engine": "beautifulsoup",
+    "selectors": {},
+    "js_triggers": [],
+    "wait_selector": "",
+    "wait_timeout_ms": 30000,
+    "rate_limit_seconds": 3.0,
+    "confidence": 0.95,
+    "notes": "Direct Zeekr signed public storefront API: queryCarModels → queryOptions. Current signing configuration is read from the public frontend bundle. Market: DE."
+  },
+  "duration_seconds": 19.32,
+  "option_summary": [
+    {
+      "standardized_name": "alloy_wheels",
+      "brand_specific_name": "20-Zoll-Leichtmetallfelgen",
+      "avg_price": 733.33,
+      "min_price": 400.0,
+      "max_price": 900.0,
+      "model_count": 3,
+      "category": "wheels"
+    },
+    {
+      "standardized_name": "leather_seats",
+      "brand_specific_name": "Leder (Nappa & PU) Charcoal Black",
+      "avg_price": 600.0,
+      "min_price": 600.0,
+      "max_price": 600.0,
+      "model_count": 1,
+      "category": "interior"
+    }
+  ]
+}
