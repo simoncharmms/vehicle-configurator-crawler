@@ -1,0 +1,363 @@
+{
+  "brand": "BYD",
+  "market": "NL",
+  "currency": "EUR",
+  "timestamp": "2026-09-26T09:15:13.062991+00:00",
+  "vehicle_count": 9,
+  "vehicles": [
+    {
+      "brand": "BYD",
+      "model": "BYD ATTO 2",
+      "variant": "",
+      "base_price": 34490.0,
+      "currency": "EUR",
+      "market": "NL",
+      "fuel_type": "electric",
+      "available_options": [
+        {
+          "brand_specific_name": "Obsidian Black",
+          "price": 750.0,
+          "category": "exterior",
+          "code": "baseConfig0094",
+          "currency": "EUR"
+        },
+        {
+          "brand_specific_name": "Hiking Green",
+          "price": 750.0,
+          "category": "exterior",
+          "code": "baseConfig0091",
+          "currency": "EUR"
+        },
+        {
+          "brand_specific_name": "Skiing White",
+          "price": 750.0,
+          "category": "exterior",
+          "code": "baseConfig0089",
+          "currency": "EUR"
+        }
+      ],
+      "url": "https://cms-api.byd.com/car/byd/nl/CX013030.json",
+      "image_url": ""
+    },
+    {
+      "brand": "BYD",
+      "model": "BYD ATTO 3 EVO",
+      "variant": "",
+      "base_price": 40990.0,
+      "currency": "EUR",
+      "market": "NL",
+      "fuel_type": "electric",
+      "available_options": [
+        {
+          "brand_specific_name": "Time Grey",
+          "price": 750.0,
+          "category": "exterior",
+          "code": "baseConfig0090",
+          "currency": "EUR"
+        },
+        {
+          "brand_specific_name": "Obsidian Black",
+          "price": 750.0,
+          "category": "exterior",
+          "code": "baseConfig0094",
+          "currency": "EUR"
+        },
+        {
+          "brand_specific_name": "Atlantis Blue",
+          "price": 750.0,
+          "category": "exterior",
+          "code": "baseConfig0141",
+          "currency": "EUR"
+        },
+        {
+          "brand_specific_name": "Skiing White",
+          "price": 750.0,
+          "category": "exterior",
+          "code": "baseConfig0059",
+          "currency": "EUR"
+        },
+        {
+          "brand_specific_name": "Ruby Red",
+          "price": 750.0,
+          "category": "exterior",
+          "code": "baseConfig0215",
+          "currency": "EUR"
+        }
+      ],
+      "url": "https://cms-api.byd.com/car/byd/nl/CX004031.json",
+      "image_url": ""
+    },
+    {
+      "brand": "BYD",
+      "model": "BYD SEAL",
+      "variant": "",
+      "base_price": 39690.0,
+      "currency": "EUR",
+      "market": "NL",
+      "fuel_type": "electric",
+      "available_options": [
+        {
+          "brand_specific_name": "Polar White",
+          "price": 1100.0,
+          "category": "exterior",
+          "code": "baseConfig0047",
+          "currency": "EUR"
+        },
+        {
+          "brand_specific_name": "Atlantis Grey",
+          "price": 1100.0,
+          "category": "exterior",
+          "code": "baseConfig0046",
+          "currency": "EUR"
+        },
+        {
+          "brand_specific_name": "Obsidian Black",
+          "price": 1100.0,
+          "category": "exterior",
+          "code": "baseConfig0092",
+          "currency": "EUR"
+        },
+        {
+          "brand_specific_name": "Ruby Red",
+          "price": 1100.0,
+          "category": "exterior",
+          "code": "baseConfig0215",
+          "currency": "EUR"
+        },
+        {
+          "brand_specific_name": "Lavender Grey",
+          "price": 1100.0,
+          "category": "exterior",
+          "code": "baseConfig0216",
+          "currency": "EUR"
+        }
+      ],
+      "url": "https://cms-api.byd.com/car/byd/nl/CX009017.json",
+      "image_url": ""
+    },
+    {
+      "brand": "BYD",
+      "model": "BYD SEALION 7",
+      "variant": "",
+      "base_price": 50690.0,
+      "currency": "EUR",
+      "market": "NL",
+      "fuel_type": "electric",
+      "available_options": [
+        {
+          "brand_specific_name": "Obsidian Black",
+          "price": 1100.0,
+          "category": "exterior",
+          "code": "baseConfig0092",
+          "currency": "EUR"
+        },
+        {
+          "brand_specific_name": "Indigo Grey",
+          "price": 1100.0,
+          "category": "exterior",
+          "code": "baseConfig0050",
+          "currency": "EUR"
+        },
+        {
+          "brand_specific_name": "Polar White",
+          "price": 1100.0,
+          "category": "exterior",
+          "code": "baseConfig0047",
+          "currency": "EUR"
+        }
+      ],
+      "url": "https://cms-api.byd.com/car/byd/nl/CX012026.json",
+      "image_url": ""
+    },
+    {
+      "brand": "BYD",
+      "model": "BYD TANG",
+      "variant": "",
+      "base_price": 67400.0,
+      "currency": "EUR",
+      "market": "NL",
+      "fuel_type": "electric",
+      "available_options": [
+        {
+          "brand_specific_name": "Silver Sand Black",
+          "price": 1300.0,
+          "category": "exterior",
+          "code": "Blue0022",
+          "currency": "EUR"
+        },
+        {
+          "brand_specific_name": "Snow White",
+          "price": 1300.0,
+          "category": "exterior",
+          "code": "SnowWhite0007",
+          "currency": "EUR"
+        }
+      ],
+      "url": "https://cms-api.byd.com/car/byd/nl/CX006007.json",
+      "image_url": ""
+    },
+    {
+      "brand": "BYD",
+      "model": "BYD ATTO 2 DM-i",
+      "variant": "",
+      "base_price": 29490.0,
+      "currency": "EUR",
+      "market": "NL",
+      "fuel_type": "hybrid",
+      "available_options": [
+        {
+          "brand_specific_name": "Time Grey",
+          "price": 750.0,
+          "category": "exterior",
+          "code": "baseConfig0179",
+          "currency": "EUR"
+        },
+        {
+          "brand_specific_name": "Skiing White",
+          "price": 750.0,
+          "category": "exterior",
+          "code": "baseConfig0181",
+          "currency": "EUR"
+        },
+        {
+          "brand_specific_name": "Obsidian Black",
+          "price": 750.0,
+          "category": "exterior",
+          "code": "baseConfig0182",
+          "currency": "EUR"
+        }
+      ],
+      "url": "https://cms-api.byd.com/car/byd/nl/CX025001.json",
+      "image_url": ""
+    },
+    {
+      "brand": "BYD",
+      "model": "BYD DOLPHIN G DM-i",
+      "variant": "",
+      "base_price": 24990.0,
+      "currency": "EUR",
+      "market": "NL",
+      "fuel_type": "hybrid",
+      "available_options": [
+        {
+          "brand_specific_name": "Time Grey",
+          "price": 750.0,
+          "category": "exterior",
+          "code": "baseConfig0109",
+          "currency": "EUR"
+        },
+        {
+          "brand_specific_name": "Obsidian Black",
+          "price": 750.0,
+          "category": "exterior",
+          "code": "baseConfig0218",
+          "currency": "EUR"
+        },
+        {
+          "brand_specific_name": "Skiing White",
+          "price": 750.0,
+          "category": "exterior",
+          "code": "baseConfig0059",
+          "currency": "EUR"
+        },
+        {
+          "brand_specific_name": "Ocean Blue",
+          "price": 750.0,
+          "category": "exterior",
+          "code": "baseConfig0227",
+          "currency": "EUR"
+        }
+      ],
+      "url": "https://cms-api.byd.com/car/byd/nl/CX027001.json",
+      "image_url": ""
+    },
+    {
+      "brand": "BYD",
+      "model": "BYD SEAL U DM-i",
+      "variant": "",
+      "base_price": 39620.0,
+      "currency": "EUR",
+      "market": "NL",
+      "fuel_type": "hybrid",
+      "available_options": [
+        {
+          "brand_specific_name": "Tian Qing",
+          "price": 1100.0,
+          "category": "exterior",
+          "code": "baseConfig0054",
+          "currency": "EUR"
+        },
+        {
+          "brand_specific_name": "Obsidian Black",
+          "price": 1100.0,
+          "category": "exterior",
+          "code": "baseConfig0151",
+          "currency": "EUR"
+        },
+        {
+          "brand_specific_name": "Snow White",
+          "price": 1100.0,
+          "category": "exterior",
+          "code": "baseConfig0057",
+          "currency": "EUR"
+        },
+        {
+          "brand_specific_name": "Boundless Cloud",
+          "price": 1100.0,
+          "category": "exterior",
+          "code": "baseConfig0062",
+          "currency": "EUR"
+        }
+      ],
+      "url": "https://cms-api.byd.com/car/byd/nl/CX007011.json",
+      "image_url": ""
+    },
+    {
+      "brand": "BYD",
+      "model": "BYD SEAL 6 DM-i Touring",
+      "variant": "",
+      "base_price": 39000.0,
+      "currency": "EUR",
+      "market": "NL",
+      "fuel_type": "hybrid",
+      "available_options": [
+        {
+          "brand_specific_name": "Atlantis Blue",
+          "price": 1100.0,
+          "category": "exterior",
+          "code": "baseConfig0141",
+          "currency": "EUR"
+        },
+        {
+          "brand_specific_name": "Sandstone",
+          "price": 1100.0,
+          "category": "exterior",
+          "code": "baseConfig0140",
+          "currency": "EUR"
+        },
+        {
+          "brand_specific_name": "Obsidian Black",
+          "price": 1100.0,
+          "category": "exterior",
+          "code": "baseConfig0148",
+          "currency": "EUR"
+        }
+      ],
+      "url": "https://cms-api.byd.com/car/byd/nl/CX023060.json",
+      "image_url": ""
+    }
+  ],
+  "errors": [],
+  "strategy": {
+    "engine": "beautifulsoup",
+    "selectors": {},
+    "js_triggers": [],
+    "wait_selector": "",
+    "wait_timeout_ms": 30000,
+    "rate_limit_seconds": 3.0,
+    "confidence": 0.95,
+    "notes": "Direct public BYD CMS configuration catalogue: GET cms-api.byd.com/car/byd/{market}/{modelCode}.json; priced choices from skuList colours/interior/wheels. Market: NL."
+  },
+  "duration_seconds": 28.2,
+  "option_summary": []
+}
