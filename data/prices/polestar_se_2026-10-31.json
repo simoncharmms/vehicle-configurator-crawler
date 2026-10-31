@@ -1,0 +1,27 @@
+{
+  "brand": "Polestar",
+  "market": "SE",
+  "currency": "SEK",
+  "timestamp": "2026-10-31T10:32:48.526964+00:00",
+  "vehicle_count": 0,
+  "vehicles": [],
+  "errors": [
+    "Polestar 2: configuration metadata (state/change/partner) missing",
+    "Polestar 3: configuration metadata (state/change/partner) missing",
+    "Polestar 4 Coupé: configuration metadata (state/change/partner) missing",
+    "Polestar 5: configuration metadata (state/change/partner) missing",
+    "No Polestar vehicles returned for market SE"
+  ],
+  "strategy": {
+    "engine": "beautifulsoup",
+    "selectors": {},
+    "js_triggers": [],
+    "wait_selector": "",
+    "wait_timeout_ms": 30000,
+    "rate_limit_seconds": 3.0,
+    "confidence": 0.95,
+    "notes": "Direct public Polestar configuration API: RSC page metadata → POST /car-configurator-back/{market}/{model}/configurator/api/v2/configuration. Market: SE."
+  },
+  "duration_seconds": 19.5,
+  "option_summary": []
+}
