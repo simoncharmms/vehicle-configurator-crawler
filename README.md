@@ -30,6 +30,7 @@ brand-market activation remains gated by verified extraction quality and complia
 - **Dashboard:** https://simoncharmms.github.io/vehicle-configurator-crawler
 - **Update Frequency:** Daily at 6:00 AM CET
 - **Data Policy:** Only real extracted data — no reference or fallback pricing
+- **Dashboard Layout:** Simplified landing tab (scraped prices, option mapping, option price overview, simple time series) + separate prediction tab (beta)
 
 ### Dashboard Snapshot (2026-09-11)
 
@@ -164,10 +165,10 @@ python scripts/validate_crawl_results.py data/prices --date "$(date +%Y-%m-%d)" 
 python scripts/check_compliance_preflight.py --strict
 
 # Run deterministic offline test suite
-pytest tests/ -v -m "not live"
+python -m pytest tests/ -v -m "not live"
 
 # Optional: run live network integration tests
-pytest tests/ -v --run-live -m live
+python -m pytest tests/ -v --run-live -m live
 ```
 
 Snapshots are written as `data/prices/{brand}_{date}.json` for Germany and

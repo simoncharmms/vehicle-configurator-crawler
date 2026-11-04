@@ -44,6 +44,42 @@ header h1 { font-size: 1.8rem; font-weight: 600; }
 
 main { max-width: 1400px; margin: 0 auto; padding: 1.5rem; }
 
+#dashboard-tabs {
+  display: flex;
+  gap: 0.6rem;
+  margin-bottom: 1.25rem;
+}
+
+.dashboard-tab {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--text-dim);
+  padding: 0.55rem 0.85rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.86rem;
+  font-weight: 600;
+}
+
+.dashboard-tab:hover {
+  border-color: var(--accent);
+  color: var(--text);
+}
+
+.dashboard-tab.active {
+  color: var(--text);
+  border-color: var(--accent);
+  background: rgba(79, 143, 247, 0.14);
+}
+
+body[data-dashboard-tab="overview"] .intelligence-only {
+  display: none !important;
+}
+
+body[data-dashboard-tab="intelligence"] .overview-only {
+  display: none !important;
+}
+
 /* --- Controls --- */
 
 #controls {
@@ -167,6 +203,37 @@ select:focus { outline: none; border-color: var(--accent); }
   padding: 1.5rem;
   margin-bottom: 2rem;
   overflow-x: auto;
+}
+
+#option-mapping {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1.25rem;
+  margin-bottom: 2rem;
+}
+
+#option-mapping h2 {
+  font-size: 1.05rem;
+  margin-bottom: 0.45rem;
+  color: var(--text-dim);
+}
+
+.mapping-copy {
+  color: var(--text);
+  font-size: 0.9rem;
+  line-height: 1.5;
+  margin-bottom: 0.65rem;
+}
+
+.mapping-link {
+  color: var(--accent);
+  text-decoration: none;
+  font-size: 0.86rem;
+}
+
+.mapping-link:hover {
+  text-decoration: underline;
 }
 #option-comparison h2 {
   font-size: 1.1rem;
@@ -519,6 +586,15 @@ footer p + p { margin-top: 0.25rem; }
 }
 
 @media (max-width: 600px) {
+  #dashboard-tabs {
+    flex-direction: column;
+  }
+
+  .dashboard-tab {
+    width: 100%;
+    text-align: left;
+  }
+
   #controls { flex-direction: column; }
   #stats { grid-template-columns: repeat(2, 1fr); }
   #vehicles-container { grid-template-columns: 1fr; }

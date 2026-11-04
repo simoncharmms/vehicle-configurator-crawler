@@ -20,6 +20,7 @@ let availableMarkets = [];  // [{ code, name, currency }]
 let currentMarket = 'DE';
 let currentCurrency = 'EUR';
 let comparableModelMap = new Map();
+let activeDashboardTab = 'overview';
 
 const BRAND_COLORS = {
   'mercedes-benz': '#00adef',
@@ -50,6 +51,8 @@ const BRAND_ORDER = [
 // ---------- Initialization ----------
 
 document.addEventListener('DOMContentLoaded', async () => {
+  setupDashboardTabs();
+
   const ok = await loadIndex();
   if (ok) {
     populateMarketSelect();
@@ -63,11 +66,12 @@ document.addEventListener('DOMContentLoaded', async () => {
   updateStats();
   renderOptionTable();
   renderChart();
-  renderBarChart();
-  renderRangeChart();
-  renderComparableModels();
   renderVehicles();
-  window.OptionIntelligence?.filtersChanged();
+
+  if (activeDashboardTab === 'intelligence') {
+    renderIntelligencePanels();
+    window.OptionIntelligence?.filtersChanged();
+  }
 
 });
 
@@ -258,10 +262,44 @@ function onFilterChange() {
   updateStats();
   renderOptionTable();
   renderChart();
+  renderVehicles();
+
+  if (activeDashboardTab === 'intelligence') {
+    renderIntelligencePanels();
+  }
+}
+
+function setupDashboardTabs() {
+  const buttons = [...document.querySelectorAll('.dashboard-tab')];
+  if (!buttons.length) return;
+
+  const setTab = tab => {
+    activeDashboardTab = tab === 'intelligence' ? 'intelligence' : 'overview';
+    document.body.dataset.dashboardTab = activeDashboardTab;
+
+    for (const button of buttons) {
+      const isActive = button.dataset.tab === activeDashboardTab;
+      button.classList.toggle('active', isActive);
+      button.setAttribute('aria-pressed', String(isActive));
+    }
+
+    if (activeDashboardTab === 'intelligence') {
+      renderIntelligencePanels();
+      window.OptionIntelligence?.filtersChanged();
+    }
+  };
+
+  for (const button of buttons) {
+    button.addEventListener('click', () => setTab(button.dataset.tab || 'overview'));
+  }
+
+  setTab(activeDashboardTab);
+}
+
+function renderIntelligencePanels() {
   renderBarChart();
   renderRangeChart();
   renderComparableModels();
-  renderVehicles();
 }
 
 // ---------- Stats ----------

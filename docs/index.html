@@ -14,7 +14,12 @@
   </header>
 
   <main>
-    <section id="controls">
+    <section id="dashboard-tabs" aria-label="Dashboard Views">
+      <button type="button" class="dashboard-tab active" data-tab="overview" aria-pressed="true">Price Overview</button>
+      <button type="button" class="dashboard-tab" data-tab="intelligence" aria-pressed="false">Take-Rate Prediction (Beta)</button>
+    </section>
+
+    <section id="controls" class="overview-only">
       <div class="filter-group">
         <label for="market-filter">Country:</label>
         <select id="market-filter" class="market-select" aria-label="Country">
@@ -37,7 +42,7 @@
       </div>
     </section>
 
-    <section id="stats">
+    <section id="stats" class="overview-only">
       <div class="stat-card">
         <span class="stat-value" id="total-brands">-</span>
         <span class="stat-label">Brands</span>
@@ -56,7 +61,7 @@
       </div>
     </section>
 
-    <section id="option-intelligence" aria-labelledby="intelligence-heading">
+    <section id="option-intelligence" class="intelligence-only" aria-labelledby="intelligence-heading">
       <div class="intelligence-heading">
         <h2 id="intelligence-heading">Option Intelligence</h2>
         <strong id="intelligence-source-label" class="source-badge">Synthetic demand</strong>
@@ -71,7 +76,7 @@
         <button id="intelligence-retry" type="button">Refresh intelligence</button>
       </div>
       <p id="intelligence-status" role="status" aria-live="polite">Waiting for market index.</p>
-      <p id="intelligence-source-caveat" class="intelligence-caveat">Synthetic exposures and selections are simulated, not actual sales.</p>
+      <p id="intelligence-source-caveat" class="intelligence-caveat">Synthetic exposures and selections are simulated, not actual sales. Forecast model behavior is under active review and can appear flat.</p>
       <div id="intelligence-content" hidden>
         <p id="intelligence-totals" class="intelligence-caveat"></p>
         <div class="intelligence-controls">
@@ -138,8 +143,15 @@
       </div>
     </section>
 
+    <section id="option-mapping" class="overview-only">
+      <h2>Option Mapping</h2>
+      <p class="section-subtitle">Standardized cross-brand option keys power the comparison and trend views.</p>
+      <p class="mapping-copy">Brand-specific names are normalized into shared categories (for example ADAS, paint upgrades, upholstery, wheels, and performance packages).</p>
+      <p><a class="mapping-link" href="OPTION_MAPPINGS.md" target="_blank" rel="noopener">Open the full option mapping reference</a></p>
+    </section>
+
     <!-- Option Price Comparison (primary view) -->
-    <section id="option-comparison">
+    <section id="option-comparison" class="overview-only">
       <h2>Option Price Comparison</h2>
       <p class="section-subtitle" id="option-source-label">Cross-brand pricing for common vehicle options</p>
       <div id="option-table-container">
@@ -161,30 +173,30 @@
     </section>
 
     <!-- Option Price Time Series -->
-    <section id="chart-section">
+    <section id="chart-section" class="overview-only">
       <h2>Option Price Trend</h2>
       <canvas id="price-chart"></canvas>
     </section>
 
-    <section id="bar-chart-section">
+    <section id="bar-chart-section" class="intelligence-only">
       <h2 id="bar-chart-title">Focus Brand Option Comparison</h2>
       <canvas id="option-price-bar-chart"></canvas>
     </section>
 
-    <section id="range-chart-section">
+    <section id="range-chart-section" class="intelligence-only">
       <h2>Option Price Range Distribution</h2>
       <p class="section-subtitle">Min/avg/max range across filtered cross-brand options</p>
       <canvas id="option-price-range-chart"></canvas>
     </section>
 
-    <section id="comparable-models-section">
+    <section id="comparable-models-section" class="intelligence-only">
       <h2>Comparable Models</h2>
       <p class="section-subtitle" id="comparable-source-label">Closest cross-brand reference based on shared options and list-price proximity</p>
       <div id="comparable-models-container"></div>
     </section>
 
     <!-- Vehicle List (collapsed by default) -->
-    <section id="vehicle-list">
+    <section id="vehicle-list" class="overview-only">
       <details>
         <summary><h2 style="display:inline">Vehicle Models</h2></summary>
         <div id="vehicles-container"></div>

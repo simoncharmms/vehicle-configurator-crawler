@@ -42,11 +42,12 @@ jobs:
       - name: Install dependencies
         run: |
           pip install -r requirements.txt
+          python -m pip install pytest
           playwright install chromium
           playwright install-deps chromium
 
       - name: Run test suite
-        run: pytest tests/ -v -m "not live"
+        run: python -m pytest tests/ -v -m "not live"
 
       - name: Run compliance preflight
         run: python scripts/check_compliance_preflight.py --strict
