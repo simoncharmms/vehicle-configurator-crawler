@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "generator_version": "1",
+  "seed": 42,
+  "min_exposure": 20,
+  "max_exposure": 80,
+  "baseline_logit": -1.0,
+  "affinity_sd": 0.6,
+  "log_price_effect": -1.5,
+  "lag_change_effect": -0.3,
+  "shock_autocorrelation": 0.7,
+  "shock_sd": 0.12,
+  "sensitivity_prior_sd": 1.0
+}

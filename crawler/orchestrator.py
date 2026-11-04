@@ -16,6 +16,7 @@ from crawler.base import (
     MARKET_NAMES,
     BrandCrawler,
     CrawlResult,
+    DataValidationError,
     OptionData,
     currency_for_market,
     snapshot_key,
@@ -37,10 +38,19 @@ import crawler.brands.byd       # noqa: F401
 import crawler.brands.xpeng     # noqa: F401
 import crawler.brands.zeekr     # noqa: F401
 import crawler.brands.polestar  # noqa: F401
+import crawler.brands.volkswagen  # noqa: F401
+import crawler.brands.range_rover  # noqa: F401
 
 logger = logging.getLogger(__name__)
 
 DEFAULT_DATA_DIR = Path(__file__).parent.parent / "data" / "prices"
+FOCUS_BRANDS: tuple[str, ...] = (
+    "Audi",
+    "Mercedes-Benz",
+    "Volkswagen",
+    "Range Rover",
+)
+COMPARABLE_MIN_SCORE = 0.2
 
 
 async def crawl_brand(crawler: BrandCrawler) -> CrawlResult:
@@ -121,10 +131,45 @@ async def crawl_all(
         f"{[f'{c.brand}/{c.market}' for c in crawlers]}"
     )
 
+    def normalize_result_currency(result: CrawlResult) -> None:
+        market = (result.market or DEFAULT_MARKET).upper()
+        expected_currency = currency_for_market(market)
+        result.market = market
+
+        for vehicle in result.vehicles:
+            vehicle.market = market
+            if vehicle.currency != expected_currency:
+                if vehicle.currency:
+                    logger.debug(
+                        "Normalizing %s [%s] vehicle currency %s -> %s",
+                        result.brand,
+                        market,
+                        vehicle.currency,
+                        expected_currency,
+                    )
+                vehicle.currency = expected_currency
+
+            for option in vehicle.available_options:
+                if option.currency != vehicle.currency:
+                    option.currency = vehicle.currency
+
     results: list[CrawlResult] = []
     if sequential:
         for crawler in crawlers:
             result = await crawl_brand(crawler)
+            normalize_result_currency(result)
+            try:
+                result.validate(raise_on_error=True)
+            except DataValidationError as e:
+                logger.error(
+                    "Validation failed for %s [%s]: %s",
+                    result.brand,
+                    result.market,
+                    "; ".join(e.errors),
+                )
+                raise RuntimeError(
+                    f"Refusing to write invalid crawl result for {result.brand} [{result.market}]"
+                ) from e
             results.append(result)
             filepath = result.save(data_dir)
             logger.info(f"  Saved: {filepath}")
@@ -132,6 +177,19 @@ async def crawl_all(
         tasks = [crawl_brand(c) for c in crawlers]
         results = await asyncio.gather(*tasks)
         for result in results:
+            normalize_result_currency(result)
+            try:
+                result.validate(raise_on_error=True)
+            except DataValidationError as e:
+                logger.error(
+                    "Validation failed for %s [%s]: %s",
+                    result.brand,
+                    result.market,
+                    "; ".join(e.errors),
+                )
+                raise RuntimeError(
+                    f"Refusing to write invalid crawl result for {result.brand} [{result.market}]"
+                ) from e
             filepath = result.save(data_dir)
             logger.info(f"  Saved: {filepath}")
 
@@ -164,6 +222,132 @@ async def crawl_all(
 # ------------------------------------------------------------------
 # Index & option summary
 # ------------------------------------------------------------------
+
+
+def _vehicle_identity(brand: str, model: str, variant: str) -> str:
+    return f"{brand}|{model}|{variant}"
+
+
+def _option_set_for_vehicle(vehicle) -> set[str]:
+    return {
+        option.standardized_name
+        for option in vehicle.available_options
+        if option.standardized_name
+    }
+
+
+def _compute_comparable_models(results: list[CrawlResult]) -> dict[str, Any]:
+    """Build per-vehicle comparable-model references from live crawl data."""
+    candidates: list[dict[str, Any]] = []
+    for result in results:
+        for vehicle in result.vehicles:
+            if not vehicle.base_price or vehicle.base_price <= 0:
+                continue
+            option_set = _option_set_for_vehicle(vehicle)
+            if not option_set:
+                continue
+            candidates.append(
+                {
+                    "brand": result.brand,
+                    "model": vehicle.model,
+                    "variant": vehicle.variant,
+                    "base_price": vehicle.base_price,
+                    "currency": vehicle.currency,
+                    "vehicle_key": _vehicle_identity(result.brand, vehicle.model, vehicle.variant),
+                    "options": option_set,
+                }
+            )
+
+    rows: list[dict[str, Any]] = []
+    for source in candidates:
+        best: dict[str, Any] | None = None
+
+        for target in candidates:
+            if target["vehicle_key"] == source["vehicle_key"]:
+                continue
+
+            # Prefer cross-brand comparables; same-brand fallback is allowed only
+            # when no cross-brand candidate reaches the minimum score.
+            same_brand = target["brand"] == source["brand"]
+            intersection = source["options"] & target["options"]
+            if not intersection:
+                continue
+
+            union = source["options"] | target["options"]
+            overlap = len(intersection) / len(union)
+            source_coverage = len(intersection) / len(source["options"])
+            price_delta = target["base_price"] - source["base_price"]
+            price_similarity = 1.0 - (
+                abs(price_delta) / max(source["base_price"], target["base_price"])
+            )
+            price_similarity = max(0.0, price_similarity)
+            focus_bonus = 0.05 if target["brand"] in FOCUS_BRANDS else 0.0
+            score = (0.55 * overlap) + (0.30 * source_coverage) + (0.15 * price_similarity) + focus_bonus
+            if same_brand:
+                score -= 0.1
+
+            current = {
+                "score": round(score, 4),
+                "shared": len(intersection),
+                "price_delta_abs": abs(price_delta),
+                "same_brand": same_brand,
+                "target": target,
+                "shared_options": sorted(intersection)[:20],
+            }
+
+            if best is None:
+                best = current
+                continue
+
+            current_rank = (
+                current["score"],
+                current["shared"],
+                not current["same_brand"],
+                -current["price_delta_abs"],
+                current["target"]["vehicle_key"],
+            )
+            best_rank = (
+                best["score"],
+                best["shared"],
+                not best["same_brand"],
+                -best["price_delta_abs"],
+                best["target"]["vehicle_key"],
+            )
+            if current_rank > best_rank:
+                best = current
+
+        if not best or best["score"] < COMPARABLE_MIN_SCORE:
+            continue
+
+        target = best["target"]
+        price_delta = target["base_price"] - source["base_price"]
+        rows.append(
+            {
+                "vehicle_key": source["vehicle_key"],
+                "brand": source["brand"],
+                "model": source["model"],
+                "variant": source["variant"],
+                "base_price": source["base_price"],
+                "currency": source["currency"],
+                "reference_vehicle_key": target["vehicle_key"],
+                "reference_brand": target["brand"],
+                "reference_model": target["model"],
+                "reference_variant": target["variant"],
+                "reference_price": target["base_price"],
+                "score": best["score"],
+                "shared_option_count": best["shared"],
+                "shared_options": best["shared_options"],
+                "price_delta": round(price_delta, 2),
+                "price_delta_pct": round((price_delta / source["base_price"]) * 100, 2),
+            }
+        )
+
+    rows.sort(key=lambda row: row["vehicle_key"])
+    return {
+        "generated_at": datetime.now().isoformat(),
+        "focus_brands": list(FOCUS_BRANDS),
+        "vehicles": rows,
+    }
 
 def _write_index(results: list[CrawlResult], data_dir: Path) -> None:
     """Write a summary index.json including cross-brand option summary."""
@@ -249,9 +433,18 @@ def _write_index(results: list[CrawlResult], data_dir: Path) -> None:
         summaries[market] = _compute_option_summary(market_results)
     index["option_summary_by_market"] = summaries
 
+    comparable_by_market = index.get("comparable_models_by_market") or {}
+    for market, market_results in by_market.items():
+        comparable_by_market[market] = _compute_comparable_models(market_results)
+    index["comparable_models_by_market"] = comparable_by_market
+
     # Legacy key = German summary (dashboard default view)
     if DEFAULT_MARKET in summaries:
         index["option_summary"] = summaries[DEFAULT_MARKET]
+    if DEFAULT_MARKET in comparable_by_market:
+        index["comparable_models"] = comparable_by_market[DEFAULT_MARKET]
+
+    index["focus_brands"] = list(FOCUS_BRANDS)
 
     index["available_markets"] = [
         {

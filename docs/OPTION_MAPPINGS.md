@@ -26,6 +26,24 @@ Each option has a **standardized key** (used in data/code) and one or more
 | BMW | M Sportfahrwerk |
 | Porsche | PASM (Porsche Active Suspension Management) |
 
+### Sport / Performance Package (`sport_package`)
+
+| Brand | Name |
+|-------|------|
+| Mercedes-Benz | AMG Line / AMG Sport Package |
+| Audi | S line |
+| Volkswagen | R-Line |
+| Range Rover | SV Dynamic |
+
+### Performance Brakes (`performance_brakes`)
+
+| Brand | Name |
+|-------|------|
+| Mercedes-Benz | AMG High-Performance Bremsanlage |
+| Audi | RS brakes |
+| Porsche | PCCB |
+| Volkswagen | R Performance brakes |
+
 ---
 
 ## Comfort
@@ -61,6 +79,9 @@ Each option has a **standardized key** (used in data/code) and one or more
 
 ## Interior
 
+Leather and premium seat-material options are categorized as **Upholstery** in
+dashboard filters.
+
 ### Leather Seats (`leather_seats`)
 
 | Brand | Name |
@@ -78,6 +99,16 @@ Each option has a **standardized key** (used in data/code) and one or more
 | Audi | Ambientebeleuchtung |
 | BMW | Ambient Lighting |
 | Porsche | Ambient Lighting |
+
+### Premium Upholstery (`premium_upholstery`)
+
+| Brand | Name |
+|-------|------|
+| Mercedes-Benz | Nappaleder |
+| Audi | Valcona Leather |
+| BMW | Extended Leather |
+| Volkswagen | ArtVelours |
+| Range Rover | Windsor Leather |
 
 ---
 
@@ -104,6 +135,10 @@ Each option has a **standardized key** (used in data/code) and one or more
 ---
 
 ## Safety
+
+Driver-assistance options such as adaptive cruise control, lane assist,
+blind-spot monitoring, parking assist and emergency braking are grouped under
+the **ADAS & Driver Assistance** category in the dashboard filters.
 
 ### Adaptive Cruise Control (`adaptive_cruise_control`)
 
@@ -170,6 +205,31 @@ Each option has a **standardized key** (used in data/code) and one or more
 | Audi | Panorama-Glasdach |
 | BMW | Panoramadach |
 | Porsche | Panoramadach |
+
+### Paint Upgrades (`metallic_paint`, `matte_paint`)
+
+| Brand | Name |
+|-------|------|
+| Mercedes-Benz | Metallic-Lackierung / MANUFAKTUR magno |
+| Audi | Metalliclack / Matte Paint |
+| BMW | Metallic Paint / Frozen Paint |
+| Volkswagen | Metallic |
+| Range Rover | Premium Metallic / Satin Finish |
+
+## Wheels
+
+### Lightweight Wheels (`lightweight_wheels`)
+
+| Brand | Name |
+|-------|------|
+| Mercedes-Benz | AMG Forged Wheels |
+| Audi | RS Forged Wheels |
+| Volkswagen | R Performance Wheels |
+| Range Rover | SV Performance Wheels |
+
+### Wheel Size Upgrade (`wheel_size_upgrade`)
+
+Includes 19" / 20" / 21" / 22" wheel-size naming variants.
 
 ---
 

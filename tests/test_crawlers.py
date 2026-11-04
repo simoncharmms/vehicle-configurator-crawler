@@ -50,6 +50,8 @@ import crawler.brands.mercedes  # noqa: F401
 import crawler.brands.audi      # noqa: F401
 import crawler.brands.porsche   # noqa: F401
 import crawler.brands.lexus     # noqa: F401
+import crawler.brands.volkswagen  # noqa: F401
+import crawler.brands.range_rover  # noqa: F401
 
 
 class TestBaseEngine:
@@ -143,10 +145,14 @@ class TestOptionMappings:
         """Categories for newly added options."""
         assert get_category("manual_transmission") == "drivetrain"
         assert get_category("dual_clutch_transmission") == "drivetrain"
-        assert get_category("blind_spot_monitor") == "safety"
+        assert get_category("blind_spot_monitor") == "adas"
+        assert get_category("adaptive_cruise_control") == "adas"
         assert get_category("active_noise_cancellation") == "comfort"
         assert get_category("climate_control") == "climate"
         assert get_category("alloy_wheels") == "wheels"
+        assert get_category("leather_seats") == "upholstery"
+        assert get_category("sport_package") == "performance_packages"
+        assert get_category("metallic_paint") == "paint_upgrades"
 
     def test_get_brand_name(self):
         assert get_brand_name("allrad", "Mercedes-Benz") == "4MATIC"
@@ -365,6 +371,8 @@ class TestBrandRegistry:
         assert "mercedes-benz" in brands
         assert "porsche" in brands
         assert "lexus" in brands
+        assert "volkswagen" in brands
+        assert "range rover" in brands
 
     def test_get_brand(self):
         crawler = BrandRegistry.get("audi")
@@ -769,7 +777,7 @@ class TestLexusFeatureToOption:
         opt = _feature_to_option("Lexus Intelligent Park Assist: Parksensoren vorne und hinten", "Lexus")
         assert opt is not None
         assert opt.standardized_name == "parking_assist"
-        assert opt.category == "safety"
+        assert opt.category == "adas"
 
     def test_unmapped_automotive_feature(self):
         opt = _feature_to_option("Regensensor automatisch", "Lexus")

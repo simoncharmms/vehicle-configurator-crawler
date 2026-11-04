@@ -13,23 +13,39 @@ let allData = {};           // { brandKey: { name, snapshots: { date: [CrawlResu
 let optionSummary = null;   // from index.json → option_summary(_by_market)
 let chartInstance = null;
 let barChartInstance = null;
+let rangeChartInstance = null;
 let comparisonRows = [];
 let indexData = null;       // raw index.json
 let availableMarkets = [];  // [{ code, name, currency }]
 let currentMarket = 'DE';
 let currentCurrency = 'EUR';
+let comparableModelMap = new Map();
 
 const BRAND_COLORS = {
   'mercedes-benz': '#00adef',
   'mercedesbenz':  '#00adef',
   'mercedes_benz': '#00adef',
   'audi':          '#bb0a30',
+  'volkswagen':    '#001e50',
+  'vw':            '#001e50',
+  'range-rover':   '#3f5d42',
+  'rangerover':    '#3f5d42',
   'porsche':       '#c0a062',
   'bmw':           '#1c69d4',
   'tesla':         '#cc0000',
 };
 
-const BRAND_ORDER = ['Mercedes-Benz', 'Audi', 'Porsche', 'BMW'];
+const FOCUS_BRANDS = ['Mercedes-Benz', 'Audi', 'Volkswagen', 'Range Rover'];
+const BRAND_ORDER = [
+  ...FOCUS_BRANDS,
+  'Porsche',
+  'BMW',
+  'Lexus',
+  'Polestar',
+  'BYD',
+  'XPeng',
+  'Zeekr',
+];
 
 // ---------- Initialization ----------
 
@@ -37,6 +53,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   const ok = await loadIndex();
   if (ok) {
     populateMarketSelect();
+    window.OptionIntelligence?.initialize();
     await loadMarketData(currentMarket);
   }
   populateFilters();
@@ -47,7 +64,10 @@ document.addEventListener('DOMContentLoaded', async () => {
   renderOptionTable();
   renderChart();
   renderBarChart();
+  renderRangeChart();
+  renderComparableModels();
   renderVehicles();
+  window.OptionIntelligence?.filtersChanged();
 
 });
 
@@ -101,14 +121,29 @@ async function loadMarketData(market) {
       };
     }
 
+    const comparableRows = indexData?.comparable_models_by_market?.[market]?.vehicles || [];
+    comparableModelMap = new Map(
+      comparableRows.map(row => [row.vehicle_key, row]),
+    );
+
+    window.OptionIntelligence?.marketChanged();
+
     for (const [brandKey, brandInfo] of Object.entries(brandsForMarket(market))) {
       allData[brandKey] = { name: brandInfo.name, snapshots: {} };
 
       for (const snap of brandInfo.snapshots || []) {
         try {
-          const resp = await fetch(`${DATA_BASE}/${snap.file}`);
+          const compressed = indexData?.snapshot_encoding === 'gzip';
+          const resp = await fetch(`${DATA_BASE}/${snap.file}${compressed ? '.gz' : ''}`);
           if (resp.ok) {
-            let data = await resp.json();
+            let data;
+            if (compressed) {
+              const bytes = new Uint8Array(await resp.arrayBuffer());
+              const stream = new Blob([bytes]).stream().pipeThrough(new DecompressionStream('gzip'));
+              data = JSON.parse(await new Response(stream).text());
+            } else {
+              data = await resp.json();
+            }
             if (!Array.isArray(data)) data = [data];
             allData[brandKey].snapshots[snap.date] = data.map(snapshot => ({
               ...snapshot,
@@ -189,6 +224,8 @@ function populateFilters() {
     }
   }
 
+  brands.sort((left, right) => compareBrandPriority(left.label, right.label));
+
   populateCheckboxOptions('brand-filter', brands);
   populateCheckboxOptions(
     'category-filter',
@@ -217,10 +254,13 @@ function getFilteredVehicles() {
 }
 
 function onFilterChange() {
+  window.OptionIntelligence?.filtersChanged();
   updateStats();
   renderOptionTable();
   renderChart();
   renderBarChart();
+  renderRangeChart();
+  renderComparableModels();
   renderVehicles();
 }
 
@@ -232,17 +272,17 @@ function updateStats() {
 
   // Count unique options
   const optionNames = new Set();
-  let optionPriceSum = 0;
-  let optionPriceCount = 0;
+  let listPriceSum = 0;
+  let listPriceCount = 0;
 
   for (const v of vehicles) {
+    if (v.base_price && v.base_price > 0) {
+      listPriceSum += v.base_price;
+      listPriceCount++;
+    }
     for (const opt of (v.available_options || [])) {
       const key = opt.standardized_name || opt.brand_specific_name;
       if (key) optionNames.add(key);
-      if (opt.price && opt.price > 0) {
-        optionPriceSum += opt.price;
-        optionPriceCount++;
-      }
     }
   }
 
@@ -253,16 +293,14 @@ function updateStats() {
     }
   }
 
-  const avgOptPrice = optionPriceCount
-    ? optionPriceSum / optionPriceCount
-    : (optionSummary && optionSummary.options
-      ? avgFromSummary(optionSummary.options)
-      : 0);
+  const avgListPrice = listPriceCount
+    ? listPriceSum / listPriceCount
+    : 0;
 
   document.getElementById('total-brands').textContent = brands.size || Object.keys(allData).length;
   document.getElementById('total-options').textContent = optionNames.size || '-';
-  document.getElementById('avg-option-price').textContent = avgOptPrice
-    ? formatMoney(avgOptPrice)
+  document.getElementById('avg-option-price').textContent = avgListPrice
+    ? formatMoney(avgListPrice)
     : '-';
 
   const dates = vehicles.map(v => v.date).sort();
@@ -287,59 +325,35 @@ function isExcludedOption(option) {
 }
 
 function buildComparisonRows() {
-  const brand = allData['mercedes-benz'];
-  if (!brand || !optionSummary?.options) return;
-
-  const source = Object.entries(brand.snapshots || {})
-    .sort(([dateA], [dateB]) => dateB.localeCompare(dateA))
-    .map(([, snapshots]) => snapshots)
-    .flat()
-    .find(snapshot => (snapshot.vehicles || []).some(vehicle =>
-      (vehicle.available_options || []).some(option => option.price > 0)
-    ));
-  if (!source) return;
-
-  const mercedesOptions = new Map();
-  for (const vehicle of source.vehicles || []) {
-    for (const option of vehicle.available_options || []) {
-      if (!option.price || option.price <= 0 || !option.standardized_name) continue;
-      const entry = mercedesOptions.get(option.standardized_name) || {
-        names: [],
-        models: new Set(),
-        prices: [],
-      };
-      if (option.brand_specific_name && !entry.names.includes(option.brand_specific_name)) {
-        entry.names.push(option.brand_specific_name);
-      }
-      entry.models.add(vehicle.model);
-      entry.prices.push(option.price);
-      mercedesOptions.set(option.standardized_name, entry);
-    }
+  if (!optionSummary?.options) {
+    comparisonRows = [];
+    return;
   }
 
-  comparisonRows = optionSummary.options.map(row => {
-    const porsche = row.brands?.Porsche;
-    const mercedes = mercedesOptions.get(row.standardized_name);
-    if (!porsche?.avg_price || !mercedes) return null;
+  comparisonRows = optionSummary.options
+    .map(row => {
+      const pricedBrands = Object.entries(row.brands || {})
+        .filter(([, info]) => info && info.avg_price != null)
+        .map(([name, info]) => [name, info]);
+      if (pricedBrands.length < 2) return null;
 
-    const mercedesInfo = {
-      name: mercedes.names[0] || row.standardized_name,
-      avg_price: mercedes.prices.reduce((sum, price) => sum + price, 0) / mercedes.prices.length,
-      min_price: Math.min(...mercedes.prices),
-      max_price: Math.max(...mercedes.prices),
-      model_count: mercedes.models.size,
-    };
-    const prices = [mercedesInfo.avg_price, porsche.avg_price];
-    return {
-      ...row,
-      brands: { 'Mercedes-Benz': mercedesInfo, Porsche: porsche },
-      cross_brand_count: 2,
-      total_model_count: mercedesInfo.model_count + porsche.model_count,
-      overall_avg_price: prices.reduce((sum, price) => sum + price, 0) / prices.length,
-      overall_min_price: Math.min(...prices),
-      overall_max_price: Math.max(...prices),
-    };
-  }).filter(Boolean);
+      const brandMap = Object.fromEntries(pricedBrands);
+      const focusBrandCount = pricedBrands.filter(([name]) => FOCUS_BRANDS.includes(name)).length;
+
+      return {
+        ...row,
+        brands: brandMap,
+        cross_brand_count: pricedBrands.length,
+        focus_brand_count: focusBrandCount,
+      };
+    })
+    .filter(Boolean)
+    .sort((left, right) => {
+      if (right.focus_brand_count !== left.focus_brand_count) {
+        return right.focus_brand_count - left.focus_brand_count;
+      }
+      return (right.total_model_count || 0) - (left.total_model_count || 0);
+    });
 }
 
 // ---------- Option Comparison Table ----------
@@ -462,10 +476,7 @@ function renderChart() {
   const displayDates = dates.map(formatDate);
 
   const datasets = brands.map(brand => {
-    const brandKey = Object.keys(BRAND_COLORS).find(k =>
-      brand.toLowerCase().replace(/[- ]/g, '').includes(k.replace(/[_-]/g, ''))
-    );
-    const color = BRAND_COLORS[brandKey] || '#888';
+    const color = colorForBrand(brand);
 
     return {
       label: brand,
@@ -534,13 +545,28 @@ function renderBarChart() {
     (!categoryFilter.length || categoryFilter.includes(row.category_label)) &&
     (!selectedBrandNames.size || [...selectedBrandNames].some(name => row.brands[name]))
   );
-  const brands = ['Mercedes-Benz', 'Porsche'].filter(brand =>
-    !selectedBrandNames.size || selectedBrandNames.has(brand)
-  );
+  const brandScores = new Map();
+  for (const row of rows) {
+    for (const [brand, info] of Object.entries(row.brands || {})) {
+      if (info?.avg_price == null) continue;
+      if (selectedBrandNames.size && !selectedBrandNames.has(brand)) continue;
+      const prev = brandScores.get(brand) || 0;
+      brandScores.set(brand, prev + 1);
+    }
+  }
+
+  const brands = [...brandScores.keys()]
+    .sort((left, right) => {
+      const priority = compareBrandPriority(left, right);
+      if (priority !== 0) return priority;
+      return (brandScores.get(right) || 0) - (brandScores.get(left) || 0);
+    })
+    .slice(0, 4);
+
   if (!rows.length || !brands.length) return;
 
   const datasets = brands.map(brand => {
-    const color = brand === 'Mercedes-Benz' ? BRAND_COLORS['mercedes-benz'] : BRAND_COLORS.porsche;
+    const color = colorForBrand(brand);
     return {
       label: brand,
       data: rows.map(row => row.brands[brand]?.avg_price ?? null),
@@ -584,6 +610,180 @@ function renderBarChart() {
       },
     },
   });
+}
+
+function filteredComparisonRows() {
+  const categoryFilter = getSelectedValues('category-filter');
+  const selectedBrandNames = new Set(getSelectedValues('brand-filter').map(key => allData[key]?.name));
+  return comparisonRows.filter(row =>
+    (!categoryFilter.length || categoryFilter.includes(row.category_label)) &&
+    (!selectedBrandNames.size || [...selectedBrandNames].some(name => row.brands[name]))
+  );
+}
+
+function renderRangeChart() {
+  const canvas = document.getElementById('option-price-range-chart');
+  if (!canvas) return;
+  if (rangeChartInstance) rangeChartInstance.destroy();
+
+  const rows = filteredComparisonRows()
+    .filter(row => row.overall_min_price != null && row.overall_max_price != null && row.overall_avg_price != null)
+    .slice(0, 20);
+  if (!rows.length) return;
+
+  const labels = rows.map(row => row.display_name || row.standardized_name);
+  const ranges = rows.map(row => [row.overall_min_price, row.overall_max_price]);
+  const avgPoints = rows.map((row, idx) => ({ x: row.overall_avg_price, y: labels[idx] }));
+
+  rangeChartInstance = new Chart(canvas.getContext('2d'), {
+    data: {
+      labels,
+      datasets: [
+        {
+          type: 'bar',
+          label: 'Price range',
+          data: ranges,
+          backgroundColor: 'rgba(79, 143, 247, 0.22)',
+          borderColor: 'rgba(79, 143, 247, 0.9)',
+          borderWidth: 1,
+          borderRadius: 3,
+        },
+        {
+          type: 'scatter',
+          label: 'Average list price',
+          data: avgPoints,
+          pointRadius: 4,
+          pointHoverRadius: 5,
+          pointBackgroundColor: '#ffb74d',
+          pointBorderColor: '#ffb74d',
+          showLine: false,
+        },
+      ],
+    },
+    options: {
+      responsive: true,
+      indexAxis: 'y',
+      interaction: { mode: 'index', intersect: false },
+      plugins: {
+        legend: {
+          position: 'bottom',
+          labels: { color: '#8b8fa3', font: { size: 11 }, boxWidth: 12 },
+        },
+        tooltip: {
+          callbacks: {
+            label: ctx => {
+              if (ctx.dataset.type === 'bar') {
+                const values = ctx.raw || [];
+                if (!Array.isArray(values) || values.length !== 2) return 'Price range: —';
+                return `Price range: ${formatMoney(values[0])} - ${formatMoney(values[1])}`;
+              }
+              return `Average list price: ${formatMoney(ctx.raw?.x)}`;
+            },
+          },
+        },
+      },
+      scales: {
+        x: {
+          ticks: { color: '#8b8fa3', callback: value => formatMoney(value) },
+          grid: { color: '#2a2d3a' },
+          title: { display: true, text: `List price (${currentCurrency})`, color: '#8b8fa3' },
+        },
+        y: {
+          ticks: { color: '#8b8fa3', font: { size: 11 } },
+          grid: { color: '#2a2d3a' },
+        },
+      },
+    },
+  });
+}
+
+function categoryLabelForOptionKey(optionKey) {
+  return optionSummary?.options?.find(row => row.standardized_name === optionKey)?.category_label || '';
+}
+
+function optionLabel(optionKey) {
+  return optionSummary?.options?.find(row => row.standardized_name === optionKey)?.display_name
+    || optionKey.replaceAll('_', ' ');
+}
+
+function renderComparableModels() {
+  const container = document.getElementById('comparable-models-container');
+  if (!container) return;
+
+  const selectedCategories = getSelectedValues('category-filter');
+  const vehicles = getFilteredVehicles();
+  const latest = {};
+  for (const vehicle of vehicles) {
+    const key = `${vehicle.brandKey}|${vehicle.model}|${vehicle.variant || ''}`;
+    if (!latest[key] || vehicle.date > latest[key].date) {
+      latest[key] = vehicle;
+    }
+  }
+
+  const rows = Object.values(latest)
+    .map(vehicle => ({ vehicle, comparable: comparableModelMap.get(vehicleComparableKey(vehicle)) }))
+    .filter(row => row.comparable)
+    .filter(row => {
+      if (!selectedCategories.length) return true;
+      return (row.comparable.shared_options || []).some(optionKey => {
+        const category = categoryLabelForOptionKey(optionKey);
+        return category && selectedCategories.includes(category);
+      });
+    })
+    .sort((left, right) => {
+      const priority = compareBrandPriority(
+        left.vehicle.brandName || left.vehicle.brand,
+        right.vehicle.brandName || right.vehicle.brand,
+      );
+      if (priority !== 0) return priority;
+      return (right.comparable.score || 0) - (left.comparable.score || 0);
+    })
+    .slice(0, 24);
+
+  if (!rows.length) {
+    container.innerHTML = '<div class="no-data"><p>No comparable model pairs match the current filters.</p></div>';
+    return;
+  }
+
+  container.innerHTML = `<div class="comparable-grid">${rows.map(row => {
+    const vehicle = row.vehicle;
+    const comparable = row.comparable;
+    const shared = (comparable.shared_options || []).slice(0, 4).map(optionLabel).join(' · ');
+    return `
+      <article class="comparable-card">
+        <header>
+          <span class="brand">${escapeHtml(vehicle.brandName || vehicle.brand)}</span>
+          <h3>${escapeHtml(vehicle.model)}${vehicle.variant ? ` <span>${escapeHtml(vehicle.variant)}</span>` : ''}</h3>
+          <p class="price">${vehicle.base_price ? formatMoney(vehicle.base_price) : 'Price on request'}</p>
+        </header>
+        <p class="reference">Reference: ${escapeHtml(comparable.reference_brand)} ${escapeHtml(comparable.reference_model)}${comparable.reference_variant ? ` (${escapeHtml(comparable.reference_variant)})` : ''}</p>
+        <p class="reference-price">Ref ${formatMoney(comparable.reference_price)} · Delta ${formatSignedMoney(comparable.price_delta)}</p>
+        <p class="meta">Shared options: ${comparable.shared_option_count || 0} · Score ${(comparable.score || 0).toFixed(2)}</p>
+        ${shared ? `<p class="shared">${escapeHtml(shared)}</p>` : ''}
+      </article>
+    `;
+  }).join('')}</div>`;
+}
+
+function compareBrandPriority(left, right) {
+  const leftIdx = BRAND_ORDER.indexOf(left);
+  const rightIdx = BRAND_ORDER.indexOf(right);
+  const leftRank = leftIdx === -1 ? Number.MAX_SAFE_INTEGER : leftIdx;
+  const rightRank = rightIdx === -1 ? Number.MAX_SAFE_INTEGER : rightIdx;
+  if (leftRank !== rightRank) return leftRank - rightRank;
+  return left.localeCompare(right);
+}
+
+function colorForBrand(brand) {
+  const normalized = (brand || '').toLowerCase().replace(/[^a-z0-9]/g, '');
+  const colorKey = Object.keys(BRAND_COLORS).find(key =>
+    normalized.includes(key.replace(/[^a-z0-9]/g, '')),
+  );
+  if (colorKey) return BRAND_COLORS[colorKey];
+
+  const fallback = ['#6f8cc3', '#c48352', '#4d9a7a', '#9b6c9d', '#c96f7f', '#728f5c'];
+  const hash = [...normalized].reduce((acc, char) => acc + char.charCodeAt(0), 0);
+  return fallback[hash % fallback.length];
 }
 
 function getSelectedValues(id) {
@@ -663,6 +863,17 @@ function formatMoney(value) {
   }).format(value);
 }
 
+function formatSignedMoney(value) {
+  if (value == null) return '—';
+  if (value === 0) return `±${formatMoney(0)}`;
+  const sign = value > 0 ? '+' : '-';
+  return `${sign}${formatMoney(Math.abs(value))}`;
+}
+
+function vehicleComparableKey(vehicle) {
+  return `${vehicle.brandName || vehicle.brand}|${vehicle.model}|${vehicle.variant || ''}`;
+}
+
 // ---------- Vehicle Cards ----------
 
 function renderVehicles() {
@@ -677,7 +888,11 @@ function renderVehicles() {
     }
   }
 
-  const sorted = Object.values(latest).sort((a, b) => (b.base_price || 0) - (a.base_price || 0));
+  const sorted = Object.values(latest).sort((left, right) => {
+    const byBrand = compareBrandPriority(left.brandName || left.brand, right.brandName || right.brand);
+    if (byBrand !== 0) return byBrand;
+    return (right.base_price || 0) - (left.base_price || 0);
+  });
 
   if (sorted.length === 0) {
     container.innerHTML = '<div class="no-data"><p>No vehicles found.</p><p>Run the crawler to populate data.</p></div>';
@@ -689,6 +904,10 @@ function renderVehicles() {
     const optBadge = optCount > 0
       ? `<span class="option-count">${optCount} options</span>`
       : '';
+    const comparable = comparableModelMap.get(vehicleComparableKey(v));
+    const comparableHtml = comparable
+      ? `<div class="comparable-model">Comparable: ${escapeHtml(comparable.reference_brand)} ${escapeHtml(comparable.reference_model)}${comparable.reference_variant ? ` (${escapeHtml(comparable.reference_variant)})` : ''} · Ref ${formatMoney(comparable.reference_price)} · Δ ${formatSignedMoney(comparable.price_delta)}</div>`
+      : '';
 
     return `
     <div class="vehicle-card">
@@ -696,6 +915,7 @@ function renderVehicles() {
       <div class="model">${escapeHtml(v.model)}</div>
       ${v.variant ? `<div class="variant">${escapeHtml(v.variant)}</div>` : ''}
       <div class="price">${v.base_price ? formatMoney(v.base_price) : 'Price on request'}</div>
+      ${comparableHtml}
       ${v.fuel_type ? `<div class="fuel">${escapeHtml(v.fuel_type)}</div>` : ''}
       ${optBadge}
     </div>`;

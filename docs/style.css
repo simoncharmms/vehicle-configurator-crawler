@@ -275,20 +275,85 @@ select:focus { outline: none; border-color: var(--accent); }
 
 /* --- Chart --- */
 
-#chart-section {
+#chart-section,
+#bar-chart-section,
+#range-chart-section,
+#comparable-models-section {
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: 8px;
   padding: 1.5rem;
   margin-bottom: 2rem;
 }
-#chart-section h2 {
+#chart-section h2,
+#bar-chart-section h2,
+#range-chart-section h2,
+#comparable-models-section h2 {
   font-size: 1.1rem;
   margin-bottom: 1rem;
   color: var(--text-dim);
 }
 #price-chart { max-height: 500px; }
 #option-price-bar-chart { max-height: 500px; }
+#option-price-range-chart { max-height: 560px; }
+
+#comparable-models-container {
+  margin-top: 0.75rem;
+}
+
+.comparable-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 0.9rem;
+}
+
+.comparable-card {
+  background: rgba(15, 17, 23, 0.38);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1rem;
+}
+
+.comparable-card header .brand {
+  display: block;
+  font-size: 0.74rem;
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-weight: 600;
+}
+
+.comparable-card h3 {
+  margin-top: 0.25rem;
+  font-size: 1.02rem;
+  font-weight: 600;
+}
+
+.comparable-card h3 span {
+  font-size: 0.82rem;
+  color: var(--text-dim);
+  font-weight: 500;
+}
+
+.comparable-card .price {
+  margin-top: 0.45rem;
+  color: var(--success);
+  font-weight: 700;
+}
+
+.comparable-card .reference,
+.comparable-card .reference-price,
+.comparable-card .meta,
+.comparable-card .shared {
+  margin-top: 0.45rem;
+  line-height: 1.4;
+  font-size: 0.83rem;
+  color: var(--text-dim);
+}
+
+.comparable-card .reference-price {
+  color: var(--text);
+}
 
 /* --- Vehicle List --- */
 
@@ -343,6 +408,12 @@ select:focus { outline: none; border-color: var(--accent); }
   color: var(--success);
   margin-top: 0.75rem;
 }
+.vehicle-card .comparable-model {
+  margin-top: 0.5rem;
+  font-size: 0.78rem;
+  line-height: 1.35;
+  color: var(--text-dim);
+}
 .vehicle-card .fuel {
   font-size: 0.8rem;
   color: var(--text-dim);
@@ -373,6 +444,79 @@ footer {
   font-size: 0.8rem;
 }
 footer p + p { margin-top: 0.25rem; }
+
+#option-intelligence {
+  padding: 1.5rem 0;
+  margin-bottom: 2rem;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  min-width: 0;
+}
+#option-intelligence > div, #intelligence-detail { min-width: 0; max-width: 100%; }
+#option-intelligence [hidden] { display: none !important; }
+.intelligence-heading, .intelligence-controls, .intelligence-pagination {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-bottom: 0.9rem;
+}
+#option-intelligence h2 { font-size: 1.25rem; }
+#option-intelligence h3 { font-size: 1rem; margin-bottom: 0.75rem; overflow-wrap: anywhere; }
+#option-intelligence .source-badge { margin: 0; font-size: 0.85rem; }
+.intelligence-controls label { display: grid; gap: 0.35rem; font-size: 0.8rem; color: var(--text-dim); min-width: 0; }
+#option-intelligence input, #option-intelligence select, #option-intelligence button {
+  color: var(--text);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 0.55rem 0.65rem;
+  font: inherit;
+  min-height: 2.5rem;
+  max-width: 100%;
+}
+#option-intelligence button { cursor: pointer; }
+#option-intelligence button:disabled { opacity: 0.45; cursor: default; }
+#option-intelligence :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+#option-intelligence button:hover:not(:disabled) { border-color: var(--accent); }
+#option-intelligence .intelligence-icon { width: 2.5rem; height: 2.5rem; padding: 0; font-size: 1.5rem; align-self: end; }
+.intelligence-search { flex: 1 1 15rem; }
+.intelligence-series { flex: 2 1 22rem; }
+.intelligence-series select, .intelligence-search input { width: 100%; min-width: 0; }
+.intelligence-slider { flex: 1 1 12rem; max-width: 22rem; }
+#intelligence-change { width: 9rem; }
+#intelligence-change-slider { width: 100%; accent-color: var(--accent); padding: 0; }
+#intelligence-status, #intelligence-scenario-status { margin: 0.75rem 0; line-height: 1.5; overflow-wrap: anywhere; }
+#intelligence-status[data-state="error"] { color: var(--warning); }
+.intelligence-caveat { color: var(--text-dim); font-size: 0.85rem; line-height: 1.6; margin-bottom: 0.85rem; overflow-wrap: anywhere; }
+.intelligence-charts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.25rem; margin: 1rem 0; }
+.intelligence-charts figure { min-width: 0; }
+.intelligence-charts figcaption { font-size: 0.85rem; margin-bottom: 0.5rem; color: var(--text-dim); }
+.intelligence-chart { position: relative; height: 320px; min-width: 0; }
+.intelligence-facts { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 1rem; padding: 1rem 0; }
+.intelligence-facts dt { font-size: 0.8rem; color: var(--text-dim); margin-bottom: 0.25rem; }
+.intelligence-facts dd { font-size: 0.9rem; overflow-wrap: anywhere; }
+.intelligence-warnings { padding-left: 1.25rem; color: var(--warning); font-size: 0.85rem; line-height: 1.7; margin: 0.5rem 0 1.25rem; overflow-wrap: anywhere; }
+.intelligence-table-scroll { width: 100%; overflow-x: auto; margin-bottom: 0.75rem; }
+.intelligence-table { border-collapse: collapse; width: 100%; font-size: 0.85rem; }
+.intelligence-table th, .intelligence-table td { text-align: left; padding: 0.7rem 0.5rem; border-bottom: 1px solid var(--border); vertical-align: top; min-width: 100px; }
+.intelligence-table th { color: var(--text-dim); font-size: 0.8rem; }
+.intelligence-table td:first-child { min-width: 235px; }
+.intelligence-table td button { text-align: left; width: 100%; overflow-wrap: anywhere; }
+.intelligence-table tr[aria-current="true"] { background: rgba(79, 143, 247, 0.08); }
+.intelligence-ranking-heading { margin-top: 1.5rem; align-items: end; }
+.intelligence-ranking-heading h3 { margin-right: auto; }
+.intelligence-pagination { justify-content: flex-end; font-size: 0.85rem; }
+.intelligence-methodology { border-top: 1px solid var(--border); padding-top: 1rem; font-size: 0.85rem; line-height: 1.7; color: var(--text-dim); }
+.intelligence-methodology summary { color: var(--text); cursor: pointer; margin-bottom: 0.75rem; }
+.intelligence-methodology p { margin-bottom: 0.75rem; }
+.intelligence-methodology ul { padding-left: 1.25rem; margin-bottom: 1rem; }
+.intelligence-methodology a { color: var(--accent); overflow-wrap: anywhere; }
+
+@media (max-width: 850px) {
+  .intelligence-charts { grid-template-columns: minmax(0, 1fr); }
+  .intelligence-chart { height: 290px; }
+}
 
 @media (max-width: 600px) {
   #controls { flex-direction: column; }

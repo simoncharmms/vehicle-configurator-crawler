@@ -16,12 +16,16 @@ OPTION_CATEGORIES: dict[str, str] = {
     "drivetrain": "Drivetrain",
     "comfort": "Comfort",
     "safety": "Safety",
+    "adas": "ADAS & Driver Assistance",
     "exterior": "Exterior",
     "interior": "Interior",
+    "upholstery": "Upholstery",
     "technology": "Technology",
     "sound": "Sound & Entertainment",
     "lighting": "Lighting",
     "packages": "Packages",
+    "performance_packages": "Sport & Performance Packages",
+    "paint_upgrades": "Paint Upgrades",
     "climate": "Climate",
     "wheels": "Wheels & Tyres",
     "other": "Other",
@@ -66,6 +70,42 @@ OPTION_DEFINITIONS: dict[str, dict] = {
             "BMW": "M Sportfahrwerk",
             "Porsche": "PASM",
             "Lexus": "Adaptive Variable Suspension",
+        },
+    },
+    "sport_package": {
+        "aliases": [
+            "AMG Line", "AMG Sport Package", "AMG Paket",
+            "S line", "S-Line", "S line Exterieurpaket",
+            "R-Line", "R Line", "GTI Package",
+            "RS design package", "M Sportpaket", "M Sport Package",
+            "Dynamic Handling Pack", "Dynamic Pack",
+            "SV Bespoke", "SV Dynamic",
+        ],
+        "category": "performance_packages",
+        "description": "Sport/performance package",
+        "brand_names": {
+            "Mercedes-Benz": "AMG Line",
+            "Audi": "S line",
+            "BMW": "M Sport Package",
+            "Porsche": "Sport Package",
+            "Volkswagen": "R-Line",
+            "Range Rover": "SV Dynamic",
+        },
+    },
+    "performance_brakes": {
+        "aliases": [
+            "Performance Brakes", "Sport Bremsanlage", "Hochleistungsbremsanlage",
+            "Keramikbremse", "PCCB", "Carbon Ceramic Brakes",
+            "AMG High-Performance Bremsanlage", "RS brakes",
+            "R Performance brakes", "Brembo",
+        ],
+        "category": "performance_packages",
+        "description": "Upgraded high-performance brake system",
+        "brand_names": {
+            "Mercedes-Benz": "AMG High-Performance Bremsanlage",
+            "Audi": "RS brakes",
+            "Porsche": "PCCB",
+            "Volkswagen": "R Performance brakes",
         },
     },
     "air_suspension": {
@@ -317,7 +357,7 @@ OPTION_DEFINITIONS: dict[str, dict] = {
             "Active Cruise Control", "Abstandstempomat",
             "Radar-Abstandstempomat",
         ],
-        "category": "safety",
+        "category": "adas",
         "description": "Adaptive cruise control with distance keeping",
         "brand_names": {
             "Mercedes-Benz": "DISTRONIC",
@@ -335,7 +375,7 @@ OPTION_DEFINITIONS: dict[str, dict] = {
             "Intelligent Park Assist", "Lexus Intelligent Park Assist",
             "Parksensoren",
         ],
-        "category": "safety",
+        "category": "adas",
         "description": "Automated parking assistance",
         "brand_names": {
             "Mercedes-Benz": "PARKTRONIC",
@@ -351,7 +391,7 @@ OPTION_DEFINITIONS: dict[str, dict] = {
             "360° Kamera", "360°-Kamera", "Surround View",
             "360-Grad-Kamera", "Surround-View-System",
         ],
-        "category": "safety",
+        "category": "adas",
         "description": "Rear-view / 360° camera system",
         "brand_names": {
             "Mercedes-Benz": "Rückfahrkamera",
@@ -368,7 +408,7 @@ OPTION_DEFINITIONS: dict[str, dict] = {
             "Ausstiegswarnung", "Ausstiegswarnung Safe Exit Assist",
             "Safe Exit Assist",
         ],
-        "category": "safety",
+        "category": "adas",
         "description": "Blind spot monitoring / exit warning",
         "brand_names": {
             "Mercedes-Benz": "Totwinkelassistent",
@@ -384,7 +424,7 @@ OPTION_DEFINITIONS: dict[str, dict] = {
             "Spurassistent", "Aktiver Spurhalteassistent",
             "Lane Departure Warning", "Spurverlassenswarnung",
         ],
-        "category": "safety",
+        "category": "adas",
         "description": "Lane keeping / departure assist",
         "brand_names": {
             "Mercedes-Benz": "Aktiver Spurhalteassistent",
@@ -394,13 +434,43 @@ OPTION_DEFINITIONS: dict[str, dict] = {
             "Lexus": "Spurhalteassistent",
         },
     },
+    "lane_centering_assist": {
+        "aliases": [
+            "Lane Centering", "Spurzentrierung", "Travel Assist",
+            "Aktiver Lenkassistent", "Steering Assist",
+            "Highway Assist", "Autobahnassistent",
+        ],
+        "category": "adas",
+        "description": "Lane centering / steering assist",
+        "brand_names": {
+            "Mercedes-Benz": "Aktiver Lenkassistent",
+            "Audi": "Travel Assist",
+            "Volkswagen": "Travel Assist",
+            "Range Rover": "Highway Assist",
+        },
+    },
+    "traffic_sign_recognition": {
+        "aliases": [
+            "Traffic Sign Recognition", "Verkehrszeichenerkennung",
+            "Traffic Sign Assist", "Road Sign Information",
+            "Speed Limit Assist",
+        ],
+        "category": "adas",
+        "description": "Traffic-sign recognition and speed-limit assist",
+        "brand_names": {
+            "Mercedes-Benz": "Verkehrszeichenerkennung",
+            "Audi": "Traffic Sign Recognition",
+            "Volkswagen": "Traffic Sign Assist",
+            "Range Rover": "Road Sign Information",
+        },
+    },
     "emergency_braking": {
         "aliases": [
             "Notbremsassistent", "Emergency Braking", "Pre-Safe",
             "PRE-SAFE", "Notbremsfunktion", "Autonomous Emergency Braking",
             "City-Notbremsfunktion", "Pre-Collision System",
         ],
-        "category": "safety",
+        "category": "adas",
         "description": "Automatic emergency braking system",
         "brand_names": {
             "Mercedes-Benz": "PRE-SAFE",
@@ -530,6 +600,36 @@ OPTION_DEFINITIONS: dict[str, dict] = {
             "Lexus": "Panoramadach",
         },
     },
+    "metallic_paint": {
+        "aliases": [
+            "Metallic", "Metallic Paint", "Metallic-Lackierung",
+            "Metalliclack", "Metallic Finish",
+            "Pearlescent", "Pearl Effect", "Perleffekt",
+        ],
+        "category": "paint_upgrades",
+        "description": "Metallic / pearl paint upgrade",
+        "brand_names": {
+            "Mercedes-Benz": "Metallic-Lackierung",
+            "Audi": "Metalliclack",
+            "BMW": "Metallic Paint",
+            "Volkswagen": "Metallic",
+            "Range Rover": "Premium Metallic",
+        },
+    },
+    "matte_paint": {
+        "aliases": [
+            "Matt", "Matte Paint", "Magno", "Frozen Paint",
+            "Satin Finish", "Matte-Lackierung",
+        ],
+        "category": "paint_upgrades",
+        "description": "Matte or satin paint upgrade",
+        "brand_names": {
+            "Mercedes-Benz": "MANUFAKTUR magno",
+            "Audi": "Matte Paint",
+            "BMW": "Frozen Paint",
+            "Range Rover": "Satin Finish",
+        },
+    },
     "privacy_glass": {
         "aliases": [
             "Privacy Glas", "Privacy Glass", "Getöntes Glas",
@@ -567,7 +667,7 @@ OPTION_DEFINITIONS: dict[str, dict] = {
             "Ledersitze", "Lederausstattung", "Lederpolsterung",
             "Nappaleder", "Vollleder", "Race-Tex",
         ],
-        "category": "interior",
+        "category": "upholstery",
         "description": "Leather seat upholstery",
         "brand_names": {
             "Mercedes-Benz": "Lederausstattung",
@@ -575,6 +675,25 @@ OPTION_DEFINITIONS: dict[str, dict] = {
             "BMW": "Lederausstattung",
             "Porsche": "Leather Interior",
             "Lexus": "Lederausstattung",
+        },
+    },
+    "premium_upholstery": {
+        "aliases": [
+            "Nappa Leather", "Nappaleder", "Valcona Leather",
+            "Semi-Aniline", "Semi Aniline", "Extended Leather",
+            "Fine Nappa", "Perforated Leather",
+            "Windsor Leather", "SV Bespoke Leather",
+            "ArtVelours", "Alcantara",
+        ],
+        "category": "upholstery",
+        "description": "Premium upholstery material upgrade",
+        "brand_names": {
+            "Mercedes-Benz": "Nappaleder",
+            "Audi": "Valcona Leather",
+            "BMW": "Extended Leather",
+            "Porsche": "Club Leather",
+            "Volkswagen": "ArtVelours",
+            "Range Rover": "Windsor Leather",
         },
     },
     "heated_windshield": {
@@ -674,6 +793,42 @@ OPTION_DEFINITIONS: dict[str, dict] = {
             "Lexus": "Leichtmetallräder",
         },
     },
+    "lightweight_wheels": {
+        "aliases": [
+            "Leichtbaufelgen", "Lightweight Wheels", "Forged Wheels",
+            "Geschmiedete Felgen", "Performance Wheels",
+            "AMG Forged Wheels", "RS Forged Wheels",
+            "R Performance Wheels", "SV Performance Wheels",
+        ],
+        "category": "wheels",
+        "description": "Lightweight / forged wheel upgrade",
+        "brand_names": {
+            "Mercedes-Benz": "AMG Forged Wheels",
+            "Audi": "RS Forged Wheels",
+            "BMW": "Performance Wheels",
+            "Porsche": "Lightweight Wheels",
+            "Volkswagen": "R Performance Wheels",
+            "Range Rover": "SV Performance Wheels",
+        },
+    },
+    "wheel_size_upgrade": {
+        "aliases": [
+            "19-inch wheels", "20-inch wheels", "21-inch wheels", "22-inch wheels",
+            "19 Zoll", "20 Zoll", "21 Zoll", "22 Zoll",
+            "19\"", "20\"", "21\"", "22\"",
+            "large wheel upgrade", "bigger wheels",
+        ],
+        "category": "wheels",
+        "description": "Wheel size upgrade",
+        "brand_names": {
+            "Mercedes-Benz": "20 Zoll",
+            "Audi": "21-inch wheels",
+            "BMW": "20-inch wheels",
+            "Porsche": "21-inch wheels",
+            "Volkswagen": "20 Zoll",
+            "Range Rover": "22-inch wheels",
+        },
+    },
 
     # ========== DRIVER MONITOR ==========
     "driver_monitor": {
@@ -682,7 +837,7 @@ OPTION_DEFINITIONS: dict[str, dict] = {
             "Müdigkeitserkennung", "Aufmerksamkeitsassistent",
             "ATTENTION ASSIST",
         ],
-        "category": "safety",
+        "category": "adas",
         "description": "Driver attention / fatigue monitoring",
         "brand_names": {
             "Mercedes-Benz": "ATTENTION ASSIST",

@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+import math
 from abc import ABC, abstractmethod
 from dataclasses import dataclass, field, asdict
 from datetime import datetime, timezone
@@ -33,6 +34,26 @@ class OptionData:
     def to_dict(self) -> dict[str, Any]:
         return {k: v for k, v in asdict(self).items() if v is not None and v != ""}
 
+    def validate(self, expected_currency: str | None = None) -> list[str]:
+        """Return structural validation errors for this option."""
+        errors: list[str] = []
+
+        if self.price is not None:
+            if not _is_finite_number(self.price):
+                errors.append("option price must be finite numeric")
+            elif self.price < 0:
+                errors.append("option price must be >= 0")
+
+        if self.currency and expected_currency and self.currency != expected_currency:
+            errors.append(
+                f"option currency '{self.currency}' does not match vehicle currency '{expected_currency}'"
+            )
+
+        if not any((self.standardized_name, self.brand_specific_name, self.code)):
+            errors.append("option has no usable identity (standardized_name/brand_specific_name/code)")
+
+        return errors
+
 
 # Backward compatibility alias
 VehicleOption = OptionData
@@ -61,6 +82,8 @@ MARKET_CURRENCY: dict[str, str] = {
     "SE": "SEK",
     "NO": "NOK",
     "DK": "DKK",
+    "US": "USD",
+    "CN": "CNY",
 }
 
 # English names — the dashboard UI is in English.
@@ -84,9 +107,33 @@ MARKET_NAMES: dict[str, str] = {
     "SE": "Sweden",
     "NO": "Norway",
     "DK": "Denmark",
+    "US": "United States",
+    "CN": "China",
 }
 
 DEFAULT_MARKET = "DE"
+
+
+class DataValidationError(ValueError):
+    """Raised when a crawl result contains invalid or inconsistent data."""
+
+    def __init__(self, errors: list[str]) -> None:
+        self.errors = errors
+        super().__init__("Crawl result validation failed:\n" + "\n".join(errors))
+
+
+def _is_finite_number(value: Any) -> bool:
+    return isinstance(value, (int, float)) and not isinstance(value, bool) and math.isfinite(value)
+
+
+def _is_iso_timestamp(value: str) -> bool:
+    if not isinstance(value, str) or not value:
+        return False
+    try:
+        datetime.fromisoformat(value.replace("Z", "+00:00"))
+    except ValueError:
+        return False
+    return True
 
 
 def currency_for_market(market: str) -> str:
@@ -114,6 +161,43 @@ class VehicleData:
         d.pop("raw_data", None)
         d["available_options"] = [o.to_dict() for o in self.available_options]
         return d
+
+    def validate(self) -> list[str]:
+        """Return structural validation errors for this vehicle."""
+        errors: list[str] = []
+
+        if not self.brand:
+            errors.append("vehicle.brand is required")
+        if not self.model:
+            errors.append("vehicle.model is required")
+
+        if self.market not in MARKET_CURRENCY:
+            errors.append(f"vehicle.market '{self.market}' is not supported")
+
+        expected_currency = currency_for_market(self.market)
+        if self.currency != expected_currency:
+            errors.append(
+                f"vehicle currency '{self.currency}' does not match market currency '{expected_currency}'"
+            )
+
+        if self.base_price is not None:
+            if not _is_finite_number(self.base_price):
+                errors.append("vehicle.base_price must be finite numeric when present")
+            elif self.base_price <= 0:
+                errors.append("vehicle.base_price must be > 0 when present")
+
+        seen_option_ids: set[str] = set()
+        for idx, option in enumerate(self.available_options):
+            option_errors = option.validate(expected_currency=self.currency)
+            errors.extend([f"option[{idx}]: {msg}" for msg in option_errors])
+
+            identity = option.code or option.standardized_name or option.brand_specific_name.lower()
+            if identity in seen_option_ids:
+                errors.append(f"duplicate option identity '{identity}'")
+            else:
+                seen_option_ids.add(identity)
+
+        return errors
 
 
 @dataclass
@@ -200,6 +284,50 @@ class CrawlResult:
             "option_summary": self.option_summary(),
         }
 
+    def validate(self, *, raise_on_error: bool = False) -> list[str]:
+        """Return structural validation errors for this crawl result.
+
+        Validation is strict and intended to prevent malformed snapshots from
+        being persisted or published.
+        """
+        errors: list[str] = []
+
+        if not self.brand:
+            errors.append("brand is required")
+
+        market = (self.market or DEFAULT_MARKET).upper()
+        if market not in MARKET_CURRENCY:
+            errors.append(f"market '{market}' is not supported")
+
+        if not _is_iso_timestamp(self.timestamp):
+            errors.append("timestamp must be a valid ISO-8601 datetime")
+
+        if self.duration_seconds is not None:
+            if not _is_finite_number(self.duration_seconds):
+                errors.append("duration_seconds must be finite numeric")
+            elif self.duration_seconds < 0:
+                errors.append("duration_seconds must be >= 0")
+
+        if any(not isinstance(item, str) for item in self.errors):
+            errors.append("errors must contain strings only")
+
+        expected_currency = currency_for_market(market)
+        for idx, vehicle in enumerate(self.vehicles):
+            if vehicle.market != market:
+                errors.append(
+                    f"vehicle[{idx}] market '{vehicle.market}' does not match result market '{market}'"
+                )
+            if vehicle.currency != expected_currency:
+                errors.append(
+                    f"vehicle[{idx}] currency '{vehicle.currency}' does not match market currency '{expected_currency}'"
+                )
+            vehicle_errors = vehicle.validate()
+            errors.extend([f"vehicle[{idx}]: {msg}" for msg in vehicle_errors])
+
+        if raise_on_error and errors:
+            raise DataValidationError(errors)
+        return errors
+
     def save(self, data_dir: Path) -> Path:
         """Save crawl result as timestamped JSON.
 
@@ -207,6 +335,8 @@ class CrawlResult:
         the existing archive and dashboard history stay valid; every other
         market is written as ``{brand}_{market}_{date}.json``.
         """
+        self.validate(raise_on_error=True)
+
         data_dir.mkdir(parents=True, exist_ok=True)
         date_str = datetime.now().strftime("%Y-%m-%d")
         # Consistent brand key: lowercase, spaces → hyphens

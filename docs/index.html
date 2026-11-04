@@ -52,7 +52,89 @@
       </div>
       <div class="stat-card">
         <span class="stat-value" id="avg-option-price">-</span>
-        <span class="stat-label">Avg. Option Price</span>
+        <span class="stat-label">Avg. List Price</span>
+      </div>
+    </section>
+
+    <section id="option-intelligence" aria-labelledby="intelligence-heading">
+      <div class="intelligence-heading">
+        <h2 id="intelligence-heading">Option Intelligence</h2>
+        <strong id="intelligence-source-label" class="source-badge">Synthetic demand</strong>
+      </div>
+      <div class="intelligence-controls">
+        <label>Demand source
+          <select id="intelligence-source"><option value="synthetic">Synthetic demand</option><option value="observed">Observed purchases</option></select>
+        </label>
+        <label>Projection horizon
+          <select id="intelligence-horizon"><option value="30">30 days</option><option value="90">90 days</option></select>
+        </label>
+        <button id="intelligence-retry" type="button">Refresh intelligence</button>
+      </div>
+      <p id="intelligence-status" role="status" aria-live="polite">Waiting for market index.</p>
+      <p id="intelligence-source-caveat" class="intelligence-caveat">Synthetic exposures and selections are simulated, not actual sales.</p>
+      <div id="intelligence-content" hidden>
+        <p id="intelligence-totals" class="intelligence-caveat"></p>
+        <div class="intelligence-controls">
+          <label class="intelligence-search">Search model, variant or option
+            <input id="intelligence-search" type="search" autocomplete="off">
+          </label>
+          <label class="intelligence-series">Model / variant / option
+            <select id="intelligence-series"></select>
+          </label>
+        </div>
+        <p id="intelligence-matches" class="intelligence-caveat"></p>
+        <div id="intelligence-detail" hidden>
+          <h3 id="intelligence-series-title"></h3>
+          <div class="intelligence-controls">
+            <label>Price change (%)
+              <input id="intelligence-change" type="number" min="-100" max="200" step="any" value="0" aria-describedby="intelligence-scenario-status">
+            </label>
+            <label class="intelligence-slider">Price change (%)
+              <input id="intelligence-change-slider" type="range" min="-100" max="200" step="0.5" value="0">
+            </label>
+            <button id="intelligence-reset" class="intelligence-icon" type="button" title="Reset price change" aria-label="Reset price change">&#8634;</button>
+          </div>
+          <p id="intelligence-scenario-status" role="status"></p>
+          <p class="intelligence-caveat">Approximate source-conditional expected-rate intervals, not guaranteed coverage, future purchase counts or causal price effects.</p>
+          <div class="intelligence-charts">
+            <figure><figcaption id="intelligence-price-caption">Price</figcaption><div class="intelligence-chart"><canvas id="intelligence-price-chart" role="img" aria-label="Historical and scenario option prices"></canvas></div></figure>
+            <figure><figcaption id="intelligence-rate-caption">Take rate</figcaption><div class="intelligence-chart"><canvas id="intelligence-rate-chart" role="img" aria-label="Historical and projected option take rates with approximate conditional intervals"></canvas></div></figure>
+          </div>
+          <dl id="intelligence-model-status" class="intelligence-facts"></dl>
+          <ul id="intelligence-warnings" class="intelligence-warnings"></ul>
+          <h3 id="intelligence-metrics-title">Rolling-origin validation</h3>
+          <p class="intelligence-caveat">Scores are exposure-weighted; overlapping origins are not unique buyers. Synthetic scores validate simulation mechanics, not real-world demand accuracy.</p>
+          <div class="intelligence-table-scroll" tabindex="0" role="region" aria-labelledby="intelligence-metrics-title">
+            <table class="intelligence-table"><thead><tr><th>Horizon / status</th><th>Method</th><th>Brier</th><th>Log loss</th><th>Actual / predicted</th><th>Calibration (pp)</th><th>Evaluation exposures</th></tr></thead><tbody id="intelligence-metrics"></tbody></table>
+          </div>
+          <p id="intelligence-evaluation-dates" class="intelligence-caveat"></p>
+        </div>
+        <div class="intelligence-controls intelligence-ranking-heading">
+          <h3 id="intelligence-ranking-title">Option Ranking</h3>
+          <label>Sort by
+            <select id="intelligence-sort"><option value="take_rate">Historical take rate</option><option value="forecast">Expected rate</option><option value="delta">Scenario change (pp)</option><option value="eligible_count">Exposures</option><option value="label">Model / option</option></select>
+          </label>
+          <button id="intelligence-export" type="button">Download filtered CSV</button>
+        </div>
+        <p id="intelligence-table-label" class="intelligence-caveat"></p>
+        <div class="intelligence-table-scroll" tabindex="0" role="region" aria-labelledby="intelligence-ranking-title">
+          <table class="intelligence-table"><thead><tr><th>Model / variant / option</th><th>Latest catalogue price</th><th>Full-history selected / eligible</th><th>Full-history rate</th><th>30-day expected</th><th>90-day expected</th><th>Scenario change (pp)</th><th>Catalogue coverage</th><th>Sensitivity source</th></tr></thead><tbody id="intelligence-ranking"></tbody></table>
+        </div>
+        <nav class="intelligence-pagination" aria-label="Option ranking pages">
+          <button id="intelligence-prev" type="button" title="Previous page" aria-label="Previous ranking page">&#8592;</button>
+          <span id="intelligence-page" role="status"></span>
+          <button id="intelligence-next" type="button" title="Next page" aria-label="Next ranking page">&#8594;</button>
+        </nav>
+        <details class="intelligence-methodology">
+          <summary>Methodology and source assumptions</summary>
+          <p>Historical ratios use all imported purchase cohorts, not just the latest day or the displayed 90 available points. Exposures are option-level eligibility counts, not unique buyers or market sales. Inventory is excluded from fitting.</p>
+          <p>Unchanged price is the default. A scenario changes the latest reference price once, then holds it constant. Configured sensitivity is a prior assumption, not learned elasticity; fitted sensitivity is an association, not a causal effect. Large price changes are extrapolations with clipped features.</p>
+          <p>Intervals use a local Gaussian/Laplace approximation conditional on the selected source, model and priors. Dependence, selection bias, future shocks and misspecification are not fully represented. Synthetic intervals describe the simulation only.</p>
+          <p>Catalogue-context history follows the published artifact; on purchase-only dates its price may be the cohort price, not an independently observed catalogue quote. Demand prices are exposure-weighted cohort prices. Missing demand is not a zero take rate.</p>
+          <ul id="intelligence-assumptions"></ul>
+          <a id="intelligence-cohorts" hidden>Published cohort archive</a>
+          <p>Only aggregate, authorized data belongs in public artifacts. A synthetic archive is a mapping template, not observed purchases; replacing its labels does not create real evidence. Cohort archives cover the revision scope, which may differ from cached market endpoints.</p>
+        </details>
       </div>
     </section>
 
@@ -85,8 +167,20 @@
     </section>
 
     <section id="bar-chart-section">
-      <h2>Mercedes-Benz vs Porsche</h2>
+      <h2 id="bar-chart-title">Focus Brand Option Comparison</h2>
       <canvas id="option-price-bar-chart"></canvas>
+    </section>
+
+    <section id="range-chart-section">
+      <h2>Option Price Range Distribution</h2>
+      <p class="section-subtitle">Min/avg/max range across filtered cross-brand options</p>
+      <canvas id="option-price-range-chart"></canvas>
+    </section>
+
+    <section id="comparable-models-section">
+      <h2>Comparable Models</h2>
+      <p class="section-subtitle" id="comparable-source-label">Closest cross-brand reference based on shared options and list-price proximity</p>
+      <div id="comparable-models-container"></div>
     </section>
 
     <!-- Vehicle List (collapsed by default) -->
@@ -100,9 +194,11 @@
 
   <footer>
     <p>Data collected daily at 06:00 CET. Prices in the selected country's currency, sourced from official configurators.</p>
-    <p>Mercedes-Benz · Lexus · Polestar · Porsche · BYD · XPeng · Zeekr</p>
+    <p>Focus: Mercedes-Benz · Audi · Volkswagen · Range Rover · Additional: Porsche · Lexus · Polestar · BYD · XPeng · Zeekr</p>
   </footer>
 
   <script src="app.js"></script>
+  <script src="intelligence-model.js"></script>
+  <script src="intelligence.js"></script>
 </body>
 </html>
