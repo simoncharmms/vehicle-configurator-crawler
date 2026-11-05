@@ -16,6 +16,7 @@ from __future__ import annotations
 import asyncio
 import json
 import logging
+import math
 import re
 import time
 from dataclasses import dataclass
@@ -169,6 +170,33 @@ def _options_from_groups(groups: list[dict[str, Any]], brand: str) -> list[Optio
     return options
 
 
+def _coerce_positive_base_price(*candidates: Any) -> float | None:
+    """Return the first finite, positive price from candidate values."""
+    for candidate in candidates:
+        if candidate in (None, ""):
+            continue
+
+        value: float | None
+        if isinstance(candidate, str):
+            normalized = candidate.strip().replace(",", "")
+            if not normalized:
+                continue
+            try:
+                value = float(normalized)
+            except ValueError:
+                continue
+        else:
+            try:
+                value = float(candidate)
+            except (TypeError, ValueError):
+                continue
+
+        if math.isfinite(value) and value > 0:
+            return value
+
+    return None
+
+
 @BrandRegistry.register
 class XPengCrawler(BrandCrawler):
     brand = "XPeng"
@@ -214,13 +242,13 @@ class XPengCrawler(BrandCrawler):
                         continue
                     options = await asyncio.to_thread(api.option_groups, version["id"])
                     parsed_options = _options_from_groups(options, self.brand)
-                    price = version.get("msrpAfterDiscount")
-                    if price is None:
-                        price = version.get("msrpBeforeSubsidy")
-                    try:
-                        base_price = float(price) if price is not None else None
-                    except (TypeError, ValueError):
-                        base_price = None
+                    base_price = _coerce_positive_base_price(
+                        version.get("msrpAfterDiscount"),
+                        version.get("msrpBeforeSubsidy"),
+                        version.get("msrp"),
+                        version.get("startingPrice"),
+                        version.get("price"),
+                    )
                     model_name = str(version.get("carSeriesName") or series).strip()
                     variant = str(version.get("carVersionName") or "").strip()
                     vehicles.append(VehicleData(
