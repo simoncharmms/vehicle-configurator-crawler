@@ -76,7 +76,7 @@
         <button id="intelligence-retry" type="button">Refresh intelligence</button>
       </div>
       <p id="intelligence-status" role="status" aria-live="polite">Waiting for market index.</p>
-      <p id="intelligence-source-caveat" class="intelligence-caveat">Synthetic exposures and selections are simulated, not actual sales. Forecast model behavior is under active review and can appear flat.</p>
+      <p id="intelligence-source-caveat" class="intelligence-caveat">Take-rate strength is inferred from historical option price behavior (trend, dips, stability), not direct per-option buyer labels.</p>
       <div id="intelligence-content" hidden>
         <p id="intelligence-totals" class="intelligence-caveat"></p>
         <div class="intelligence-controls">
@@ -100,30 +100,30 @@
             <button id="intelligence-reset" class="intelligence-icon" type="button" title="Reset price change" aria-label="Reset price change">&#8634;</button>
           </div>
           <p id="intelligence-scenario-status" role="status"></p>
-          <p class="intelligence-caveat">Approximate source-conditional expected-rate intervals, not guaranteed coverage, future purchase counts or causal price effects.</p>
+          <p class="intelligence-caveat">Intervals indicate directional uncertainty of the trend-proxy signal, not guaranteed future take rates or causal elasticities.</p>
           <div class="intelligence-charts">
             <figure><figcaption id="intelligence-price-caption">Price</figcaption><div class="intelligence-chart"><canvas id="intelligence-price-chart" role="img" aria-label="Historical and scenario option prices"></canvas></div></figure>
-            <figure><figcaption id="intelligence-rate-caption">Take rate</figcaption><div class="intelligence-chart"><canvas id="intelligence-rate-chart" role="img" aria-label="Historical and projected option take rates with approximate conditional intervals"></canvas></div></figure>
+            <figure><figcaption id="intelligence-rate-caption">Take-rate strength proxy</figcaption><div class="intelligence-chart"><canvas id="intelligence-rate-chart" role="img" aria-label="Historical and projected trend-proxy take-rate strength with directional intervals"></canvas></div></figure>
           </div>
           <dl id="intelligence-model-status" class="intelligence-facts"></dl>
           <ul id="intelligence-warnings" class="intelligence-warnings"></ul>
-          <h3 id="intelligence-metrics-title">Rolling-origin validation</h3>
-          <p class="intelligence-caveat">Scores are exposure-weighted; overlapping origins are not unique buyers. Synthetic scores validate simulation mechanics, not real-world demand accuracy.</p>
+          <h3 id="intelligence-metrics-title">Trend-Signal Decomposition</h3>
+          <p class="intelligence-caveat">The score combines relative momentum, dip pressure and volatility. It is a directional proxy for take-rate strength, not an observed take-rate truth.</p>
           <div class="intelligence-table-scroll" tabindex="0" role="region" aria-labelledby="intelligence-metrics-title">
-            <table class="intelligence-table"><thead><tr><th>Horizon / status</th><th>Method</th><th>Brier</th><th>Log loss</th><th>Actual / predicted</th><th>Calibration (pp)</th><th>Evaluation exposures</th></tr></thead><tbody id="intelligence-metrics"></tbody></table>
+            <table class="intelligence-table"><thead><tr><th>Component</th><th>Input</th><th>Weight</th><th>Contribution</th><th>Direction</th><th>Data basis</th><th>Interpretation</th></tr></thead><tbody id="intelligence-metrics"></tbody></table>
           </div>
           <p id="intelligence-evaluation-dates" class="intelligence-caveat"></p>
         </div>
         <div class="intelligence-controls intelligence-ranking-heading">
           <h3 id="intelligence-ranking-title">Option Ranking</h3>
           <label>Sort by
-            <select id="intelligence-sort"><option value="take_rate">Historical take rate</option><option value="forecast">Expected rate</option><option value="delta">Scenario change (pp)</option><option value="eligible_count">Exposures</option><option value="label">Model / option</option></select>
+            <select id="intelligence-sort"><option value="take_rate">Current strength proxy</option><option value="forecast">Expected strength</option><option value="delta">Scenario change (pp)</option><option value="eligible_count">Exposures</option><option value="label">Model / option</option></select>
           </label>
           <button id="intelligence-export" type="button">Download filtered CSV</button>
         </div>
         <p id="intelligence-table-label" class="intelligence-caveat"></p>
         <div class="intelligence-table-scroll" tabindex="0" role="region" aria-labelledby="intelligence-ranking-title">
-          <table class="intelligence-table"><thead><tr><th>Model / variant / option</th><th>Latest catalogue price</th><th>Full-history selected / eligible</th><th>Full-history rate</th><th>30-day expected</th><th>90-day expected</th><th>Scenario change (pp)</th><th>Catalogue coverage</th><th>Sensitivity source</th></tr></thead><tbody id="intelligence-ranking"></tbody></table>
+          <table class="intelligence-table"><thead><tr><th>Model / variant / option</th><th>Latest catalogue price</th><th>Signal confidence / history</th><th>Current strength</th><th>30-day expected</th><th>90-day expected</th><th>Scenario change (pp)</th><th>Catalogue coverage</th><th>Signal basis</th></tr></thead><tbody id="intelligence-ranking"></tbody></table>
         </div>
         <nav class="intelligence-pagination" aria-label="Option ranking pages">
           <button id="intelligence-prev" type="button" title="Previous page" aria-label="Previous ranking page">&#8592;</button>
@@ -132,13 +132,14 @@
         </nav>
         <details class="intelligence-methodology">
           <summary>Methodology and source assumptions</summary>
-          <p>Historical ratios use all imported purchase cohorts, not just the latest day or the displayed 90 available points. Exposures are option-level eligibility counts, not unique buyers or market sales. Inventory is excluded from fitting.</p>
-          <p>Unchanged price is the default. A scenario changes the latest reference price once, then holds it constant. Configured sensitivity is a prior assumption, not learned elasticity; fitted sensitivity is an association, not a causal effect. Large price changes are extrapolations with clipped features.</p>
-          <p>Intervals use a local Gaussian/Laplace approximation conditional on the selected source, model and priors. Dependence, selection bias, future shocks and misspecification are not fully represented. Synthetic intervals describe the simulation only.</p>
-          <p>Catalogue-context history follows the published artifact; on purchase-only dates its price may be the cohort price, not an independently observed catalogue quote. Demand prices are exposure-weighted cohort prices. Missing demand is not a zero take rate.</p>
+          <p>This beta uses a price-trend proxy for option take-rate strength: short-term momentum, long-window drift, discount dip pressure and price stability relative to peers in the same filtered market set.</p>
+          <p>Alloy-wheel options use a dedicated calibration profile: stronger momentum and dip weighting with a softer volatility penalty to reduce false weakness from normal trim-price churn.</p>
+          <p>A price dip is treated as a weaker organic pull signal (seller push), while stable or rising prices against a softer peer baseline are treated as stronger pull signals. The output is directional, not a causal elasticity estimate.</p>
+          <p>The scenario control applies a one-time price shock to the latest observed price and projects a mean-reverting strength path over the selected horizon. Large shocks are extrapolations.</p>
+          <p>Strength percentages are normalized proxy scores for ranking and monitoring. They should not be interpreted as observed buyer-level take rates.</p>
           <ul id="intelligence-assumptions"></ul>
           <a id="intelligence-cohorts" hidden>Published cohort archive</a>
-          <p>Only aggregate, authorized data belongs in public artifacts. A synthetic archive is a mapping template, not observed purchases; replacing its labels does not create real evidence. Cohort archives cover the revision scope, which may differ from cached market endpoints.</p>
+          <p>Only aggregate, authorized data belongs in public artifacts. Synthetic archives are templates for structure testing, not real purchase truth.</p>
         </details>
       </div>
     </section>

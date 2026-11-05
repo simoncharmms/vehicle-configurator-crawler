@@ -3,20 +3,94 @@
 
   const element = id => document.getElementById(`intelligence-${id}`);
   const PAGE_SIZE = 50;
+  const TREND_MODEL = {
+    minPoints: 6,
+    shortWindow: 14,
+    longWindow: 45,
+    defaultProfile: {
+      key: 'default',
+      scenarioImpactPerPct: 0.45,
+      halfLifeDays: 42,
+      confidenceBonus: 0,
+      featureScales: {
+        dipDepth: 1,
+        volatility: 1,
+      },
+      weights: {
+        relative: 220,
+        short: 120,
+        long: 60,
+        dipPenalty: 180,
+        volatilityPenalty: 140,
+      },
+    },
+    profiles: {
+      alloy_wheels: {
+        key: 'alloy_wheels',
+        scenarioImpactPerPct: 0.55,
+        halfLifeDays: 54,
+        confidenceBonus: 0.08,
+        featureScales: {
+          dipDepth: 1.12,
+          volatility: 0.55,
+        },
+        weights: {
+          relative: 280,
+          short: 150,
+          long: 80,
+          dipPenalty: 220,
+          volatilityPenalty: 65,
+        },
+      },
+    },
+    interval: {
+      base: 6,
+      confidenceScale: 16,
+      volatilityScale: 60,
+    },
+  };
   const cache = new Map();
   const detailCache = new Map();
   let detailRequest = 0;
   const state = {source: 'synthetic', horizon: 30, change: 0, page: 0, selected: null,
-    payload: null, filtered: [], summaries: new Map(), request: 0, key: null, initialized: false};
+    payload: null, filtered: [], summaries: new Map(), features: new Map(), trendContext: null,
+    request: 0, key: null, initialized: false, searchIndex: new Map()};
   let manifestPromise = null;
   let priceChart = null;
   let rateChart = null;
   const normalize = value => String(value || '').toLowerCase().replace(/[^a-z0-9]/g, '');
   const readable = value => String(value || 'unavailable').replace(/_/g, ' ');
   const numeric = value => typeof value === 'number' && Number.isFinite(value);
+  const clamp = (value, low, high) => Math.max(low, Math.min(high, value));
+  const average = values => values.length ? values.reduce((total, value) => total + value, 0) / values.length : null;
+  const median = values => {
+    if (!values.length) return null;
+    const ordered = [...values].sort((left, right) => left - right);
+    const mid = Math.floor(ordered.length / 2);
+    return ordered.length % 2 ? ordered[mid] : (ordered[mid - 1] + ordered[mid]) / 2;
+  };
+  const stddev = values => {
+    if (values.length < 2) return 0;
+    const mu = average(values);
+    return Math.sqrt(values.reduce((total, value) => total + (value - mu) ** 2, 0) / values.length);
+  };
+  const safeLogRatio = (numerator, denominator) => {
+    if (!numeric(numerator) || !numeric(denominator) || numerator <= 0 || denominator <= 0) return 0;
+    return Math.log(numerator / denominator);
+  };
+  const isDate = value => /^\d{4}-\d{2}-\d{2}$/.test(String(value || ''));
+  const addDays = (dateString, days) => {
+    if (!isDate(dateString)) return null;
+    const target = new Date(`${dateString}T00:00:00Z`);
+    target.setUTCDate(target.getUTCDate() + days);
+    return target.toISOString().slice(0, 10);
+  };
   const count = value => numeric(value) ? value.toLocaleString() : 'Unavailable';
   const rate = value => numeric(value) ? `${(value * 100).toFixed(1)}%` : 'Unavailable';
   const points = value => numeric(value) ? `${value >= 0 ? '+' : ''}${(value * 100).toFixed(2)}` : 'Unavailable';
+  const signedPercent = value => numeric(value) ? `${value >= 0 ? '+' : ''}${(value * 100).toFixed(2)}%` : 'Unavailable';
+  const indexScale = value => numeric(value) ? `${value.toFixed(1)} / 100` : 'Unavailable';
+  const indexDelta = value => numeric(value) ? `${value >= 0 ? '+' : ''}${value.toFixed(2)}` : 'Unavailable';
   const sourceLabel = () => state.source === 'synthetic' ? 'Synthetic demand' : 'Observed purchases';
   const label = series => [series.brand, series.vehicle_model, series.variant,
     series.option_name || series.standardized_name || series.option_code, series.option_code].filter(Boolean).join(' / ');
@@ -74,14 +148,16 @@
     state.payload = null;
     state.filtered = [];
     state.summaries.clear();
+    state.features.clear();
+    state.trendContext = null;
     state.page = 0;
     element('content').hidden = true;
     element('cohorts').hidden = true;
     clearCharts();
     text('source-label', sourceLabel());
     text('source-caveat', source === 'synthetic'
-      ? 'Synthetic exposures, selections and eligibility are simulated, not actual sales. Sensitivity may be configured.'
-      : 'Observed purchases only. Missing observations are never replaced with synthetic demand; fallback sensitivity may still be a configured assumption.');
+      ? 'Synthetic exposures, selections and eligibility are simulated, not actual sales. Trend-proxy strength is inferred from option price history, not observed take-rate labels.'
+      : 'Observed purchases only. Trend-proxy strength is inferred from option price history, not direct per-option buyer labels.');
     status(`Loading ${sourceLabel().toLowerCase()} for ${market}...`, 'loading');
     try {
       if (force) manifestPromise = null;
@@ -139,11 +215,11 @@
         text('cohorts', `${sourceLabel()} aggregate cohort archive / ${market}`);
       }
       if (payload.status === 'no_observed_data') {
-        status(`No observed purchase cohorts for ${market}. Catalogue series may be available; forecasts are unavailable.`, 'empty');
+        status(`No observed purchase cohorts for ${market}. Catalogue series may still support trend-proxy strength scoring.`, 'empty');
       } else if (payload.status === 'no_usable_prices' || !payload.series.length) {
         status(`No usable option price series for ${market} in this source.`, 'empty');
       } else {
-        status(`${sourceLabel()} / ${market} / ${payload.currency} / as of ${payload.as_of || 'unknown'} / published ${payload.generated_at || 'unknown'}`);
+        status(`${sourceLabel()} / ${market} / ${payload.currency} / trend-proxy model / as of ${payload.as_of || 'unknown'} / published ${payload.generated_at || 'unknown'}`);
       }
       renderFiltered();
     } catch (error) {
@@ -172,6 +248,8 @@
       (!selectedCategories.size || selectedCategories.has(normalize(series.category)) ||
         selectedCategories.has(normalize(categoryLabels.get(series.category)))) &&
       (!query || state.searchIndex.get(series.id).includes(query)));
+    state.trendContext = buildTrendContext(state.filtered);
+    state.summaries.clear();
     state.page = 0;
     let eligible = 0;
     let selected = 0;
@@ -179,7 +257,7 @@
       eligible += series.eligible_count || 0;
       selected += series.selected_count || 0;
     }
-    text('totals', `${sourceLabel()} / ${state.filtered.length.toLocaleString()} of ${state.payload.series.length.toLocaleString()} series / ${count(selected)} selected / ${count(eligible)} ${state.source === 'synthetic' ? 'simulated option exposures (not actual sales)' : 'option exposures (not unique buyers)'} / full-history count-weighted rate ${rate(eligible ? selected / eligible : null)}.`);
+    text('totals', `${sourceLabel()} / ${state.filtered.length.toLocaleString()} of ${state.payload.series.length.toLocaleString()} series / ${count(selected)} selected / ${count(eligible)} ${state.source === 'synthetic' ? 'simulated option exposures (not actual sales)' : 'option exposures (not unique buyers)'} / peer short-trend baseline ${signedPercent(state.trendContext?.marketShortMomentum)}.`);
     const candidates = state.filtered.slice(0, PAGE_SIZE);
     if (!state.filtered.some(series => series.id === state.selected)) state.selected = candidates[0]?.id || null;
     const chosen = state.filtered.find(series => series.id === state.selected);
@@ -197,12 +275,244 @@
     renderDetail();
   }
 
+  function historyPrices(series) {
+    return (series.history || [])
+      .filter(point => isDate(point.date) && numeric(point.price) && point.price > 0)
+      .map(point => ({date: point.date, price: point.price}))
+      .sort((left, right) => left.date.localeCompare(right.date));
+  }
+
+  function deriveHistoryFeatures(series) {
+    const points = historyPrices(series);
+    if (points.length < TREND_MODEL.minPoints) return null;
+    const prices = points.map(point => point.price);
+    const shortWindow = Math.max(3, Math.min(TREND_MODEL.shortWindow, Math.floor(points.length / 2)));
+    if (points.length < shortWindow * 2) return null;
+    const recent = prices.slice(-shortWindow);
+    const previous = prices.slice(-shortWindow * 2, -shortWindow);
+    const recentAvg = average(recent);
+    const previousAvg = average(previous);
+    const anchorIndex = Math.max(0, prices.length - Math.min(TREND_MODEL.longWindow, prices.length));
+    const anchorPrice = prices[anchorIndex];
+    const returns = [];
+    for (let index = 1; index < prices.length; index += 1) {
+      const move = safeLogRatio(prices[index], prices[index - 1]);
+      if (numeric(move)) returns.push(move);
+    }
+    const recentMin = Math.min(...recent);
+    return {
+      available: true,
+      basis: 'history_derived',
+      shortMomentum: safeLogRatio(recentAvg, previousAvg),
+      longMomentum: safeLogRatio(prices.at(-1), anchorPrice),
+      dipDepth: Math.max(0, safeLogRatio(previousAvg, recentMin)),
+      volatility: clamp(stddev(returns.slice(-21)), 0, 0.35),
+      observedDays: points.length,
+      priceLevels: new Set(prices.map(value => value.toFixed(2))).size,
+      anchorDate: points.at(-1)?.date || null,
+      latestPrice: prices.at(-1),
+    };
+  }
+
+  function deriveSummaryFeatures(series) {
+    const latestPrice = numeric(series.latest_price) ? series.latest_price
+      : numeric(series.model?.last_price) ? series.model.last_price
+        : null;
+    if (!numeric(latestPrice) || latestPrice <= 0) {
+      return {available: false, reason: 'missing_latest_price'};
+    }
+    const reference = numeric(series.model?.reference_price) && series.model.reference_price > 0
+      ? series.model.reference_price
+      : latestPrice;
+    const coverage = series.coverage || {};
+    const observedDays = coverage.observed_days || series.model?.training_days || 0;
+    const priceLevels = coverage.different_price_levels || Math.max(1, Math.round(observedDays * 0.2));
+    const changes = coverage.price_changes || 0;
+    const changeRate = changes / Math.max(1, observedDays - 1);
+    const levelDensity = priceLevels / Math.max(1, observedDays || 1);
+    const pct = numeric(series.price_change_pct) && series.price_change_pct > -100
+      ? series.price_change_pct / 100
+      : null;
+    const longMomentum = pct == null ? safeLogRatio(latestPrice + 1, reference + 1) : Math.log1p(pct);
+    return {
+      available: true,
+      basis: 'summary_derived',
+      shortMomentum: safeLogRatio(latestPrice + 1, reference + 1),
+      longMomentum,
+      dipDepth: pct != null && pct < 0 ? Math.min(0.35, Math.abs(pct) * 0.4) : 0,
+      volatility: clamp(changeRate * 0.22 + Math.max(0, levelDensity - 0.06), 0, 0.35),
+      observedDays,
+      priceLevels,
+      anchorDate: series.coverage?.last_date || series.model?.last_date || series.as_of || state.payload?.as_of || null,
+      latestPrice,
+    };
+  }
+
+  function priceFeatures(series) {
+    if (!series.history && state.features.has(series.id)) return state.features.get(series.id);
+    const summary = deriveSummaryFeatures(series);
+    const history = deriveHistoryFeatures(series);
+    const merged = history ? {...summary, ...history} : summary;
+    merged.available = Boolean(history?.available || summary.available);
+    if (!series.history && merged.available) state.features.set(series.id, merged);
+    return merged;
+  }
+
+  function buildTrendContext(seriesList) {
+    const short = [];
+    const long = [];
+    const volatility = [];
+    for (const series of seriesList) {
+      const features = priceFeatures(series);
+      if (!features.available) continue;
+      if (numeric(features.shortMomentum)) short.push(features.shortMomentum);
+      if (numeric(features.longMomentum)) long.push(features.longMomentum);
+      if (numeric(features.volatility)) volatility.push(features.volatility);
+    }
+    return {
+      marketShortMomentum: median(short) || 0,
+      marketLongMomentum: median(long) || 0,
+      marketVolatility: median(volatility) || 0,
+      sampleCount: short.length,
+    };
+  }
+
+  function isAlloyWheelSeries(series) {
+    const category = String(series.category || '').toLowerCase();
+    const corpus = [series.standardized_name, series.option_name, series.option_code]
+      .filter(Boolean)
+      .join(' ')
+      .toLowerCase();
+    if (corpus.includes('lenkrad') || corpus.includes('steering wheel')) return false;
+    return category === 'wheels'
+      || /\b(alloy|wheel|wheels|rim|rims|felge|felgen|leichtmetall)\b/i.test(corpus);
+  }
+
+  function profileForSeries(series) {
+    if (isAlloyWheelSeries(series)) return TREND_MODEL.profiles.alloy_wheels;
+    return TREND_MODEL.defaultProfile;
+  }
+
+  function signalFromSeries(series, context = state.trendContext) {
+    const features = priceFeatures(series);
+    if (!features.available || !isDate(features.anchorDate)) {
+      return {available: false, reason: features.reason || 'insufficient_price_history'};
+    }
+    const profile = profileForSeries(series);
+    const scaledDipDepth = features.dipDepth * profile.featureScales.dipDepth;
+    const scaledVolatility = features.volatility * profile.featureScales.volatility;
+    const marketShortMomentum = context?.marketShortMomentum || 0;
+    const relativeMomentum = features.shortMomentum - marketShortMomentum;
+    const components = {
+      relative: profile.weights.relative * relativeMomentum,
+      short: profile.weights.short * features.shortMomentum,
+      long: profile.weights.long * features.longMomentum,
+      dipPenalty: profile.weights.dipPenalty * scaledDipDepth,
+      volatilityPenalty: profile.weights.volatilityPenalty * scaledVolatility,
+    };
+    const baselineIndex = clamp(
+      50 + components.relative + components.short + components.long - components.dipPenalty - components.volatilityPenalty,
+      1,
+      99,
+    );
+    const confidence = clamp(
+      0.22 + Math.min(features.observedDays || 0, 90) / 120 + Math.min(features.priceLevels || 0, 12) / 24
+      - scaledVolatility * 1.8 + profile.confidenceBonus,
+      0.2,
+      0.95,
+    );
+    const intervalWidth = TREND_MODEL.interval.base
+      + (1 - confidence) * TREND_MODEL.interval.confidenceScale
+      + scaledVolatility * TREND_MODEL.interval.volatilityScale;
+    return {
+      available: true,
+      ...features,
+      marketShortMomentum,
+      relativeMomentum,
+      scaledDipDepth,
+      scaledVolatility,
+      components,
+      profileKey: profile.key,
+      profileLabel: readable(profile.key),
+      weights: profile.weights,
+      scenarioImpactPerPct: profile.scenarioImpactPerPct,
+      halfLifeDays: profile.halfLifeDays,
+      baselineIndex,
+      confidence,
+      intervalWidth,
+      anchorDate: features.anchorDate,
+    };
+  }
+
+  function projectedIndex(start, day, halfLifeDays) {
+    const decay = Math.exp(-(day - 1) / halfLifeDays);
+    return clamp(50 + (start - 50) * decay, 1, 99);
+  }
+
+  function projectPoint(signal, changePct, day) {
+    const start = clamp(signal.baselineIndex - changePct * signal.scenarioImpactPerPct, 1, 99);
+    const index = projectedIndex(start, day, signal.halfLifeDays);
+    const width = signal.intervalWidth * Math.sqrt(1 + (day - 1) / 60);
+    return {
+      index,
+      rate: index / 100,
+      lower: clamp(index - width, 1, 99) / 100,
+      upper: clamp(index + width, 1, 99) / 100,
+      start,
+    };
+  }
+
+  function projectSeries(signal, changePct, horizon) {
+    if (!signal.available) return [];
+    const points = [];
+    for (let day = 1; day <= horizon; day += 1) {
+      const date = addDays(signal.anchorDate, day);
+      if (!date) break;
+      points.push({date, day, ...projectPoint(signal, changePct, day)});
+    }
+    return points;
+  }
+
+  function historicalSignalTimeline(series) {
+    const history = historyPrices(series);
+    if (history.length < TREND_MODEL.minPoints) return [];
+    const timeline = [];
+    for (let index = TREND_MODEL.minPoints - 1; index < history.length; index += 1) {
+      const partial = {...series, history: history.slice(0, index + 1)};
+      const signal = signalFromSeries(partial, state.trendContext);
+      if (signal.available) timeline.push({date: history[index].date, rate: signal.baselineIndex / 100});
+    }
+    return timeline;
+  }
+
   function forecastSummary(series) {
     if (!state.summaries.has(series.id)) {
-      const baseline = window.OptionIntelligenceModel.predictSeries(series, 0, 2);
-      const scenario = state.change === 0 ? baseline : window.OptionIntelligenceModel.predictSeries(series, state.change, 2);
-      state.summaries.set(series.id, {baseline30: baseline[1]?.rate, baseline90: baseline[1]?.rate,
-        scenario30: scenario[1]?.rate, scenario90: scenario[1]?.rate});
+      const signal = signalFromSeries(series);
+      if (!signal.available) {
+        state.summaries.set(series.id, {
+          signal,
+          currentStrength: null,
+          baseline30: null,
+          baseline90: null,
+          scenario30: null,
+          scenario90: null,
+          confidence: null,
+          basis: 'insufficient_data',
+          observedDays: null,
+        });
+      } else {
+        state.summaries.set(series.id, {
+          signal,
+          currentStrength: signal.baselineIndex / 100,
+          baseline30: projectPoint(signal, 0, 30).rate,
+          baseline90: projectPoint(signal, 0, 90).rate,
+          scenario30: projectPoint(signal, state.change, 30).rate,
+          scenario90: projectPoint(signal, state.change, 90).rate,
+          confidence: signal.confidence,
+          basis: signal.basis,
+          observedDays: signal.observedDays,
+        });
+      }
     }
     return state.summaries.get(series.id);
   }
@@ -210,6 +520,7 @@
   function renderTable() {
     const sort = element('sort').value;
     const value = series => {
+      if (sort === 'take_rate') return forecastSummary(series).currentStrength;
       if (sort === 'forecast') return forecastSummary(series)[`scenario${state.horizon}`];
       if (sort === 'delta') {
         const summary = forecastSummary(series);
@@ -253,11 +564,12 @@
       name.append(button);
       row.append(name);
       const coverage = series.coverage || {};
-      for (const content of [money(series.latest_price), `${count(series.selected_count)} / ${count(series.eligible_count)}`,
-        rate(series.take_rate), rate(summary.scenario30), rate(summary.scenario90),
+      for (const content of [money(series.latest_price),
+        numeric(summary.confidence) ? `${(summary.confidence * 100).toFixed(0)}% / ${count(summary.observedDays)}` : 'Unavailable',
+        rate(summary.currentStrength), rate(summary.scenario30), rate(summary.scenario90),
         points(numeric(expected) && numeric(baseline) ? expected - baseline : null),
         `${coverage.observed_days || 0} / ${coverage.calendar_span_days || 0} days; ${coverage.different_price_levels || 0} price levels`,
-        readable(series.model.sensitivity_source)]) row.append(node('td', content));
+        readable(summary.basis)]) row.append(node('td', content));
       return row;
     });
     if (!rows.length) {
@@ -268,7 +580,7 @@
       rows.push(row);
     }
     element('ranking').replaceChildren(...rows);
-    text('table-label', `${sourceLabel()} / expected rates use the ${state.change}% price scenario; delta compares unchanged price at ${state.horizon} days. Historical ratios cover all imported history, not the latest day. Counts are ${state.source === 'synthetic' ? 'simulated exposures, not actual sales' : 'option exposures, not unique buyers'}.`);
+    text('table-label', `${sourceLabel()} / trend-proxy strength uses relative price momentum, dip depth and price stability. Scenario delta shows the ${state.change}% price shock impact at ${state.horizon} days; this is directional, not causal proof.`);
     text('page', `${sorted.length ? start + 1 : 0}-${Math.min(start + PAGE_SIZE, sorted.length)} of ${sorted.length.toLocaleString()} / page ${state.page + 1} of ${pageCount}`);
     element('prev').disabled = state.page === 0;
     element('next').disabled = state.page + 1 >= pageCount;
@@ -283,7 +595,7 @@
     if (!series) return;
     if (series.detail_path) {
       text('series-title', `${sourceLabel()} / ${label(series)}`);
-      text('scenario-status', 'Loading selected option history and validation...');
+      text('scenario-status', 'Loading selected option price history and trend-signal details...');
       const url = artifactURL(series.detail_path);
       try {
         if (!detailCache.has(url)) {
@@ -305,25 +617,33 @@
         return;
       }
     }
-    const model = series.model;
-    const baseline = window.OptionIntelligenceModel.predictSeries(series, 0, state.horizon);
-    const scenario = state.change === 0 ? baseline : window.OptionIntelligenceModel.predictSeries(series, state.change, state.horizon);
+    const signal = signalFromSeries(series, state.trendContext);
+    if (!signal.available) {
+      text('scenario-status', 'Trend signal unavailable: insufficient usable price history for this option series.');
+      element('model-status').replaceChildren();
+      element('warnings').replaceChildren();
+      element('metrics').replaceChildren();
+      return;
+    }
+    const baseline = projectSeries(signal, 0, state.horizon);
+    const scenario = state.change === 0 ? baseline : projectSeries(signal, state.change, state.horizon);
     text('series-title', `${sourceLabel()} / ${label(series)}`);
-    const proposed = numeric(model.last_price) ? model.last_price * (1 + state.change / 100) : null;
-    const range = model.scenario_price_range;
-    const extrapolation = range && numeric(proposed) && (proposed < range[0] || proposed > range[1]);
+    const proposed = numeric(signal.latestPrice) ? signal.latestPrice * (1 + state.change / 100) : null;
     text('scenario-status', baseline.length
-      ? `Unchanged reference ${money(model.last_price)}; scenario ${money(proposed)} (${state.change}%). Day ${state.horizon}: unchanged ${rate(baseline.at(-1)?.rate)}, scenario ${rate(scenario.at(-1)?.rate)}; ${points(scenario.at(-1).rate - baseline.at(-1).rate)} pp.${extrapolation ? ' Outside recorded price range: extrapolation, not a reliable elasticity estimate.' : ''}`
-      : 'Forecast unavailable: insufficient positive purchase exposure, history or model convergence. No scenario has been fabricated.');
+      ? `Price-trend take-rate proxy (not observed buyer labels). Peer baseline short trend: ${signedPercent(signal.marketShortMomentum)}. Current strength ${rate(signal.baselineIndex / 100)}. Day ${state.horizon}: unchanged ${rate(baseline.at(-1)?.rate)}, scenario ${rate(scenario.at(-1)?.rate)}; ${points(scenario.at(-1).rate - baseline.at(-1).rate)} pp.`
+      : 'Projection unavailable: insufficient valid anchor date or horizon data.');
+    const scenarioShift = -state.change * signal.scenarioImpactPerPct;
     const facts = [
-      ['Model / availability', `${readable(model.kind)} / ${model.forecast_available ? 'forecast available' : 'forecast unavailable'}`],
-      ['Sensitivity source', readable(model.sensitivity_source)],
-      ['Training history', `${model.training_start || 'Unavailable'} to ${model.training_end || 'Unavailable'}; ${model.training_days || 0} positive-exposure days`],
-      ['Training exposures', count(model.eligible_count)],
-      ['Forecast origin / reference price', `${model.last_date || 'Unavailable'} / ${money(model.last_price)}`],
-      ['Catalogue latest / as of', `${money(series.latest_price)} / ${series.coverage?.last_date || 'Unavailable'}`],
-      ['Demand price sources', (series.price_sources || []).join(', ') || 'No purchase prices'],
-      ['90-day validation', readable(series.metrics?.['90']?.status)],
+      ['Model lens', 'Price-trend take-rate proxy (heuristic)'],
+      ['Applied profile', signal.profileLabel],
+      ['Recent momentum (short window)', signedPercent(signal.shortMomentum)],
+      ['Peer-market momentum baseline', signedPercent(signal.marketShortMomentum)],
+      ['Relative momentum', signedPercent(signal.relativeMomentum)],
+      ['Dip pressure / volatility', `${signedPercent(-signal.dipDepth)} / ${signedPercent(signal.volatility)}`],
+      ['Signal confidence', `${(signal.confidence * 100).toFixed(0)}%`],
+      ['Anchor date / latest price', `${signal.anchorDate} / ${money(signal.latestPrice)}`],
+      ['Scenario shock contribution', `${indexDelta(scenarioShift)} index points (${state.change}%)`],
+      ['Data basis', readable(signal.basis)],
       ['Series identity', series.id],
     ];
     element('model-status').replaceChildren(...facts.map(([name, value]) => {
@@ -331,47 +651,73 @@
       group.append(node('dt', name), node('dd', value));
       return group;
     }));
-    element('warnings').replaceChildren(...(series.warnings || []).map(warning => node('li', readable(warning))));
-    renderMetrics(series);
-    renderCharts(series, baseline, scenario);
+    const warningSet = new Set(series.warnings || []);
+    if (signal.basis !== 'history_derived') warningSet.add('detail_history_missing_summary_fallback_used');
+    if (signal.confidence < 0.45) warningSet.add('low_signal_confidence_directional_interpretation_only');
+    element('warnings').replaceChildren(...[...warningSet].map(warning => node('li', readable(warning))));
+    renderMetrics(signal);
+    renderCharts(series, signal, baseline, scenario);
   }
 
-  function renderMetrics(series) {
-    const rows = [];
-    const dateNotes = [];
-    const decimal = value => numeric(value) ? value.toFixed(4) : 'Unavailable';
-    for (const horizon of [1, 30, 90]) {
-      const metric = series.metrics?.[String(horizon)];
-      const dates = metric?.evaluated_dates || [];
-      dateNotes.push(`${horizon}d origins: ${(metric?.origins || []).join(', ') || 'none'}; evaluated: ${dates.length ? `${dates[0]} to ${dates.at(-1)} (${dates.length} dates)` : 'none'}`);
-      for (const [key, name] of [['model', 'Model'], ['latest_day_smoothed_baseline', 'Latest-day smoothed baseline'], ['pooled_smoothed_baseline', 'Pooled per-series baseline']]) {
-        const score = metric?.[key];
-        const row = node('tr');
-        for (const content of [`${horizon}d / ${readable(metric?.status)}`, name, decimal(score?.brier), decimal(score?.log_loss),
-          `${rate(score?.observed_rate)} / ${rate(score?.predicted_rate)}`, points(score?.calibration_error), count(score?.eligible_count)]) row.append(node('td', content));
-        rows.push(row);
-      }
-    }
-    text('metrics-title', `${sourceLabel()} / rolling-origin validation`);
-    element('metrics').replaceChildren(...rows);
-    text('evaluation-dates', dateNotes.join('. '));
+  function renderMetrics(signal) {
+    const scenarioContribution = -state.change * signal.scenarioImpactPerPct;
+    const rows = [
+      ['Relative momentum', signedPercent(signal.relativeMomentum), `+${signal.weights.relative.toFixed(0)}`, indexDelta(signal.components.relative),
+        signal.components.relative >= 0 ? 'Supports stronger take-rate signal' : 'Weakens signal', 'Peer-normalized short trend', 'Compares option trend vs market median trend.'],
+      ['Short momentum', signedPercent(signal.shortMomentum), `+${signal.weights.short.toFixed(0)}`, indexDelta(signal.components.short),
+        signal.components.short >= 0 ? 'Supports strength' : 'Signals discount pressure', readable(signal.basis), 'Uses latest window vs prior window price average.'],
+      ['Long momentum', signedPercent(signal.longMomentum), `+${signal.weights.long.toFixed(0)}`, indexDelta(signal.components.long),
+        signal.components.long >= 0 ? 'Supports sustained strength' : 'Weakens sustained signal', readable(signal.basis), 'Captures broader directional drift.'],
+      ['Dip penalty', `${signedPercent(signal.dipDepth)} (scaled ${signedPercent(signal.scaledDipDepth)})`, `-${signal.weights.dipPenalty.toFixed(0)}`, indexDelta(-signal.components.dipPenalty),
+        'Penalty for recent discount depth', readable(signal.basis), 'Deeper dips imply push to stimulate weaker demand.'],
+      ['Volatility penalty', `${signedPercent(signal.volatility)} (scaled ${signedPercent(signal.scaledVolatility)})`, `-${signal.weights.volatilityPenalty.toFixed(0)}`, indexDelta(-signal.components.volatilityPenalty),
+        'Penalty for unstable pricing', readable(signal.basis), 'Frequent/large shifts reduce confidence in organic pull.'],
+      ['Scenario shock', `${state.change}%`, `-${signal.scenarioImpactPerPct.toFixed(2)} / pct`, indexDelta(scenarioContribution),
+        scenarioContribution >= 0 ? 'Price cut strengthens signal' : 'Price increase weakens signal', 'Scenario control', 'Applies once, then mean-reverts toward neutral.'],
+      ['Baseline index', indexScale(signal.baselineIndex), 'Neutral anchor 50', indexDelta(signal.baselineIndex - 50),
+        signal.baselineIndex >= 50 ? 'Above-neutral strength proxy' : 'Below-neutral strength proxy', `${(signal.confidence * 100).toFixed(0)}% confidence`,
+        'Directional estimate only; not a causal estimate of true take rate.'],
+    ];
+    element('metrics').replaceChildren(...rows.map(columns => {
+      const row = node('tr');
+      for (const content of columns) row.append(node('td', content));
+      return row;
+    }));
+    text('metrics-title', `${sourceLabel()} / trend-signal decomposition`);
+    text('evaluation-dates',
+      `Anchor date ${signal.anchorDate}; observed price points ${count(signal.observedDays)}; distinct price levels ${count(signal.priceLevels)}; peer sample ${count(state.trendContext?.sampleCount)}.`);
   }
 
-  function renderCharts(series, baseline, scenario) {
+  function renderCharts(series, signal, baseline, scenario) {
     if (typeof Chart === 'undefined') {
       text('scenario-status', `${element('scenario-status').textContent} Charts unavailable: Chart.js did not load.`);
       return;
     }
-    const history = series.history || [];
+    const history = historyPrices(series);
+    const historyAverage = new Map();
+    for (let index = 0; index < history.length; index += 1) {
+      const start = Math.max(0, index - 6);
+      const avg = average(history.slice(start, index + 1).map(point => point.price));
+      historyAverage.set(history[index].date, avg);
+    }
+    const historySignal = new Map(historicalSignalTimeline(series).map(point => [point.date, point.rate]));
     const dates = [...new Set([...history.map(point => point.date), ...scenario.map(point => point.date)])].sort();
-    const historical = new Map(history.map(point => [point.date, point]));
+    const historical = new Map(history.map(point => [point.date, point.price]));
     const unchanged = new Map(baseline.map(point => [point.date, point]));
     const changed = new Map(scenario.map(point => [point.date, point]));
+    const unchangedPrice = new Map(baseline.map(point => [point.date, signal.latestPrice]));
+    const scenarioPrice = numeric(signal.latestPrice)
+      ? new Map(scenario.map(point => [point.date, signal.latestPrice * (1 + state.change / 100)]))
+      : new Map();
     const css = getComputedStyle(document.documentElement);
     const accent = css.getPropertyValue('--accent').trim();
     const success = css.getPropertyValue('--success').trim();
     const warning = css.getPropertyValue('--warning').trim();
-    const dataFor = (mapping, key, multiplier = 1) => dates.map(day => {
+    const numberData = mapping => dates.map(day => {
+      const value = mapping.get(day);
+      return numeric(value) ? value : null;
+    });
+    const objectData = (mapping, key, multiplier = 1) => dates.map(day => {
       const value = mapping.get(day)?.[key];
       return numeric(value) ? value * multiplier : null;
     });
@@ -386,26 +732,25 @@
         y: {min: isRate ? 0 : undefined, max: isRate ? 100 : undefined,
           ticks: {color: css.getPropertyValue('--text-dim').trim(), callback: value => isRate ? `${value}%` : money(value)},
           grid: {color: css.getPropertyValue('--border').trim()}}}});
-    const futurePrice = (mapping, price) => dates.map(day => mapping.has(day) ? price : null);
-    text('price-caption', `${sourceLabel()} / ${state.payload.currency} / catalogue context and demand prices`);
-    text('rate-caption', `${sourceLabel()} / take rate / ${state.horizon}-day conditional projection`);
+    text('price-caption', `${sourceLabel()} / ${state.payload.currency} / observed option price, rolling baseline and scenario path`);
+    text('rate-caption', `${sourceLabel()} / trend-proxy take-rate strength / ${state.horizon}-day directional projection`);
     priceChart = new Chart(element('price-chart'), {type: 'line', data: {labels: dates, datasets: [
-      line('Catalogue-context price (artifact)', dataFor(historical, 'price'), accent),
-      line('Demand cohort price', dataFor(historical, 'demand_price'), success),
-      line('Unchanged reference price', futurePrice(unchanged, series.model.last_price), accent, true),
-      line('Scenario price', futurePrice(changed, series.model.last_price * (1 + state.change / 100)), warning, true),
+      line('Observed option price', numberData(historical), accent),
+      line('7-point rolling average', numberData(historyAverage), success),
+      line('Unchanged scenario price', numberData(unchangedPrice), accent, true),
+      line('Price scenario path', numberData(scenarioPrice), warning, true),
     ]}, options: options(false)});
     const interval = (mapping, color, name) => [
-      {label: '', data: dataFor(mapping, 'lower', 100), borderWidth: 0, pointRadius: 0, backgroundColor: 'transparent'},
-      {label: `${name} approximate conditional interval`, data: dataFor(mapping, 'upper', 100),
+      {label: '', data: objectData(mapping, 'lower', 100), borderWidth: 0, pointRadius: 0, backgroundColor: 'transparent'},
+      {label: `${name} directional interval`, data: objectData(mapping, 'upper', 100),
         borderWidth: 0, pointRadius: 0, fill: '-1', backgroundColor: color},
     ];
     rateChart = new Chart(element('rate-chart'), {type: 'line', data: {labels: dates, datasets: [
       ...interval(unchanged, 'rgba(79,143,247,0.12)', 'Unchanged'),
       ...interval(changed, 'rgba(255,152,0,0.12)', 'Scenario'),
-      line(`${sourceLabel()} historical rate`, dataFor(historical, 'take_rate', 100), success),
-      line('Unchanged expected rate', dataFor(unchanged, 'rate', 100), accent, true),
-      line('Scenario expected rate', dataFor(changed, 'rate', 100), warning, true),
+      line('Historical trend strength proxy', numberData(new Map([...historySignal.entries()].map(([date, value]) => [date, value * 100]))), success),
+      line('Unchanged expected strength', objectData(unchanged, 'rate', 100), accent, true),
+      line('Scenario expected strength', objectData(changed, 'rate', 100), warning, true),
     ]}, options: options(true)});
   }
 
@@ -443,26 +788,25 @@
       lines.push(columns.map(key => escape(row[key])).join(','));
     };
     for (const series of state.filtered) {
+      const summary = forecastSummary(series);
+      const signal = summary.signal;
       const identity = {...series, model: series.vehicle_model, series_id: series.id, demand_source: state.source, market: state.payload.market,
-        currency: state.payload.currency, price_sources: (series.price_sources || []).join('|'), sensitivity_source: series.model.sensitivity_source};
+        currency: state.payload.currency, price_sources: (series.price_sources || []).join('|'),
+        sensitivity_source: signal?.basis || readable(series.model?.sensitivity_source)};
       for (const point of series.history || []) {
-        append(identity, {...point, horizon: 0, path: 'historical', rate: point.take_rate,
-          price_source: 'artifact_catalogue_context_or_cohort_on_purchase_only_dates'});
-        if (numeric(point.demand_price)) append(identity, {...point, horizon: 0, path: 'historical_demand_price',
-          price: point.demand_price, rate: point.take_rate, price_source: (series.price_sources || []).join('|')});
+        append(identity, {...point, horizon: 0, path: 'historical_price', rate: null,
+          price_source: 'catalogue_history'});
       }
       append(identity, {date: series.as_of, horizon: 0, path: 'historical_full_period',
-        price: series.latest_price, price_source: 'latest_catalogue_price_not_period_average', rate: series.take_rate});
+        price: series.latest_price, price_source: 'latest_catalogue_price_not_period_average', rate: summary.currentStrength});
+      if (!signal?.available) continue;
       for (const [path, change] of [['unchanged', 0], ['scenario', state.change]]) {
-        const endpoint = window.OptionIntelligenceModel.predictSeries(series, change, 2)[1];
-        if (!endpoint) continue;
         for (const horizon of [30, 90]) {
-          const date = new Date(`${series.model.last_date}T00:00:00Z`);
-          date.setUTCDate(date.getUTCDate() + horizon);
-          append(identity, {...endpoint, date: date.toISOString().slice(0, 10), horizon, path,
-          price: series.model.last_price * (1 + change / 100), price_source: path === 'scenario' ? 'scenario' : 'unchanged_catalogue_reference',
+          const endpoint = projectPoint(signal, change, horizon);
+          append(identity, {...endpoint, date: addDays(signal.anchorDate, horizon), horizon, path,
+          price: signal.latestPrice * (1 + change / 100), price_source: path === 'scenario' ? 'scenario' : 'unchanged_catalogue_reference',
           pct_change: change, eligible_count: null, selected_count: null,
-          uncertainty_source: `${state.source}:approximate_model_prior_conditional_laplace_expected_rate`});
+          uncertainty_source: `${state.source}:trend_proxy_price_signal_v1`});
         }
       }
     }
